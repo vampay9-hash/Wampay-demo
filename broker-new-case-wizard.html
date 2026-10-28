@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ثبت متقاضی جدید | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23; --primary-light: #1a5c3a; --primary-dark: #062416;
+    --gold: #d4a62a; --gold-light: #f0c651;
+    --text: #1a2b22; --text-muted: #6b7d73;
+    --bg: #f4f7f4; --bg-card: #ffffff; --border: #e0e8e3;
+    --error: #c0392b; --success: #1e8e4a; --warning: #e67e22; --info: #2980b9;
+    --credit: #8e44ad;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px; --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+    background-image:
+        radial-gradient(circle at 10% 10%, rgba(212,166,42,0.06), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(11,59,35,0.08), transparent 40%);
+}
+.wiz-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; padding: 14px 24px; box-shadow: var(--shadow-md);
+    position: sticky; top: 0; z-index: 100;
+}
+.wiz-header__inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.wiz-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 18px; color: #fff; text-decoration: none;
+}
+.wiz-logo__icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; box-shadow: 0 4px 12px rgba(212,166,42,0.4);
+}
+.wiz-header__actions { display: flex; gap: 8px; align-items: center; }
+.wiz-theme-btn {
+    width: 38px; height: 38px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: #fff;
+    cursor: pointer; font-size: 16px; transition: var(--transition);
+}
+.wiz-theme-btn:hover { background: rgba(255,255,255,0.18); }
+.wiz-back-link {
+    color: #fff; text-decoration: none; font-size: 13px;
+    padding: 8px 14px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: var(--transition);
+}
+.wiz-back-link:hover { background: rgba(255,255,255,0.12); }
+
+.wiz-main { max-width: 780px; margin: 0 auto; padding: 24px 20px 80px; }
+.wiz-hero { text-align: center; margin-bottom: 20px; }
+.wiz-hero__badge {
+    display: inline-block; padding: 5px 14px;
+    background: rgba(30,142,74,0.12); color: var(--success);
+    border-radius: 999px; font-size: 12px; font-weight: 800; margin-bottom: 10px;
+}
+.wiz-hero__title { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+.wiz-hero__subtitle { color: var(--text-muted); font-size: 14px; max-width: 500px; margin: 0 auto; }
+
+.wiz-filenum {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; border-radius: var(--radius); padding: 16px 22px;
+    margin-bottom: 20px; display: flex; align-items: center;
+    justify-content: space-between; gap: 14px;
+    box-shadow: var(--shadow-md); position: relative; overflow: hidden;
+}
+.wiz-filenum::before {
+    content: ''; position: absolute; top: -50%; right: -20%;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: rgba(212,166,42,0.15);
+}
+.wiz-filenum__right { position: relative; z-index: 1; }
+.wiz-filenum__label { font-size: 12px; opacity: 0.85; margin-bottom: 2px; }
+.wiz-filenum__value {
+    font-size: 20px; font-weight: 800; letter-spacing: 2px;
+    color: var(--gold-light); font-family: monospace; direction: ltr;
+}
+.wiz-filenum__left { position: relative; z-index: 1; text-align: left; }
+.wiz-filenum__badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(30,142,74,0.9); color: #fff;
+    font-size: 11px; font-weight: 800;
+    padding: 4px 10px; border-radius: 8px; margin-bottom: 4px;
+}
+.wiz-filenum__hint { font-size: 11px; opacity: 0.85; }
+
+.wiz-progress {
+    display: flex; align-items: center; justify-content: center;
+    gap: 4px; margin-bottom: 22px; flex-wrap: wrap;
+}
+.wiz-progress__step { display: flex; align-items: center; gap: 4px; }
+.wiz-progress__num {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--bg-card); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 12px; transition: var(--transition);
+    color: var(--text-muted);
+}
+.wiz-progress__step--active .wiz-progress__num {
+    background: var(--primary); border-color: var(--primary); color: #fff;
+    box-shadow: 0 0 0 4px rgba(11,59,35,0.15);
+}
+.wiz-progress__step--done .wiz-progress__num {
+    background: var(--success); border-color: var(--success); color: #fff;
+}
+.wiz-progress__step--credit .wiz-progress__num {
+    border-color: var(--credit);
+}
+.wiz-progress__step--credit.wiz-progress__step--active .wiz-progress__num {
+    background: var(--credit); border-color: var(--credit);
+    box-shadow: 0 0 0 4px rgba(142,68,173,0.15);
+}
+.wiz-progress__line { width: 24px; height: 2px; background: var(--border); border-radius: 2px; }
+.wiz-progress__line--done { background: var(--success); }
+
+.wiz-card {
+    background: var(--bg-card); border-radius: var(--radius); padding: 28px;
+    box-shadow: var(--shadow-md); border: 1px solid var(--border);
+    animation: fadeInUp 0.4s ease;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.wiz-step { display: none; }
+.wiz-step--active { display: block; }
+.wiz-card__title { font-size: 19px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.wiz-card__desc { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px dashed var(--border); }
+
+.wiz-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.wiz-field { display: flex; flex-direction: column; gap: 6px; }
+.wiz-field--full { grid-column: 1 / -1; }
+.wiz-label { font-size: 13px; font-weight: 700; color: var(--text); }
+.wiz-label__required { color: var(--error); margin-right: 3px; }
+.wiz-input, .wiz-select, .wiz-textarea {
+    width: 100%; padding: 11px 13px;
+    border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+    background: var(--bg); color: var(--text);
+    font-family: inherit; font-size: 14px; transition: var(--transition);
+}
+.wiz-input:focus, .wiz-select:focus, .wiz-textarea:focus {
+    outline: none; border-color: var(--primary);
+    background: var(--bg-card); box-shadow: 0 0 0 4px rgba(11,59,35,0.10);
+}
+.wiz-input--error { border-color: var(--error); }
+.wiz-input:disabled { opacity: 0.65; cursor: not-allowed; background: var(--border); }
+.wiz-textarea { resize: vertical; min-height: 80px; }
+.wiz-hint { font-size: 11px; color: var(--text-muted); }
+.wiz-error { font-size: 11px; color: var(--error); font-weight: 700; display: none; }
+.wiz-error--show { display: block; }
+.wiz-section-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 800; color: var(--primary);
+    margin: 18px 0 10px; padding-bottom: 6px;
+    border-bottom: 2px solid rgba(11,59,35,0.10);
+    grid-column: 1 / -1;
+}
+.wiz-section-title:first-of-type { margin-top: 0; }
+[data-theme="dark"] .wiz-section-title { color: var(--gold-light); border-bottom-color: rgba(212,166,42,0.25); }
+
+.wiz-date { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.wiz-date .wiz-select { padding: 11px 8px; text-align: center; font-weight: 700; }
+.wiz-landline { display: grid; grid-template-columns: 1.2fr 1.5fr; gap: 8px; }
+.wiz-landline .wiz-select { text-align: center; font-weight: 700; }
+.wiz-landline .wiz-input { text-align: center; font-weight: 700; letter-spacing: 3px; }
+
+.wiz-info-box {
+    background: linear-gradient(135deg, rgba(41,128,185,0.08), rgba(11,59,35,0.05));
+    border: 2px solid rgba(41,128,185,0.35);
+    border-radius: var(--radius-sm); padding: 14px 16px; margin: 10px 0;
+    grid-column: 1 / -1;
+}
+.wiz-info-box--success { border-color: rgba(30,142,74,0.4); background: linear-gradient(135deg, rgba(30,142,74,0.08), rgba(11,59,35,0.05)); }
+.wiz-info-box--warning { border-color: rgba(230,126,34,0.4); background: linear-gradient(135deg, rgba(230,126,34,0.08), rgba(11,59,35,0.05)); }
+.wiz-info-box--credit { border-color: rgba(142,68,173,0.4); background: linear-gradient(135deg, rgba(142,68,173,0.08), rgba(11,59,35,0.05)); }
+.wiz-info-box__title {
+    font-size: 13px; font-weight: 800; color: var(--primary);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+}
+[data-theme="dark"] .wiz-info-box__title { color: var(--gold-light); }
+.wiz-info-box__desc { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+
+.wiz-upload {
+    border: 2px dashed var(--border); border-radius: var(--radius-sm);
+    padding: 20px; text-align: center; cursor: pointer;
+    transition: var(--transition); background: var(--bg);
+    position: relative; overflow: hidden;
+}
+.wiz-upload:hover { border-color: var(--primary); background: rgba(11,59,35,0.04); }
+.wiz-upload--has-file { border-color: var(--success); background: rgba(30,142,74,0.06); }
+.wiz-upload--required { border-color: rgba(192,57,43,0.4); }
+.wiz-upload--compressing { border-color: var(--gold); background: rgba(212,166,42,0.08); }
+.wiz-upload__icon { font-size: 28px; margin-bottom: 6px; }
+.wiz-upload__text { font-size: 13px; font-weight: 700; }
+.wiz-upload__hint { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.wiz-upload__file { font-size: 12px; color: var(--success); font-weight: 700; margin-top: 6px; }
+.wiz-upload__thumb {
+    width: 90px; height: 90px; border-radius: 8px;
+    object-fit: cover; margin: 8px auto 4px; display: block;
+    border: 2px solid var(--success);
+}
+.wiz-upload__meta { font-size: 10px; color: var(--text-muted); font-family: monospace; }
+.wiz-upload input[type="file"] { display: none; }
+
+.wiz-checkbox {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 12px; border-radius: var(--radius-sm);
+    background: var(--bg); border: 1.5px solid var(--border);
+    cursor: pointer; transition: var(--transition);
+    grid-column: 1 / -1;
+}
+.wiz-checkbox:hover { border-color: var(--primary); }
+.wiz-checkbox input[type="checkbox"] {
+    margin-top: 3px; width: 18px; height: 18px;
+    accent-color: var(--primary); cursor: pointer; flex-shrink: 0;
+}
+.wiz-checkbox__text { font-size: 12px; line-height: 1.7; }
+.wiz-checkbox__text a { color: var(--primary); font-weight: 700; text-decoration: none; }
+
+.wiz-otp-wrap {
+    display: flex; gap: 8px; direction: ltr;
+    justify-content: center; margin: 16px 0;
+}
+.wiz-otp-input {
+    width: 48px; height: 56px; text-align: center;
+    font-size: 22px; font-weight: 800;
+    border-radius: var(--radius-sm); border: 2px solid var(--border);
+    background: var(--bg); color: var(--text);
+    font-family: inherit; transition: var(--transition);
+}
+.wiz-otp-input:focus {
+    outline: none; border-color: var(--primary);
+    background: var(--bg-card); box-shadow: 0 0 0 4px rgba(11,59,35,0.10);
+    transform: translateY(-2px);
+}
+
+.wiz-signature-wrap {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 10px; border: 2px dashed var(--border);
+    grid-column: 1 / -1;
+}
+.wiz-signature-label {
+    font-size: 12px; color: var(--text-muted);
+    margin-bottom: 6px; display: flex; justify-content: space-between;
+}
+#signatureCanvas {
+    width: 100%; height: 200px;
+    background: #fff; border-radius: 6px;
+    cursor: crosshair; touch-action: none;
+    border: 1px solid var(--border);
+}
+.wiz-signature-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.wiz-signature-actions button {
+    padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--bg-card); color: var(--text);
+    font-family: inherit; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+}
+.wiz-signature-actions button:hover { border-color: var(--primary); color: var(--primary); }
+.wiz-signature-actions .clear-btn:hover { border-color: var(--error); color: var(--error); }
+
+/* 🆕 Credit Invoice Section */
+.credit-box {
+    background: linear-gradient(135deg, rgba(142,68,173,0.06), rgba(11,59,35,0.04));
+    border: 2px solid rgba(142,68,173,0.3);
+    border-radius: var(--radius-sm); padding: 18px;
+    grid-column: 1 / -1; margin-top: 8px;
+}
+.credit-box__title {
+    font-size: 14px; font-weight: 800; color: var(--credit);
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+[data-theme="dark"] .credit-box__title { color: var(--gold-light); }
+.credit-box__desc {
+    font-size: 12px; color: var(--text-muted); line-height: 1.7;
+    padding-bottom: 12px; border-bottom: 1px dashed rgba(142,68,173,0.25);
+    margin-bottom: 14px;
+}
+.credit-preview {
+    background: var(--bg-card); border-radius: var(--radius-sm);
+    padding: 16px; border: 2px solid rgba(142,68,173,0.3);
+    margin-top: 14px;
+}
+.credit-preview__row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px dashed var(--border); font-size: 13px;
+}
+.credit-preview__row:last-child { border-bottom: none; padding-top: 12px; }
+.credit-preview__row span:first-child { color: var(--text-muted); }
+.credit-preview__row span:last-child { font-weight: 800; }
+.credit-preview__highlight {
+    background: linear-gradient(135deg, rgba(212,166,42,0.15), rgba(11,59,35,0.05));
+    border-radius: 8px; padding: 12px; margin-top: 10px;
+    border: 1px solid rgba(212,166,42,0.35);
+    display: flex; justify-content: space-between; align-items: center;
+}
+.credit-preview__highlight-label { font-size: 12px; color: var(--text-muted); }
+.credit-preview__highlight-value {
+    font-size: 20px; font-weight: 800; color: var(--gold);
+    direction: rtl;
+}
+[data-theme="dark"] .credit-preview__highlight-value { color: var(--gold-light); }
+
+.wiz-actions {
+    display: flex; gap: 12px; margin-top: 24px;
+    padding-top: 18px; border-top: 1px dashed var(--border);
+}
+.wiz-btn {
+    flex: 1; padding: 13px 18px; border-radius: var(--radius-sm); border: none;
+    font-family: inherit; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    text-decoration: none;
+}
+.wiz-btn--primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; box-shadow: 0 6px 16px rgba(11,59,35,0.25);
+}
+.wiz-btn--primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11,59,35,0.35); }
+.wiz-btn--primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.wiz-btn--credit {
+    background: linear-gradient(135deg, var(--credit), #a569bd);
+    color: #fff; box-shadow: 0 6px 16px rgba(142,68,173,0.3);
+}
+.wiz-btn--credit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(142,68,173,0.45); }
+.wiz-btn--gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--primary-dark); box-shadow: 0 6px 16px rgba(212,166,42,0.3);
+}
+.wiz-btn--gold:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(212,166,42,0.45); }
+.wiz-btn--ghost { background: transparent; color: var(--text-muted); border: 1.5px solid var(--border); }
+.wiz-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.wiz-btn__spinner {
+    width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.8s linear infinite; display: none;
+}
+.wiz-btn--loading .wiz-btn__spinner { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.wiz-success { text-align: center; padding: 20px 0; }
+.wiz-success__icon {
+    width: 90px; height: 90px; margin: 0 auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--success), #2ecc71);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 46px; color: #fff;
+    box-shadow: 0 12px 32px rgba(30,142,74,0.35);
+    animation: pop 0.6s cubic-bezier(0.68,-0.55,0.27,1.55);
+}
+@keyframes pop { 0% { transform: scale(0); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+.wiz-success__title { font-size: 22px; font-weight: 800; margin-bottom: 6px; color: var(--success); }
+.wiz-success__desc { color: var(--text-muted); margin-bottom: 20px; font-size: 14px; }
+.wiz-summary {
+    background: var(--bg); border-radius: var(--radius-sm); padding: 18px;
+    text-align: right; margin-bottom: 20px; border: 1px solid var(--border);
+}
+.wiz-summary__row {
+    display: flex; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px dashed var(--border); font-size: 13px;
+}
+.wiz-summary__row:last-child { border-bottom: none; }
+.wiz-summary__row span:first-child { color: var(--text-muted); }
+.wiz-summary__row span:last-child { font-weight: 700; text-align: left; max-width: 60%; }
+.wiz-alert {
+    padding: 12px 16px; border-radius: var(--radius-sm);
+    font-size: 13px; margin-bottom: 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+}
+.wiz-alert--info { background: rgba(41,128,185,0.08); color: var(--info); border-right: 4px solid var(--info); }
+.wiz-alert--warning { background: rgba(230,126,34,0.10); color: var(--warning); border-right: 4px solid var(--warning); }
+.wiz-alert--success { background: rgba(30,142,74,0.08); color: var(--success); border-right: 4px solid var(--success); }
+
+.wiz-toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 13px 22px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 13px; font-weight: 600;
+    z-index: 9999; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 8px; max-width: 90%;
+}
+.wiz-toast--show { transform: translateX(-50%) translateY(0); }
+.wiz-toast--error { background: var(--error); }
+.wiz-toast--success { background: var(--success); }
+
+@media (max-width: 640px) {
+    .wiz-main { padding: 16px 14px 60px; }
+    .wiz-card { padding: 20px 16px; }
+    .wiz-grid { grid-template-columns: 1fr; gap: 12px; }
+    .wiz-hero__title { font-size: 20px; }
+    .wiz-otp-input { width: 42px; height: 50px; font-size: 18px; }
+    .wiz-progress__line { width: 12px; }
+    .wiz-actions { flex-direction: column-reverse; }
+    .wiz-filenum { flex-direction: column; text-align: center; }
+    .wiz-filenum__left { text-align: center; }
+    .wiz-date { grid-template-columns: 1fr 1fr 1fr; }
+    .wiz-landline { grid-template-columns: 1fr; }
+    #signatureCanvas { height: 160px; }
+    .wiz-progress__num { width: 26px; height: 26px; font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<header class="wiz-header">
+    <div class="wiz-header__inner">
+        <a href="broker-dashboard.html" class="wiz-logo">
+            <div class="wiz-logo__icon">💰</div>
+            <span>وام پی</span>
+        </a>
+        <div class="wiz-header__actions">
+            <button class="wiz-theme-btn" id="themeBtn" title="تغییر تم">🌙</button>
+            <a href="broker-dashboard.html" class="wiz-back-link">→ بازگشت به داشبورد</a>
+        </div>
+    </div>
+</header>
+
+<main class="wiz-main">
+
+    <div class="wiz-hero">
+        <div class="wiz-hero__badge">🟢 ثبت متقاضی توسط کارگزار — مدل امتیاز</div>
+        <h1 class="wiz-hero__title">ثبت متقاضی جدید</h1>
+        <p class="wiz-hero__subtitle">
+            اطلاعات متقاضی را در ۶ گام وارد کنید. پس از ارسال، زنجیره‌ی تأیید شروع می‌شود.
+        </p>
+    </div>
+
+    <div class="wiz-filenum">
+        <div class="wiz-filenum__right">
+            <div class="wiz-filenum__label">📁 شماره پرونده‌ی این متقاضی</div>
+            <div class="wiz-filenum__value" id="caseNumberDisplay">CASE-2026-000000</div>
+        </div>
+        <div class="wiz-filenum__left">
+            <div class="wiz-filenum__badge">💎 مدل امتیاز</div>
+            <div class="wiz-filenum__hint" id="brokerRefInfo">—</div>
+        </div>
+    </div>
+
+    <div class="wiz-progress" id="progress">
+        <div class="wiz-progress__step wiz-progress__step--active" data-step="1"><div class="wiz-progress__num">۱</div></div>
+        <div class="wiz-progress__line"></div>
+        <div class="wiz-progress__step" data-step="2"><div class="wiz-progress__num">۲</div></div>
+        <div class="wiz-progress__line"></div>
+        <div class="wiz-progress__step" data-step="3"><div class="wiz-progress__num">۳</div></div>
+        <div class="wiz-progress__line"></div>
+        <div class="wiz-progress__step" data-step="4"><div class="wiz-progress__num">۴</div></div>
+        <div class="wiz-progress__line"></div>
+        <div class="wiz-progress__step wiz-progress__step--credit" data-step="4.5"><div class="wiz-progress__num">💎</div></div>
+        <div class="wiz-progress__line"></div>
+        <div class="wiz-progress__step" data-step="5"><div class="wiz-progress__num">۵</div></div>
+    </div>
+
+    <div class="wiz-card">
+
+        <!-- ========== STEP 1: Personal Info ========== -->
+        <section class="wiz-step wiz-step--active" data-step="1">
+            <h2 class="wiz-card__title">👤 اطلاعات هویتی متقاضی</h2>
+            <p class="wiz-card__desc">اطلاعات را دقیقاً مطابق کارت ملی متقاضی وارد کنید.</p>
+
+            <div class="wiz-grid">
+                <div class="wiz-field">
+                    <label class="wiz-label">نام <span class="wiz-label__required">*</span></label>
+                    <input type="text" id="firstName" class="wiz-input" placeholder="مثال: رضا">
+                    <div class="wiz-error" id="firstNameError">نام را وارد کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">نام خانوادگی <span class="wiz-label__required">*</span></label>
+                    <input type="text" id="lastName" class="wiz-input" placeholder="مثال: احمدی">
+                    <div class="wiz-error" id="lastNameError">نام خانوادگی را وارد کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">کد ملی <span class="wiz-label__required">*</span></label>
+                    <input type="text" id="nationalId" class="wiz-input" placeholder="۱۰ رقم" maxlength="10" inputmode="numeric" dir="ltr">
+                    <div class="wiz-error" id="nationalIdError">کد ملی معتبر نیست</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">تاریخ تولد <span class="wiz-label__required">*</span></label>
+                    <div class="wiz-date">
+                        <select id="birthYear" class="wiz-select"><option value="">سال</option></select>
+                        <select id="birthMonth" class="wiz-select">
+                            <option value="">ماه</option>
+                            <option value="1">فروردین</option><option value="2">اردیبهشت</option>
+                            <option value="3">خرداد</option><option value="4">تیر</option>
+                            <option value="5">مرداد</option><option value="6">شهریور</option>
+                            <option value="7">مهر</option><option value="8">آبان</option>
+                            <option value="9">آذر</option><option value="10">دی</option>
+                            <option value="11">بهمن</option><option value="12">اسفند</option>
+                        </select>
+                        <select id="birthDay" class="wiz-select"><option value="">روز</option></select>
+                    </div>
+                    <div class="wiz-error" id="birthDateError">تاریخ تولد را کامل انتخاب کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">شماره موبایل <span class="wiz-label__required">*</span></label>
+                    <input type="tel" id="mobile" class="wiz-input" placeholder="09123456789" maxlength="11" inputmode="numeric" dir="ltr">
+                    <div class="wiz-error" id="mobileError">شماره موبایل معتبر نیست</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">ایمیل</label>
+                    <input type="email" id="email" class="wiz-input" placeholder="example@mail.com" dir="ltr">
+                </div>
+
+                <div class="wiz-section-title">🏠 آدرس محل سکونت</div>
+
+                <div class="wiz-field wiz-field--full">
+                    <label class="wiz-label">آدرس کامل <span class="wiz-label__required">*</span></label>
+                    <textarea id="address" class="wiz-textarea" placeholder="استان، شهر، خیابان، پلاک..."></textarea>
+                    <div class="wiz-error" id="addressError">آدرس را وارد کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">کد پستی <span class="wiz-label__required">*</span></label>
+                    <input type="text" id="postalCode" class="wiz-input" placeholder="۱۰ رقم" maxlength="10" inputmode="numeric" dir="ltr">
+                    <div class="wiz-error" id="postalCodeError">کد پستی باید ۱۰ رقم باشد</div>
+                </div>
+            </div>
+
+            <div class="wiz-actions">
+                <a href="broker-dashboard.html" class="wiz-btn wiz-btn--ghost" style="text-align:center;">→ بازگشت</a>
+                <button class="wiz-btn wiz-btn--primary" data-next="2"><span>مرحله بعد ←</span></button>
+            </div>
+        </section>
+
+        <!-- ========== STEP 2: Employment ========== -->
+        <section class="wiz-step" data-step="2">
+            <h2 class="wiz-card__title">💼 اطلاعات شغلی متقاضی</h2>
+            <p class="wiz-card__desc">اطلاعات شغلی و درآمدی متقاضی را وارد کنید.</p>
+
+            <div class="wiz-grid">
+                <div class="wiz-field">
+                    <label class="wiz-label">شغل <span class="wiz-label__required">*</span></label>
+                    <select id="job" class="wiz-select">
+                        <option value="">انتخاب کنید...</option>
+                        <option>کارمند دولتی</option><option>کارمند خصوصی</option>
+                        <option>آزاد / کسب‌وکار</option><option>پزشک / پیراپزشک</option>
+                        <option>مهندس</option><option>معلم / استاد</option>
+                        <option>وکیل / قاضی</option><option>نظامی / انتظامی</option>
+                        <option>بازنشسته</option><option>راننده</option>
+                        <option>کشاورز</option><option>فروشنده</option>
+                        <option>کارگر</option><option>سایر</option>
+                    </select>
+                    <div class="wiz-error" id="jobError">شغل را انتخاب کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">سابقه‌ی کار (سال) <span class="wiz-label__required">*</span></label>
+                    <input type="number" id="experience" class="wiz-input" placeholder="مثال: ۵" min="0" max="60">
+                    <div class="wiz-error" id="experienceError">سابقه را وارد کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">درآمد ماهانه (تومان) <span class="wiz-label__required">*</span></label>
+                    <input type="text" id="monthlyIncome" class="wiz-input" placeholder="مثال: ۱۵,۰۰۰,۰۰۰" inputmode="numeric" dir="ltr">
+                    <div class="wiz-error" id="monthlyIncomeError">درآمد را وارد کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">نام محل کار <span class="wiz-label__required">*</span></label>
+                    <input type="text" id="workPlace" class="wiz-input" placeholder="مثال: شرکت ایران خودرو">
+                    <div class="wiz-error" id="workPlaceError">نام محل کار را وارد کنید</div>
+                </div>
+                <div class="wiz-field wiz-field--full">
+                    <label class="wiz-label">آدرس محل کار <span class="wiz-label__required">*</span></label>
+                    <textarea id="workAddress" class="wiz-textarea" placeholder="استان، شهر، خیابان، پلاک..."></textarea>
+                    <div class="wiz-error" id="workAddressError">آدرس محل کار را وارد کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">کد پستی محل کار <span class="wiz-label__required">*</span></label>
+                    <input type="text" id="workPostalCode" class="wiz-input" placeholder="۱۰ رقم" maxlength="10" inputmode="numeric" dir="ltr">
+                    <div class="wiz-error" id="workPostalCodeError">کد پستی باید ۱۰ رقم باشد</div>
+                </div>
+            </div>
+
+            <div class="wiz-actions">
+                <button class="wiz-btn wiz-btn--ghost" data-back="1">→ مرحله قبل</button>
+                <button class="wiz-btn wiz-btn--primary" data-next="3"><span>مرحله بعد ←</span></button>
+            </div>
+        </section>
+
+        <!-- ========== STEP 3: Documents ========== -->
+        <section class="wiz-step" data-step="3">
+            <h2 class="wiz-card__title">📎 بارگذاری مدارک</h2>
+            <p class="wiz-card__desc">تصاویر به‌صورت خودکار فشرده می‌شوند. فرمت JPG/PNG.</p>
+
+            <div class="wiz-grid">
+                <div class="wiz-field">
+                    <label class="wiz-label">تصویر کارت ملی <span class="wiz-label__required">*</span></label>
+                    <label class="wiz-upload wiz-upload--required" id="uploadNationalCard">
+                        <input type="file" accept="image/*" data-doc="nationalCard">
+                        <div class="wiz-upload__icon">🪪</div>
+                        <div class="wiz-upload__text">انتخاب کارت ملی</div>
+                        <div class="wiz-upload__hint">پشت و رو در یک عکس</div>
+                        <div class="wiz-upload__file"></div>
+                    </label>
+                    <div class="wiz-error" id="nationalCardError">بارگذاری کارت ملی الزامی است</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">تصویر شناسنامه <span class="wiz-label__required">*</span></label>
+                    <label class="wiz-upload wiz-upload--required" id="uploadBirthCert">
+                        <input type="file" accept="image/*" data-doc="birthCert">
+                        <div class="wiz-upload__icon">📖</div>
+                        <div class="wiz-upload__text">انتخاب شناسنامه</div>
+                        <div class="wiz-upload__hint">صفحه‌ی اول و توضیحات</div>
+                        <div class="wiz-upload__file"></div>
+                    </label>
+                    <div class="wiz-error" id="birthCertError">بارگذاری شناسنامه الزامی است</div>
+                </div>
+                <div class="wiz-field wiz-field--full">
+                    <label class="wiz-label">📋 مدرک شغلی (اختیاری)</label>
+                    <label class="wiz-upload" id="uploadJobDoc">
+                        <input type="file" accept="image/*" data-doc="jobDoc">
+                        <div class="wiz-upload__icon">💼</div>
+                        <div class="wiz-upload__text">انتخاب مدرک شغلی</div>
+                        <div class="wiz-upload__hint">آخرین فیش حقوقی یا جواز کسب</div>
+                        <div class="wiz-upload__file"></div>
+                    </label>
+                </div>
+                <div class="wiz-field wiz-field--full">
+                    <label class="wiz-label">🤳 سلفی متقاضی با کارت ملی <span class="wiz-label__required">*</span></label>
+                    <label class="wiz-upload wiz-upload--required" id="uploadSelfie">
+                        <input type="file" accept="image/*" capture="user" data-doc="selfie">
+                        <div class="wiz-upload__icon">🤳</div>
+                        <div class="wiz-upload__text">انتخاب سلفی + کارت ملی</div>
+                        <div class="wiz-upload__hint">صورت + کارت ملی واضح و خوانا</div>
+                        <div class="wiz-upload__file"></div>
+                    </label>
+                    <div class="wiz-error" id="selfieError">بارگذاری سلفی الزامی است</div>
+                </div>
+            </div>
+
+            <div class="wiz-actions">
+                <button class="wiz-btn wiz-btn--ghost" data-back="2">→ مرحله قبل</button>
+                <button class="wiz-btn wiz-btn--primary" data-next="4"><span>مرحله بعد ←</span></button>
+            </div>
+        </section>
+
+        <!-- ========== STEP 4: Loan & Bank ========== -->
+        <section class="wiz-step" data-step="4">
+            <h2 class="wiz-card__title">🏦 اطلاعات وام و بانکی</h2>
+            <p class="wiz-card__desc">مشخصات وام درخواستی و اطلاعات بانکی متقاضی.</p>
+
+            <div class="wiz-grid">
+                <div class="wiz-field">
+                    <label class="wiz-label">مبلغ وام درخواستی (تومان) <span class="wiz-label__required">*</span></label>
+                    <input type="text" id="loanAmount" class="wiz-input" placeholder="مثال: ۱۰۰,۰۰۰,۰۰۰" inputmode="numeric" dir="ltr">
+                    <div class="wiz-error" id="loanAmountError">مبلغ وام را وارد کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">مدت بازپرداخت (ماه) <span class="wiz-label__required">*</span></label>
+                    <select id="loanDuration" class="wiz-select">
+                        <option value="">انتخاب کنید...</option>
+                        <option value="12">۱۲ ماه</option><option value="24">۲۴ ماه</option>
+                        <option value="36">۳۶ ماه</option><option value="48">۴۸ ماه</option>
+                        <option value="60">۶۰ ماه</option><option value="84">۸۴ ماه</option>
+                        <option value="120">۱۲۰ ماه</option>
+                    </select>
+                    <div class="wiz-error" id="loanDurationError">مدت را انتخاب کنید</div>
+                </div>
+                <div class="wiz-field wiz-field--full">
+                    <label class="wiz-label">نوع تسهیلات <span class="wiz-label__required">*</span></label>
+                    <select id="loanType" class="wiz-select">
+                        <option value="">انتخاب کنید...</option>
+                        <option>وام مسکن</option><option>وام خودرو</option>
+                        <option>وام قرض‌الحسنه</option><option>تسهیلات سرمایه در گردش</option>
+                        <option>تسهیلات خرید کالا</option><option>وام ازدواج</option>
+                    </select>
+                    <div class="wiz-error" id="loanTypeError">نوع تسهیلات را انتخاب کنید</div>
+                </div>
+
+                <div class="wiz-section-title">🏦 اطلاعات بانکی متقاضی</div>
+
+                <div class="wiz-field">
+                    <label class="wiz-label">نام بانک <span class="wiz-label__required">*</span></label>
+                    <select id="bankName" class="wiz-select">
+                        <option value="">انتخاب کنید...</option>
+                        <optgroup label="⭐ بانک‌های همکار">
+                            <option>بانک رسالت</option>
+                            <option>بانک مهر ایران</option>
+                            <option>بانک ملی ایران</option>
+                            <option>بانک سپه</option>
+                        </optgroup>
+                        <optgroup label="بانک‌های دیگر">
+                            <option>بانک ملت</option>
+                            <option>بانک صادرات</option>
+                            <option>بانک تجارت</option>
+                            <option>بانک پاسارگاد</option>
+                            <option>بانک پارسیان</option>
+                            <option>بانک سامان</option>
+                            <option>بانک اقتصاد نوین</option>
+                            <option>بانک شهر</option>
+                            <option>بانک رفاه کارگران</option>
+                            <option>بانک کشاورزی</option>
+                            <option>بانک مسکن</option>
+                            <option>بانک آینده</option>
+                            <option>بانک دی</option>
+                            <option>بانک سینا</option>
+                            <option>بانک صنعت و معدن</option>
+                            <option>بانک توسعه صادرات</option>
+                            <option>بانک توسعه تعاون</option>
+                            <option>پست بانک</option>
+                            <option>بانک قوامین</option>
+                            <option>بانک حکمت ایرانیان</option>
+                            <option>بانک ایران زمین</option>
+                            <option>بانک خاورمیانه</option>
+                            <option>بانک سرمایه</option>
+                            <option>بانک گردشگری</option>
+                            <option>بانک قرض‌الحسنه مهر</option>
+                            <option>بلوبانک</option>
+                        </optgroup>
+                    </select>
+                    <div class="wiz-error" id="bankNameError">نام بانک را انتخاب کنید</div>
+                </div>
+                <div class="wiz-field">
+                    <label class="wiz-label">شماره حساب</label>
+                    <input type="text" id="accountNumber" class="wiz-input" placeholder="۱۰ تا ۱۸ رقم" maxlength="18" inputmode="numeric" dir="ltr">
+                </div>
+                <div class="wiz-field wiz-field--full">
+                    <label class="wiz-label">شماره کارت (۱۶ رقم) <span class="wiz-label__required">*</span></label>
+                    <input type="text" id="cardNumber" class="wiz-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" inputmode="numeric" dir="ltr" style="letter-spacing:3px;text-align:center;font-weight:700;">
+                    <div class="wiz-error" id="cardNumberError">شماره کارت باید ۱۶ رقم معتبر (Luhn) باشد</div>
+                </div>
+                <div class="wiz-field wiz-field--full">
+                    <label class="wiz-label">شماره شبا (۲۴ رقم) <span class="wiz-label__required">*</span></label>
+                    <div style="display:grid;grid-template-columns:60px 1fr;gap:6px;">
+                        <div style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-weight:800;border-radius:8px;font-family:monospace;">IR</div>
+                        <input type="text" id="shebaNumber" class="wiz-input" placeholder="۲۴ رقم بعد از IR" maxlength="24" inputmode="numeric" dir="ltr" style="letter-spacing:2px;text-align:center;font-weight:700;font-family:monospace;">
+                    </div>
+                    <div class="wiz-error" id="shebaNumberError">شماره شبا باید ۲۴ رقم باشد</div>
+                </div>
+            </div>
+
+            <div class="wiz-actions">
+                <button class="wiz-btn wiz-btn--ghost" data-back="3">→ مرحله قبل</button>
+                <button class="wiz-btn wiz-btn--credit" data-next="4.5">
+                    <span>💎 مرحله امتیاز ←</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ========== STEP 4.5: Credit Invoice 🆕 ========== -->
+        <section class="wiz-step" data-step="4.5">
+            <h2 class="wiz-card__title">💎 فاکتور خرید امتیاز</h2>
+            <p class="wiz-card__desc">
+                مشخصات امتیاز موضوع این پرونده را وارد کنید. سود سایت و سهم شما به‌صورت خودکار محاسبه می‌شود.
+            </p>
+
+            <div class="wiz-info-box wiz-info-box--credit">
+                <div class="wiz-info-box__title">
+                    <span>💡</span>
+                    <span>مدل تجاری</span>
+                </div>
+                <div class="wiz-info-box__desc">
+                    سایت امتیاز را از شما <strong>خرید</strong> می‌کند و به متقاضی <strong>می‌فروشد</strong>.
+                    <br>✔️ سود سایت از اختلاف قیمت خرید و فروش محاسبه می‌شود.
+                    <br>✔️ سهم شما همان قیمت خرید سایت از شماست.
+                </div>
+            </div>
+
+            <div class="credit-box">
+                <div class="credit-box__title">
+                    <span>💎</span>
+                    <span>مشخصات امتیاز</span>
+                </div>
+                <div class="credit-box__desc">
+                    لطفاً اطلاعات را دقیق وارد کنید. قیمت‌ها بر اساس توافق شما با سایت تعیین می‌شود.
+                </div>
+
+                <div class="wiz-grid">
+                    <div class="wiz-field">
+                        <label class="wiz-label">مبلغ وام (تومان) <span class="wiz-label__required">*</span></label>
+                        <input type="text" id="creditLoanAmount" class="wiz-input" placeholder="مثال: ۱۰۰,۰۰۰,۰۰۰" inputmode="numeric" dir="ltr">
+                        <div class="wiz-error" id="creditLoanAmountError">مبلغ وام را وارد کنید</div>
+                    </div>
+                    <!-- 🆕 تغییر: input عددی به جای dropdown -->
+                    <div class="wiz-field">
+                        <label class="wiz-label">تعداد ماه بازپرداخت <span class="wiz-label__required">*</span></label>
+                        <input type="number" id="creditRepaymentMonths" class="wiz-input"
+                               placeholder="مثلاً ۱۸" min="10" max="36" step="1" value="18"
+                               inputmode="numeric" dir="ltr"
+                               style="text-align:center;font-weight:700;">
+                        <div class="wiz-hint">📅 عدد بین <strong>۱۰ تا ۳۶</strong> ماه</div>
+                        <div class="wiz-error" id="creditRepaymentMonthsError">مدت باید بین ۱۰ تا ۳۶ ماه باشد</div>
+                    </div>
+                    <div class="wiz-field">
+                        <label class="wiz-label">نام امتیاز <span class="wiz-label__required">*</span></label>
+                        <select id="creditName" class="wiz-select">
+                            <option value="">انتخاب کنید...</option>
+                            <option>رسالت</option>
+                            <option>مهر ایران</option>
+                            <option>سپه</option>
+                            <option>ملی</option>
+                            <option>قرض‌الحسنه</option>
+                            <option>رفاه</option>
+                            <option>پاسارگاد</option>
+                            <option>پارسیان</option>
+                            <option>سامان</option>
+                            <option>سایر</option>
+                        </select>
+                        <div class="wiz-error" id="creditNameError">نام امتیاز را انتخاب کنید</div>
+                    </div>
+                    <div class="wiz-field">
+                        <label class="wiz-label">تعداد امتیاز <span class="wiz-label__required">*</span></label>
+                        <input type="text" id="creditCount" class="wiz-input" placeholder="مثال: ۱۰۰" inputmode="numeric" dir="ltr">
+                        <div class="wiz-error" id="creditCountError">تعداد امتیاز را وارد کنید</div>
+                    </div>
+                    <div class="wiz-field">
+                        <label class="wiz-label">قیمت خرید (سایت از شما) <span class="wiz-label__required">*</span></label>
+                        <input type="text" id="creditPurchasePrice" class="wiz-input" placeholder="مثال: ۱۵۰,۰۰۰" inputmode="numeric" dir="ltr" value="150,000">
+                        <div class="wiz-hint">💵 مبلغی که سایت به شما پرداخت می‌کند</div>
+                        <div class="wiz-error" id="creditPurchasePriceError">قیمت خرید را وارد کنید</div>
+                    </div>
+                    <div class="wiz-field">
+                        <label class="wiz-label">قیمت فروش (سایت به متقاضی) <span class="wiz-label__required">*</span></label>
+                        <input type="text" id="creditSalePrice" class="wiz-input" placeholder="مثال: ۲۰۰,۰۰۰" inputmode="numeric" dir="ltr" value="200,000">
+                        <div class="wiz-hint">💰 مبلغی که متقاضی پرداخت می‌کند</div>
+                        <div class="wiz-error" id="creditSalePriceError">قیمت فروش را وارد کنید</div>
+                    </div>
+                </div>
+
+                <!-- ========== Live Preview ========== -->
+                <div class="credit-preview" id="creditPreview">
+                    <div class="credit-preview__row">
+                        <span>📋 مبلغ وام:</span>
+                        <span id="previewLoanAmount">— تومان</span>
+                    </div>
+                    <div class="credit-preview__row">
+                        <span>📅 مدت بازپرداخت:</span>
+                        <span id="previewMonths">— ماه</span>
+                    </div>
+                    <div class="credit-preview__row">
+                        <span>💎 نام امتیاز:</span>
+                        <span id="previewCreditName">—</span>
+                    </div>
+                    <div class="credit-preview__row">
+                        <span>🔢 تعداد امتیاز:</span>
+                        <span id="previewCount">— امتیاز</span>
+                    </div>
+                    <div class="credit-preview__row">
+                        <span>💵 قیمت خرید واحد:</span>
+                        <span id="previewPurchaseUnit">— تومان</span>
+                    </div>
+                    <div class="credit-preview__row">
+                        <span>💰 قیمت فروش واحد:</span>
+                        <span id="previewSaleUnit">— تومان</span>
+                    </div>
+                    <div class="credit-preview__row">
+                        <span>🛒 جمع خرید (سهم شما):</span>
+                        <span id="previewPurchaseTotal" style="color:var(--success);">— تومان</span>
+                    </div>
+                    <div class="credit-preview__row">
+                        <span>💵 جمع فروش (پرداخت متقاضی):</span>
+                        <span id="previewSaleTotal" style="color:var(--info);">— تومان</span>
+                    </div>
+                    <div class="credit-preview__row">
+                        <span>✨ سود خالص سایت:</span>
+                        <span id="previewSiteShare" style="color:var(--warning);">— تومان</span>
+                    </div>
+
+                    <div class="credit-preview__highlight">
+                        <div>
+                            <div class="credit-preview__highlight-label">💰 سهم شما از این پرونده</div>
+                        </div>
+                        <div class="credit-preview__highlight-value" id="previewBrokerShare">— تومان</div>
+                    </div>
+                </div>
+
+                <div class="wiz-info-box wiz-info-box--warning" style="margin-top:14px;">
+                    <div class="wiz-info-box__title">
+                        <span>⚖️</span>
+                        <span>تعهدات شما</span>
+                    </div>
+                    <div class="wiz-info-box__desc">
+                        با ارسال این فاکتور، شما تأیید می‌کنید که از قیمت فروش سایت به متقاضی
+                        (<strong>که بیشتر از قیمت خرید است</strong>) آگاه هستید و هیچ‌گونه ادعا،
+                        اعتراض یا مطالبه‌ای نسبت به آن ندارید. این موضوع در قرارداد رسمی
+                        نیز به‌عنوان <strong>«سلب حق اعتراض»</strong> درج خواهد شد.
+                    </div>
+                </div>
+            </div>
+
+            <div class="wiz-actions">
+                <button class="wiz-btn wiz-btn--ghost" data-back="4">→ مرحله قبل</button>
+                <button class="wiz-btn wiz-btn--primary" data-next="5"><span>مرحله امضا ←</span></button>
+            </div>
+        </section>
+
+        <!-- ========== STEP 5: Contract & Signature ========== -->
+        <section class="wiz-step" data-step="5">
+            <h2 class="wiz-card__title">✍️ امضای متقاضی</h2>
+            <p class="wiz-card__desc">
+                خلاصه را برای متقاضی بخوانید و امضای دیجیتال دریافت کنید.
+            </p>
+
+            <div class="wiz-info-box wiz-info-box--warning">
+                <div class="wiz-info-box__title">📋 خلاصه‌ی پرونده</div>
+                <div class="wiz-info-box__desc" id="contractSummary">—</div>
+            </div>
+
+            <div class="wiz-signature-wrap">
+                <div class="wiz-signature-label">
+                    <span>✍️ امضای متقاضی (حضوری روی صفحه‌ی دستگاه)</span>
+                    <span id="signatureStatus" style="color:var(--warning);">امضا نشده</span>
+                </div>
+                <canvas id="signatureCanvas"></canvas>
+                <div class="wiz-signature-actions">
+                    <button type="button" class="clear-btn" id="clearSignature">🗑️ پاک کردن</button>
+                </div>
+            </div>
+
+            <div class="wiz-info-box" style="margin-top:14px;">
+                <div class="wiz-info-box__title">📱 تأیید نهایی با OTP</div>
+                <div class="wiz-info-box__desc">
+                    کد تأیید به شماره‌ی متقاضی (<strong id="otpMobileDisplay">—</strong>) ارسال می‌شود.
+                </div>
+                <div style="text-align:center;margin:14px 0 8px;">
+                    <button class="wiz-btn wiz-btn--gold" id="sendOtpBtn" style="max-width:280px;margin:0 auto;">
+                        📲 ارسال کد به متقاضی
+                    </button>
+                </div>
+                <div id="otpSection" style="display:none;">
+                    <div class="wiz-otp-wrap">
+                        <input type="tel" class="wiz-otp-input" maxlength="1" inputmode="numeric" data-otp-index="0">
+                        <input type="tel" class="wiz-otp-input" maxlength="1" inputmode="numeric" data-otp-index="1">
+                        <input type="tel" class="wiz-otp-input" maxlength="1" inputmode="numeric" data-otp-index="2">
+                        <input type="tel" class="wiz-otp-input" maxlength="1" inputmode="numeric" data-otp-index="3">
+                        <input type="tel" class="wiz-otp-input" maxlength="1" inputmode="numeric" data-otp-index="4">
+                    </div>
+                    <div class="wiz-error" id="otpError" style="text-align:center;">کد وارد شده صحیح نیست</div>
+                    <div style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:6px;">
+                        (کد تست: <strong>12345</strong>)
+                    </div>
+                </div>
+            </div>
+
+            <label class="wiz-checkbox" style="margin-top:14px;">
+                <input type="checkbox" id="agreeTerms">
+                <span class="wiz-checkbox__text">
+                    متقاضی اعلام می‌کند که تمام اطلاعات وارد شده <strong>صحیح و مطابق واقع</strong> است
+                    و <a href="#">قوانین و مقررات</a> وام‌پی را می‌پذیرد.
+                </span>
+            </label>
+            <div class="wiz-error" id="agreeError" style="margin-top:6px;">پذیرش قوانین الزامی است</div>
+
+            <div class="wiz-actions">
+                <button class="wiz-btn wiz-btn--ghost" data-back="4.5">→ مرحله قبل</button>
+                <button class="wiz-btn wiz-btn--gold" id="submitBtn">
+                    <span class="wiz-btn__spinner"></span>
+                    <span>🎉 ارسال به ادمین کارگزار</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ========== STEP 6: Success ========== -->
+        <section class="wiz-step" data-step="6">
+            <div class="wiz-success">
+                <div class="wiz-success__icon">✓</div>
+                <h2 class="wiz-success__title">پرونده ثبت شد!</h2>
+                <p class="wiz-success__desc">
+                    پرونده برای بررسی به ادمین کارگزار ارسال شد. مراحل بعدی:
+                    حسابداری → مدیر کل → حقوقی → امضاها → پرداخت.
+                </p>
+
+                <div class="wiz-alert wiz-alert--info" style="justify-content:center;">
+                    <span>📁</span>
+                    <span>
+                        شماره پرونده:
+                        <strong id="summaryCaseNumber" style="font-family:monospace;letter-spacing:2px;"></strong>
+                    </span>
+                </div>
+
+                <div class="wiz-alert wiz-alert--warning">
+                    <span>⏳</span>
+                    <span>
+                        <strong>مرحله‌ی بعد:</strong> ادمین کارگزار پرونده را بررسی می‌کند
+                        و سپس به حسابداری، مدیر کل و حقوقی ارجاع می‌شود.
+                    </span>
+                </div>
+
+                <div class="wiz-summary">
+                    <div class="wiz-summary__row">
+                        <span>نام متقاضی</span>
+                        <span id="summaryName">—</span>
+                    </div>
+                    <div class="wiz-summary__row">
+                        <span>شماره موبایل</span>
+                        <span id="summaryMobile">—</span>
+                    </div>
+                    <div class="wiz-summary__row">
+                        <span>مبلغ وام</span>
+                        <span id="summaryLoan">—</span>
+                    </div>
+                    <div class="wiz-summary__row">
+                        <span>💎 نام امتیاز</span>
+                        <span id="summaryCreditName">—</span>
+                    </div>
+                    <div class="wiz-summary__row">
+                        <span>💵 جمع خرید (سهم شما)</span>
+                        <span id="summaryPurchase" style="color:var(--success);">—</span>
+                    </div>
+                    <div class="wiz-summary__row">
+                        <span>💰 جمع فروش (پرداخت متقاضی)</span>
+                        <span id="summarySale" style="color:var(--info);">—</span>
+                    </div>
+                    <div class="wiz-summary__row">
+                        <span>✨ سود خالص سایت</span>
+                        <span id="summarySiteProfit" style="color:var(--warning);">—</span>
+                    </div>
+                    <div class="wiz-summary__row">
+                        <span>وضعیت</span>
+                        <span style="color:var(--warning);">⏳ در انتظار ادمین کارگزار</span>
+                    </div>
+                </div>
+
+                <div class="wiz-actions">
+                    <a href="broker-dashboard.html" class="wiz-btn wiz-btn--primary" style="text-align:center;">
+                        <span>🏠 بازگشت به داشبورد</span>
+                    </a>
+                    <button class="wiz-btn wiz-btn--gold" id="newCaseAgainBtn">
+                        <span>➕ ثبت متقاضی جدید</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<div class="wiz-toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<!-- Services -->
+<script src="js/credit-invoice-service.js"></script>
+<script src="js/contract-service.js"></script>
+<script src="js/financial-log-service.js"></script>
+<script src="js/case-state-machine.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    const OTP_CONFIG = { mock: true, mockCode: '12345', length: 5 };
+    const IMAGE_CONFIG = { maxWidth: 800, maxHeight: 1000, quality: 0.7, maxSizeBytes: 3 * 1024 * 1024 };
+
+    const state = {
+        broker: null,
+        caseNumber: '',
+        currentStep: 1,
+        otpCode: '',
+        otpVerified: false,
+        signatureImage: null,
+        documents: { nationalCard: null, birthCert: null, jobDoc: null, selfie: null },
+        creditInvoiceData: null
+    };
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'wiz-toast wiz-toast--show';
+        if (type === 'error') el.classList.add('wiz-toast--error');
+        if (type === 'success') el.classList.add('wiz-toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('wiz-toast--show'), 3200);
+    }
+
+    // ===== Auth =====
+    function checkAuth() {
+        try {
+            const cu = JSON.parse(localStorage.getItem('wamPayCurrentUser') || 'null');
+            if (!cu || cu.role !== 'broker' || cu.status !== 'active') {
+                toast('ابتدا وارد شوید', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            const users = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+            state.broker = users.find(u => u.id === cu.id);
+            if (!state.broker) { window.location.href = 'login.html'; return false; }
+            return true;
+        } catch (e) {
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    // ===== Case Number =====
+    function generateCaseNumber() {
+        const year = new Date().getFullYear();
+        return `CASE-${year}-${Math.floor(100000 + Math.random() * 900000)}`;
+    }
+    function initCaseNumber() {
+        let cn = sessionStorage.getItem('wamPayNewCaseNumber');
+        if (!cn || !/^CASE-\d{4}-\d{6}$/.test(cn)) {
+            cn = generateCaseNumber();
+            sessionStorage.setItem('wamPayNewCaseNumber', cn);
+        }
+        state.caseNumber = cn;
+        $('#caseNumberDisplay').textContent = cn;
+        $('#brokerRefInfo').textContent = `👤 ${state.broker.name} • 📁 ${state.broker.fileNumber || ''}`;
+    }
+
+    // ===== Shamsi =====
+    function initDateDropdowns() {
+        const y = $('#birthYear'), d = $('#birthDay');
+        for (let i = 1385; i >= 1330; i--) {
+            const o = document.createElement('option');
+            o.value = i; o.textContent = faNum(i); y.appendChild(o);
+        }
+        for (let i = 1; i <= 31; i++) {
+            const o = document.createElement('option');
+            o.value = i; o.textContent = faNum(i); d.appendChild(o);
+        }
+    }
+    function getBirthDateString() {
+        const y = $('#birthYear').value, m = $('#birthMonth').value, d = $('#birthDay').value;
+        if (!y || !m || !d) return null;
+        const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+        return `${fa(y)}/${fa(m)}/${fa(d)}`;
+    }
+
+    // ===== Validators =====
+    const isValidMobile = (v) => /^09\d{9}$/.test(v);
+    function isValidNationalId(v) {
+        if (!/^\d{10}$/.test(v)) return false;
+        const c = +v[9]; let s = 0;
+        for (let i = 0; i < 9; i++) s += +v[i] * (10 - i);
+        const r = s % 11;
+        return (r < 2 && c === r) || (r >= 2 && c === 11 - r);
+    }
+    const isValidPostal = (v) => /^\d{10}$/.test(v);
+    const isValidCard = (v) => {
+        const d = v.replace(/\D/g, '');
+        if (!/^\d{16}$/.test(d)) return false;
+        let s = 0, alt = false;
+        for (let i = d.length - 1; i >= 0; i--) {
+            let n = +d[i];
+            if (alt) { n *= 2; if (n > 9) n -= 9; }
+            s += n; alt = !alt;
+        }
+        return s % 10 === 0;
+    };
+    const isValidSheba = (v) => /^\d{24}$/.test(v);
+
+    function showError(id, s = true) { const e = document.getElementById(id); if (e) e.classList.toggle('wiz-error--show', s); }
+    function markErr(id, s = true) { const e = document.getElementById(id); if (e) e.classList.toggle('wiz-input--error', s); }
+
+    // ===== Navigation =====
+    function goToStep(n) {
+        state.currentStep = n;
+        $$('.wiz-step').forEach(s => s.classList.toggle('wiz-step--active', String(s.dataset.step) === String(n)));
+        $$('.wiz-progress__step').forEach(s => {
+            const sn = parseFloat(s.dataset.step);
+            const cur = parseFloat(n);
+            s.classList.toggle('wiz-progress__step--active', sn === cur);
+            s.classList.toggle('wiz-progress__step--done', sn < cur);
+        });
+        $$('.wiz-progress__line').forEach((l, i) => l.classList.toggle('wiz-progress__line--done', i + 1 < n));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== Validations =====
+    function validateStep1() {
+        let ok = true;
+        const f = {
+            firstName: { err: 'firstNameError' },
+            lastName: { err: 'lastNameError' },
+            nationalId: { err: 'nationalIdError', validate: isValidNationalId },
+            mobile: { err: 'mobileError', validate: isValidMobile },
+            address: { err: 'addressError' },
+            postalCode: { err: 'postalCodeError', validate: isValidPostal }
+        };
+        for (const k in f) {
+            const input = document.getElementById(k);
+            const v = input.value.trim();
+            const invalid = !v || (f[k].validate && !f[k].validate(v));
+            markErr(k, invalid); showError(f[k].err, invalid);
+            if (invalid) ok = false;
+        }
+        const bd = getBirthDateString();
+        showError('birthDateError', !bd);
+        if (!bd) ok = false;
+        return ok;
+    }
+
+    function validateStep2() {
+        let ok = true;
+        ['job', 'experience', 'monthlyIncome', 'workPlace', 'workAddress', 'workPostalCode'].forEach(id => {
+            const input = document.getElementById(id);
+            const v = input.value.trim();
+            let invalid = !v;
+            if (id === 'workPostalCode' && v) invalid = !isValidPostal(v);
+            markErr(id, invalid); showError(id + 'Error', invalid);
+            if (invalid) ok = false;
+        });
+        return ok;
+    }
+
+    function validateStep3() {
+        let ok = true;
+        if (!state.documents.nationalCard) { showError('nationalCardError', true); ok = false; } else showError('nationalCardError', false);
+        if (!state.documents.birthCert) { showError('birthCertError', true); ok = false; } else showError('birthCertError', false);
+        if (!state.documents.selfie) { showError('selfieError', true); ok = false; } else showError('selfieError', false);
+        return ok;
+    }
+
+    function validateStep4() {
+        let ok = true;
+        ['loanAmount', 'loanDuration', 'loanType', 'bankName'].forEach(id => {
+            const input = document.getElementById(id);
+            const invalid = !input.value.trim();
+            markErr(id, invalid); showError(id + 'Error', invalid);
+            if (invalid) ok = false;
+        });
+        const card = $('#cardNumber').value.replace(/\D/g, '');
+        const sheba = $('#shebaNumber').value.replace(/\D/g, '');
+        const invalidCard = !isValidCard(card);
+        const invalidSheba = !isValidSheba(sheba);
+        markErr('cardNumber', invalidCard); showError('cardNumberError', invalidCard);
+        markErr('shebaNumber', invalidSheba); showError('shebaNumberError', invalidSheba);
+        if (invalidCard || invalidSheba) ok = false;
+        return ok;
+    }
+
+    // 🆕 Validation for step 4.5 — months 10-36
+    function validateStep4_5() {
+        let ok = true;
+        const loanAmount = parseInt($('#creditLoanAmount').value.replace(/\D/g, '')) || 0;
+        const months = parseInt($('#creditRepaymentMonths').value) || 0;
+        const name = $('#creditName').value.trim();
+        const count = parseInt($('#creditCount').value.replace(/\D/g, '')) || 0;
+        const purchasePrice = parseInt($('#creditPurchasePrice').value.replace(/\D/g, '')) || 0;
+        const salePrice = parseInt($('#creditSalePrice').value.replace(/\D/g, '')) || 0;
+
+        if (loanAmount <= 0) { markErr('creditLoanAmount', true); showError('creditLoanAmountError', true); ok = false; }
+        else { markErr('creditLoanAmount', false); showError('creditLoanAmountError', false); }
+
+        // 🆕 ماه بین ۱۰ تا ۳۶
+        if (!months || months < 10 || months > 36) {
+            markErr('creditRepaymentMonths', true);
+            showError('creditRepaymentMonthsError', true);
+            ok = false;
+        } else {
+            markErr('creditRepaymentMonths', false);
+            showError('creditRepaymentMonthsError', false);
+        }
+
+        if (!name) { markErr('creditName', true); showError('creditNameError', true); ok = false; }
+        else { markErr('creditName', false); showError('creditNameError', false); }
+
+        if (count <= 0) { markErr('creditCount', true); showError('creditCountError', true); ok = false; }
+        else { markErr('creditCount', false); showError('creditCountError', false); }
+
+        if (purchasePrice <= 0) { markErr('creditPurchasePrice', true); showError('creditPurchasePriceError', true); ok = false; }
+        else { markErr('creditPurchasePrice', false); showError('creditPurchasePriceError', false); }
+
+        if (salePrice <= 0 || salePrice <= purchasePrice) {
+            markErr('creditSalePrice', true); showError('creditSalePriceError', true);
+            toast('قیمت فروش باید بیشتر از قیمت خرید باشد', 'error');
+            ok = false;
+        } else { markErr('creditSalePrice', false); showError('creditSalePriceError', false); }
+
+        return ok;
+    }
+
+    function validateStep5() {
+        let ok = true;
+        if (!state.signatureImage) { toast('امضای متقاضی الزامی است', 'error'); ok = false; }
+        if (!state.otpVerified) { toast('تأیید OTP متقاضی الزامی است', 'error'); ok = false; }
+        if (!$('#agreeTerms').checked) { showError('agreeError', true); ok = false; } else showError('agreeError', false);
+        return ok;
+    }
+
+    // ===== Buttons =====
+    $$('[data-next]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const next = btn.dataset.next, cur = state.currentStep;
+            let ok = true;
+            if (cur === 1 || cur === '1') ok = validateStep1();
+            else if (cur === 2 || cur === '2') ok = validateStep2();
+            else if (cur === 3 || cur === '3') ok = validateStep3();
+            else if (cur === 4 || cur === '4') ok = validateStep4();
+            else if (cur === 4.5 || cur === '4.5') ok = validateStep4_5();
+            if (!ok) { toast('لطفاً خطاها را برطرف کنید', 'error'); return; }
+            goToStep(next);
+        });
+    });
+    $$('[data-back]').forEach(btn => btn.addEventListener('click', () => goToStep(btn.dataset.back)));
+
+    // ===== Image Compression =====
+    function compressImage(file, options = {}) {
+        const { maxWidth = IMAGE_CONFIG.maxWidth, maxHeight = IMAGE_CONFIG.maxHeight, quality = IMAGE_CONFIG.quality } = options;
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    let { width, height } = img;
+                    if (width > maxWidth) { height = Math.round((height * maxWidth) / width); width = maxWidth; }
+                    if (height > maxHeight) { width = Math.round((width * maxHeight) / height); height = maxHeight; }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                    const b64 = dataUrl.length - 'data:image/jpeg;base64,'.length;
+                    resolve({ dataUrl, width, height, size: Math.round(b64 * 3 / 4), mime: 'image/jpeg' });
+                };
+                img.onerror = () => reject(new Error('خطا'));
+                img.src = e.target.result;
+            };
+            reader.onerror = () => reject(new Error('خطا'));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    $$('.wiz-upload input[type="file"]').forEach(input => {
+        input.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) { toast('فقط تصویر مجاز است', 'error'); e.target.value = ''; return; }
+            if (file.size > IMAGE_CONFIG.maxSizeBytes) { toast('حجم بیشتر از ۳MB', 'error'); e.target.value = ''; return; }
+            const key = input.dataset.doc;
+            const wrap = input.closest('.wiz-upload');
+            const fileLabel = wrap.querySelector('.wiz-upload__file');
+            const icon = wrap.querySelector('.wiz-upload__icon');
+
+            wrap.classList.add('wiz-upload--compressing');
+            if (icon) icon.textContent = '⏳';
+            if (fileLabel) fileLabel.textContent = 'در حال فشرده‌سازی...';
+
+            try {
+                const c = await compressImage(file);
+                state.documents[key] = {
+                    fileName: file.name, size: c.size, originalSize: file.size,
+                    mime: c.mime, width: c.width, height: c.height,
+                    dataUrl: c.dataUrl, uploadedAt: new Date().toISOString()
+                };
+                wrap.classList.remove('wiz-upload--compressing', 'wiz-upload--required');
+                wrap.classList.add('wiz-upload--has-file');
+
+                wrap.querySelectorAll('.wiz-upload__thumb, .wiz-upload__meta').forEach(el => el.remove());
+                const thumb = document.createElement('img');
+                thumb.className = 'wiz-upload__thumb';
+                thumb.src = c.dataUrl;
+                const meta = document.createElement('div');
+                meta.className = 'wiz-upload__meta';
+                meta.textContent = `${c.width}×${c.height} • ${(c.size/1024).toFixed(0)}KB`;
+                if (icon) icon.style.display = 'none';
+                if (fileLabel) fileLabel.textContent = '✓ ' + file.name;
+                wrap.insertBefore(thumb, fileLabel);
+                wrap.insertBefore(meta, fileLabel.nextSibling);
+
+                const savings = Math.round((1 - c.size / file.size) * 100);
+                toast(`✓ فشرده شد (${savings}٪)`, 'success');
+            } catch (err) {
+                console.error(err);
+                wrap.classList.remove('wiz-upload--compressing');
+                if (icon) icon.textContent = '⚠️';
+                if (fileLabel) fileLabel.textContent = '';
+                toast('خطا در پردازش', 'error');
+                e.target.value = '';
+            }
+        });
+    });
+
+    // ============================================================
+    // Credit Invoice Live Preview
+    // ============================================================
+    function updateCreditPreview() {
+        const loanAmount = parseInt($('#creditLoanAmount').value.replace(/\D/g, '')) || 0;
+        const months = parseInt($('#creditRepaymentMonths').value) || 0;
+        const name = $('#creditName').value || '—';
+        const count = parseInt($('#creditCount').value.replace(/\D/g, '')) || 0;
+        const purchasePrice = parseInt($('#creditPurchasePrice').value.replace(/\D/g, '')) || 0;
+        const salePrice = parseInt($('#creditSalePrice').value.replace(/\D/g, '')) || 0;
+
+        $('#previewLoanAmount').textContent = loanAmount > 0 ? faPrice(loanAmount) + ' تومان' : '— تومان';
+        $('#previewMonths').textContent = months > 0 ? faNum(months) + ' ماه' : '— ماه';
+        $('#previewCreditName').textContent = name;
+        $('#previewCount').textContent = count > 0 ? faNum(count) + ' امتیاز' : '— امتیاز';
+        $('#previewPurchaseUnit').textContent = purchasePrice > 0 ? faPrice(purchasePrice) + ' تومان' : '— تومان';
+        $('#previewSaleUnit').textContent = salePrice > 0 ? faPrice(salePrice) + ' تومان' : '— تومان';
+
+        const purchaseTotal = count * purchasePrice;
+        const saleTotal = count * salePrice;
+        const siteShare = saleTotal - purchaseTotal;
+
+        $('#previewPurchaseTotal').textContent = purchaseTotal > 0 ? faPrice(purchaseTotal) + ' تومان' : '— تومان';
+        $('#previewSaleTotal').textContent = saleTotal > 0 ? faPrice(saleTotal) + ' تومان' : '— تومان';
+        $('#previewSiteShare').textContent = siteShare > 0 ? faPrice(siteShare) + ' تومان' : '— تومان';
+        $('#previewBrokerShare').textContent = purchaseTotal > 0 ? faPrice(purchaseTotal) + ' تومان' : '— تومان';
+
+        if (count > 0 && purchasePrice > 0 && salePrice > 0) {
+            state.creditInvoiceData = {
+                loanAmount, repaymentMonths: months, creditName: name,
+                creditCount: count, purchasePrice, salePrice
+            };
+        }
+    }
+
+    ['creditLoanAmount', 'creditRepaymentMonths', 'creditName', 'creditCount', 'creditPurchasePrice', 'creditSalePrice']
+        .forEach(id => {
+            document.getElementById(id)?.addEventListener('input', updateCreditPreview);
+            document.getElementById(id)?.addEventListener('change', updateCreditPreview);
+        });
+
+    // فرمت‌دهی خودکار
+    $('#creditLoanAmount').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 12);
+        if (v) e.target.value = Number(v).toLocaleString('en-US');
+    });
+    $('#creditPurchasePrice').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 8);
+        if (v) e.target.value = Number(v).toLocaleString('en-US');
+    });
+    $('#creditSalePrice').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 8);
+        if (v) e.target.value = Number(v).toLocaleString('en-US');
+    });
+    $('#creditCount').addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
+    });
+    // 🆕 محدود کردن input ماه به ۱۰-۳۶
+    $('#creditRepaymentMonths').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 2);
+        if (v) {
+            const n = parseInt(v, 10);
+            if (n > 36) v = '36';
+        }
+        e.target.value = v;
+    });
+    $('#creditRepaymentMonths').addEventListener('blur', (e) => {
+        const n = parseInt(e.target.value, 10);
+        if (!isNaN(n)) {
+            if (n < 10) e.target.value = '10';
+            else if (n > 36) e.target.value = '36';
+        }
+    });
+
+    // ===== Signature =====
+    let canvasCtx, isDrawing = false, lastPoint = null, pointCount = 0;
+    function initSignature() {
+        const canvas = $('#signatureCanvas');
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        canvasCtx = canvas.getContext('2d');
+        canvasCtx.strokeStyle = '#0b3b23';
+        canvasCtx.lineWidth = 2.5;
+        canvasCtx.lineCap = 'round';
+        canvasCtx.lineJoin = 'round';
+
+        function getPos(e) {
+            const r = canvas.getBoundingClientRect();
+            const p = e.touches ? e.touches[0] : e;
+            return { x: p.clientX - r.left, y: p.clientY - r.top };
+        }
+        function start(e) {
+            e.preventDefault(); isDrawing = true;
+            lastPoint = getPos(e); pointCount++;
+            canvasCtx.beginPath();
+            canvasCtx.arc(lastPoint.x, lastPoint.y, 1.25, 0, Math.PI * 2);
+            canvasCtx.fillStyle = '#0b3b23';
+            canvasCtx.fill();
+        }
+        function move(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            const p = getPos(e);
+            canvasCtx.beginPath();
+            canvasCtx.moveTo(lastPoint.x, lastPoint.y);
+            canvasCtx.lineTo(p.x, p.y);
+            canvasCtx.stroke();
+            lastPoint = p;
+            pointCount++;
+            if (pointCount > 5 && !state.signatureImage) {
+                $('#signatureStatus').textContent = '✅ در حال امضا';
+                $('#signatureStatus').style.color = 'var(--success)';
+            }
+        }
+        function end() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            if (pointCount >= 15) {
+                state.signatureImage = canvas.toDataURL('image/png');
+                $('#signatureStatus').textContent = '✅ امضا ثبت شد';
+                $('#signatureStatus').style.color = 'var(--success)';
+            } else if (pointCount > 0) {
+                $('#signatureStatus').textContent = '⚠️ امضا ناقص';
+                $('#signatureStatus').style.color = 'var(--warning)';
+                state.signatureImage = null;
+            }
+        }
+
+        canvas.addEventListener('mousedown', start);
+        canvas.addEventListener('mousemove', move);
+        canvas.addEventListener('mouseup', end);
+        canvas.addEventListener('mouseleave', end);
+        canvas.addEventListener('touchstart', start, { passive: false });
+        canvas.addEventListener('touchmove', move, { passive: false });
+        canvas.addEventListener('touchend', end);
+    }
+
+    $('#clearSignature').addEventListener('click', () => {
+        const c = $('#signatureCanvas');
+        canvasCtx.clearRect(0, 0, c.width, c.height);
+        state.signatureImage = null;
+        pointCount = 0;
+        $('#signatureStatus').textContent = 'امضا نشده';
+        $('#signatureStatus').style.color = 'var(--warning)';
+    });
+
+    // ===== OTP =====
+    function generateOtp() {
+        if (OTP_CONFIG.mock) {
+            console.log(`🧪 [MOCK OTP] کد به ${$('#mobile').value} → ${OTP_CONFIG.mockCode}`);
+            return OTP_CONFIG.mockCode;
+        }
+        return Math.floor(Math.random() * 90000 + 10000).toString();
+    }
+    function getOtpValue() {
+        return Array.from($$('.wiz-otp-input')).map(i => i.value).join('');
+    }
+    function resetOtpInputs() {
+        $$('.wiz-otp-input').forEach(i => i.value = '');
+        $$('.wiz-otp-input')[0].focus();
+    }
+
+    $$('.wiz-otp-input').forEach((input, idx, all) => {
+        input.addEventListener('input', (e) => {
+            const v = e.target.value.replace(/\D/g, '');
+            e.target.value = v.slice(-1);
+            if (v && idx < all.length - 1) all[idx + 1].focus();
+            if (getOtpValue().length === 5) setTimeout(verifyOtp, 200);
+        });
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !e.target.value && idx > 0) all[idx - 1].focus();
+        });
+        input.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const p = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 5);
+            if (p.length === 5) {
+                p.split('').forEach((ch, i) => all[i].value = ch);
+                all[4].focus();
+                setTimeout(verifyOtp, 200);
+            }
+        });
+    });
+
+    $('#sendOtpBtn').addEventListener('click', () => {
+        const mobile = $('#mobile').value.trim();
+        if (!isValidMobile(mobile)) { toast('ابتدا شماره موبایل معتبر وارد کنید', 'error'); return; }
+        state.otpCode = generateOtp();
+        $('#otpMobileDisplay').textContent = mobile;
+        $('#otpSection').style.display = 'block';
+        resetOtpInputs();
+        toast('کد ارسال شد (تست: 12345)', 'success');
+    });
+
+    function verifyOtp() {
+        const entered = getOtpValue();
+        showError('otpError', false);
+        if (entered.length !== 5) { showError('otpError', true); return; }
+        if (entered !== state.otpCode) {
+            showError('otpError', true);
+            toast('کد صحیح نیست', 'error');
+            resetOtpInputs();
+            return;
+        }
+        state.otpVerified = true;
+        toast('✅ OTP تأیید شد', 'success');
+        $$('.wiz-otp-input').forEach(i => { i.disabled = true; i.style.background = 'rgba(30,142,74,0.1)'; });
+        $('#sendOtpBtn').disabled = true;
+        $('#sendOtpBtn').textContent = '✅ تأیید شد';
+        $('#sendOtpBtn').style.background = 'var(--success)';
+    }
+
+    // ===== Contract Summary Update =====
+    function updateContractSummary() {
+        const name = ($('#firstName').value + ' ' + $('#lastName').value).trim() || '—';
+        const nid = $('#nationalId').value || '—';
+        const c = state.creditInvoiceData;
+        if (!c) {
+            $('#contractSummary').textContent = 'لطفاً ابتدا فاکتور امتیاز را تکمیل کنید.';
+            return;
+        }
+        const purchaseTotal = c.creditCount * c.purchasePrice;
+        const saleTotal = c.creditCount * c.salePrice;
+        $('#contractSummary').innerHTML = `
+            👤 متقاضی: <strong>${name}</strong> — کد ملی: <strong>${nid}</strong><br>
+            💎 نام امتیاز: <strong>${c.creditName}</strong><br>
+            🔢 تعداد: <strong>${faNum(c.creditCount)} امتیاز</strong><br>
+            💵 جمع خرید: <strong>${faPrice(purchaseTotal)} تومان</strong><br>
+            💰 جمع فروش: <strong>${faPrice(saleTotal)} تومان</strong>
+        `;
+    }
+    $$('[data-next="5"]').forEach(b => b.addEventListener('click', () => setTimeout(updateContractSummary, 100)));
+
+    // ============================================================
+    // 🆕 Submit — با افزودن خودکار متقاضی به wamPayUsers
+    // ============================================================
+    $('#submitBtn').addEventListener('click', () => {
+        if (!validateStep5()) { toast('خطاها را برطرف کنید', 'error'); return; }
+
+        const btn = $('#submitBtn');
+        btn.classList.add('wiz-btn--loading'); btn.disabled = true;
+
+        const birthDate = getBirthDateString();
+        const c = state.creditInvoiceData;
+        const cardDigits = $('#cardNumber').value.replace(/\D/g, '');
+        const shebaDigits = $('#shebaNumber').value.replace(/\D/g, '');
+        const cardFormatted = cardDigits.replace(/(\d{4})(?=\d)/g, '$1-');
+        const purchaseTotal = c.creditCount * c.purchasePrice;
+        const saleTotal = c.creditCount * c.salePrice;
+        const siteShare = saleTotal - purchaseTotal;
+
+        const caseData = {
+            id: 'app_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+            caseNumber: state.caseNumber,
+            source: 'broker_referral',
+            brokerId: state.broker.id,
+            brokerFileNumber: state.broker.fileNumber,
+            brokerName: state.broker.name,
+
+            applicantData: {
+                firstName: $('#firstName').value.trim(),
+                lastName: $('#lastName').value.trim(),
+                name: ($('#firstName').value + ' ' + $('#lastName').value).trim(),
+                nationalId: $('#nationalId').value.trim(),
+                birthDate: birthDate,
+                birthDateISO: {
+                    year: +$('#birthYear').value,
+                    month: +$('#birthMonth').value,
+                    day: +$('#birthDay').value
+                },
+                mobile: $('#mobile').value.trim(),
+                email: $('#email').value.trim(),
+                address: $('#address').value.trim(),
+                postalCode: $('#postalCode').value.trim()
+            },
+            employmentData: {
+                job: $('#job').value,
+                experience: +$('#experience').value || 0,
+                monthlyIncome: parseInt($('#monthlyIncome').value.replace(/\D/g, '')) || 0,
+                workPlace: $('#workPlace').value.trim(),
+                workAddress: $('#workAddress').value.trim(),
+                workPostalCode: $('#workPostalCode').value.trim()
+            },
+            loanData: {
+                loanAmount: parseInt($('#loanAmount').value.replace(/\D/g, '')) || 0,
+                loanDuration: +$('#loanDuration').value || 0,
+                loanType: $('#loanType').value
+            },
+            bankInfo: {
+                bankName: $('#bankName').value,
+                accountNumber: $('#accountNumber').value.replace(/\D/g, ''),
+                cardNumber: cardDigits,
+                cardNumberFormatted: cardFormatted,
+                shebaNumber: shebaDigits,
+                shebaFull: 'IR' + shebaDigits
+            },
+            documents: {
+                nationalCard: state.documents.nationalCard,
+                birthCert: state.documents.birthCert,
+                jobDoc: state.documents.jobDoc,
+                selfie: state.documents.selfie
+            },
+            signature: {
+                image: state.signatureImage,
+                signedAt: new Date().toISOString(),
+                otpVerified: true,
+                otpVerifiedAt: new Date().toISOString()
+            },
+            status: 'awaiting_broker_admin_review',
+            createdBy: {
+                role: 'broker',
+                userId: state.broker.id,
+                userName: state.broker.name,
+                createdAt: new Date().toISOString()
+            },
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+
+        setTimeout(() => {
+            try {
+                // ۱. ذخیره‌ی پرونده
+                const apps = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+                apps.push(caseData);
+                localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+
+                // ۲. ساخت فاکتور امتیاز
+                let invoiceResult = null;
+                if (window.WamPayCreditInvoice) {
+                    invoiceResult = WamPayCreditInvoice.createInvoice({
+                        loanAmount: c.loanAmount,
+                        repaymentMonths: c.repaymentMonths,
+                        creditName: c.creditName,
+                        creditCount: c.creditCount,
+                        purchasePrice: c.purchasePrice,
+                        salePrice: c.salePrice
+                    }, {
+                        caseId: caseData.id,
+                        caseNumber: caseData.caseNumber,
+                        brokerId: caseData.brokerId,
+                        brokerName: caseData.brokerName
+                    });
+
+                    if (invoiceResult.ok) {
+                        caseData.creditInvoice = invoiceResult.invoice;
+                        const idx = apps.findIndex(a => a.id === caseData.id);
+                        if (idx >= 0) {
+                            apps[idx] = caseData;
+                            localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+                        }
+                    }
+                }
+
+                // ۳. افزودن به صف ادمین کارگزار
+                const queue = JSON.parse(localStorage.getItem('wamPayBrokerAdminQueue') || '[]');
+                queue.push({
+                    caseId: caseData.id,
+                    caseNumber: caseData.caseNumber,
+                    brokerId: caseData.brokerId,
+                    brokerName: caseData.brokerName,
+                    applicantName: caseData.applicantData.name,
+                    loanAmount: c.loanAmount,
+                    creditInfo: {
+                        name: c.creditName,
+                        count: c.creditCount,
+                        purchaseTotal,
+                        saleTotal,
+                        siteShare
+                    },
+                    invoiceId: invoiceResult?.invoice?.id || null,
+                    invoiceNumber: invoiceResult?.invoice?.invoiceNumber || null,
+                    status: 'pending',
+                    submittedAt: caseData.createdAt
+                });
+                localStorage.setItem('wamPayBrokerAdminQueue', JSON.stringify(queue));
+
+                // ۳.۵. 🆕 افزودن خودکار متقاضی به wamPayUsers
+                try {
+                    const users = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+                    const applicantMobile = caseData.applicantData.mobile;
+                    const existingIdx = users.findIndex(u => u.mobile === applicantMobile && u.role === 'applicant');
+
+                    if (existingIdx === -1) {
+                        // کاربر جدید
+                        users.push({
+                            id: 'applicant_' + caseData.id,
+                            mobile: applicantMobile,
+                            name: caseData.applicantData.name,
+                            firstName: caseData.applicantData.firstName,
+                            lastName: caseData.applicantData.lastName,
+                            nationalId: caseData.applicantData.nationalId,
+                            role: 'applicant',
+                            status: 'active',
+                            source: 'broker_referral',
+                            brokerId: caseData.brokerId,
+                            brokerName: caseData.brokerName,
+                            linkedCaseId: caseData.id,
+                            caseNumber: caseData.caseNumber,
+                            password: null,
+                            mustChangePassword: false,
+                            createdAt: new Date().toISOString(),
+                            updatedAt: new Date().toISOString(),
+                            lastLoginAt: null,
+                            autoCreated: true,
+                            fromBrokerCase: true
+                        });
+                        localStorage.setItem('wamPayUsers', JSON.stringify(users));
+                        console.log('✅ [Auto] متقاضی به wamPayUsers اضافه شد:', {
+                            name: caseData.applicantData.name,
+                            mobile: applicantMobile,
+                            caseNumber: caseData.caseNumber
+                        });
+                    } else {
+                        // کاربر قبلاً هست — اطلاعات پرونده رو به‌روز کن
+                        users[existingIdx] = {
+                            ...users[existingIdx],
+                            linkedCaseId: caseData.id,
+                            caseNumber: caseData.caseNumber,
+                            brokerId: caseData.brokerId,
+                            brokerName: caseData.brokerName,
+                            source: 'broker_referral',
+                            updatedAt: new Date().toISOString()
+                        };
+                        localStorage.setItem('wamPayUsers', JSON.stringify(users));
+                        console.log('ℹ️ [Auto] متقاضی قبلاً ثبت شده بود — اطلاعات پرونده به‌روزرسانی شد');
+                    }
+                } catch (e) {
+                    console.warn('⚠️ [Auto] خطا در افزودن متقاضی:', e.message);
+                }
+
+                // ۴. لاگ مالی
+                if (window.WamPayFinancialLog) {
+                    WamPayFinancialLog.logEvent(
+                        'invoice_created',
+                        { caseNumber: caseData.caseNumber, creditName: c.creditName },
+                        {
+                            caseId: caseData.id,
+                            caseNumber: caseData.caseNumber,
+                            invoiceId: invoiceResult?.invoice?.id,
+                            invoiceNumber: invoiceResult?.invoice?.invoiceNumber,
+                            brokerId: caseData.brokerId,
+                            title: `ثبت فاکتور امتیاز ${c.creditName} — ${caseData.caseNumber}`,
+                            description: `${c.creditCount} امتیاز — خرید: ${faPrice(purchaseTotal)} | فروش: ${faPrice(saleTotal)} | سود سایت: ${faPrice(siteShare)}`,
+                            amount: saleTotal,
+                            siteShare,
+                            brokerShare: purchaseTotal,
+                            loanAmount: c.loanAmount,
+                            important: true
+                        }
+                    );
+                }
+
+                // ۵. خلاصه
+                $('#summaryCaseNumber').textContent = state.caseNumber;
+                $('#summaryName').textContent = caseData.applicantData.name;
+                $('#summaryMobile').textContent = caseData.applicantData.mobile;
+                $('#summaryLoan').textContent = faPrice(c.loanAmount) + ' تومان';
+                $('#summaryCreditName').textContent = c.creditName + ' (' + faNum(c.creditCount) + ' امتیاز)';
+                $('#summaryPurchase').textContent = faPrice(purchaseTotal) + ' تومان';
+                $('#summarySale').textContent = faPrice(saleTotal) + ' تومان';
+                $('#summarySiteProfit').textContent = faPrice(siteShare) + ' تومان';
+
+                console.log('✅ [New Case] پرونده ثبت شد:', caseData);
+                console.log('💎 فاکتور:', invoiceResult?.invoice?.invoiceNumber);
+                console.log('💰 سهم کارگزار:', purchaseTotal);
+                console.log('✨ سود سایت:', siteShare);
+
+                sessionStorage.removeItem('wamPayNewCaseNumber');
+                btn.classList.remove('wiz-btn--loading');
+                goToStep(6);
+                toast('پرونده با موفقیت ثبت شد', 'success');
+            } catch (err) {
+                console.error('❌ خطا:', err);
+                btn.classList.remove('wiz-btn--loading'); btn.disabled = false;
+                toast('خطا در ثبت پرونده', 'error');
+            }
+        }, 1200);
+    });
+
+    $('#newCaseAgainBtn').addEventListener('click', () => {
+        if (!confirm('ثبت متقاضی جدید؟ اطلاعات فرم پاک می‌شود.')) return;
+        window.location.reload();
+    });
+
+    // ===== Theme =====
+    (function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light'); btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark'); btn.textContent = '☀️';
+            }
+        });
+    })();
+
+    // ===== Input formatting =====
+    $('#mobile').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11));
+    $('#nationalId').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10));
+    $('#postalCode').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10));
+    $('#workPostalCode').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10));
+    $('#monthlyIncome').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 12);
+        if (v) e.target.value = Number(v).toLocaleString('en-US');
+    });
+    $('#loanAmount').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 12);
+        if (v) e.target.value = Number(v).toLocaleString('en-US');
+    });
+    $('#cardNumber').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+        v = v.replace(/(\d{4})(?=\d)/g, '$1-');
+        e.target.value = v;
+    });
+    $('#accountNumber').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 18));
+    $('#shebaNumber').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 24));
+
+    // ===== Init =====
+    function init() {
+        if (!checkAuth()) return;
+        initCaseNumber();
+        initDateDropdowns();
+        initSignature();
+
+        console.log('%c🚀 WAM PAY — Broker New Case Wizard v2.1', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+        console.log('%c💎 مدل امتیاز | 🛒 خرید/فروش | ✨ سود از اختلاف', 'color:#8e44ad;font-weight:bold;');
+        console.log('%c🧪 Mock OTP: 12345', 'color:#d4a62a;font-weight:bold;');
+        console.log('%c🆕 v2.1: مدت بازپرداخت دستی (۱۰-۳۶) + ترتیب بانکها + افزودن خودکار متقاضی', 'color:#1e8e4a;font-weight:bold;');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وام پی — سامانه مشاوره و راهنمایی دریافت وام</title>
+<meta name="description" content="وام پی سامانه مشاوره و راهنمایی دریافت وام.">
+<link rel="icon" type="image/png" href="images/hero.png">
+<link rel="stylesheet" href="css/fonts/Vazirmatn-font-face.css">
+<link rel="stylesheet" href="css/logo-animation.css">
+<style>
+:root{--green-dark:#0b3b23;--green:#1e8e4a;--gold:#d4a62a;--gold-light:#f0c453;--black:#0d1a12;--cream:#fdf8f2;--white:#fff;--text:#2a1e0f;--text-muted:#8a7863;--border:#f0e0cc;--shadow-sm:0 2px 8px rgba(11,59,35,.08);--shadow-lg:0 12px 32px rgba(11,59,35,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Vazirmatn',Tahoma,sans-serif;background:var(--cream);color:var(--text);direction:rtl;line-height:1.7;overflow-x:hidden}
+.header{position:fixed;top:0;right:0;left:0;z-index:1000;background:rgba(11,59,35,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,166,42,.2)}
+.header__inner{max-width:1300px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.header__brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+.header__logo{width:42px;height:42px;object-fit:contain;border-radius:8px}
+.header__brand-text h1{font-size:1.15rem;font-weight:800;color:var(--gold);line-height:1.2}
+.header__brand-text p{font-size:.7rem;color:rgba(255,255,255,.65);margin-top:2px}
+.header__nav{display:flex;align-items:center;gap:8px}
+.header__nav a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.85rem;font-weight:500;padding:8px 14px;border-radius:8px;transition:all .2s}
+.header__nav a:hover{background:rgba(212,166,42,.15);color:var(--gold)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;font-family:inherit;font-size:.85rem;font-weight:700;text-decoration:none;cursor:pointer;border:none;transition:all .2s;white-space:nowrap}
+.btn--primary{background:linear-gradient(135deg,var(--gold),#b88a1e);color:var(--black);box-shadow:0 4px 12px rgba(212,166,42,.35)}
+.btn--gold{background:var(--gold);color:var(--black);padding:8px 16px;font-size:.82rem}
+.btn--outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+.btn--lg{padding:16px 32px;font-size:1rem;border-radius:12px}
+.hero{position:relative;min-height:100vh;padding:100px 24px 60px;display:flex;align-items:center;background:var(--black);overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:url('images/hero.png');background-size:cover;background-position:center;opacity:.35;z-index:0}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,transparent 0%,var(--black) 100%);z-index:1}
+.hero__inner{position:relative;z-index:2;max-width:1300px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero__content{color:#fff;text-align:right}
+.hero__badge{display:inline-flex;align-items:center;gap:6px;background:rgba(212,166,42,.15);border:1px solid rgba(212,166,42,.4);color:var(--gold);padding:8px 16px;border-radius:50px;font-size:.82rem;font-weight:600;margin-bottom:20px}
+.hero__title{font-size:3rem;font-weight:900;line-height:1.25;margin-bottom:16px}
+.hero__title span{color:var(--gold);display:inline-block}
+.hero__subtitle{font-size:1.15rem;line-height:1.9;color:rgba(255,255,255,.78);margin-bottom:28px;max-width:520px}
+.hero__cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px}
+.hero__notice{background:rgba(212,166,42,.08);border:1px solid rgba(212,166,42,.25);border-right:4px solid var(--gold);padding:16px 20px;border-radius:12px;max-width:520px}
+.hero__notice p{font-size:.82rem;line-height:1.9;color:rgba(255,255,255,.85);margin:4px 0}
+.hero__notice p strong{color:var(--gold)}
+.hero__logo{display:flex;justify-content:center;align-items:center}
+.features{padding:80px 24px;background:var(--white)}
+.container{max-width:1300px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:56px}
+.section-header h2{font-size:2.2rem;font-weight:800;color:var(--green-dark);margin-bottom:12px}
+.section-header p{font-size:1rem;color:var(--text-muted);max-width:600px;margin:0 auto}
+.features__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.feature{background:var(--cream);border:1.5px solid var(--border);border-radius:20px;padding:32px 24px;text-align:center;transition:all .3s}
+.feature:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--gold)}
+.feature__icon{font-size:2.8rem;margin-bottom:16px;display:block}
+.feature__title{font-size:1.1rem;font-weight:700;color:var(--green-dark);margin-bottom:8px}
+.feature__desc{font-size:.85rem;color:var(--text-muted);line-height:1.8}
+.services{padding:80px 24px;background:var(--cream)}
+.services__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px}
+.service{background:var(--white);border-radius:20px;padding:28px 20px;text-align:center;box-shadow:var(--shadow-sm);border:1.5px solid var(--border);transition:all .3s}
+.service:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--gold)}
+.service__icon{font-size:2.4rem;margin-bottom:12px;display:block}
+.service__title{font-size:1rem;font-weight:700;color:var(--green-dark);margin-bottom:6px}
+.service__sub{font-size:.78rem;color:var(--text-muted)}
+.how{padding:80px 24px;background:var(--green-dark);color:#fff}
+.how .section-header h2{color:#fff}
+.how .section-header p{color:rgba(255,255,255,.7)}
+.how__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.step{background:rgba(255,255,255,.05);border:1px solid rgba(212,166,42,.2);border-radius:20px;padding:28px 24px;transition:all .3s}
+.step:hover{background:rgba(212,166,42,.08);border-color:var(--gold);transform:translateY(-4px)}
+.step__num{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:linear-gradient(135deg,var(--gold),#b88a1e);color:var(--black);border-radius:12px;font-size:1.3rem;font-weight:900;margin-bottom:16px}
+.step__title{font-size:1.05rem;font-weight:700;margin-bottom:6px;color:var(--gold)}
+.step__desc{font-size:.85rem;color:rgba(255,255,255,.75);line-height:1.8}
+.legal{padding:60px 24px;background:#fef9e8;border-top:3px solid var(--gold);border-bottom:3px solid var(--gold)}
+.legal__inner{max-width:900px;margin:0 auto;text-align:center}
+.legal__icon{font-size:2.5rem;margin-bottom:12px}
+.legal h3{font-size:1.3rem;font-weight:800;color:#8a6a08;margin-bottom:16px}
+.legal p{font-size:.92rem;line-height:2;color:var(--text);margin:10px 0}
+.legal p strong{color:#c0392b}
+.stats{padding:60px 24px;background:var(--white)}
+.stats__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;text-align:center}
+.stat__num{font-size:2.8rem;font-weight:900;color:var(--green-dark);line-height:1;margin-bottom:8px}
+.stat__num span{color:var(--gold)}
+.stat__label{font-size:.88rem;color:var(--text-muted);font-weight:600}
+.cta{padding:80px 24px;background:linear-gradient(135deg,var(--green-dark),var(--black));color:#fff;text-align:center}
+.cta__inner{max-width:700px;margin:0 auto}
+.cta h2{font-size:2.2rem;font-weight:900;margin-bottom:16px}
+.cta h2 span{color:var(--gold)}
+.cta p{font-size:1.05rem;color:rgba(255,255,255,.75);margin-bottom:32px}
+.footer{background:var(--black);color:rgba(255,255,255,.75);padding:60px 24px 24px}
+.footer__inner{max-width:1300px;margin:0 auto}
+.footer__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:40px;margin-bottom:40px}
+.footer__brand img{width:60px;height:60px;object-fit:contain;margin-bottom:16px;border-radius:12px}
+.footer__brand h3{font-size:1.2rem;font-weight:800;color:var(--gold);margin-bottom:8px}
+.footer__brand p{font-size:.82rem;line-height:1.8;color:rgba(255,255,255,.6)}
+.footer__col h4{font-size:.92rem;font-weight:700;color:var(--gold);margin-bottom:16px}
+.footer__col a{display:block;color:rgba(255,255,255,.65);text-decoration:none;font-size:.85rem;padding:6px 0;transition:all .2s}
+.footer__col a:hover{color:var(--gold);padding-right:6px}
+.footer__contact p{font-size:.85rem;color:rgba(255,255,255,.65);margin:6px 0}
+.footer__legal{background:rgba(212,166,42,.08);border:1px solid rgba(212,166,42,.2);border-radius:12px;padding:20px 24px;margin-bottom:24px;font-size:.8rem;line-height:1.9;color:rgba(255,255,255,.7)}
+.footer__legal strong{color:var(--gold);display:block;margin-bottom:8px}
+.footer__copy{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;text-align:center;font-size:.78rem;color:rgba(255,255,255,.5)}
+@media(max-width:900px){.hero__inner{grid-template-columns:1fr;gap:40px}.hero__logo{order:-1}.hero__title{font-size:2rem}.header__nav a:not(.btn){display:none}.footer__grid{grid-template-columns:1fr;gap:24px}.section-header h2{font-size:1.6rem}.cta h2{font-size:1.6rem}.stat__num{font-size:2rem}}
+@media(max-width:500px){.hero__title{font-size:1.6rem}.hero__cta{flex-direction:column}.hero__cta .btn{width:100%;justify-content:center}.header__inner{padding:10px 16px}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header__inner">
+    <a href="index.html" class="header__brand">
+      <img src="images/hero.png" alt="وام پی" class="header__logo">
+      <div class="header__brand-text">
+        <h1>وام پی</h1>
+        <p>وام | سرمایه‌گذاری | رشد مالی</p>
+      </div>
+    </a>
+    <nav class="header__nav">
+      <a href="#services">خدمات</a>
+      <a href="#how">چطور کار می‌کنه</a>
+      <a href="login.html" class="btn btn--outline">ورود</a>
+      <a href="login.html" class="btn btn--gold">ثبت‌نام</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <div class="hero__badge">⚖️ سامانه رسمی مشاوره دریافت وام</div>
+      <h1 class="hero__title">مسیر هوشمند تا <span>وام دلخواه</span> شما</h1>
+      <p class="hero__subtitle">با مشاوره تخصصی وام پی، در کوتاه‌ترین زمان وام خود را از بانک دریافت کنید. ما در تمام مراحل همراه شما هستیم.</p>
+      <div class="hero__cta">
+        <a href="login.html" class="btn btn--primary btn--lg">🚀 دریافت مشاوره</a>
+        <a href="#services" class="btn btn--outline btn--lg">📋 مشاهده خدمات</a>
+      </div>
+      <div class="hero__notice">
+        <p><strong>⚖️ توجه:</strong> وام پی یک سامانه مشاوره‌ای است</p>
+        <p><strong>🚫</strong> ما وام نمی‌فروشیم، واسطه نمی‌شیم، پیش‌پرداخت نمی‌گیریم</p>
+        <p><strong>✅</strong> شما با مشاوره ما، وام خود را مستقیماً از بانک دریافت می‌کنید</p>
+      </div>
+    </div>
+    <div class="hero__logo">
+      <div id="wamLogoSvg" class="wam-logo-svg">
+        <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="wamGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f0c453"/>
+              <stop offset="50%" stop-color="#d4a62a"/>
+              <stop offset="100%" stop-color="#b88a1e"/>
+            </linearGradient>
+            <linearGradient id="wamGreenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#2d9961"/>
+              <stop offset="100%" stop-color="#0b3b23"/>
+            </linearGradient>
+          </defs>
+          <g class="frame-1"><path class="logo-stroke" stroke-width="14" d="M 60 250 Q 160 320 260 250 Q 200 290 160 285 Q 120 280 60 250 Z"/></g>
+          <g class="frame-2"><circle class="logo-stroke" cx="160" cy="140" r="120" stroke-width="14"/></g>
+          <g class="frame-3">
+            <path class="letter" fill="none" stroke="url(#wamGreenGrad)" stroke-width="16" d="M 70 80 L 95 180 L 120 110 L 145 180 L 170 80"/>
+            <path class="letter" fill="none" stroke="url(#wamGreenGrad)" stroke-width="16" d="M 195 80 L 195 180 M 195 80 Q 240 80 240 120 Q 240 160 195 160"/>
+            <path class="letter" fill="none" stroke="url(#wamGoldGrad)" stroke-width="16" d="M 230 160 L 245 105 M 245 105 L 220 115 M 245 105 L 250 130" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect class="bar bar-1" x="130" y="200" width="14" height="30" rx="3" fill="url(#wamGoldGrad)"/>
+            <rect class="bar bar-2" x="150" y="190" width="14" height="40" rx="3" fill="url(#wamGoldGrad)"/>
+            <rect class="bar bar-3" x="170" y="175" width="14" height="55" rx="3" fill="url(#wamGoldGrad)"/>
+          </g>
+          <g class="frame-4">
+            <circle cx="160" cy="140" r="130" fill="url(#wamGoldGrad)" opacity="0.15"/>
+            <circle cx="160" cy="140" r="145" fill="url(#wamGoldGrad)" opacity="0.08"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>چرا وام پی؟</h2>
+      <p>با ویژگی‌های منحصربه‌فرد ما، مسیر دریافت وام ساده‌تر از همیشه است</p>
+    </div>
+    <div class="features__grid">
+      <div class="feature"><span class="feature__icon">🛡️</span><h3 class="feature__title">امن و مطمئن</h3><p class="feature__desc">اطلاعات شما نزد ما کاملاً محفوظ است.</p></div>
+      <div class="feature"><span class="feature__icon">💰</span><h3 class="feature__title">مشاوره هوشمند</h3><p class="feature__desc">کارشناسان متخصص ما بهترین مسیر را انتخاب می‌کنند.</p></div>
+      <div class="feature"><span class="feature__icon">📈</span><h3 class="feature__title">رشد و پیشرفت</h3><p class="feature__desc">مسیر ساده و شفاف برای دریافت وام.</p></div>
+      <div class="feature"><span class="feature__icon">🤝</span><h3 class="feature__title">همراه شما</h3><p class="feature__desc">از لحظه ثبت‌نام تا واریز وام کنارتان هستیم.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-header">
+      <h2>خدمات وام پی</h2>
+      <p>مشاوره و راهنمایی دریافت ۶ نوع وام مختلف</p>
+    </div>
+    <div class="services__grid">
+      <div class="service"><span class="service__icon">🏠</span><h3 class="service__title">وام مسکن</h3><p class="service__sub">راهنمای دریافت وام مسکن</p></div>
+      <div class="service"><span class="service__icon">💍</span><h3 class="service__title">وام ازدواج</h3><p class="service__sub">راهنمای دریافت وام ازدواج</p></div>
+      <div class="service"><span class="service__icon">📚</span><h3 class="service__title">وام قرض‌الحسنه</h3><p class="service__sub">راهنمای دریافت قرض‌الحسنه</p></div>
+      <div class="service"><span class="service__icon">🎓</span><h3 class="service__title">وام دانشجویی</h3><p class="service__sub">راهنمای دریافت وام دانشجویی</p></div>
+      <div class="service"><span class="service__icon">🚗</span><h3 class="service__title">وام خودرو</h3><p class="service__sub">راهنمای دریافت وام خودرو</p></div>
+      <div class="service"><span class="service__icon">📦</span><h3 class="service__title">وام کالا</h3><p class="service__sub">راهنمای دریافت وام کالا</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-header">
+      <h2>چطور کار می‌کنه؟</h2>
+      <p>در ۶ مرحله ساده، وام خود را دریافت کنید</p>
+    </div>
+    <div class="how__grid">
+      <div class="step"><div class="step__num">۱</div><h3 class="step__title">ثبت‌نام</h3><p class="step__desc">فقط با شماره موبایل ثبت‌نام کنید.</p></div>
+      <div class="step"><div class="step__num">۲</div><h3 class="step__title">مشاوره تخصصی</h3><p class="step__desc">کارشناسان ما نیاز شما را بررسی می‌کنند.</p></div>
+      <div class="step"><div class="step__num">۳</div><h3 class="step__title">اعتبارسنجی</h3><p class="step__desc">مدارک شما بررسی می‌شود.</p></div>
+      <div class="step"><div class="step__num">۴</div><h3 class="step__title">ارجاع به بانک</h3><p class="step__desc">پرونده شما به بانک ارسال می‌شود.</p></div>
+      <div class="step"><div class="step__num">۵</div><h3 class="step__title">دریافت وام</h3><p class="step__desc">وام مستقیماً به حساب شما واریز می‌شود.</p></div>
+      <div class="step"><div class="step__num">۶</div><h3 class="step__title">پشتیبانی</h3><p class="step__desc">تا لحظه واریز کنارتان هستیم.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="legal">
+  <div class="legal__inner">
+    <div class="legal__icon">⚖️</div>
+    <h3>توجه قانونی</h3>
+    <p><strong>وام پی یک سامانه مشاوره‌ای است.</strong></p>
+    <p>خرید و فروش وام، واسطه‌گری و پیش‌پرداخت ممنوع و پیگرد قانونی دارد.</p>
+    <p>دریافت وام مستقیماً از بانک انجام می‌شود.</p>
+    <p>تمام حقوق سایت وام پی محفوظ است.</p>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container">
+    <div class="stats__grid">
+      <div><div class="stat__num">۵۰۰<span>+</span></div><div class="stat__label">کاربر فعال</div></div>
+      <div><div class="stat__num">۱۰<span>+</span></div><div class="stat__label">کارگزار</div></div>
+      <div><div class="stat__num">۹۸<span>٪</span></div><div class="stat__label">رضایت</div></div>
+      <div><div class="stat__num">&lt;۲۴<span>h</span></div><div class="stat__label">زمان پرداخت</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta__inner">
+    <h2>آماده دریافت <span>وام</span> هستید؟</h2>
+    <p>همین حالا مشاوره بگیرید و مسیر دریافت وام خود را شروع کنید</p>
+    <a href="login.html" class="btn btn--primary btn--lg">🚀 همین حالا شروع کنید</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="images/hero.png" alt="وام پی">
+        <h3>وام پی</h3>
+        <p>سامانه مشاوره و راهنمایی دریافت وام<br>وام | سرمایه‌گذاری | رشد مالی</p>
+      </div>
+      <div class="footer__col">
+        <h4>دسترسی سریع</h4>
+        <a href="#services">خدمات</a>
+        <a href="#how">چطور کار می‌کنه</a>
+        <a href="login.html">ورود</a>
+        <a href="login.html">ثبت‌نام</a>
+      </div>
+      <div class="footer__col">
+        <h4>خدمات</h4>
+        <a href="#services">وام مسکن</a>
+        <a href="#services">وام ازدواج</a>
+        <a href="#services">وام خودرو</a>
+        <a href="#services">وام کالا</a>
+      </div>
+      <div class="footer__col footer__contact">
+        <h4>تماس با ما</h4>
+        <p>📞 ۰۹۱۲-XXXXXXX</p>
+        <p>📧 info@wampay.ir</p>
+        <p>🌐 wampay.ir</p>
+      </div>
+    </div>
+    <div class="footer__legal">
+      <strong>⚖️ توجه قانونی:</strong>
+      وام پی یک سامانه مشاوره‌ای است. خرید و فروش وام، واسطه‌گری و پیش‌پرداخت ممنوع و پیگرد قانونی دارد.
+    </div>
+    <div class="footer__copy">
+      © ۱۴۰۴ وام پی — تمام حقوق محفوظ است
+    </div>
+  </div>
+</footer>
+
+<script src="js/logo-animation.js" defer></script>
+</body>
+</html>

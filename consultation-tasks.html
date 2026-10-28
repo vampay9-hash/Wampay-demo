@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="تسک‌های مشاوره — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>تسک‌های مشاوره | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       CONSULTATION TASKS (Shared)
+       ═══════════════════════════════════════ */
+
+    .wam-contask {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 100px;
+    }
+
+    .wam-contask__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-contask__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-contask__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+    .wam-contask__topbar-back:hover { color: var(--wam-primary-light); }
+
+    .wam-contask__topbar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-contask__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-contask__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-contask__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+    .wam-contask__icon-btn--primary {
+      background: var(--wam-primary-light);
+      color: #fff;
+    }
+    .wam-contask__icon-btn--primary:hover {
+      background: var(--wam-primary);
+      color: #fff;
+    }
+
+    .wam-contask__main {
+      padding: var(--wam-space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Context banner (اگر caseId یا consultationId از URL) */
+    .wam-contask__context {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: var(--wam-info-soft);
+      color: var(--wam-info-text);
+      border-radius: var(--wam-radius-md);
+      margin-bottom: var(--wam-space-md);
+      font-size: 0.82rem;
+      border: 1px solid transparent;
+    }
+
+    .wam-contask__context-icon {
+      font-size: 1.1rem;
+      flex: 0 0 auto;
+    }
+
+    .wam-contask__context-text {
+      flex: 1 1 auto;
+      line-height: 1.6;
+    }
+
+    .wam-contask__context-close {
+      background: transparent;
+      border: 0;
+      color: var(--wam-info-text);
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
+    .wam-contask__context-close:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    /* Stats */
+    .wam-contask__stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 8px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-contask__stat {
+      padding: 12px 10px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      text-align: center;
+      box-shadow: var(--wam-shadow-sm);
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      color: var(--wam-text);
+    }
+
+    .wam-contask__stat:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-contask__stat-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.1;
+    }
+    .wam-contask__stat-value--warning { color: var(--wam-warning-text); }
+    .wam-contask__stat-value--info    { color: var(--wam-info-text); }
+    .wam-contask__stat-value--success { color: var(--wam-success-text); }
+    .wam-contask__stat-value--danger  { color: var(--wam-danger-text); }
+
+    .wam-contask__stat-label {
+      font-size: 0.68rem;
+      color: var(--wam-text-muted);
+      margin-top: 4px;
+    }
+
+    /* Search */
+    .wam-contask__search {
+      position: relative;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-contask__search input {
+      width: 100%;
+      padding: 11px 42px 11px 42px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-contask__search input:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-contask__search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      color: var(--wam-text-muted);
+      pointer-events: none;
+    }
+
+    .wam-contask__search-clear {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--wam-text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: none;
+    }
+    .wam-contask__search-clear.is-visible { display: inline-flex; }
+
+    /* Tabs */
+    .wam-contask__tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      margin-bottom: var(--wam-space-md);
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .wam-contask__tabs::-webkit-scrollbar { display: none; }
+
+    .wam-contask__tab {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 14px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .wam-contask__tab:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary-light);
+    }
+
+    .wam-contask__tab.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-contask__tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .wam-contask__tab.is-active .wam-contask__tab-count {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    /* Sort */
+    .wam-contask__sort-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-contask__sort-select {
+      padding: 5px 10px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      font-size: 0.75rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      cursor: pointer;
+    }
+
+    /* Task list */
+    .wam-contask__list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .wam-contask__task {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-right: 4px solid var(--wam-muted);
+      border-radius: var(--wam-radius-md);
+      box-shadow: var(--wam-shadow-sm);
+      transition: all var(--wam-t);
+    }
+
+    .wam-contask__task:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .wam-contask__task--pending     { border-right-color: var(--wam-warning); }
+    .wam-contask__task--in_progress { border-right-color: var(--wam-info); }
+    .wam-contask__task--done        { border-right-color: var(--wam-success); }
+    .wam-contask__task--cancelled   { border-right-color: var(--wam-danger); }
+
+    .wam-contask__task--done .wam-contask__task-title {
+      text-decoration: line-through;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-contask__task--cancelled .wam-contask__task-title {
+      text-decoration: line-through;
+      color: var(--wam-text-muted);
+    }
+
+    /* Checkbox */
+    .wam-contask__check {
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      border: 2px solid var(--wam-border-strong);
+      background: transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: transparent;
+      transition: all var(--wam-t);
+      padding: 0;
+      font-family: inherit;
+      margin-top: 2px;
+    }
+
+    .wam-contask__check:hover {
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-contask__task--done .wam-contask__check {
+      background: var(--wam-success);
+      border-color: var(--wam-success);
+      color: #fff;
+    }
+
+    .wam-contask__task--in_progress .wam-contask__check {
+      border-color: var(--wam-info);
+      background: var(--wam-info-soft);
+    }
+
+    /* Body */
+    .wam-contask__task-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-contask__task-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .wam-contask__task-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0;
+      line-height: 1.5;
+      flex: 1 1 auto;
+      word-break: break-word;
+    }
+
+    .wam-contask__priority {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.65rem;
+      font-weight: 800;
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+
+    .wam-contask__priority--urgent { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+    .wam-contask__priority--high   { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-contask__priority--normal { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-contask__priority--low    { background: var(--wam-muted-soft); color: var(--wam-text-muted); }
+
+    .wam-contask__task-desc {
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+      line-height: 1.6;
+      margin: 0 0 6px;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .wam-contask__task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-contask__task-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .wam-contask__task-meta-item--overdue {
+      color: var(--wam-danger);
+      font-weight: 700;
+    }
+
+    /* Actions */
+    .wam-contask__task-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 0 0 auto;
+    }
+
+    .wam-contask__task-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      border: 0;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-contask__task-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    .wam-contask__task-btn--danger:hover {
+      background: var(--wam-danger-soft);
+      color: var(--wam-danger);
+    }
+
+    /* Empty */
+    .wam-contask__empty {
+      text-align: center;
+      padding: 56px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+
+    .wam-contask__empty-icon {
+      font-size: 2.6rem;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+
+    .wam-contask__empty-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 6px;
+    }
+
+    .wam-contask__empty-text {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0 0 var(--wam-space-md);
+      line-height: 1.7;
+    }
+
+    /* Modal */
+    .wam-contask__modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 59, 35, 0.5);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: var(--wam-z-modal);
+      padding: 0;
+    }
+    .wam-contask__modal.is-open { display: flex; }
+
+    .wam-contask__modal-box {
+      background: var(--wam-bg-alt);
+      width: 100%;
+      max-width: 560px;
+      border-radius: var(--wam-radius-lg) var(--wam-radius-lg) 0 0;
+      padding: var(--wam-space-lg);
+      padding-bottom: calc(var(--wam-space-lg) + env(safe-area-inset-bottom, 0px));
+      animation: wam-slide-up 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .wam-contask__modal-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border-soft);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-contask__modal-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      flex: 1 1 auto;
+    }
+
+    .wam-contask__modal-close {
+      background: transparent;
+      border: 0;
+      font-size: 1.2rem;
+      color: var(--wam-text-muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .wam-contask__modal-close:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    .wam-contask__modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .wam-contask__modal-actions .wam-btn {
+      flex: 1 1 0;
+    }
+
+    /* FAB */
+    .wam-contask__fab {
+      position: fixed;
+      bottom: 24px;
+      left: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--wam-gold);
+      color: #3a2a00;
+      font-size: 1.6rem;
+      font-weight: 800;
+      border: 0;
+      box-shadow: 0 6px 18px rgba(212, 166, 42, 0.45);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--wam-t), box-shadow var(--wam-t);
+      z-index: calc(var(--wam-z-sticky) - 1);
+      font-family: inherit;
+    }
+    .wam-contask__fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 24px rgba(212, 166, 42, 0.55);
+    }
+
+    /* Toast */
+    .wam-contask__toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .wam-contask__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Inputs */
+    .wam-contask__field {
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-contask__label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin-bottom: 6px;
+    }
+
+    .wam-contask__input,
+    .wam-contask__select,
+    .wam-contask__textarea {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.87rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-contask__input:focus,
+    .wam-contask__select:focus,
+    .wam-contask__textarea:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-contask__textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    @media (max-width: 640px) {
+      .wam-contask__main { padding: var(--wam-space-md); }
+      .wam-contask__stats { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .wam-contask__stat { padding: 10px 6px; }
+      .wam-contask__stat-value { font-size: 1.05rem; }
+      .wam-contask__stat-label { font-size: 0.6rem; }
+    }
+  </style>
+</head>
+
+<body data-page="consultation-tasks">
+
+  <div class="wam-contask" id="ctRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-contask__topbar">
+      <div class="wam-contask__topbar-info">
+        <a href="consultations.html" class="wam-contask__topbar-back" id="backLink">↩ بازگشت</a>
+        <h1 class="wam-contask__topbar-title">✅ تسک‌های مشاوره</h1>
+      </div>
+      <div class="wam-contask__topbar-actions">
+        <button type="button" class="wam-contask__icon-btn" id="refreshBtn" title="بروزرسانی">🔄</button>
+        <button type="button" class="wam-contask__icon-btn wam-contask__icon-btn--primary" id="newBtn" title="تسک جدید">➕</button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-contask__main">
+
+      <!-- Context banner -->
+      <div class="wam-contask__context" id="contextBanner" style="display:none;">
+        <span class="wam-contask__context-icon">🔗</span>
+        <span class="wam-contask__context-text" id="contextText">فیلتر شده بر اساس شناسه</span>
+        <button type="button" class="wam-contask__context-close" id="contextClear" aria-label="پاک">✕</button>
+      </div>
+
+      <!-- Stats -->
+      <section class="wam-contask__stats">
+        <button type="button" class="wam-contask__stat" data-status="all">
+          <div class="wam-contask__stat-value" id="statTotal">۰</div>
+          <div class="wam-contask__stat-label">کل</div>
+        </button>
+        <button type="button" class="wam-contask__stat" data-status="pending">
+          <div class="wam-contask__stat-value wam-contask__stat-value--warning" id="statPending">۰</div>
+          <div class="wam-contask__stat-label">در انتظار</div>
+        </button>
+        <button type="button" class="wam-contask__stat" data-status="in_progress">
+          <div class="wam-contask__stat-value wam-contask__stat-value--info" id="statInProgress">۰</div>
+          <div class="wam-contask__stat-label">در جریان</div>
+        </button>
+        <button type="button" class="wam-contask__stat" data-status="done">
+          <div class="wam-contask__stat-value wam-contask__stat-value--success" id="statDone">۰</div>
+          <div class="wam-contask__stat-label">انجام‌شده</div>
+        </button>
+        <button type="button" class="wam-contask__stat" data-status="overdue">
+          <div class="wam-contask__stat-value wam-contask__stat-value--danger" id="statOverdue">۰</div>
+          <div class="wam-contask__stat-label">عقب‌افتاده</div>
+        </button>
+      </section>
+
+      <!-- Search -->
+      <div class="wam-contask__search">
+        <input type="text" id="searchInput" placeholder="جستجوی عنوان، توضیح، متقاضی...">
+        <span class="wam-contask__search-icon">🔍</span>
+        <button type="button" class="wam-contask__search-clear" id="searchClear" aria-label="پاک">✕</button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="wam-contask__tabs" id="tabsBar">
+        <button type="button" class="wam-contask__tab is-active" data-tab="all">
+          همه <span class="wam-contask__tab-count" data-count="all">۰</span>
+        </button>
+        <button type="button" class="wam-contask__tab" data-tab="pending">
+          ⏳ در انتظار <span class="wam-contask__tab-count" data-count="pending">۰</span>
+        </button>
+        <button type="button" class="wam-contask__tab" data-tab="in_progress">
+          🔎 در جریان <span class="wam-contask__tab-count" data-count="in_progress">۰</span>
+        </button>
+        <button type="button" class="wam-contask__tab" data-tab="done">
+          ✓ انجام‌شده <span class="wam-contask__tab-count" data-count="done">۰</span>
+        </button>
+        <button type="button" class="wam-contask__tab" data-tab="overdue">
+          🚨 عقب‌افتاده <span class="wam-contask__tab-count" data-count="overdue">۰</span>
+        </button>
+      </div>
+
+      <!-- Sort -->
+      <div class="wam-contask__sort-row">
+        <span id="resultsCount">۰ تسک</span>
+        <select class="wam-contask__sort-select" id="sortSelect">
+          <option value="newest">جدیدترین</option>
+          <option value="oldest">قدیمی‌ترین</option>
+          <option value="priority">اولویت</option>
+          <option value="due">مهلت</option>
+        </select>
+      </div>
+
+      <!-- List -->
+      <div class="wam-contask__list" id="tasksList">
+        <!-- توسط JS پر می‌شود -->
+      </div>
+
+      <!-- Empty -->
+      <div class="wam-contask__empty" id="emptyState" style="display:none;">
+        <div class="wam-contask__empty-icon">📭</div>
+        <h3 class="wam-contask__empty-title" id="emptyTitle">تسکی یافت نشد</h3>
+        <p class="wam-contask__empty-text" id="emptyText">
+          با فیلترهای فعلی تسکی وجود ندارد.
+        </p>
+        <button type="button" class="wam-btn wam-btn--primary" id="emptyNewBtn">
+          ➕ افزودن تسک جدید
+        </button>
+      </div>
+
+    </main>
+
+    <!-- ═══ FAB ═══ -->
+    <button type="button" class="wam-contask__fab" id="fabBtn" aria-label="تسک جدید">➕</button>
+
+    <!-- ═══ MODAL: تسک جدید/ویرایش ═══ -->
+    <div class="wam-contask__modal" id="taskModal" role="dialog" aria-modal="true">
+      <div class="wam-contask__modal-box">
+
+        <div class="wam-contask__modal-head">
+          <h3 class="wam-contask__modal-title" id="modalTitle">➕ تسک جدید</h3>
+          <button type="button" class="wam-contask__modal-close" id="modalClose" aria-label="بستن">✕</button>
+        </div>
+
+        <input type="hidden" id="taskId" value="">
+
+        <div class="wam-contask__field">
+          <label class="wam-contask__label" for="taskTitle">عنوان تسک *</label>
+          <input type="text" id="taskTitle" class="wam-contask__input"
+                 placeholder="مثال: تماس با متقاضی" required>
+        </div>
+
+        <div class="wam-contask__field">
+          <label class="wam-contask__label" for="taskDesc">توضیحات</label>
+          <textarea id="taskDesc" class="wam-contask__textarea"
+                    placeholder="توضیحات اضافی (اختیاری)"></textarea>
+        </div>
+
+        <div class="wam-contask__field">
+          <label class="wam-contask__label" for="taskPriority">اولویت</label>
+          <select id="taskPriority" class="wam-contask__select">
+            <option value="normal">عادی</option>
+            <option value="high">بالا</option>
+            <option value="urgent">فوری</option>
+            <option value="low">کم</option>
+          </select>
+        </div>
+
+        <div class="wam-contask__field">
+          <label class="wam-contask__label" for="taskStatus">وضعیت</label>
+          <select id="taskStatus" class="wam-contask__select">
+            <option value="pending">در انتظار</option>
+            <option value="in_progress">در جریان</option>
+            <option value="done">انجام‌شده</option>
+            <option value="cancelled">لغو‌شده</option>
+          </select>
+        </div>
+
+        <div class="wam-contask__field">
+          <label class="wam-contask__label" for="taskDue">مهلت (روز از امروز)</label>
+          <input type="number" id="taskDue" class="wam-contask__input"
+                 min="0" max="365" placeholder="مثال: ۳" dir="ltr">
+        </div>
+
+        <div class="wam-contask__field">
+          <label class="wam-contask__label" for="taskCaseId">شناسه پرونده (اختیاری)</label>
+          <input type="text" id="taskCaseId" class="wam-contask__input"
+                 placeholder="مثال: C-ABC12" dir="ltr">
+        </div>
+
+        <div class="wam-contask__field">
+          <label class="wam-contask__label" for="taskConsultationId">شناسه مشاوره (اختیاری)</label>
+          <input type="text" id="taskConsultationId" class="wam-contask__input"
+                 placeholder="مثال: CS-XYZ12" dir="ltr">
+        </div>
+
+        <div class="wam-contask__modal-actions">
+          <button type="button" class="wam-btn" id="modalCancelBtn">انصراف</button>
+          <button type="button" class="wam-btn wam-btn--primary" id="modalSaveBtn">
+            💾 ذخیره
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="wam-contask__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       CONSULTATION TASKS CONTROLLER (Shared)
+       - CRUD تسک‌های مرتبط با مشاوره/پرونده
+       - فیلتر/مرتب/جستجو
+       - ذخیره در wamPayConsultationTasks
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_KEY = 'wamPayConsultationTasks';
+
+      var state = {
+        user: null,
+        all: [],
+        filtered: [],
+        status: 'all',
+        tab: 'all',
+        query: '',
+        sort: 'newest',
+        context: {
+          caseId: '',
+          consultationId: ''
+        }
+      };
+
+      var PRIORITY_WEIGHT = { urgent: 4, high: 3, normal: 2, low: 1 };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = ts - Date.now();
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت';
+        return Math.round(abs / 86400000) + ' روز';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کاربر', username: 'user', role: 'applicant', id: 'user' };
+      }
+
+      function currentUserId() {
+        var u = state.user;
+        return (u && (u.id || u.username)) || 'user';
+      }
+
+      function roleOf() {
+        var u = state.user;
+        return (u && (u.role || u.userRole)) || 'applicant';
+      }
+
+      function isStaff() {
+        var r = roleOf();
+        return r === 'super_admin' || r === 'admin' || r === 'verifier' || r === 'broker';
+      }
+
+      function genId() {
+        return 'T-' + Date.now().toString(36).toUpperCase().slice(-5) +
+               Math.random().toString(36).slice(2, 4).toUpperCase();
+      }
+
+      function getParam(name) {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          return params.get(name) || '';
+        } catch (_) { return ''; }
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function statusLabel(s) {
+        var map = {
+          pending: 'در انتظار', in_progress: 'در جریان',
+          done: 'انجام‌شده', cancelled: 'لغو‌شده'
+        };
+        return map[s] || s || '—';
+      }
+
+      function priorityLabel(p) {
+        var map = { urgent: '🚨 فوری', high: '⚠️ بالا', normal: 'عادی', low: 'کم' };
+        return map[p] || p || 'عادی';
+      }
+
+      function isOverdue(t) {
+        if (!t) return false;
+        if (t.status === 'done' || t.status === 'cancelled') return false;
+        return t.dueAt && t.dueAt < Date.now();
+      }
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadTasks() {
+        var all = readJSON(STORAGE_KEY, []);
+        if (!Array.isArray(all)) return [];
+
+        if (isStaff()) {
+          // کارکنان: همه تسک‌ها
+          return all;
+        }
+
+        // کاربر عادی: تسک‌های خودش
+        var me = currentUserId();
+        var myName = (state.user && state.user.name) || '';
+        return all.filter(function (t) {
+          if (!t) return false;
+          return t.assigneeId === me ||
+                 (t.assigneeName && myName && t.assigneeName === myName) ||
+                 t.createdBy === me;
+        });
+      }
+
+      function seedIfEmpty() {
+        var all = readJSON(STORAGE_KEY, []);
+        if (Array.isArray(all) && all.length > 0) return;
+
+        var now = Date.now();
+        var me = currentUserId();
+        var meName = (state.user && state.user.name) || 'کاربر';
+
+        var samples = [
+          {
+            id: 'T-' + now.toString(36).toUpperCase().slice(-5) + 'A',
+            title: 'تماس با متقاضی برای تکمیل مدارک',
+            description: 'تماس با آقای رضایی برای دریافت فیش حقوقی به‌روز',
+            priority: 'high',
+            status: 'pending',
+            assigneeId: me, assigneeName: meName,
+            createdBy: me,
+            dueAt: now + 86400000 * 2,
+            caseId: 'C-ABC12',
+            consultationId: 'CS-XYZ12',
+            createdAt: now - 1000 * 60 * 60 * 3,
+            updatedAt: now - 1000 * 60 * 60 * 3
+          },
+          {
+            id: 'T-' + now.toString(36).toUpperCase().slice(-5) + 'B',
+            title: 'پیگیری پاسخ بانک درباره وام خودرو',
+            description: 'پیگیری وضعیت اعتبارسنجی وام خودرو',
+            priority: 'urgent',
+            status: 'in_progress',
+            assigneeId: me, assigneeName: meName,
+            createdBy: me,
+            dueAt: now + 86400000,
+            caseId: 'C-DEF34',
+            consultationId: null,
+            createdAt: now - 1000 * 60 * 60 * 24,
+            updatedAt: now - 1000 * 60 * 60 * 12
+          },
+          {
+            id: 'T-' + now.toString(36).toUpperCase().slice(-5) + 'C',
+            title: 'ارسال پیام تشکر از مشتری',
+            description: '',
+            priority: 'low',
+            status: 'done',
+            assigneeId: me, assigneeName: meName,
+            createdBy: me,
+            dueAt: now - 86400000 * 2,
+            caseId: null,
+            consultationId: 'CS-ABC45',
+            createdAt: now - 1000 * 60 * 60 * 24 * 5,
+            updatedAt: now - 1000 * 60 * 60 * 24 * 3,
+            completedAt: now - 1000 * 60 * 60 * 24 * 3
+          },
+          {
+            id: 'T-' + now.toString(36).toUpperCase().slice(-5) + 'D',
+            title: 'بازبینی شرایط ضمانت‌نامه',
+            description: 'بررسی ضمانت‌نامه جدید ارسال‌شده توسط متقاضی',
+            priority: 'normal',
+            status: 'pending',
+            assigneeId: me, assigneeName: meName,
+            createdBy: me,
+            dueAt: now - 86400000,
+            caseId: 'C-GHI56',
+            consultationId: null,
+            createdAt: now - 1000 * 60 * 60 * 24 * 4,
+            updatedAt: now - 1000 * 60 * 60 * 24 * 4
+          }
+        ];
+
+        if (!Array.isArray(all)) all = [];
+        all = all.concat(samples);
+        writeJSON(STORAGE_KEY, all);
+      }
+
+      // ═══════════════════════════════════
+      // آمار
+      // ═══════════════════════════════════
+
+      function updateStats() {
+        var list = state.all;
+        var counts = { total: list.length, pending: 0, in_progress: 0, done: 0, cancelled: 0, overdue: 0 };
+
+        list.forEach(function (t) {
+          var st = t.status || 'pending';
+          if (counts[st] != null) counts[st]++;
+          if (isOverdue(t)) counts.overdue++;
+        });
+
+        if ($('statTotal')) $('statTotal').textContent = toFa(counts.total);
+        if ($('statPending')) $('statPending').textContent = toFa(counts.pending);
+        if ($('statInProgress')) $('statInProgress').textContent = toFa(counts.in_progress);
+        if ($('statDone')) $('statDone').textContent = toFa(counts.done);
+        if ($('statOverdue')) $('statOverdue').textContent = toFa(counts.overdue);
+
+        Object.keys(counts).forEach(function (k) {
+          if (k === 'total' || k === 'cancelled') return;
+          var el = document.querySelector('[data-count="' + k + '"]');
+          if (el) el.textContent = toFa(counts[k]);
+        });
+        var allEl = document.querySelector('[data-count="all"]');
+        if (allEl) allEl.textContent = toFa(counts.total);
+      }
+
+      // ═══════════════════════════════════
+      // فیلتر و مرتب
+      // ═══════════════════════════════════
+
+      function applyFilters() {
+        var q = state.query.toLowerCase();
+        var tab = state.tab;
+
+        state.filtered = state.all.filter(function (t) {
+          // Context
+          if (state.context.caseId && t.caseId !== state.context.caseId) return false;
+          if (state.context.consultationId && t.consultationId !== state.context.consultationId) return false;
+
+          // Tab filter
+          if (tab === 'pending' && t.status !== 'pending') return false;
+          if (tab === 'in_progress' && t.status !== 'in_progress') return false;
+          if (tab === 'done' && t.status !== 'done') return false;
+          if (tab === 'overdue' && !isOverdue(t)) return false;
+
+          // Search
+          if (q) {
+            var hay = [
+              t.title, t.description, t.assigneeName, t.caseId, t.consultationId, t.id
+            ].join(' ').toLowerCase();
+            if (hay.indexOf(q) < 0) return false;
+          }
+          return true;
+        });
+
+        // Sort
+        var s = state.sort;
+        state.filtered.sort(function (a, b) {
+          if (s === 'oldest') return (a.createdAt || 0) - (b.createdAt || 0);
+          if (s === 'priority') {
+            var wa = PRIORITY_WEIGHT[a.priority] || 0;
+            var wb = PRIORITY_WEIGHT[b.priority] || 0;
+            if (wa !== wb) return wb - wa;
+            return (b.createdAt || 0) - (a.createdAt || 0);
+          }
+          if (s === 'due') {
+            var ad = a.dueAt || Infinity;
+            var bd = b.dueAt || Infinity;
+            if (ad !== bd) return ad - bd;
+            return (b.createdAt || 0) - (a.createdAt || 0);
+          }
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+
+        render();
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function render() {
+        var container = $('tasksList');
+        var empty = $('emptyState');
+        var countEl = $('resultsCount');
+
+        if (countEl) countEl.textContent = toFa(state.filtered.length) + ' تسک';
+
+        if (state.filtered.length === 0) {
+          if (container) container.innerHTML = '';
+          if (empty) {
+            empty.style.display = '';
+            var et = $('emptyTitle');
+            var ex = $('emptyText');
+            if (state.query || state.tab !== 'all' || state.context.caseId || state.context.consultationId) {
+              if (et) et.textContent = 'نتیجه‌ای یافت نشد';
+              if (ex) ex.textContent = 'با فیلترهای فعلی تسکی وجود ندارد.';
+            } else {
+              if (et) et.textContent = 'هنوز تسکی ندارید';
+              if (ex) ex.textContent = 'اولین تسک خود را اضافه کنید.';
+            }
+          }
+          return;
+        }
+
+        if (empty) empty.style.display = 'none';
+
+        var html = '';
+        state.filtered.forEach(function (t) {
+          html += renderTask(t);
+        });
+        container.innerHTML = html;
+
+        // Bind checkbox
+        container.querySelectorAll('[data-check]').forEach(function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var id = btn.getAttribute('data-check');
+            cycleStatus(id);
+          });
+        });
+
+        // Bind edit
+        container.querySelectorAll('[data-act="edit"]').forEach(function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var id = btn.getAttribute('data-id');
+            openEditModal(id);
+          });
+        });
+
+        // Bind delete
+        container.querySelectorAll('[data-act="delete"]').forEach(function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var id = btn.getAttribute('data-id');
+            deleteTask(id);
+          });
+        });
+      }
+
+      function renderTask(t) {
+        var st = t.status || 'pending';
+        var prio = t.priority || 'normal';
+        var overdue = isOverdue(t);
+
+        var checkChar = '';
+        if (st === 'done') checkChar = '✓';
+        else if (st === 'in_progress') checkChar = '•';
+
+        var dueLine = '';
+        if (t.dueAt) {
+          var rel = relTime(t.dueAt);
+          var prefix = overdue ? '⚠️ گذشته' : '⏰';
+          var cls = 'wam-contask__task-meta-item' + (overdue ? ' wam-contask__task-meta-item--overdue' : '');
+          dueLine = '<span class="' + cls + '">' + prefix + ' ' + esc(fmtDate(t.dueAt)) + ' (' + esc(rel) + ')</span>';
+        }
+
+        return '' +
+          '<div class="wam-contask__task wam-contask__task--' + esc(st) + '" data-id="' + esc(t.id) + '">' +
+            '<button type="button" class="wam-contask__check" data-check="' + esc(t.id) + '" aria-label="تغییر وضعیت">' +
+              checkChar +
+            '</button>' +
+            '<div class="wam-contask__task-body">' +
+              '<div class="wam-contask__task-head">' +
+                '<p class="wam-contask__task-title">' + esc(t.title || 'بدون عنوان') + '</p>' +
+                '<span class="wam-contask__priority wam-contask__priority--' + esc(prio) + '">' +
+                  priorityLabel(prio) +
+                '</span>' +
+              '</div>' +
+              (t.description ? '<p class="wam-contask__task-desc">' + esc(t.description) + '</p>' : '') +
+              '<div class="wam-contask__task-meta">' +
+                '<span class="wam-contask__task-meta-item">' + statusLabel(st) + '</span>' +
+                (t.caseId ? '<span class="wam-contask__task-meta-item">📁 ' + esc(t.caseId) + '</span>' : '') +
+                (t.consultationId ? '<span class="wam-contask__task-meta-item">💬 ' + esc(t.consultationId) + '</span>' : '') +
+                (t.assigneeName ? '<span class="wam-contask__task-meta-item">👤 ' + esc(t.assigneeName) + '</span>' : '') +
+                dueLine +
+              '</div>' +
+            '</div>' +
+            '<div class="wam-contask__task-actions">' +
+              '<button type="button" class="wam-contask__task-btn" data-act="edit" data-id="' + esc(t.id) + '" title="ویرایش">✏</button>' +
+              '<button type="button" class="wam-contask__task-btn wam-contask__task-btn--danger" data-act="delete" data-id="' + esc(t.id) + '" title="حذف">🗑</button>' +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // عملیات
+      // ═══════════════════════════════════
+
+      function cycleStatus(id) {
+        var all = state.all.slice();
+        for (var i = 0; i < all.length; i++) {
+          if (all[i].id === id) {
+            var cur = all[i].status || 'pending';
+            var next = 'pending';
+            if (cur === 'pending') next = 'in_progress';
+            else if (cur === 'in_progress') next = 'done';
+            else if (cur === 'done') next = 'pending';
+            else if (cur === 'cancelled') next = 'pending';
+
+            all[i].status = next;
+            all[i].updatedAt = Date.now();
+            if (next === 'done') all[i].completedAt = Date.now();
+            break;
+          }
+        }
+        writeJSON(STORAGE_KEY, all);
+        state.all = loadTasks();
+        updateStats();
+        applyFilters();
+        emitEvent('consultation-task:status-changed', { id: id });
+      }
+
+      function deleteTask(id) {
+        var t = state.all.find(function (x) { return x.id === id; });
+        if (!t) return;
+        if (!confirm('تسک «' + (t.title || 'بدون عنوان') + '» حذف شود؟')) return;
+
+        var all = readJSON(STORAGE_KEY, []);
+        if (!Array.isArray(all)) all = [];
+        all = all.filter(function (x) { return x.id !== id; });
+        writeJSON(STORAGE_KEY, all);
+
+        state.all = loadTasks();
+        updateStats();
+        applyFilters();
+        emitEvent('consultation-task:deleted', { id: id });
+        showToast('✓ تسک حذف شد');
+      }
+
+      // ═══════════════════════════════════
+      // Modal
+      // ═══════════════════════════════════
+
+      function openNewModal() {
+        if ($('modalTitle')) $('modalTitle').textContent = '➕ تسک جدید';
+        if ($('taskId')) $('taskId').value = '';
+        if ($('taskTitle')) $('taskTitle').value = '';
+        if ($('taskDesc')) $('taskDesc').value = '';
+        if ($('taskPriority')) $('taskPriority').value = 'normal';
+        if ($('taskStatus')) $('taskStatus').value = 'pending';
+        if ($('taskDue')) $('taskDue').value = '';
+        if ($('taskCaseId')) $('taskCaseId').value = state.context.caseId || '';
+        if ($('taskConsultationId')) $('taskConsultationId').value = state.context.consultationId || '';
+
+        var m = $('taskModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('taskTitle')) $('taskTitle').focus(); }, 150);
+      }
+
+      function openEditModal(id) {
+        var t = state.all.find(function (x) { return x.id === id; });
+        if (!t) return;
+
+        if ($('modalTitle')) $('modalTitle').textContent = '✏ ویرایش تسک';
+        if ($('taskId')) $('taskId').value = t.id;
+        if ($('taskTitle')) $('taskTitle').value = t.title || '';
+        if ($('taskDesc')) $('taskDesc').value = t.description || '';
+        if ($('taskPriority')) $('taskPriority').value = t.priority || 'normal';
+        if ($('taskStatus')) $('taskStatus').value = t.status || 'pending';
+        if ($('taskDue') && t.dueAt) {
+          var days = Math.round((t.dueAt - Date.now()) / 86400000);
+          $('taskDue').value = days > 0 ? days : 0;
+        } else if ($('taskDue')) {
+          $('taskDue').value = '';
+        }
+        if ($('taskCaseId')) $('taskCaseId').value = t.caseId || '';
+        if ($('taskConsultationId')) $('taskConsultationId').value = t.consultationId || '';
+
+        var m = $('taskModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('taskTitle')) $('taskTitle').focus(); }, 150);
+      }
+
+      function closeModal() {
+        var m = $('taskModal');
+        if (m) m.classList.remove('is-open');
+      }
+
+      function saveTask() {
+        var id = ($('taskId') || {}).value || '';
+        var title = (($('taskTitle') || {}).value || '').trim();
+        var desc = (($('taskDesc') || {}).value || '').trim();
+        var prio = ($('taskPriority') || {}).value || 'normal';
+        var st = ($('taskStatus') || {}).value || 'pending';
+        var dueStr = ($('taskDue') || {}).value || '';
+        var caseId = (($('taskCaseId') || {}).value || '').trim();
+        var consId = (($('taskConsultationId') || {}).value || '').trim();
+
+        if (!title || title.length < 3) {
+          showToast('عنوان تسک الزامی است (حداقل ۳ کاراکتر).');
+          return;
+        }
+
+        var dueAt = null;
+        if (dueStr !== '') {
+          var days = parseInt(dueStr, 10);
+          if (isNaN(days) || days < 0) days = 0;
+          dueAt = Date.now() + days * 86400000;
+        }
+
+        var user = state.user;
+        var all = readJSON(STORAGE_KEY, []);
+        if (!Array.isArray(all)) all = [];
+
+        if (id) {
+          // Edit
+          for (var i = 0; i < all.length; i++) {
+            if (all[i].id === id) {
+              all[i].title = title;
+              all[i].description = desc;
+              all[i].priority = prio;
+              all[i].status = st;
+              all[i].dueAt = dueAt;
+              all[i].caseId = caseId || null;
+              all[i].consultationId = consId || null;
+              all[i].updatedAt = Date.now();
+              if (st === 'done' && !all[i].completedAt) all[i].completedAt = Date.now();
+              break;
+            }
+          }
+        } else {
+          // Create
+          all.push({
+            id: genId(),
+            title: title,
+            description: desc,
+            priority: prio,
+            status: st,
+            assigneeId: currentUserId(),
+            assigneeName: user.name || user.username || 'کاربر',
+            createdBy: currentUserId(),
+            dueAt: dueAt,
+            caseId: caseId || null,
+            consultationId: consId || null,
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          });
+        }
+
+        if (!writeJSON(STORAGE_KEY, all)) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        emitEvent(id ? 'consultation-task:updated' : 'consultation-task:created', { id: id || 'new' });
+
+        closeModal();
+        state.all = loadTasks();
+        updateStats();
+        applyFilters();
+        showToast('✓ ذخیره شد');
+      }
+
+      // ═══════════════════════════════════
+      // Context
+      // ═══════════════════════════════════
+
+      function applyContext() {
+        var banner = $('contextBanner');
+        var txt = $('contextText');
+        if (!banner || !txt) return;
+
+        if (!state.context.caseId && !state.context.consultationId) {
+          banner.style.display = 'none';
+          return;
+        }
+
+        banner.style.display = 'flex';
+        if (state.context.caseId && state.context.consultationId) {
+          txt.textContent = 'فیلتر: پرونده ' + state.context.caseId + ' و مشاوره ' + state.context.consultationId;
+        } else if (state.context.caseId) {
+          txt.textContent = 'فیلتر بر اساس پرونده: ' + state.context.caseId;
+        } else {
+          txt.textContent = 'فیلتر بر اساس مشاوره: ' + state.context.consultationId;
+        }
+      }
+
+      function clearContext() {
+        state.context.caseId = '';
+        state.context.consultationId = '';
+        applyContext();
+        applyFilters();
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Search
+        var input = $('searchInput');
+        var clearBtn = $('searchClear');
+        if (input) {
+          input.addEventListener('input', function () {
+            state.query = input.value || '';
+            if (clearBtn) clearBtn.classList.toggle('is-visible', state.query.length > 0);
+            applyFilters();
+          });
+        }
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function () {
+            if (input) input.value = '';
+            state.query = '';
+            clearBtn.classList.remove('is-visible');
+            applyFilters();
+          });
+        }
+
+        // Stats
+        $$('.wam-contask__stat').forEach(function (stat) {
+          stat.addEventListener('click', function () {
+            var s = stat.getAttribute('data-status');
+            if (!s || s === 'all') {
+              state.tab = 'all';
+              $$('.wam-contask__tab').forEach(function (x) {
+                x.classList.toggle('is-active', x.getAttribute('data-tab') === 'all');
+              });
+            } else if (s === 'done' || s === 'pending' || s === 'in_progress' || s === 'overdue') {
+              state.tab = s;
+              $$('.wam-contask__tab').forEach(function (x) {
+                x.classList.toggle('is-active', x.getAttribute('data-tab') === s);
+              });
+            }
+            applyFilters();
+          });
+        });
+
+        // Tabs
+        $$('.wam-contask__tab').forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            $$('.wam-contask__tab').forEach(function (x) { x.classList.remove('is-active'); });
+            tab.classList.add('is-active');
+            state.tab = tab.getAttribute('data-tab') || 'all';
+            applyFilters();
+          });
+        });
+
+        // Sort
+        var sortSelect = $('sortSelect');
+        if (sortSelect) {
+          sortSelect.addEventListener('change', function () {
+            state.sort = sortSelect.value;
+            applyFilters();
+          });
+        }
+
+        // Refresh
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            state.all = loadTasks();
+            updateStats();
+            applyFilters();
+            $('refreshBtn').textContent = '✓';
+            setTimeout(function () { $('refreshBtn').textContent = '🔄'; }, 900);
+          });
+        }
+
+        // New
+        if ($('newBtn')) $('newBtn').addEventListener('click', openNewModal);
+        if ($('fabBtn')) $('fabBtn').addEventListener('click', openNewModal);
+        if ($('emptyNewBtn')) $('emptyNewBtn').addEventListener('click', openNewModal);
+
+        // Context
+        if ($('contextClear')) $('contextClear').addEventListener('click', clearContext);
+
+        // Modal
+        if ($('modalClose')) $('modalClose').addEventListener('click', closeModal);
+        if ($('modalCancelBtn')) $('modalCancelBtn').addEventListener('click', closeModal);
+        if ($('modalSaveBtn')) $('modalSaveBtn').addEventListener('click', saveTask);
+        var m = $('taskModal');
+        if (m) {
+          m.addEventListener('click', function (e) {
+            if (e.target === m) closeModal();
+          });
+        }
+
+        // Back
+        if ($('backLink')) {
+          $('backLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.history.length > 1) window.history.back();
+            else window.location.href = 'consultations.html';
+          });
+        }
+
+        // Esc
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeModal();
+        });
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        state.user = currentUser();
+
+        // Context از URL
+        state.context.caseId = getParam('case') || '';
+        state.context.consultationId = getParam('consultation') || '';
+
+        seedIfEmpty();
+        state.all = loadTasks();
+        applyContext();
+        updateStats();
+        applyFilters();
+        bindEvents();
+
+        // auto-refresh
+        setInterval(function () {
+          state.all = loadTasks();
+          updateStats();
+          applyFilters();
+        }, 60000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

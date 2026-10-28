@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پنل حقوقی | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23; --primary-light: #1a5c3a; --primary-dark: #062416;
+    --gold: #d4a62a; --gold-light: #f0c651;
+    --text: #1a2b22; --text-muted: #6b7d73;
+    --bg: #f4f7f4; --bg-card: #ffffff; --border: #e0e8e3;
+    --error: #c0392b; --success: #1e8e4a; --warning: #e67e22; --info: #2980b9;
+    --legal: #1f3a5f; --legal-light: #2c5282;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px; --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.7; transition: background 0.3s, color 0.3s;
+}
+
+/* Header حقوقی */
+.legal-header {
+    background: linear-gradient(135deg, #0d1b2e 0%, #1f3a5f 50%, #2c5282 100%);
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; box-shadow: 0 8px 24px rgba(15,23,42,0.35);
+    position: sticky; top: 0; z-index: 100; height: 68px;
+    border-bottom: 3px solid #4a90e2;
+}
+.legal-header__inner {
+    max-width: 1400px; width: 100%; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.legal-header__right { display: flex; align-items: center; gap: 14px; }
+.legal-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 17px; color: #fff; text-decoration: none;
+}
+.legal-logo__icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, #4a90e2, #6ba3f0);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 0 20px rgba(74,144,226,0.5);
+}
+.legal-header__left { display: flex; align-items: center; gap: 10px; }
+.legal-header__btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(74,144,226,0.3);
+    background: rgba(255,255,255,0.08); color: #a9c8ff;
+    cursor: pointer; font-size: 18px;
+    position: relative; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+}
+.legal-header__btn:hover { background: rgba(74,144,226,0.2); }
+.legal-header__badge {
+    position: absolute; top: -4px; left: -4px;
+    background: var(--error); color: #fff;
+    font-size: 10px; font-weight: 800;
+    min-width: 18px; height: 18px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 4px; border: 2px solid #0d1b2e;
+}
+.legal-user {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 12px 6px 6px; border-radius: 10px;
+    background: rgba(74,144,226,0.15);
+    border: 1px solid rgba(74,144,226,0.3);
+}
+.legal-user__avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, #4a90e2, #6ba3f0);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: #fff; font-weight: 800;
+}
+.legal-user__name { font-size: 13px; font-weight: 700; color: #fff; }
+.legal-user__role { font-size: 11px; opacity: 0.85; color: #a9c8ff; }
+
+/* Main */
+.legal-main { padding: 24px 28px 100px; max-width: 1400px; margin: 0 auto; }
+.legal-page-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+.legal-page-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; }
+
+/* Banner */
+.legal-banner {
+    background: linear-gradient(135deg, #0d1b2e 0%, #1f3a5f 60%, #2c5282 100%);
+    color: #fff; border-radius: var(--radius);
+    padding: 24px 28px; margin-bottom: 22px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 32px rgba(15,23,42,0.35);
+    border: 2px solid rgba(74,144,226,0.4);
+}
+.legal-banner::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,144,226,0.3), transparent);
+}
+.legal-banner__content {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+}
+.legal-banner__title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.legal-banner__subtitle { font-size: 13px; opacity: 0.9; max-width: 500px; }
+.legal-banner__icon {
+    font-size: 72px;
+    filter: drop-shadow(0 0 20px rgba(74,144,226,0.8));
+    animation: scale-pulse 3s ease-in-out infinite;
+}
+@keyframes scale-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+/* Stats */
+.legal-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+.legal-stat {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 18px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--legal);
+    transition: var(--transition);
+}
+.legal-stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.legal-stat--warning { border-right-color: var(--warning); }
+.legal-stat--success { border-right-color: var(--success); }
+
+.legal-stat__icon { font-size: 22px; margin-bottom: 4px; }
+.legal-stat__label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.legal-stat__value { font-size: 26px; font-weight: 800; line-height: 1.2; color: var(--legal); }
+.legal-stat--warning .legal-stat__value { color: var(--warning); }
+.legal-stat--success .legal-stat__value { color: var(--success); }
+
+/* Card */
+.legal-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    margin-bottom: 18px; overflow: hidden;
+}
+.legal-card__header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+}
+.legal-card__title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.legal-card__body { padding: 18px 20px; }
+
+/* Case Item */
+.case-list { display: flex; flex-direction: column; gap: 12px; }
+.case-item {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 16px;
+    transition: var(--transition);
+    border-right: 4px solid var(--warning);
+}
+.case-item:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.case-item__head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 16px; flex-wrap: wrap; margin-bottom: 12px;
+}
+.case-item__info { flex: 1; min-width: 240px; }
+.case-item__title {
+    font-size: 15px; font-weight: 800;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+.case-item__number {
+    font-family: monospace; font-size: 13px; font-weight: 700;
+    color: var(--legal); direction: ltr;
+    background: rgba(31,58,95,0.08); padding: 2px 10px; border-radius: 6px;
+}
+.case-item__meta {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    font-size: 12.5px; color: var(--text-muted);
+}
+.case-item__meta strong { color: var(--text); font-weight: 700; }
+.case-item__actions {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+}
+
+/* Buttons */
+.legal-btn {
+    padding: 9px 16px; border-radius: var(--radius-sm);
+    border: none; font-family: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    text-decoration: none; white-space: nowrap;
+}
+.legal-btn--primary {
+    background: linear-gradient(135deg, var(--legal), var(--legal-light));
+    color: #fff; box-shadow: 0 4px 12px rgba(31,58,95,0.25);
+}
+.legal-btn--primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.legal-btn--success { background: var(--success); color: #fff; }
+.legal-btn--success:hover { background: #167a3e; }
+.legal-btn--ghost {
+    background: transparent; color: var(--text);
+    border: 1.5px solid var(--border);
+}
+.legal-btn--ghost:hover { background: var(--bg); border-color: var(--legal); color: var(--legal); }
+.legal-btn--sm { padding: 6px 12px; font-size: 12px; }
+
+/* Empty */
+.legal-empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.legal-empty__icon { font-size: 64px; margin-bottom: 12px; opacity: 0.4; }
+.legal-empty__title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.legal-empty__desc { font-size: 13px; }
+
+/* Loading */
+.loading-spinner {
+    width: 44px; height: 44px; border: 4px solid var(--border);
+    border-top-color: var(--legal-light);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin: 40px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Modal */
+.modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    z-index: 500; display: none; align-items: center; justify-content: center;
+    padding: 20px;
+}
+.modal-backdrop--open { display: flex; }
+.modal {
+    background: var(--bg-card); border-radius: var(--radius);
+    max-width: 700px; width: 100%; max-height: 90vh;
+    overflow-y: auto; box-shadow: var(--shadow-lg);
+    border: 2px solid var(--legal-light);
+}
+.modal__header {
+    padding: 18px 24px; border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(135deg, rgba(31,58,95,0.04), rgba(74,144,226,0.08));
+    position: sticky; top: 0; z-index: 1;
+}
+.modal__title { font-size: 18px; font-weight: 800; }
+.modal__close {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: none; background: var(--bg); cursor: pointer;
+    font-size: 20px; color: var(--text-muted);
+    transition: var(--transition);
+}
+.modal__close:hover { background: var(--error); color: #fff; }
+.modal__body { padding: 24px; }
+.modal__footer {
+    padding: 16px 24px; border-top: 2px solid var(--border);
+    display: flex; gap: 10px; justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+    margin-bottom: 20px;
+}
+.info-item {
+    background: var(--bg); padding: 12px 14px; border-radius: var(--radius-sm);
+    border-right: 3px solid var(--legal);
+}
+.info-item__label {
+    font-size: 11.5px; color: var(--text-muted); font-weight: 700;
+    margin-bottom: 4px;
+}
+.info-item__value {
+    font-size: 14px; font-weight: 800; direction: rtl;
+}
+.info-item__value--ltr { direction: ltr; text-align: right; }
+
+/* Form */
+.form-group { margin-bottom: 16px; }
+.form-label {
+    display: block; font-size: 13px; font-weight: 700;
+    margin-bottom: 8px; color: var(--text);
+}
+.form-label .req { color: var(--error); }
+.form-file {
+    width: 100%; padding: 10px; border-radius: var(--radius-sm);
+    border: 2px dashed var(--border); background: var(--bg);
+    font-family: inherit; font-size: 13px; cursor: pointer;
+    transition: var(--transition);
+}
+.form-file:hover { border-color: var(--legal); }
+.form-textarea {
+    width: 100%; padding: 11px 14px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: var(--bg);
+    font-family: inherit; font-size: 13.5px; color: var(--text);
+    transition: var(--transition); resize: vertical; min-height: 90px;
+}
+.form-textarea:focus { outline: none; border-color: var(--legal); }
+.form-hint { font-size: 11.5px; color: var(--text-muted); margin-top: 6px; }
+
+.file-preview {
+    margin-top: 10px; padding: 10px 14px;
+    background: var(--bg); border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12.5px;
+}
+.file-preview__icon { font-size: 20px; }
+.file-preview__name { font-weight: 700; }
+.file-preview__size { color: var(--text-muted); font-size: 11.5px; }
+
+/* Toast */
+.toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 22px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 10000; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px; max-width: 90%;
+}
+.toast--show { transform: translateX(-50%) translateY(0); }
+.toast--error { background: var(--error); }
+.toast--success { background: var(--success); }
+
+@media (max-width: 768px) {
+    .legal-header { padding: 12px 16px; height: 60px; }
+    .legal-main { padding: 16px 14px 100px; }
+    .legal-page-title { font-size: 20px; }
+    .legal-user__name, .legal-user__role { display: none; }
+    .legal-stats { grid-template-columns: 1fr 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+    .case-item__head { flex-direction: column; }
+    .case-item__actions { width: 100%; }
+    .case-item__actions .legal-btn { flex: 1; }
+    .modal { max-height: 95vh; }
+}
+</style>
+</head>
+<body>
+
+<header class="legal-header">
+    <div class="legal-header__inner">
+        <div class="legal-header__right">
+            <a href="admin-legal-dashboard.html" class="legal-logo">
+                <div class="legal-logo__icon">⚖️</div>
+                <span>پنل حقوقی وام پی</span>
+            </a>
+        </div>
+        <div class="legal-header__left">
+            <button class="legal-header__btn" id="editorBtn" title="ادیتور متن قالب" onclick="window.location.href='admin-legal-contract-editor.html'">📝</button>
+            <div style="width: 1px; height: 24px; background: rgba(74,144,226,0.3);"></div>
+            <button class="legal-header__btn" id="themeBtn" title="تغییر تم">🌙</button>
+            <button class="legal-header__btn" id="refreshBtn" title="به‌روزرسانی">🔄</button>
+            <button class="legal-header__btn" id="notifBtn" title="اعلانات">
+                🔔
+                <span class="legal-header__badge" id="notifBadge" style="display:none;">۰</span>
+            </button>
+            <div class="legal-user">
+                <div class="legal-user__avatar" id="userAvatar">⚖️</div>
+                <div>
+                    <div class="legal-user__name" id="userName">ادمین حقوقی</div>
+                    <div class="legal-user__role">⚖️ حقوقی</div>
+                </div>
+            </div>
+            <button class="legal-header__btn" id="logoutBtn" title="خروج">🚪</button>
+        </div>
+    </div>
+</header>
+
+<main class="legal-main">
+    <div class="legal-banner">
+        <div class="legal-banner__content">
+            <div>
+                <div class="legal-banner__title">⚖️ پنل حقوقی</div>
+                <div class="legal-banner__subtitle">
+                    تنظیم پیش‌نویس قراردادهای تأییدشده توسط مدیر کل و ارسال برای تأیید نهایی
+                </div>
+            </div>
+            <div class="legal-banner__icon">⚖️</div>
+        </div>
+    </div>
+
+    <h1 class="legal-page-title">📋 صف تنظیم پیش‌نویس</h1>
+    <p class="legal-page-subtitle">پرونده‌های تأییدشده توسط مدیر کل که نیاز به تنظیم پیش‌نویس حقوقی دارند</p>
+
+    <!-- Stats -->
+    <div class="legal-stats">
+        <div class="legal-stat legal-stat--warning">
+            <div class="legal-stat__icon">⏳</div>
+            <div class="legal-stat__label">در انتظار تنظیم</div>
+            <div class="legal-stat__value" id="statPending">۰</div>
+        </div>
+        <div class="legal-stat legal-stat--success">
+            <div class="legal-stat__icon">✅</div>
+            <div class="legal-stat__label">آماده‌ی تأیید مدیر کل</div>
+            <div class="legal-stat__value" id="statReady">۰</div>
+        </div>
+        <div class="legal-stat">
+            <div class="legal-stat__icon">📊</div>
+            <div class="legal-stat__label">کل در جریان</div>
+            <div class="legal-stat__value" id="statTotal">۰</div>
+        </div>
+    </div>
+
+    <!-- Queue -->
+    <div class="legal-card">
+        <div class="legal-card__header">
+            <div class="legal-card__title">
+                <span>📄</span>
+                <span>پرونده‌های در انتظار تنظیم پیش‌نویس</span>
+            </div>
+            <button class="legal-btn legal-btn--ghost legal-btn--sm" id="refreshQueue">
+                🔄 به‌روزرسانی
+            </button>
+        </div>
+        <div class="legal-card__body">
+            <div class="case-list" id="queueList">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Modal: Upload Draft -->
+<div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+        <div class="modal__header">
+            <div class="modal__title" id="modalTitle">آپلود پیش‌نویس حقوقی</div>
+            <button class="modal__close" id="modalClose">×</button>
+        </div>
+        <div class="modal__body" id="modalBody"></div>
+        <div class="modal__footer" id="modalFooter"></div>
+    </div>
+</div>
+
+<!-- Modal: Preview -->
+<div class="modal-backdrop" id="previewBackdrop">
+    <div class="modal" style="max-width:95vw">
+        <div class="modal__header">
+            <div class="modal__title">📄 پیش‌نمایش پیش‌نویس</div>
+            <button class="modal__close" id="previewClose">×</button>
+        </div>
+        <div class="modal__body" id="previewBody" style="padding:0;"></div>
+    </div>
+</div>
+
+<div class="toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<script src="js/supabase-js.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/storage-adapter.js"></script>
+<script src="js/auth-bridge.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    const state = {
+        user: null,
+        pendingCases: [],      // legal_draft_pending
+        readyCases: [],        // legal_draft_ready
+        currentCase: null
+    };
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n || 0).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+    const faPriceShort = (n) => {
+        n = Number(n || 0);
+        if (n >= 1e9) return faNum((n / 1e9).toFixed(1)) + ' میلیارد';
+        if (n >= 1e6) return faNum((n / 1e6).toFixed(1)) + ' میلیون';
+        if (n >= 1e3) return faNum((n / 1e3).toFixed(0)) + ' هزار';
+        return faPrice(n);
+    };
+
+    function safeParse(key, fallback = null) {
+        try {
+            const v = localStorage.getItem(key);
+            if (v === null || v === '' || v === 'null' || v === 'undefined') return fallback;
+            const parsed = JSON.parse(v);
+            return (parsed === null || parsed === undefined) ? fallback : parsed;
+        } catch (e) { return fallback; }
+    }
+
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'toast toast--show';
+        if (type === 'error') el.classList.add('toast--error');
+        if (type === 'success') el.classList.add('toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('toast--show'), 3500);
+    }
+
+    function checkAuth() {
+        try {
+            const cu = safeParse('wamPayCurrentUser', null);
+            if (!cu) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            const allowedRoles = ['legal_admin', 'super_admin', 'deputy_admin'];
+            if (!allowedRoles.includes(cu.role)) {
+                alert('این صفحه فقط برای ادمین حقوقی است.');
+                window.location.href = 'login.html';
+                return false;
+            }
+            state.user = cu;
+            return true;
+        } catch (e) {
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    async function loadCases() {
+        if (!window.WAM_SB || !window.WAM_SB.client) {
+            toast('Supabase client لود نشده', 'error');
+            return;
+        }
+
+        try {
+            // صف ۱: در انتظار تنظیم
+            const { data: pending, error: pendingErr } = await window.WAM_SB.client
+                .from('applications')
+                .select('*')
+                .eq('status', 'legal_draft_pending')
+                .order('updated_at', { ascending: false });
+
+            if (pendingErr) console.error('خطا در صف:', pendingErr);
+            else {
+                state.pendingCases = pending || [];
+                console.log(`✅ ${state.pendingCases.length} پرونده در انتظار تنظیم`);
+            }
+
+            // صف ۲: آماده (فقط برای آمار)
+            const { data: ready, error: readyErr } = await window.WAM_SB.client
+                .from('applications')
+                .select('id, application_number, status')
+                .eq('status', 'legal_draft_ready')
+                .order('updated_at', { ascending: false });
+
+            if (readyErr) console.error('خطا در صف آماده:', readyErr);
+            else {
+                state.readyCases = ready || [];
+            }
+
+            renderQueue();
+            renderStats();
+        } catch (err) {
+            console.error('خطا در loadCases:', err);
+            toast('خطا در بارگذاری داده‌ها', 'error');
+        }
+    }
+
+    function renderStats() {
+        $('#statPending').textContent = faNum(state.pendingCases.length);
+        $('#statReady').textContent = faNum(state.readyCases.length);
+        $('#statTotal').textContent = faNum(state.pendingCases.length + state.readyCases.length);
+
+        const nb = $('#notifBadge');
+        if (state.pendingCases.length > 0) {
+            nb.style.display = 'flex';
+            nb.textContent = faNum(state.pendingCases.length);
+        } else {
+            nb.style.display = 'none';
+        }
+    }
+
+    function getApplicantName(c) {
+        const pi = c.personal_info || {};
+        return ((pi.firstName || '') + ' ' + (pi.lastName || '')).trim() || '—';
+    }
+
+    function getApplicantMobile(c) {
+        const pi = c.personal_info || {};
+        return pi.mobile || pi.phone || '—';
+    }
+
+    function renderQueue() {
+        const box = $('#queueList');
+        if (!box) return;
+
+        if (!state.pendingCases.length) {
+            box.innerHTML = `
+                <div class="legal-empty">
+                    <div class="legal-empty__icon">✅</div>
+                    <div class="legal-empty__title">صف خالی است</div>
+                    <div class="legal-empty__desc">هیچ پرونده‌ای در انتظار تنظیم پیش‌نویس نیست.</div>
+                </div>
+            `;
+            return;
+        }
+
+        box.innerHTML = state.pendingCases.map(c => {
+            const name = getApplicantName(c);
+            const mobile = getApplicantMobile(c);
+            const amount = c.final_loan_amount || c.loan_amount || 0;
+            const monthly = c.final_monthly_installment || 0;
+            const fee = c.final_verification_fee || 0;
+            const rate = c.final_interest_rate || 18;
+            const months = c.final_months || 24;
+
+            return `
+                <div class="case-item" data-id="${c.id}">
+                    <div class="case-item__head">
+                        <div class="case-item__info">
+                            <div class="case-item__title">
+                                <span>📄</span>
+                                <span>${escapeHtml(name)}</span>
+                                <span class="case-item__number">${escapeHtml(c.application_number)}</span>
+                            </div>
+                            <div class="case-item__meta">
+                                <span>📱 <span style="direction:ltr;display:inline-block">${escapeHtml(mobile)}</span></span>
+                                <span>💰 <strong>${faPriceShort(amount)}</strong> تومان</span>
+                                <span>📅 <strong>${faPriceShort(monthly)}</strong> قسط</span>
+                                <span>🎫 <strong>${faPriceShort(fee)}</strong> امتیاز</span>
+                                <span>📊 <strong>${faNum(rate)}٪</strong></span>
+                                <span>⏱️ <strong>${faNum(months)}</strong> ماه</span>
+                            </div>
+                        </div>
+                        <div class="case-item__actions">
+                            <button class="legal-btn legal-btn--ghost legal-btn--sm" data-action="view" data-id="${c.id}">
+                                👁️ جزئیات
+                            </button>
+                            <button class="legal-btn legal-btn--primary legal-btn--sm" data-action="upload" data-id="${c.id}">
+                                📤 آپلود پیش‌نویس
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        bindActions();
+    }
+
+    function bindActions() {
+        $$('[data-action]').forEach(btn => {
+            if (btn.dataset.bound === '1') return;
+            btn.dataset.bound = '1';
+            btn.addEventListener('click', handleAction);
+        });
+    }
+
+    function handleAction(e) {
+        const btn = e.currentTarget;
+        const action = btn.dataset.action;
+        const id = btn.dataset.id;
+        const c = state.pendingCases.find(x => x.id === id);
+
+        if (!c) return;
+
+        if (action === 'view') openViewModal(c);
+        else if (action === 'upload') openUploadModal(c);
+    }
+
+    function escapeHtml(s) {
+        if (s === null || s === undefined) return '';
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function openModal(title, bodyHtml, footerHtml) {
+        $('#modalTitle').textContent = title;
+        $('#modalBody').innerHTML = bodyHtml;
+        $('#modalFooter').innerHTML = footerHtml || '';
+        $('#modalBackdrop').classList.add('modal-backdrop--open');
+    }
+
+    function closeModal() {
+        $('#modalBackdrop').classList.remove('modal-backdrop--open');
+        state.currentCase = null;
+    }
+
+    function openViewModal(c) {
+        state.currentCase = c;
+        const name = getApplicantName(c);
+        const mobile = getApplicantMobile(c);
+        const amount = c.final_loan_amount || c.loan_amount || 0;
+        const monthly = c.final_monthly_installment || 0;
+        const fee = c.final_verification_fee || 0;
+        const rate = c.final_interest_rate || 18;
+        const months = c.final_months || 24;
+
+        const body = `
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-item__label">شماره پرونده</div>
+                    <div class="info-item__value info-item__value--ltr">${escapeHtml(c.application_number)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item__label">نام متقاضی</div>
+                    <div class="info-item__value">${escapeHtml(name)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item__label">موبایل</div>
+                    <div class="info-item__value info-item__value--ltr">${escapeHtml(mobile)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item__label">بانک عامل</div>
+                    <div class="info-item__value">${escapeHtml(c.loan_bank || c.loan_type || '—')}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item__label">مبلغ نهایی</div>
+                    <div class="info-item__value">${faPrice(amount)} تومان</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item__label">قسط ماهیانه</div>
+                    <div class="info-item__value">${faPrice(monthly)} تومان</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item__label">هزینه امتیاز</div>
+                    <div class="info-item__value">${faPrice(fee)} تومان</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item__label">تعداد اقساط</div>
+                    <div class="info-item__value">${faNum(months)} ماه</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item__label">نرخ سود</div>
+                    <div class="info-item__value">${faNum(rate)}٪</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item__label">مرحله فعلی</div>
+                    <div class="info-item__value">${faNum(c.current_step)} از ${faNum(c.total_steps)}</div>
+                </div>
+            </div>
+
+            ${c.verification_notes ? `
+                <div style="padding:14px;background:var(--bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.9;margin-top:14px;">
+                    <strong>📝 یادداشت اعتبارسنج:</strong><br>
+                    ${escapeHtml(c.verification_notes)}
+                </div>
+            ` : ''}
+        `;
+
+        const footer = `
+            <button class="legal-btn legal-btn--ghost" onclick="window.__closeModal && window.__closeModal()">بستن</button>
+            <button class="legal-btn legal-btn--primary" id="modalUploadBtn">📤 آپلود پیش‌نویس</button>
+        `;
+
+        openModal(`👁️ جزئیات پرونده ${c.application_number}`, body, footer);
+
+        document.getElementById('modalUploadBtn').addEventListener('click', () => {
+            closeModal();
+            openUploadModal(c);
+        });
+    }
+
+    function openUploadModal(c) {
+        state.currentCase = c;
+
+        const body = `
+            <div style="padding:14px;background:rgba(74,144,226,0.08);border-radius:var(--radius-sm);border-right:4px solid var(--legal-light);margin-bottom:18px;">
+                <p style="font-size:13px;line-height:1.9;color:var(--text);margin:0;">
+                    <strong>📋 پرونده:</strong> <span style="direction:ltr;display:inline-block;font-family:monospace">${escapeHtml(c.application_number)}</span><br>
+                    <strong>👤 متقاضی:</strong> ${escapeHtml(getApplicantName(c))}<br>
+                    <strong>💰 مبلغ نهایی:</strong> ${faPrice(c.final_loan_amount || 0)} تومان
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    فایل پیش‌نویس حقوقی <span class="req">*</span>
+                </label>
+                <input type="file" class="form-file" id="legalFile" accept=".html,.htm,.pdf,.txt,.doc,.docx">
+                <div class="form-hint">
+                    فرمت‌های مجاز: HTML، PDF، TXT، DOC، DOCX — حداکثر ۵ مگابایت
+                </div>
+                <div id="filePreview"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">یادداشت برای مدیر کل (اختیاری)</label>
+                <textarea class="form-textarea" id="legalNote" placeholder="توضیحات تکمیلی برای مدیر کل..."></textarea>
+                <div class="form-hint">این یادداشت به مدیر کل نمایش داده می‌شود.</div>
+            </div>
+        `;
+
+        const footer = `
+            <button class="legal-btn legal-btn--ghost" onclick="window.__closeModal && window.__closeModal()">انصراف</button>
+            <button class="legal-btn legal-btn--primary" id="modalUploadConfirm">📤 آپلود و ارسال به مدیر کل</button>
+        `;
+
+        openModal('📤 آپلود پیش‌نویس حقوقی', body, footer);
+
+        const fileInput = document.getElementById('legalFile');
+        const filePreview = document.getElementById('filePreview');
+
+        fileInput.addEventListener('change', function() {
+            const f = this.files && this.files[0];
+            if (!f) {
+                filePreview.innerHTML = '';
+                return;
+            }
+            const sizeKB = (f.size / 1024).toFixed(1);
+            filePreview.innerHTML = `
+                <div class="file-preview">
+                    <div class="file-preview__icon">📄</div>
+                    <div>
+                        <div class="file-preview__name">${escapeHtml(f.name)}</div>
+                        <div class="file-preview__size">${faNum(sizeKB)} کیلوبایت</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('modalUploadConfirm').addEventListener('click', async () => {
+            const f = fileInput.files && fileInput.files[0];
+            if (!f) {
+                toast('لطفاً یک فایل انتخاب کنید', 'error');
+                return;
+            }
+
+            if (f.size > 5 * 1024 * 1024) {
+                toast('حجم فایل بیش از ۵ مگابایت است', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('modalUploadConfirm');
+            btn.disabled = true;
+            btn.textContent = '⏳ در حال آپلود...';
+
+            try {
+                const reader = new FileReader();
+                reader.onload = async (ev) => {
+                    const dataUrl = ev.target.result;
+                    const note = document.getElementById('legalNote').value.trim();
+
+                    const { error } = await window.WAM_SB.client
+                        .from('applications')
+                        .update({
+                            legal_draft_content: dataUrl,
+                            legal_draft_ready_at: new Date().toISOString(),
+                            status: 'legal_draft_ready',
+                            admin_notes: note || null,
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', c.id);
+
+                    if (error) throw error;
+
+                    console.log(`✅ پیش‌نویس ${c.application_number} آپلود شد`);
+                    closeModal();
+                    toast('✅ پیش‌نویس آپلود و برای تأیید مدیر کل ارسال شد', 'success');
+                    await loadCases();
+                };
+                reader.onerror = () => {
+                    toast('خطا در خواندن فایل', 'error');
+                    btn.disabled = false;
+                    btn.textContent = '📤 آپلود و ارسال به مدیر کل';
+                };
+                reader.readAsDataURL(f);
+            } catch (err) {
+                console.error('خطا در آپلود:', err);
+                toast('خطا: ' + err.message, 'error');
+                btn.disabled = false;
+                btn.textContent = '📤 آپلود و ارسال به مدیر کل';
+            }
+        });
+    }
+
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        if (!btn) return;
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light');
+                btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark');
+                btn.textContent = '☀️';
+            }
+        });
+    }
+
+    function attachEvents() {
+        $('#refreshBtn').addEventListener('click', async () => {
+            toast('در حال به‌روزرسانی...', 'info');
+            await loadCases();
+            toast('به‌روزرسانی شد', 'success');
+        });
+
+        $('#refreshQueue').addEventListener('click', async () => {
+            await loadCases();
+            toast('به‌روزرسانی شد', 'success');
+        });
+
+        $('#notifBtn').addEventListener('click', async () => {
+            await loadCases();
+            toast('به‌روزرسانی شد', 'success');
+        });
+
+        $('#logoutBtn').addEventListener('click', () => {
+            if (!confirm('از حساب خارج می‌شوید؟')) return;
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+            window.location.href = 'login.html';
+        });
+
+        $('#modalClose').addEventListener('click', closeModal);
+        $('#modalBackdrop').addEventListener('click', (e) => {
+            if (e.target === $('#modalBackdrop')) closeModal();
+        });
+
+        window.__closeModal = closeModal;
+
+        // به‌روزرسانی خودکار
+        setInterval(() => {
+            console.log('🔄 به‌روزرسانی خودکار...');
+            loadCases();
+        }, 30000);
+    }
+
+    async function init() {
+        if (!checkAuth()) return;
+
+        const user = state.user;
+        $('#userName').textContent = user.name || 'ادمین حقوقی';
+        $('#userAvatar').textContent = '⚖️';
+
+        initTheme();
+        attachEvents();
+
+        await loadCases();
+
+        console.log('%c⚖️ WAM PAY — Legal Dashboard v2.1 (Supabase + Editor Button)', 'color:#1f3a5f;font-weight:bold;font-size:14px;');
+        console.log('%c👤 ادمین حقوقی:', 'color:#4a90e2;font-weight:bold;', user.name);
+        console.log('%c⏳ در انتظار تنظیم:', 'color:#4a90e2;font-weight:bold;', state.pendingCases.length);
+        console.log('%c✅ آماده‌ی تأیید:', 'color:#4a90e2;font-weight:bold;', state.readyCases.length);
+        console.log('%c📝 دکمه ادیتور قالب: فعال', 'color:#4a90e2;font-weight:bold;');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

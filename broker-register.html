@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ثبت‌نام کارگزار | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23;
+    --primary-light: #1a5c3a;
+    --primary-dark: #062416;
+    --gold: #d4a62a;
+    --gold-light: #f0c651;
+    --text: #1a2b22;
+    --text-muted: #6b7d73;
+    --bg: #f4f7f4;
+    --bg-card: #ffffff;
+    --border: #e0e8e3;
+    --error: #c0392b;
+    --success: #1e8e4a;
+    --warning: #e67e22;
+    --shadow-sm: 0 2px 8px rgba(11, 59, 35, 0.06);
+    --shadow-md: 0 8px 24px rgba(11, 59, 35, 0.10);
+    --shadow-lg: 0 16px 48px rgba(11, 59, 35, 0.16);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+    background-image:
+        radial-gradient(circle at 10% 10%, rgba(212, 166, 42, 0.06), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(11, 59, 35, 0.08), transparent 40%);
+}
+.reg-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; padding: 20px 24px; box-shadow: var(--shadow-md);
+    position: sticky; top: 0; z-index: 100;
+}
+.reg-header__inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.reg-logo {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 800; font-size: 20px; color: #fff; text-decoration: none;
+}
+.reg-logo__icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 4px 12px rgba(212, 166, 42, 0.4);
+}
+.reg-header__actions { display: flex; gap: 10px; align-items: center; }
+.reg-theme-btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: #fff;
+    cursor: pointer; font-size: 18px; transition: var(--transition);
+}
+.reg-theme-btn:hover { background: rgba(255,255,255,0.18); }
+.reg-login-link {
+    color: #fff; text-decoration: none; font-size: 14px;
+    padding: 10px 18px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25); transition: var(--transition);
+}
+.reg-login-link:hover { background: rgba(255,255,255,0.12); }
+.reg-main { max-width: 780px; margin: 0 auto; padding: 32px 20px 80px; }
+.reg-hero { text-align: center; margin-bottom: 24px; }
+.reg-hero__badge {
+    display: inline-block; padding: 6px 16px;
+    background: rgba(212, 166, 42, 0.15); color: var(--gold);
+    border-radius: 999px; font-size: 13px; font-weight: 700; margin-bottom: 12px;
+}
+.reg-hero__title { font-size: 28px; font-weight: 800; margin-bottom: 10px; color: var(--text); }
+.reg-hero__subtitle { color: var(--text-muted); font-size: 15px; max-width: 500px; margin: 0 auto; }
+.reg-filenum {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; border-radius: var(--radius); padding: 18px 24px;
+    margin-bottom: 24px; display: flex; align-items: center;
+    justify-content: space-between; gap: 16px;
+    box-shadow: var(--shadow-md); position: relative; overflow: hidden;
+}
+.reg-filenum::before {
+    content: ''; position: absolute; top: -50%; right: -20%;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(212, 166, 42, 0.15);
+}
+.reg-filenum__right { position: relative; z-index: 1; }
+.reg-filenum__label { font-size: 13px; opacity: 0.85; margin-bottom: 4px; }
+.reg-filenum__value {
+    font-size: 24px; font-weight: 800; letter-spacing: 2px;
+    color: var(--gold-light); font-family: monospace; direction: ltr;
+}
+.reg-filenum__left { position: relative; z-index: 1; text-align: left; }
+.reg-filenum__hint { font-size: 12px; opacity: 0.85; margin-bottom: 6px; max-width: 240px; }
+.reg-filenum__copy {
+    padding: 6px 12px; border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1); color: #fff;
+    font-family: inherit; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+}
+.reg-filenum__copy:hover { background: rgba(255,255,255,0.2); }
+.reg-progress {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-bottom: 32px; flex-wrap: wrap;
+}
+.reg-progress__step {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--text-muted); font-weight: 600;
+}
+.reg-progress__num {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--bg-card); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; transition: var(--transition);
+}
+.reg-progress__step--active .reg-progress__num {
+    background: var(--primary); border-color: var(--primary); color: #fff;
+    box-shadow: 0 0 0 4px rgba(11, 59, 35, 0.15);
+}
+.reg-progress__step--done .reg-progress__num {
+    background: var(--success); border-color: var(--success); color: #fff;
+}
+.reg-progress__step--done .reg-progress__label { color: var(--success); }
+.reg-progress__line { width: 40px; height: 2px; background: var(--border); border-radius: 2px; }
+.reg-progress__line--done { background: var(--success); }
+.reg-card {
+    background: var(--bg-card); border-radius: var(--radius); padding: 32px;
+    box-shadow: var(--shadow-md); border: 1px solid var(--border);
+    animation: fadeInUp 0.4s ease;
+}
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.reg-step { display: none; }
+.reg-step--active { display: block; }
+.reg-card__title { font-size: 20px; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.reg-card__desc { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px dashed var(--border); }
+.reg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.reg-field { display: flex; flex-direction: column; gap: 6px; }
+.reg-field--full { grid-column: 1 / -1; }
+.reg-label { font-size: 14px; font-weight: 600; color: var(--text); }
+.reg-label__required { color: var(--error); margin-right: 3px; }
+.reg-input, .reg-select, .reg-textarea {
+    width: 100%; padding: 12px 14px;
+    border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+    background: var(--bg); color: var(--text);
+    font-family: inherit; font-size: 15px; transition: var(--transition);
+}
+.reg-input:focus, .reg-select:focus, .reg-textarea:focus {
+    outline: none; border-color: var(--primary);
+    background: var(--bg-card); box-shadow: 0 0 0 4px rgba(11, 59, 35, 0.10);
+}
+.reg-input--error { border-color: var(--error); }
+.reg-input:disabled { opacity: 0.65; cursor: not-allowed; background: var(--border); }
+.reg-textarea { resize: vertical; min-height: 90px; }
+.reg-hint { font-size: 12px; color: var(--text-muted); }
+.reg-error { font-size: 12px; color: var(--error); font-weight: 600; display: none; }
+.reg-error--show { display: block; }
+.reg-date { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.reg-date .reg-select { padding: 12px 10px; text-align: center; font-weight: 700; }
+.reg-section-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 800; color: var(--primary);
+    margin: 22px 0 10px; padding-bottom: 8px;
+    border-bottom: 2px solid rgba(11, 59, 35, 0.10);
+}
+.reg-section-title:first-of-type { margin-top: 0; }
+[data-theme="dark"] .reg-section-title { color: var(--gold-light); border-bottom-color: rgba(212, 166, 42, 0.25); }
+.reg-same-addr {
+    background: linear-gradient(135deg, rgba(212, 166, 42, 0.10), rgba(11, 59, 35, 0.05));
+    border: 2px solid rgba(212, 166, 42, 0.35);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px; cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    transition: var(--transition); margin: 6px 0;
+}
+.reg-same-addr:hover { border-color: var(--gold); }
+.reg-same-addr input[type="checkbox"] {
+    width: 20px; height: 20px;
+    accent-color: var(--primary); cursor: pointer; flex-shrink: 0;
+}
+.reg-same-addr__text {
+    font-size: 14px; font-weight: 700; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+}
+.reg-same-addr__icon { font-size: 20px; }
+.reg-otp-wrap { display: flex; gap: 10px; direction: ltr; justify-content: center; margin: 24px 0; }
+.reg-otp-input {
+    width: 52px; height: 60px; text-align: center;
+    font-size: 24px; font-weight: 800;
+    border-radius: var(--radius-sm); border: 2px solid var(--border);
+    background: var(--bg); color: var(--text);
+    font-family: inherit; transition: var(--transition);
+}
+.reg-otp-input:focus {
+    outline: none; border-color: var(--primary);
+    background: var(--bg-card); box-shadow: 0 0 0 4px rgba(11, 59, 35, 0.10);
+    transform: translateY(-2px);
+}
+.reg-otp-info { text-align: center; font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
+.reg-otp-info strong { color: var(--text); }
+.reg-otp-timer { text-align: center; font-size: 13px; color: var(--warning); font-weight: 700; margin-top: 8px; }
+.reg-resend-btn {
+    background: none; border: none; color: var(--primary);
+    font-family: inherit; font-weight: 700; cursor: pointer; font-size: 13px;
+    padding: 4px 8px; border-radius: 6px; transition: var(--transition);
+}
+.reg-resend-btn:hover:not(:disabled) { background: rgba(11, 59, 35, 0.08); }
+.reg-resend-btn:disabled { color: var(--text-muted); cursor: not-allowed; }
+.reg-upload {
+    border: 2px dashed var(--border); border-radius: var(--radius-sm);
+    padding: 24px; text-align: center; cursor: pointer;
+    transition: var(--transition); background: var(--bg);
+    position: relative; overflow: hidden;
+}
+.reg-upload:hover { border-color: var(--primary); background: rgba(11, 59, 35, 0.04); }
+.reg-upload--has-file { border-color: var(--success); background: rgba(30, 142, 74, 0.06); }
+.reg-upload--required { border-color: rgba(192, 57, 43, 0.4); }
+.reg-upload--compressing { border-color: var(--gold); background: rgba(212, 166, 42, 0.08); }
+.reg-upload__icon { font-size: 32px; margin-bottom: 8px; }
+.reg-upload__text { font-size: 14px; font-weight: 600; color: var(--text); }
+.reg-upload__hint { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.reg-upload__file { font-size: 13px; color: var(--success); font-weight: 700; margin-top: 8px; }
+.reg-upload__thumb {
+    width: 100px; height: 100px; border-radius: 8px;
+    object-fit: cover; margin: 10px auto 6px; display: block;
+    border: 2px solid var(--success);
+    box-shadow: 0 4px 12px rgba(30, 142, 74, 0.2);
+}
+.reg-upload__meta {
+    font-size: 10px; color: var(--text-muted);
+    margin-top: 2px; font-family: monospace;
+}
+.reg-upload input[type="file"] { display: none; }
+.reg-selfie-box {
+    background: linear-gradient(135deg, rgba(212, 166, 42, 0.08), rgba(11, 59, 35, 0.05));
+    border: 2px solid rgba(212, 166, 42, 0.35);
+    border-radius: var(--radius-sm); padding: 18px;
+}
+.reg-selfie-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+.reg-selfie-step {
+    background: var(--bg-card); border-radius: var(--radius-sm);
+    padding: 12px; text-align: center; border: 1px solid var(--border);
+}
+.reg-selfie-step__num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    font-weight: 800; font-size: 13px; margin-bottom: 6px;
+}
+.reg-selfie-step__text { font-size: 12px; color: var(--text); line-height: 1.6; }
+.reg-checkbox {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 14px; border-radius: var(--radius-sm);
+    background: var(--bg); border: 1.5px solid var(--border);
+    cursor: pointer; transition: var(--transition);
+}
+.reg-checkbox:hover { border-color: var(--primary); }
+.reg-checkbox input[type="checkbox"] {
+    margin-top: 4px; width: 18px; height: 18px;
+    accent-color: var(--primary); cursor: pointer; flex-shrink: 0;
+}
+.reg-checkbox__text { font-size: 13px; color: var(--text); line-height: 1.6; }
+.reg-checkbox__text a { color: var(--primary); font-weight: 700; text-decoration: none; }
+.reg-checkbox__text a:hover { text-decoration: underline; }
+.reg-actions {
+    display: flex; gap: 12px; margin-top: 28px;
+    padding-top: 20px; border-top: 1px dashed var(--border);
+}
+.reg-btn {
+    flex: 1; padding: 14px 20px; border-radius: var(--radius-sm); border: none;
+    font-family: inherit; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.reg-btn--primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; box-shadow: 0 6px 16px rgba(11, 59, 35, 0.25);
+}
+.reg-btn--primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11, 59, 35, 0.35); }
+.reg-btn--primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.reg-btn--ghost { background: transparent; color: var(--text-muted); border: 1.5px solid var(--border); }
+.reg-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.reg-btn--gold {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: var(--primary-dark); box-shadow: 0 6px 16px rgba(212, 166, 42, 0.3);
+}
+.reg-btn--gold:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(212, 166, 42, 0.45); }
+.reg-btn__spinner {
+    width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.8s linear infinite; display: none;
+}
+.reg-btn--loading .reg-btn__spinner { display: block; }
+.reg-btn--loading .reg-btn__text { opacity: 0.7; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.reg-success { text-align: center; padding: 20px 0; }
+.reg-success__icon {
+    width: 90px; height: 90px; margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--success) 0%, #2ecc71 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; color: #fff;
+    box-shadow: 0 12px 32px rgba(30, 142, 74, 0.35);
+    animation: pop 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+@keyframes pop { 0% { transform: scale(0); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+.reg-success__title { font-size: 24px; font-weight: 800; margin-bottom: 8px; color: var(--success); }
+.reg-success__desc { color: var(--text-muted); margin-bottom: 24px; font-size: 15px; }
+.reg-summary {
+    background: var(--bg); border-radius: var(--radius-sm); padding: 20px;
+    text-align: right; margin-bottom: 24px; border: 1px solid var(--border);
+}
+.reg-summary__row {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px dashed var(--border); font-size: 14px;
+}
+.reg-summary__row:last-child { border-bottom: none; }
+.reg-summary__row span:first-child { color: var(--text-muted); }
+.reg-summary__row span:last-child { font-weight: 700; color: var(--text); text-align: left; max-width: 60%; }
+.reg-alert {
+    padding: 14px 18px; border-radius: var(--radius-sm);
+    font-size: 14px; margin-bottom: 20px;
+    display: flex; gap: 10px; align-items: flex-start;
+}
+.reg-alert--info { background: rgba(11, 59, 35, 0.08); color: var(--primary); border-right: 4px solid var(--primary); }
+.reg-alert--warning { background: rgba(230, 126, 34, 0.10); color: var(--warning); border-right: 4px solid var(--warning); }
+.reg-toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 24px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 9999; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; align-items: center; gap: 10px; max-width: 90%;
+}
+.reg-toast--show { transform: translateX(-50%) translateY(0); }
+.reg-toast--error { background: var(--error); }
+.reg-toast--success { background: var(--success); }
+.reg-landline { display: grid; grid-template-columns: 1.2fr 1.5fr; gap: 8px; }
+.reg-landline .reg-select { padding: 12px 10px; font-weight: 700; text-align: center; }
+.reg-landline .reg-input { text-align: center; font-weight: 700; letter-spacing: 3px; font-size: 16px; }
+.reg-required-box {
+    background: linear-gradient(135deg, rgba(212, 166, 42, 0.10), rgba(11, 59, 35, 0.05));
+    border: 2px solid rgba(212, 166, 42, 0.4);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px; margin-top: 6px;
+}
+.reg-required-box__title {
+    font-size: 13px; font-weight: 800; color: var(--primary);
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+[data-theme="dark"] .reg-required-box__title { color: var(--gold-light); }
+.reg-required-box__desc { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
+.reg-bank-box {
+    background: linear-gradient(135deg, rgba(41, 128, 185, 0.08), rgba(11, 59, 35, 0.05));
+    border: 2px solid rgba(41, 128, 185, 0.35);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    margin-top: 6px;
+}
+.reg-bank-box__title {
+    font-size: 14px; font-weight: 800; color: var(--primary);
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+[data-theme="dark"] .reg-bank-box__title { color: var(--gold-light); }
+.reg-bank-box__desc {
+    font-size: 12px; color: var(--text-muted); line-height: 1.7;
+    padding-bottom: 12px; border-bottom: 1px dashed rgba(41, 128, 185, 0.3);
+    margin-bottom: 14px;
+}
+.reg-card-input {
+    letter-spacing: 3px;
+    font-family: 'Vazirmatn', monospace;
+    font-weight: 700;
+    text-align: center;
+    font-size: 16px;
+}
+.reg-sheba-wrap {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 6px;
+    align-items: stretch;
+}
+.reg-sheba-prefix {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; font-weight: 800; font-size: 16px;
+    border-radius: var(--radius-sm);
+    font-family: monospace; letter-spacing: 2px;
+}
+.reg-sheba-wrap .reg-input {
+    letter-spacing: 2px;
+    font-family: monospace;
+    font-weight: 700;
+    text-align: center;
+    font-size: 15px;
+}
+@media (max-width: 640px) {
+    .reg-main { padding: 20px 14px 60px; }
+    .reg-card { padding: 22px 18px; }
+    .reg-grid { grid-template-columns: 1fr; gap: 14px; }
+    .reg-hero__title { font-size: 22px; }
+    .reg-otp-input { width: 42px; height: 52px; font-size: 20px; }
+    .reg-progress__label { display: none; }
+    .reg-progress__line { width: 20px; }
+    .reg-actions { flex-direction: column-reverse; }
+    .reg-logo { font-size: 16px; }
+    .reg-logo__icon { width: 36px; height: 36px; font-size: 18px; }
+    .reg-login-link { display: none; }
+    .reg-filenum { flex-direction: column; text-align: center; }
+    .reg-filenum__left { text-align: center; }
+    .reg-filenum__hint { max-width: none; }
+    .reg-selfie-steps { grid-template-columns: 1fr; }
+    .reg-date { grid-template-columns: 1fr; }
+    .reg-landline { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="reg-header">
+    <div class="reg-header__inner">
+        <a href="index.html" class="reg-logo">
+            <div class="reg-logo__icon">💰</div>
+            <span>وام پی</span>
+        </a>
+        <div class="reg-header__actions">
+            <button class="reg-theme-btn" id="themeBtn" title="تغییر تم">🌙</button>
+            <a href="login.html" class="reg-login-link">ورود به حساب</a>
+        </div>
+    </div>
+</header>
+
+<main class="reg-main">
+
+    <div class="reg-hero">
+        <div class="reg-hero__badge">🎯 عضویت در شبکه‌ی کارگزاران</div>
+        <h1 class="reg-hero__title">ثبت‌نام کارگزار وام پی</h1>
+        <p class="reg-hero__subtitle">
+            با تکمیل این فرم، درخواست شما برای بررسی و تأیید به تیم وام پی ارسال می‌شود.
+        </p>
+    </div>
+
+    <div class="reg-filenum">
+        <div class="reg-filenum__right">
+            <div class="reg-filenum__label">📁 شماره پرونده‌ی شما در سامانه</div>
+            <div class="reg-filenum__value" id="fileNumberDisplay">BRK-2026-00000</div>
+        </div>
+        <div class="reg-filenum__left">
+            <div class="reg-filenum__hint">
+                این شماره به‌صورت خودکار برای شما تولید شده است. لطفاً آن را یادداشت کنید.
+            </div>
+            <button class="reg-filenum__copy" id="copyFileNumberBtn">📋 کپی شماره پرونده</button>
+        </div>
+    </div>
+
+    <div class="reg-progress" id="progress">
+        <div class="reg-progress__step reg-progress__step--active" data-step="1">
+            <div class="reg-progress__num">۱</div>
+            <span class="reg-progress__label">تأیید موبایل</span>
+        </div>
+        <div class="reg-progress__line"></div>
+        <div class="reg-progress__step" data-step="2">
+            <div class="reg-progress__num">۲</div>
+            <span class="reg-progress__label">اطلاعات شخصی</span>
+        </div>
+        <div class="reg-progress__line"></div>
+        <div class="reg-progress__step" data-step="3">
+            <div class="reg-progress__num">۳</div>
+            <span class="reg-progress__label">اطلاعات کارگزاری</span>
+        </div>
+        <div class="reg-progress__line"></div>
+        <div class="reg-progress__step" data-step="4">
+            <div class="reg-progress__num">۴</div>
+            <span class="reg-progress__label">مدارک</span>
+        </div>
+    </div>
+
+    <div class="reg-card">
+
+        <!-- STEP 1: OTP -->
+        <section class="reg-step reg-step--active" data-step="1">
+            <h2 class="reg-card__title">📱 تأیید شماره موبایل</h2>
+            <p class="reg-card__desc">
+                شماره موبایل خود را وارد کنید. کد تأیید ۵ رقمی برای شما ارسال خواهد شد.
+            </p>
+
+            <div class="reg-field">
+                <label class="reg-label">شماره موبایل <span class="reg-label__required">*</span></label>
+                <input type="tel" id="mobileInput" class="reg-input" placeholder="09123456789" maxlength="11" inputmode="numeric" autocomplete="tel">
+                <div class="reg-error" id="mobileError">شماره موبایل معتبر نیست</div>
+                <div class="reg-hint">شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود.</div>
+            </div>
+
+            <div id="otpSection" style="display:none;">
+                <div class="reg-otp-info" style="margin-top:24px;">
+                    کد تأیید به شماره <strong id="otpMobileDisplay"></strong> ارسال شد
+                </div>
+                <div class="reg-otp-wrap">
+                    <input type="tel" class="reg-otp-input" maxlength="1" inputmode="numeric" data-otp-index="0">
+                    <input type="tel" class="reg-otp-input" maxlength="1" inputmode="numeric" data-otp-index="1">
+                    <input type="tel" class="reg-otp-input" maxlength="1" inputmode="numeric" data-otp-index="2">
+                    <input type="tel" class="reg-otp-input" maxlength="1" inputmode="numeric" data-otp-index="3">
+                    <input type="tel" class="reg-otp-input" maxlength="1" inputmode="numeric" data-otp-index="4">
+                </div>
+                <div class="reg-otp-timer" id="otpTimer">۰۲:۰۰</div>
+                <div style="text-align:center; margin-top:12px;">
+                    <button class="reg-resend-btn" id="resendBtn" disabled>ارسال مجدد کد</button>
+                </div>
+                <div class="reg-error" id="otpError" style="text-align:center; margin-top:8px;">کد وارد شده صحیح نیست</div>
+            </div>
+
+            <div class="reg-actions">
+                <button class="reg-btn reg-btn--primary" id="sendOtpBtn">
+                    <span class="reg-btn__spinner"></span>
+                    <span class="reg-btn__text">ارسال کد تأیید</span>
+                </button>
+                <button class="reg-btn reg-btn--primary" id="verifyOtpBtn" style="display:none;">
+                    <span class="reg-btn__spinner"></span>
+                    <span class="reg-btn__text">تأیید و ادامه</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 2: Personal -->
+        <section class="reg-step" data-step="2">
+            <h2 class="reg-card__title">👤 اطلاعات شخصی</h2>
+            <p class="reg-card__desc">اطلاعات هویتی خود را دقیق وارد کنید (مطابق کارت ملی).</p>
+
+            <div class="reg-section-title">🪪 اطلاعات هویتی</div>
+            <div class="reg-grid">
+                <div class="reg-field">
+                    <label class="reg-label">نام <span class="reg-label__required">*</span></label>
+                    <input type="text" id="firstName" class="reg-input" placeholder="مثال: علی">
+                    <div class="reg-error" id="firstNameError">نام را وارد کنید</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">نام خانوادگی <span class="reg-label__required">*</span></label>
+                    <input type="text" id="lastName" class="reg-input" placeholder="مثال: محمدی">
+                    <div class="reg-error" id="lastNameError">نام خانوادگی را وارد کنید</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">کد ملی <span class="reg-label__required">*</span></label>
+                    <input type="text" id="nationalId" class="reg-input" placeholder="۱۰ رقم" maxlength="10" inputmode="numeric">
+                    <div class="reg-error" id="nationalIdError">کد ملی معتبر نیست</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">تاریخ تولد (شمسی) <span class="reg-label__required">*</span></label>
+                    <div class="reg-date">
+                        <select id="birthYear" class="reg-select">
+                            <option value="">سال</option>
+                        </select>
+                        <select id="birthMonth" class="reg-select">
+                            <option value="">ماه</option>
+                            <option value="1">فروردین</option>
+                            <option value="2">اردیبهشت</option>
+                            <option value="3">خرداد</option>
+                            <option value="4">تیر</option>
+                            <option value="5">مرداد</option>
+                            <option value="6">شهریور</option>
+                            <option value="7">مهر</option>
+                            <option value="8">آبان</option>
+                            <option value="9">آذر</option>
+                            <option value="10">دی</option>
+                            <option value="11">بهمن</option>
+                            <option value="12">اسفند</option>
+                        </select>
+                        <select id="birthDay" class="reg-select">
+                            <option value="">روز</option>
+                        </select>
+                    </div>
+                    <div class="reg-error" id="birthDateError">تاریخ تولد را کامل انتخاب کنید</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">ایمیل</label>
+                    <input type="email" id="email" class="reg-input" placeholder="example@mail.com" dir="ltr">
+                </div>
+
+                <div class="reg-field reg-field--full">
+                    <label class="reg-label">
+                        ☎️ شماره تلفن ثابت (برای احراز هویت)
+                        <span class="reg-label__required">*</span>
+                    </label>
+                    <div class="reg-landline">
+                        <select id="phoneAreaCode" class="reg-select">
+                            <option value="">کد شهر</option>
+                            <option value="021">۰۲۱ — تهران</option>
+                            <option value="025">۰۲۵ — قم</option>
+                            <option value="026">۰۲۶ — کرج / البرز</option>
+                            <option value="031">۰۳۱ — اصفهان</option>
+                            <option value="034">۰۳۴ — کرمان</option>
+                            <option value="035">۰۳۵ — یزد</option>
+                            <option value="038">۰۳۸ — شهرکرد</option>
+                            <option value="041">۰۴۱ — تبریز</option>
+                            <option value="044">۰۴۴ — ارومیه</option>
+                            <option value="045">۰۴۵ — اردبیل</option>
+                            <option value="051">۰۵۱ — مشهد</option>
+                            <option value="054">۰۵۴ — زاهدان</option>
+                            <option value="056">۰۵۶ — بیرجند</option>
+                            <option value="058">۰۵۸ — بجنورد</option>
+                            <option value="061">۰۶۱ — اهواز</option>
+                            <option value="066">۰۶۶ — خرم‌آباد</option>
+                            <option value="071">۰۷۱ — شیراز</option>
+                            <option value="074">۰۷۴ — یاسوج</option>
+                            <option value="076">۰۷۶ — بندرعباس</option>
+                            <option value="077">۰۷۷ — بوشهر</option>
+                            <option value="081">۰۸۱ — همدان</option>
+                            <option value="083">۰۸۳ — کرمانشاه</option>
+                            <option value="084">۰۸۴ — ایلام</option>
+                            <option value="086">۰۸۶ — اراک</option>
+                            <option value="087">۰۸۷ — سنندج</option>
+                            <option value="011">۰۱۱ — ساری</option>
+                            <option value="013">۰۱۳ — رشت</option>
+                            <option value="017">۰۱۷ — گرگان</option>
+                            <option value="023">۰۲۳ — سمنان</option>
+                            <option value="024">۰۲۴ — زنجان</option>
+                            <option value="028">۰۲۸ — قزوین</option>
+                        </select>
+                        <input type="tel" id="phone" class="reg-input" placeholder="۸ رقم" maxlength="8" inputmode="numeric" dir="ltr">
+                    </div>
+                    <div class="reg-error" id="phoneAreaCodeError">کد شهر را انتخاب کنید</div>
+                    <div class="reg-error" id="phoneError">شماره تلفن ثابت باید ۸ رقم باشد</div>
+                </div>
+
+                <div class="reg-field reg-field--full">
+                    <div class="reg-required-box">
+                        <div class="reg-required-box__title">
+                            <span>🔐</span>
+                            <span>نکته‌ی مهم درباره‌ی خط ثابت</span>
+                        </div>
+                        <div class="reg-required-box__desc">
+                            شماره تلفن ثابت شما <strong>برای احراز هویت توسط ادمین</strong> استفاده می‌شود.
+                            ادمین وام‌پی با این شماره تماس گرفته و هویت شما را تأیید می‌کند.
+                            لطفاً فقط شماره‌ای را وارد کنید که <strong>در دسترس و قابل پاسخگویی</strong> باشد.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reg-section-title">🏠 آدرس محل سکونت</div>
+            <div class="reg-grid">
+                <div class="reg-field reg-field--full">
+                    <label class="reg-label">آدرس کامل محل سکونت <span class="reg-label__required">*</span></label>
+                    <textarea id="address" class="reg-textarea" placeholder="استان، شهر، خیابان، کوچه، پلاک، واحد..."></textarea>
+                    <div class="reg-error" id="addressError">آدرس محل سکونت را وارد کنید</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">کد پستی محل سکونت <span class="reg-label__required">*</span></label>
+                    <input type="text" id="postalCode" class="reg-input" placeholder="۱۰ رقم" maxlength="10" inputmode="numeric" dir="ltr">
+                    <div class="reg-error" id="postalCodeError">کد پستی باید ۱۰ رقم باشد</div>
+                    <div class="reg-hint">کد پستی ۱۰ رقمی بدون خط تیره</div>
+                </div>
+            </div>
+
+            <label class="reg-same-addr" for="sameAddress">
+                <input type="checkbox" id="sameAddress">
+                <div class="reg-same-addr__text">
+                    <span class="reg-same-addr__icon">🔗</span>
+                    <span>آدرس محل کار من همان آدرس محل سکونت است</span>
+                </div>
+            </label>
+
+            <div class="reg-section-title">💼 آدرس محل کار</div>
+            <div class="reg-grid">
+                <div class="reg-field reg-field--full">
+                    <label class="reg-label">آدرس کامل محل کار <span class="reg-label__required">*</span></label>
+                    <textarea id="workAddress" class="reg-textarea" placeholder="استان، شهر، خیابان، کوچه، پلاک، واحد..."></textarea>
+                    <div class="reg-error" id="workAddressError">آدرس محل کار را وارد کنید</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">کد پستی محل کار <span class="reg-label__required">*</span></label>
+                    <input type="text" id="workPostalCode" class="reg-input" placeholder="۱۰ رقم" maxlength="10" inputmode="numeric" dir="ltr">
+                    <div class="reg-error" id="workPostalCodeError">کد پستی محل کار باید ۱۰ رقم باشد</div>
+                </div>
+            </div>
+
+            <div class="reg-actions">
+                <button class="reg-btn reg-btn--ghost" data-back="1">→ مرحله قبل</button>
+                <button class="reg-btn reg-btn--primary" data-next="3">
+                    <span class="reg-btn__text">مرحله بعد ←</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 3: Broker Info + Bank -->
+        <section class="reg-step" data-step="3">
+            <h2 class="reg-card__title">💼 اطلاعات کارگزاری</h2>
+            <p class="reg-card__desc">اطلاعات تخصصی و حرفه‌ای خود را وارد کنید.</p>
+
+            <div class="reg-grid">
+                <div class="reg-field">
+                    <label class="reg-label">شماره پروانه‌ی کارگزاری <span class="reg-label__required">*</span></label>
+                    <input type="text" id="licenseNumber" class="reg-input" placeholder="مثال: BRK-2024-XXXX">
+                    <div class="reg-error" id="licenseNumberError">شماره پروانه را وارد کنید</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">سابقه‌ی کار (سال) <span class="reg-label__required">*</span></label>
+                    <input type="number" id="experience" class="reg-input" placeholder="مثال: ۵" min="0" max="50">
+                    <div class="reg-error" id="experienceError">سابقه را وارد کنید</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">استان <span class="reg-label__required">*</span></label>
+                    <select id="province" class="reg-select">
+                        <option value="">انتخاب کنید...</option>
+                        <option>تهران</option>
+                        <option>اصفهان</option>
+                        <option>فارس</option>
+                        <option>خراسان رضوی</option>
+                        <option>آذربایجان شرقی</option>
+                        <option>آذربایجان غربی</option>
+                        <option>خوزستان</option>
+                        <option>مازندران</option>
+                        <option>گیلان</option>
+                        <option>کرمان</option>
+                        <option>البرز</option>
+                        <option>قم</option>
+                        <option>یزد</option>
+                        <option>کرمانشاه</option>
+                        <option>هرمزگان</option>
+                        <option>سیستان و بلوچستان</option>
+                        <option>گلستان</option>
+                        <option>اردبیل</option>
+                        <option>همدان</option>
+                        <option>مرکزی</option>
+                        <option>لرستان</option>
+                        <option>زنجان</option>
+                        <option>قزوین</option>
+                        <option>سمنان</option>
+                        <option>بوشهر</option>
+                        <option>کردستان</option>
+                        <option>چهارمحال و بختیاری</option>
+                        <option>خراسان شمالی</option>
+                        <option>خراسان جنوبی</option>
+                        <option>ایلام</option>
+                        <option>کهگیلویه و بویراحمد</option>
+                    </select>
+                    <div class="reg-error" id="provinceError">استان را انتخاب کنید</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">شهر <span class="reg-label__required">*</span></label>
+                    <input type="text" id="city" class="reg-input" placeholder="مثال: تهران">
+                    <div class="reg-error" id="cityError">شهر را وارد کنید</div>
+                </div>
+
+                <div class="reg-field reg-field--full">
+                    <label class="reg-label">حوزه‌ی تخصصی <span class="reg-label__required">*</span></label>
+                    <select id="specialty" class="reg-select">
+                        <option value="">انتخاب کنید...</option>
+                        <option>وام مسکن</option>
+                        <option>وام خودرو</option>
+                        <option>وام قرض‌الحسنه</option>
+                        <option>تسهیلات سرمایه در گردش</option>
+                        <option>تسهیلات خرید کالا</option>
+                        <option>وام ازدواج</option>
+                        <option>چند حوزه‌ای</option>
+                    </select>
+                    <div class="reg-error" id="specialtyError">حوزه‌ی تخصصی را انتخاب کنید</div>
+                </div>
+
+                <div class="reg-field reg-field--full">
+                    <label class="reg-label">معرفی کوتاه / توضیحات</label>
+                    <textarea id="bio" class="reg-textarea" placeholder="تجربه‌ها، توانایی‌ها و سابقه‌ی کاری خود را مختصر توضیح دهید..."></textarea>
+                </div>
+            </div>
+
+            <!-- ===== BANK INFO ===== -->
+            <div class="reg-bank-box" style="margin-top:22px;">
+                <div class="reg-bank-box__title">
+                    <span>🏦</span>
+                    <span>اطلاعات بانکی (برای واریز وجه)</span>
+                </div>
+                <div class="reg-bank-box__desc">
+                    اطلاعات حساب بانکی شما برای واریز سهم کارگزاری استفاده می‌شود.
+                    لطفاً اطلاعات را <strong>دقیقاً مطابق با کارت بانکی و شماره شبا</strong> وارد کنید.
+                </div>
+
+                <div class="reg-grid">
+                    <div class="reg-field">
+                        <label class="reg-label">نام بانک <span class="reg-label__required">*</span></label>
+                        <select id="bankName" class="reg-select">
+                            <option value="">انتخاب کنید...</option>
+                            <option>بانک ملی ایران</option>
+                            <option>بانک ملت</option>
+                            <option>بانک صادرات ایران</option>
+                            <option>بانک تجارت</option>
+                            <option>بانک سپه</option>
+                            <option>بانک کشاورزی</option>
+                            <option>بانک مسکن</option>
+                            <option>بانک پاسارگاد</option>
+                            <option>بانک پارسیان</option>
+                            <option>بانک سامان</option>
+                            <option>بانک اقتصاد نوین</option>
+                            <option>بانک کارآفرین</option>
+                            <option>بانک سینا</option>
+                            <option>بانک شهر</option>
+                            <option>بانک دی</option>
+                            <option>بانک رفاه کارگران</option>
+                            <option>بانک صنعت و معدن</option>
+                            <option>بانک توسعه صادرات</option>
+                            <option>بانک توسعه تعاون</option>
+                            <option>بانک پست بانک ایران</option>
+                            <option>بانک قرض‌الحسنه مهر ایران</option>
+                            <option>بانک قرض‌الحسنه رسالت</option>
+                            <option>بانک ایران زمین</option>
+                            <option>بانک خاورمیانه</option>
+                            <option>بانک آینده</option>
+                            <option>بانک گردشگری</option>
+                            <option>بانک قوامین</option>
+                            <option>بانک حکمت ایرانیان</option>
+                            <option>بانک مهر اقتصاد</option>
+                            <option>بانک سرمایه</option>
+                            <option>بانک بلوبانک</option>
+                            <option>بانک سامان (سامانتل)</option>
+                        </select>
+                        <div class="reg-error" id="bankNameError">نام بانک را انتخاب کنید</div>
+                    </div>
+
+                    <div class="reg-field">
+                        <label class="reg-label">شماره حساب <span class="reg-label__required">*</span></label>
+                        <input type="text" id="accountNumber" class="reg-input reg-card-input" placeholder="۱۰ تا ۱۸ رقم" maxlength="18" inputmode="numeric" dir="ltr">
+                        <div class="reg-error" id="accountNumberError">شماره حساب باید ۱۰ تا ۱۸ رقم باشد</div>
+                        <div class="reg-hint">بدون خط تیره و بدون صفر اضافه</div>
+                    </div>
+
+                    <div class="reg-field reg-field--full">
+                        <label class="reg-label">شماره کارت (۱۶ رقم) <span class="reg-label__required">*</span></label>
+                        <input type="text" id="cardNumber" class="reg-input reg-card-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" inputmode="numeric" dir="ltr">
+                        <div class="reg-error" id="cardNumberError">شماره کارت باید ۱۶ رقم معتبر باشد</div>
+                        <div class="reg-hint">شماره ۱۶ رقمی روی کارت بانکی</div>
+                    </div>
+
+                    <div class="reg-field reg-field--full">
+                        <label class="reg-label">شماره شبا (۲۴ رقم — بدون IR) <span class="reg-label__required">*</span></label>
+                        <div class="reg-sheba-wrap">
+                            <div class="reg-sheba-prefix">IR</div>
+                            <input type="text" id="shebaNumber" class="reg-input" placeholder="۲۴ رقم بعد از IR" maxlength="24" inputmode="numeric" dir="ltr">
+                        </div>
+                        <div class="reg-error" id="shebaNumberError">شماره شبا باید ۲۴ رقم معتبر باشد</div>
+                        <div class="reg-hint">مثال: اگر شبا IR123456789012345678901234 باشد، فقط ۲۴ رقم را وارد کنید</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reg-actions">
+                <button class="reg-btn reg-btn--ghost" data-back="2">→ مرحله قبل</button>
+                <button class="reg-btn reg-btn--primary" data-next="4">
+                    <span class="reg-btn__text">مرحله بعد ←</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 4: Documents -->
+        <section class="reg-step" data-step="4">
+            <h2 class="reg-card__title">📎 بارگذاری مدارک</h2>
+            <p class="reg-card__desc">
+                تصویر مدارک زیر را بارگذاری کنید. تصاویر به‌صورت خودکار فشرده می‌شوند. فرمت JPG/PNG.
+            </p>
+
+            <div class="reg-grid">
+                <div class="reg-field">
+                    <label class="reg-label">تصویر کارت ملی <span class="reg-label__required">*</span></label>
+                    <label class="reg-upload reg-upload--required" id="uploadNationalCard">
+                        <input type="file" accept="image/*" data-doc="nationalCard">
+                        <div class="reg-upload__icon">🪪</div>
+                        <div class="reg-upload__text">انتخاب تصویر کارت ملی</div>
+                        <div class="reg-upload__hint">پشت و روی کارت ملی در یک عکس</div>
+                        <div class="reg-upload__file"></div>
+                    </label>
+                    <div class="reg-error" id="nationalCardError">بارگذاری کارت ملی الزامی است</div>
+                </div>
+
+                <div class="reg-field">
+                    <label class="reg-label">تصویر پروانه‌ی کارگزاری <span class="reg-label__required">*</span></label>
+                    <label class="reg-upload reg-upload--required" id="uploadLicense">
+                        <input type="file" accept="image/*" data-doc="license">
+                        <div class="reg-upload__icon">📜</div>
+                        <div class="reg-upload__text">انتخاب تصویر پروانه</div>
+                        <div class="reg-upload__hint">JPG یا PNG</div>
+                        <div class="reg-upload__file"></div>
+                    </label>
+                    <div class="reg-error" id="licenseError">بارگذاری پروانه‌ی کارگزاری الزامی است</div>
+                </div>
+
+                <div class="reg-field reg-field--full">
+                    <label class="reg-label">
+                        🤳 تصویر سلفی همراه با کارت ملی
+                        <span class="reg-label__required">*</span>
+                    </label>
+
+                    <div class="reg-selfie-box">
+                        <div class="reg-alert reg-alert--warning" style="margin-bottom:14px;">
+                            <span>⚠️</span>
+                            <span>
+                                <strong>احراز هویت اجباری:</strong>
+                                در این تصویر باید صورت شما به‌همراه کارت ملی در کنار صورتتان
+                                به‌طور واضح قابل مشاهده باشد.
+                            </span>
+                        </div>
+
+                        <div class="reg-selfie-steps">
+                            <div class="reg-selfie-step">
+                                <div class="reg-selfie-step__num">۱</div>
+                                <div class="reg-selfie-step__text">کارت ملی را کنار صورت خود بگیرید</div>
+                            </div>
+                            <div class="reg-selfie-step">
+                                <div class="reg-selfie-step__num">۲</div>
+                                <div class="reg-selfie-step__text">اطلاعات کارت باید خوانا باشد</div>
+                            </div>
+                            <div class="reg-selfie-step">
+                                <div class="reg-selfie-step__num">۳</div>
+                                <div class="reg-selfie-step__text">نور کافی و صورت بدون ماسک</div>
+                            </div>
+                            <div class="reg-selfie-step">
+                                <div class="reg-selfie-step__num">۴</div>
+                                <div class="reg-selfie-step__text">بدون فیلتر یا ویرایش</div>
+                            </div>
+                        </div>
+
+                        <label class="reg-upload reg-upload--required" id="uploadSelfie" style="background:var(--bg-card);">
+                            <input type="file" accept="image/*" capture="user" data-doc="selfie">
+                            <div class="reg-upload__icon">🤳</div>
+                            <div class="reg-upload__text">بارگذاری تصویر سلفی + کارت ملی</div>
+                            <div class="reg-upload__hint">JPG یا PNG</div>
+                            <div class="reg-upload__file"></div>
+                        </label>
+                        <div class="reg-error" id="selfieError" style="margin-top:8px;">
+                            بارگذاری تصویر سلفی همراه با کارت ملی الزامی است
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:20px;">
+                <label class="reg-checkbox">
+                    <input type="checkbox" id="agreeTerms">
+                    <span class="reg-checkbox__text">
+                        <a href="#">قوانین و مقررات</a> و <a href="#">سیاست حفظ حریم خصوصی</a>
+                        وام پی را مطالعه کرده و می‌پذیرم. صحت تمام اطلاعات وارد شده را تأیید می‌کنم.
+                    </span>
+                </label>
+                <div class="reg-error" id="agreeError" style="margin-top:6px;">پذیرش قوانین الزامی است</div>
+            </div>
+
+            <div class="reg-actions">
+                <button class="reg-btn reg-btn--ghost" data-back="3">→ مرحله قبل</button>
+                <button class="reg-btn reg-btn--gold" id="submitBtn">
+                    <span class="reg-btn__spinner"></span>
+                    <span class="reg-btn__text">🎉 ارسال درخواست</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 5: Success -->
+        <section class="reg-step" data-step="5">
+            <div class="reg-success">
+                <div class="reg-success__icon">✓</div>
+                <h2 class="reg-success__title">درخواست شما ثبت شد!</h2>
+                <p class="reg-success__desc">
+                    اطلاعات شما با موفقیت دریافت شد. تیم بررسی وام پی طی ۴۸ ساعت آینده با شما تماس خواهد گرفت.
+                </p>
+
+                <div class="reg-alert reg-alert--info" style="justify-content:center;">
+                    <span>📁</span>
+                    <span>
+                        شماره پرونده‌ی شما:
+                        <strong id="summaryFileNumber" style="font-family:monospace;letter-spacing:2px;font-size:16px;"></strong>
+                        <br>
+                        <span style="font-size:12px;opacity:0.85;">
+                            این شماره را برای پیگیری درخواست نزد خود نگه دارید.
+                        </span>
+                    </span>
+                </div>
+
+                <div class="reg-alert reg-alert--warning">
+                    <span>☎️</span>
+                    <span>
+                        <strong>مهم:</strong> ادمین وام‌پی با خط ثابت شما تماس خواهد گرفت
+                        تا هویت شما را تأیید کند. لطفاً پاسخگو باشید.
+                    </span>
+                </div>
+
+                <div class="reg-summary" id="summaryBox">
+                    <div class="reg-summary__row">
+                        <span>شناسه‌ی درخواست</span>
+                        <span id="summaryRequestId">—</span>
+                    </div>
+                    <div class="reg-summary__row">
+                        <span>نام و نام خانوادگی</span>
+                        <span id="summaryName">—</span>
+                    </div>
+                    <div class="reg-summary__row">
+                        <span>شماره موبایل</span>
+                        <span id="summaryMobile">—</span>
+                    </div>
+                    <div class="reg-summary__row">
+                        <span>☎️ خط ثابت</span>
+                        <span id="summaryLandline" style="direction:ltr;font-family:monospace;">—</span>
+                    </div>
+                    <div class="reg-summary__row">
+                        <span>🏦 بانک</span>
+                        <span id="summaryBank">—</span>
+                    </div>
+                    <div class="reg-summary__row">
+                        <span>💳 شماره کارت</span>
+                        <span id="summaryCard" style="direction:ltr;font-family:monospace;">—</span>
+                    </div>
+                    <div class="reg-summary__row">
+                        <span>🔗 شبا</span>
+                        <span id="summarySheba" style="direction:ltr;font-family:monospace;">—</span>
+                    </div>
+                    <div class="reg-summary__row">
+                        <span>حوزه‌ی تخصصی</span>
+                        <span id="summarySpecialty">—</span>
+                    </div>
+                    <div class="reg-summary__row">
+                        <span>وضعیت</span>
+                        <span style="color: var(--warning);">⏳ در انتظار تأیید</span>
+                    </div>
+                    <div class="reg-summary__row">
+                        <span>تاریخ ثبت</span>
+                        <span id="summaryDate">—</span>
+                    </div>
+                </div>
+
+                <div class="reg-actions">
+                    <a href="login.html" class="reg-btn reg-btn--primary" style="text-decoration:none;">
+                        <span class="reg-btn__text">🚀 ورود به پنل</span>
+                    </a>
+                    <a href="index.html" class="reg-btn reg-btn--ghost" style="text-decoration:none;">
+                        <span class="reg-btn__text">بازگشت به خانه</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<div class="reg-toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<script>
+/* WAM PAY — Broker Registration Script v2.4 (با فشرده‌سازی تصویر) */
+(function () {
+    'use strict';
+
+    const OTP_CONFIG = {
+        mock: true, mockCode: '12345', length: 5,
+        ttl: 120000, resendCooldown: 60000
+    };
+
+    // تنظیمات فشرده‌سازی
+    const IMAGE_CONFIG = {
+        maxWidth: 800,      // حداکثر عرض
+        maxHeight: 1000,    // حداکثر ارتفاع
+        quality: 0.7,       // کیفیت JPEG (0-1)
+        maxSizeBytes: 3 * 1024 * 1024  // حداکثر حجم ورودی
+    };
+
+    const state = {
+        fileNumber: '', currentStep: 1,
+        mobile: '', otpCode: '', otpVerified: false,
+        otpExpiry: null, resendTimer: null, otpTimer: null,
+        documents: { nationalCard: null, license: null, selfie: null }
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+
+    // ============================================================
+    // 🆕 فشرده‌سازی تصویر
+    // ============================================================
+    function compressImage(file, options = {}) {
+        const { maxWidth = IMAGE_CONFIG.maxWidth, maxHeight = IMAGE_CONFIG.maxHeight, quality = IMAGE_CONFIG.quality } = options;
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    // محاسبه‌ی ابعاد جدید
+                    let { width, height } = img;
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                    if (height > maxHeight) {
+                        width = Math.round((width * maxHeight) / height);
+                        height = maxHeight;
+                    }
+
+                    // رسم روی canvas
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // تبدیل به JPEG فشرده
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+
+                    // محاسبه‌ی حجم تقریبی
+                    const base64Length = compressedDataUrl.length - 'data:image/jpeg;base64,'.length;
+                    const sizeBytes = Math.round(base64Length * 3 / 4);
+
+                    resolve({
+                        dataUrl: compressedDataUrl,
+                        width,
+                        height,
+                        size: sizeBytes,
+                        mime: 'image/jpeg'
+                    });
+                };
+                img.onerror = () => reject(new Error('خطا در خواندن تصویر'));
+                img.src = e.target.result;
+            };
+            reader.onerror = () => reject(new Error('خطا در بارگذاری فایل'));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // ============================================================
+    // توابع کمکی
+    // ============================================================
+    function generateFileNumber() {
+        const year = new Date().getFullYear();
+        const random = Math.floor(100000 + Math.random() * 900000);
+        return `BRK-${year}-${random}`;
+    }
+    function initFileNumber() {
+        let fn = sessionStorage.getItem('wamPayBrokerFileNumber');
+        if (!fn || !/^BRK-\d{4}-\d{6}$/.test(fn)) {
+            fn = generateFileNumber();
+            sessionStorage.setItem('wamPayBrokerFileNumber', fn);
+        }
+        state.fileNumber = fn;
+        $('#fileNumberDisplay').textContent = fn;
+        console.log('%c📁 شماره پرونده: ' + fn, 'color:#d4a62a;font-weight:bold;font-size:14px;');
+    }
+
+    $('#copyFileNumberBtn').addEventListener('click', () => {
+        const fn = state.fileNumber;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(fn).then(() => toast('کپی شد', 'success')).catch(() => fallbackCopy(fn));
+        } else fallbackCopy(fn);
+    });
+    function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); toast('کپی شد', 'success'); }
+        catch (e) { toast('کپی نشد', 'error'); }
+        document.body.removeChild(ta);
+    }
+
+    function initDateDropdowns() {
+        const yearSel = $('#birthYear'), daySel = $('#birthDay');
+        for (let y = 1385; y >= 1330; y--) {
+            const opt = document.createElement('option');
+            opt.value = y; opt.textContent = faNum(y);
+            yearSel.appendChild(opt);
+        }
+        for (let d = 1; d <= 31; d++) {
+            const opt = document.createElement('option');
+            opt.value = d; opt.textContent = faNum(d);
+            daySel.appendChild(opt);
+        }
+    }
+    function getBirthDateString() {
+        const y = $('#birthYear').value, m = $('#birthMonth').value, d = $('#birthDay').value;
+        if (!y || !m || !d) return null;
+        const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+        return `${fa(y)}/${fa(m)}/${fa(d)}`;
+    }
+
+    function toast(message, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = message;
+        el.className = 'reg-toast reg-toast--show';
+        if (type === 'error') el.classList.add('reg-toast--error');
+        if (type === 'success') el.classList.add('reg-toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('reg-toast--show'), 3200);
+    }
+
+    const isValidMobile = (v) => /^09\d{9}$/.test(v);
+    function isValidNationalId(v) {
+        if (!/^\d{10}$/.test(v)) return false;
+        const check = +v[9]; let sum = 0;
+        for (let i = 0; i < 9; i++) sum += +v[i] * (10 - i);
+        const r = sum % 11;
+        return (r < 2 && check === r) || (r >= 2 && check === 11 - r);
+    }
+    const isValidPostalCode = (v) => /^\d{10}$/.test(v);
+    const isValidAccountNumber = (v) => /^\d{10,18}$/.test(v);
+    const isValidCardNumber = (v) => {
+        const digits = v.replace(/\D/g, '');
+        if (!/^\d{16}$/.test(digits)) return false;
+        let sum = 0, alt = false;
+        for (let i = digits.length - 1; i >= 0; i--) {
+            let n = +digits[i];
+            if (alt) { n *= 2; if (n > 9) n -= 9; }
+            sum += n; alt = !alt;
+        }
+        return sum % 10 === 0;
+    };
+    const isValidSheba = (v) => /^\d{24}$/.test(v);
+
+    function showError(id, show = true) {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('reg-error--show', show);
+    }
+    function markInputError(inputId, hasError) {
+        const el = document.getElementById(inputId);
+        if (el) el.classList.toggle('reg-input--error', hasError);
+    }
+
+    function goToStep(n) {
+        state.currentStep = n;
+        $$('.reg-step').forEach(s => s.classList.toggle('reg-step--active', +s.dataset.step === n));
+        $$('.reg-progress__step').forEach(s => {
+            const sn = +s.dataset.step;
+            s.classList.toggle('reg-progress__step--active', sn === n);
+            s.classList.toggle('reg-progress__step--done', sn < n);
+        });
+        $$('.reg-progress__line').forEach((l, i) => l.classList.toggle('reg-progress__line--done', i + 1 < n));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function generateOtp() {
+        if (OTP_CONFIG.mock) {
+            console.log(`🧪 [MOCK OTP Broker] کد برای ${state.mobile} → ${OTP_CONFIG.mockCode}`);
+            return OTP_CONFIG.mockCode;
+        }
+        return Math.floor(Math.random() * 90000 + 10000).toString();
+    }
+    function startOtpTimer() {
+        clearInterval(state.otpTimer);
+        state.otpExpiry = Date.now() + OTP_CONFIG.ttl;
+        tickOtpTimer();
+        state.otpTimer = setInterval(tickOtpTimer, 1000);
+    }
+    function tickOtpTimer() {
+        const left = Math.max(0, state.otpExpiry - Date.now());
+        const m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
+        const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+        $('#otpTimer').textContent = `${fa(m)}:${fa(s)}`;
+        if (left <= 0) { clearInterval(state.otpTimer); $('#otpTimer').textContent = 'منقضی شده'; }
+    }
+    function startResendCooldown() {
+        const btn = $('#resendBtn');
+        let left = OTP_CONFIG.resendCooldown / 1000;
+        btn.disabled = true; btn.textContent = `ارسال مجدد (${left} ثانیه)`;
+        clearInterval(state.resendTimer);
+        state.resendTimer = setInterval(() => {
+            left--;
+            if (left <= 0) { clearInterval(state.resendTimer); btn.disabled = false; btn.textContent = 'ارسال مجدد کد'; }
+            else btn.textContent = `ارسال مجدد (${left} ثانیه)`;
+        }, 1000);
+    }
+    function resetOtpInputs() {
+        $$('.reg-otp-input').forEach(i => i.value = '');
+        $$('.reg-otp-input')[0].focus();
+    }
+    function getOtpValue() {
+        return Array.from($$('.reg-otp-input')).map(i => i.value).join('');
+    }
+
+    $$('.reg-otp-input').forEach((input, idx, all) => {
+        input.addEventListener('input', (e) => {
+            const v = e.target.value.replace(/\D/g, '');
+            e.target.value = v.slice(-1);
+            if (v && idx < all.length - 1) all[idx + 1].focus();
+            if (getOtpValue().length === OTP_CONFIG.length) setTimeout(() => verifyOtp(), 200);
+        });
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !e.target.value && idx > 0) all[idx - 1].focus();
+        });
+        input.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const paste = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 5);
+            if (paste.length === 5) {
+                paste.split('').forEach((ch, i) => all[i].value = ch);
+                all[4].focus();
+                setTimeout(() => verifyOtp(), 200);
+            }
+        });
+    });
+
+    $('#sendOtpBtn').addEventListener('click', () => {
+        const mobile = $('#mobileInput').value.trim();
+        markInputError('mobileInput', false); showError('mobileError', false);
+        if (!isValidMobile(mobile)) {
+            markInputError('mobileInput', true); showError('mobileError', true);
+            toast('شماره موبایل معتبر نیست', 'error'); return;
+        }
+        const users = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+        const existing = users.find(u => u.mobile === mobile);
+        if (existing && existing.role === 'broker') { toast('این شماره قبلاً ثبت شده است', 'error'); return; }
+        if (existing && existing.role === 'applicant') { toast('این شماره قبلاً ثبت شده است', 'error'); return; }
+
+        state.mobile = mobile; state.otpCode = generateOtp();
+        const btn = $('#sendOtpBtn');
+        btn.classList.add('reg-btn--loading'); btn.disabled = true;
+        setTimeout(() => {
+            btn.classList.remove('reg-btn--loading');
+            btn.style.display = 'none';
+            $('#verifyOtpBtn').style.display = 'flex';
+            $('#otpSection').style.display = 'block';
+            $('#otpMobileDisplay').textContent = mobile;
+            resetOtpInputs(); startOtpTimer(); startResendCooldown();
+            toast('کد تأیید ارسال شد', 'success');
+        }, 800);
+    });
+
+    $('#resendBtn').addEventListener('click', () => {
+        state.otpCode = generateOtp();
+        resetOtpInputs(); startOtpTimer(); startResendCooldown();
+        toast('کد جدید ارسال شد', 'success');
+    });
+
+    function verifyOtp() {
+        const entered = getOtpValue();
+        showError('otpError', false);
+        if (entered.length !== OTP_CONFIG.length) { showError('otpError', true); toast('کد ۵ رقمی را کامل وارد کنید', 'error'); return; }
+        if (entered !== state.otpCode) { showError('otpError', true); toast('کد اشتباه است', 'error'); resetOtpInputs(); return; }
+        const btn = $('#verifyOtpBtn');
+        btn.classList.add('reg-btn--loading'); btn.disabled = true;
+        setTimeout(() => {
+            btn.classList.remove('reg-btn--loading');
+            state.otpVerified = true;
+            clearInterval(state.otpTimer); clearInterval(state.resendTimer);
+            toast('موبایل تأیید شد', 'success'); goToStep(2);
+        }, 600);
+    }
+    $('#verifyOtpBtn').addEventListener('click', verifyOtp);
+
+    function setupSameAddressToggle() {
+        const cb = $('#sameAddress');
+        const addr = $('#address'), postal = $('#postalCode');
+        const workAddr = $('#workAddress'), workPostal = $('#workPostalCode');
+        function syncWorkFields() {
+            if (cb.checked) {
+                workAddr.value = addr.value; workPostal.value = postal.value;
+                workAddr.disabled = true; workPostal.disabled = true;
+                markInputError('workAddress', false); showError('workAddressError', false);
+                markInputError('workPostalCode', false); showError('workPostalCodeError', false);
+            } else {
+                workAddr.disabled = false; workPostal.disabled = false;
+            }
+        }
+        cb.addEventListener('change', syncWorkFields);
+        addr.addEventListener('input', () => { if (cb.checked) workAddr.value = addr.value; });
+        postal.addEventListener('input', () => { if (cb.checked) workPostal.value = postal.value; });
+    }
+
+    function validateStep2() {
+        let ok = true;
+        const fields = {
+            firstName: { err: 'firstNameError' },
+            lastName: { err: 'lastNameError' },
+            nationalId: { err: 'nationalIdError', validate: isValidNationalId },
+            address: { err: 'addressError' },
+            postalCode: { err: 'postalCodeError', validate: isValidPostalCode }
+        };
+        for (const key in fields) {
+            const input = document.getElementById(key);
+            const v = input.value.trim();
+            const invalid = !v || (fields[key].validate && !fields[key].validate(v));
+            markInputError(key, invalid); showError(fields[key].err, invalid);
+            if (invalid) ok = false;
+        }
+        const bd = getBirthDateString();
+        showError('birthDateError', !bd);
+        if (!bd) ok = false;
+
+        const areaCode = $('#phoneAreaCode').value;
+        const phoneNum = $('#phone').value.trim();
+        const invalidArea = !areaCode;
+        const invalidPhone = !/^\d{8}$/.test(phoneNum);
+        markInputError('phoneAreaCode', invalidArea);
+        markInputError('phone', invalidPhone);
+        showError('phoneAreaCodeError', invalidArea);
+        showError('phoneError', invalidPhone);
+        if (invalidArea || invalidPhone) ok = false;
+
+        const cb = $('#sameAddress');
+        if (cb.checked) {
+            const workAddr = $('#workAddress').value.trim();
+            const workPostal = $('#workPostalCode').value.trim();
+            if (!workAddr || !isValidPostalCode(workPostal)) { toast('آدرس سکونت را کامل کنید', 'error'); ok = false; }
+        } else {
+            const workAddr = $('#workAddress').value.trim();
+            const workPostal = $('#workPostalCode').value.trim();
+            const invalidAddr = !workAddr;
+            const invalidPostal = !isValidPostalCode(workPostal);
+            markInputError('workAddress', invalidAddr); showError('workAddressError', invalidAddr);
+            markInputError('workPostalCode', invalidPostal); showError('workPostalCodeError', invalidPostal);
+            if (invalidAddr || invalidPostal) ok = false;
+        }
+        return ok;
+    }
+
+    function validateStep3() {
+        let ok = true;
+        ['licenseNumber', 'experience', 'province', 'city', 'specialty'].forEach(id => {
+            const input = document.getElementById(id);
+            const invalid = !input.value.trim();
+            markInputError(id, invalid); showError(id + 'Error', invalid);
+            if (invalid) ok = false;
+        });
+
+        const bankName = $('#bankName').value;
+        const accountNumber = $('#accountNumber').value.replace(/\D/g, '');
+        const cardNumber = $('#cardNumber').value.replace(/\D/g, '');
+        const shebaNumber = $('#shebaNumber').value.replace(/\D/g, '');
+
+        const invalidBank = !bankName;
+        const invalidAccount = !isValidAccountNumber(accountNumber);
+        const invalidCard = !isValidCardNumber(cardNumber);
+        const invalidSheba = !isValidSheba(shebaNumber);
+
+        markInputError('bankName', invalidBank); showError('bankNameError', invalidBank);
+        markInputError('accountNumber', invalidAccount); showError('accountNumberError', invalidAccount);
+        markInputError('cardNumber', invalidCard); showError('cardNumberError', invalidCard);
+        markInputError('shebaNumber', invalidSheba); showError('shebaNumberError', invalidSheba);
+
+        if (invalidBank || invalidAccount || invalidCard || invalidSheba) ok = false;
+        return ok;
+    }
+
+    $$('[data-next]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const next = +btn.dataset.next, cur = state.currentStep;
+            if (cur === 2 && !validateStep2()) { toast('خطاها را برطرف کنید', 'error'); return; }
+            if (cur === 3 && !validateStep3()) { toast('خطاها را برطرف کنید', 'error'); return; }
+            goToStep(next);
+        });
+    });
+    $$('[data-back]').forEach(btn => btn.addEventListener('click', () => goToStep(+btn.dataset.back)));
+
+    // ============================================================
+    // 🆕 File Upload با فشرده‌سازی
+    // ============================================================
+    $$('.reg-upload input[type="file"]').forEach(input => {
+        input.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // اعتبارسنجی نوع
+            if (!file.type.startsWith('image/')) {
+                toast('فقط فرمت تصویری مجاز است', 'error');
+                e.target.value = '';
+                return;
+            }
+            // اعتبارسنجی حجم ورودی
+            if (file.size > IMAGE_CONFIG.maxSizeBytes) {
+                toast('حجم فایل بیش از ۳ مگابایت است', 'error');
+                e.target.value = '';
+                return;
+            }
+
+            const docKey = input.dataset.doc;
+            const wrap = input.closest('.reg-upload');
+            const fileLabel = wrap.querySelector('.reg-upload__file');
+            const icon = wrap.querySelector('.reg-upload__icon');
+
+            // نمایش حالت در حال فشرده‌سازی
+            wrap.classList.add('reg-upload--compressing');
+            if (icon) icon.textContent = '⏳';
+            if (fileLabel) fileLabel.textContent = 'در حال فشرده‌سازی...';
+
+            try {
+                const compressed = await compressImage(file);
+
+                state.documents[docKey] = {
+                    fileName: file.name,
+                    size: compressed.size,
+                    originalSize: file.size,
+                    mime: compressed.mime,
+                    width: compressed.width,
+                    height: compressed.height,
+                    dataUrl: compressed.dataUrl,
+                    uploadedAt: new Date().toISOString()
+                };
+
+                wrap.classList.remove('reg-upload--compressing', 'reg-upload--required');
+                wrap.classList.add('reg-upload--has-file');
+
+                // نمایش پیش‌نمایش
+                const existingThumb = wrap.querySelector('.reg-upload__thumb');
+                if (existingThumb) existingThumb.remove();
+                const existingMeta = wrap.querySelector('.reg-upload__meta');
+                if (existingMeta) existingMeta.remove();
+
+                const thumb = document.createElement('img');
+                thumb.className = 'reg-upload__thumb';
+                thumb.src = compressed.dataUrl;
+                thumb.alt = file.name;
+
+                const meta = document.createElement('div');
+                meta.className = 'reg-upload__meta';
+                meta.textContent = `${compressed.width}×${compressed.height} • ${(compressed.size/1024).toFixed(0)}KB (اصلی: ${(file.size/1024).toFixed(0)}KB)`;
+
+                // مخفی کردن آیکون اصلی
+                const origIcon = wrap.querySelector('.reg-upload__icon');
+                if (origIcon) origIcon.style.display = 'none';
+
+                if (fileLabel) fileLabel.textContent = '✓ ' + file.name;
+                wrap.insertBefore(thumb, fileLabel);
+                wrap.insertBefore(meta, fileLabel.nextSibling);
+
+                const savings = Math.round((1 - compressed.size / file.size) * 100);
+                toast(`✓ فشرده شد (${savings}٪ کاهش)`, 'success');
+                console.log(`📸 [Compress] ${docKey}: ${(file.size/1024).toFixed(0)}KB → ${(compressed.size/1024).toFixed(0)}KB (${savings}٪ کاهش)`);
+
+            } catch (err) {
+                console.error('Compress error:', err);
+                wrap.classList.remove('reg-upload--compressing');
+                if (icon) icon.textContent = '⚠️';
+                if (fileLabel) fileLabel.textContent = '';
+                toast('خطا در پردازش تصویر', 'error');
+                e.target.value = '';
+            }
+        });
+    });
+
+    $('#submitBtn').addEventListener('click', () => {
+        let ok = true;
+        if (!state.documents.nationalCard) { showError('nationalCardError', true); ok = false; } else showError('nationalCardError', false);
+        if (!state.documents.license) { showError('licenseError', true); ok = false; } else showError('licenseError', false);
+        if (!state.documents.selfie) { showError('selfieError', true); ok = false; toast('سلفی الزامی است', 'error'); } else showError('selfieError', false);
+        if (!$('#agreeTerms').checked) { showError('agreeError', true); ok = false; } else showError('agreeError', false);
+        if (!ok) { toast('خطاها را برطرف کنید', 'error'); return; }
+
+        const btn = $('#submitBtn');
+        btn.classList.add('reg-btn--loading'); btn.disabled = true;
+        const birthDateStr = getBirthDateString();
+        const sameAddress = $('#sameAddress').checked;
+        const areaCode = $('#phoneAreaCode').value;
+        const phoneNum = $('#phone').value.trim();
+        const cardDigits = $('#cardNumber').value.replace(/\D/g, '');
+        const shebaDigits = $('#shebaNumber').value.replace(/\D/g, '');
+        const cardFormatted = cardDigits.replace(/(\d{4})(?=\d)/g, '$1-');
+
+        const userData = {
+            id: 'broker_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+            fileNumber: state.fileNumber,
+            mobile: state.mobile,
+            name: $('#firstName').value.trim() + ' ' + $('#lastName').value.trim(),
+            firstName: $('#firstName').value.trim(),
+            lastName: $('#lastName').value.trim(),
+            nationalId: $('#nationalId').value.trim(),
+            birthDate: birthDateStr,
+            birthDateISO: { year: +$('#birthYear').value, month: +$('#birthMonth').value, day: +$('#birthDay').value },
+            email: $('#email').value.trim(),
+            phoneAreaCode: areaCode, phoneNumber: phoneNum,
+            phone: areaCode + phoneNum,
+            landline: {
+                areaCode: areaCode, number: phoneNum,
+                full: areaCode + '-' + phoneNum,
+                verified: false, verifiedAt: null, verifiedBy: null, verificationNote: null
+            },
+            address: $('#address').value.trim(),
+            postalCode: $('#postalCode').value.trim(),
+            workAddress: $('#workAddress').value.trim(),
+            workPostalCode: $('#workPostalCode').value.trim(),
+            sameAddressAsResidence: sameAddress,
+            role: 'broker',
+            status: 'pending',
+            password: null, mustChangePassword: false, autoCreated: false,
+            licenseNumber: $('#licenseNumber').value.trim(),
+            experience: +$('#experience').value,
+            province: $('#province').value,
+            city: $('#city').value.trim(),
+            specialty: $('#specialty').value,
+            bio: $('#bio').value.trim(),
+            bankInfo: {
+                bankName: $('#bankName').value,
+                accountNumber: $('#accountNumber').value.replace(/\D/g, ''),
+                cardNumber: cardDigits,
+                cardNumberFormatted: cardFormatted,
+                shebaNumber: shebaDigits,
+                shebaFull: 'IR' + shebaDigits,
+                verified: false, verifiedAt: null, verifiedBy: null
+            },
+            // 🆕 حالا با dataUrl ذخیره می‌شود
+            documents: {
+                nationalCard: {
+                    fileName: state.documents.nationalCard.fileName,
+                    size: state.documents.nationalCard.size,
+                    originalSize: state.documents.nationalCard.originalSize,
+                    mime: state.documents.nationalCard.mime,
+                    width: state.documents.nationalCard.width,
+                    height: state.documents.nationalCard.height,
+                    dataUrl: state.documents.nationalCard.dataUrl,
+                    uploadedAt: state.documents.nationalCard.uploadedAt
+                },
+                license: {
+                    fileName: state.documents.license.fileName,
+                    size: state.documents.license.size,
+                    originalSize: state.documents.license.originalSize,
+                    mime: state.documents.license.mime,
+                    width: state.documents.license.width,
+                    height: state.documents.license.height,
+                    dataUrl: state.documents.license.dataUrl,
+                    uploadedAt: state.documents.license.uploadedAt
+                },
+                selfie: {
+                    fileName: state.documents.selfie.fileName,
+                    size: state.documents.selfie.size,
+                    originalSize: state.documents.selfie.originalSize,
+                    mime: state.documents.selfie.mime,
+                    width: state.documents.selfie.width,
+                    height: state.documents.selfie.height,
+                    dataUrl: state.documents.selfie.dataUrl,
+                    uploadedAt: state.documents.selfie.uploadedAt,
+                    hasNationalId: true
+                }
+            },
+            registeredAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+
+        setTimeout(() => {
+            try {
+                const users = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+                users.push(userData);
+                localStorage.setItem('wamPayUsers', JSON.stringify(users));
+
+                const requests = JSON.parse(localStorage.getItem('wamPayBrokerRequests') || '[]');
+                requests.push({
+                    requestId: state.fileNumber,
+                    fileNumber: state.fileNumber,
+                    userId: userData.id,
+                    mobile: userData.mobile,
+                    name: userData.name,
+                    landline: userData.landline,
+                    bankInfo: userData.bankInfo,
+                    licenseNumber: userData.licenseNumber,
+                    specialty: userData.specialty,
+                    status: 'pending',
+                    landlineVerified: false,
+                    bankVerified: false,
+                    submittedAt: userData.registeredAt
+                });
+                localStorage.setItem('wamPayBrokerRequests', JSON.stringify(requests));
+
+                $('#summaryFileNumber').textContent = state.fileNumber;
+                $('#summaryRequestId').textContent = state.fileNumber;
+                $('#summaryName').textContent = userData.name;
+                $('#summaryMobile').textContent = userData.mobile;
+                $('#summaryLandline').textContent = userData.landline.full;
+                $('#summaryBank').textContent = userData.bankInfo.bankName;
+                $('#summaryCard').textContent = cardFormatted;
+                $('#summarySheba').textContent = 'IR' + shebaDigits;
+                $('#summarySpecialty').textContent = userData.specialty;
+
+                const d = new Date();
+                const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+                $('#summaryDate').textContent = fa(d.getFullYear()) + '/' + fa(d.getMonth() + 1) + '/' + fa(d.getDate()) + ' — ' + fa(d.getHours()) + ':' + fa(d.getMinutes());
+
+                console.log('✅ [Broker Register] درخواست ثبت شد:', userData);
+                console.log('📸 حجم کل تصاویر:', 
+                    ((userData.documents.nationalCard.size + userData.documents.license.size + userData.documents.selfie.size) / 1024).toFixed(0), 'KB');
+
+                sessionStorage.removeItem('wamPayBrokerFileNumber');
+                btn.classList.remove('reg-btn--loading');
+                goToStep(5);
+                toast('درخواست ارسال شد', 'success');
+            } catch (err) {
+                console.error('❌ خطا:', err);
+                btn.classList.remove('reg-btn--loading'); btn.disabled = false;
+                toast('خطا در ثبت درخواست (ممکنه حافظه پر شده باشه)', 'error');
+            }
+        }, 1200);
+    });
+
+    (function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light'); btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark'); btn.textContent = '☀️';
+            }
+        });
+    })();
+
+    $('#mobileInput').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11));
+    $('#nationalId').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10));
+    $('#postalCode').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10));
+    $('#workPostalCode').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10));
+    $('#phone').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 8));
+    $('#cardNumber').addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+        v = v.replace(/(\d{4})(?=\d)/g, '$1-');
+        e.target.value = v;
+    });
+    $('#accountNumber').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 18));
+    $('#shebaNumber').addEventListener('input', (e) => e.target.value = e.target.value.replace(/\D/g, '').slice(0, 24));
+
+    initFileNumber();
+    initDateDropdowns();
+    setupSameAddressToggle();
+
+    console.log('%c🚀 WAM PAY — Broker Registration v2.4', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+    console.log('%c🖼️ فشرده‌سازی تصویر فعال: 800px • کیفیت 0.7', 'color:#d4a62a;font-weight:bold;');
+    console.log('%c🧪 Mock OTP: 12345', 'color:#d4a62a;font-weight:bold;');
+
+})();
+</script>
+</body>
+</html>

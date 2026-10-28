@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="جزئیات مشاوره — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>جزئیات مشاوره | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       CONSULTATION DETAILS (Shared)
+       ═══════════════════════════════════════ */
+
+    .wam-consd {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 100px;
+    }
+
+    .wam-consd__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-consd__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-consd__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+    .wam-consd__topbar-back:hover { color: var(--wam-primary-light); }
+
+    .wam-consd__topbar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-consd__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-consd__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-consd__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    .wam-consd__main {
+      padding: var(--wam-space-lg);
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Hero */
+    .wam-consd__hero {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-md);
+      margin-bottom: var(--wam-space-md);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-consd__hero-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .wam-consd__hero-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-size: 1.4rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+    .wam-consd__hero-icon--question   { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-consd__hero-icon--complaint  { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+    .wam-consd__hero-icon--suggestion { background: var(--wam-gold-soft); color: #7a5a00; }
+    .wam-consd__hero-icon--request    { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-consd__hero-icon--followup   { background: var(--wam-primary-soft); color: var(--wam-primary); }
+
+    .wam-consd__hero-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-consd__hero-subject {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-text);
+      margin: 0 0 4px;
+      line-height: 1.4;
+    }
+
+    .wam-consd__hero-id {
+      font-family: 'Menlo', monospace;
+      font-size: 0.72rem;
+      direction: ltr;
+      text-align: right;
+      color: var(--wam-text-muted);
+    }
+
+    /* Badges */
+    .wam-consd__hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--wam-border-soft);
+    }
+
+    .wam-consd__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.7rem;
+      font-weight: 800;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      white-space: nowrap;
+    }
+
+    .wam-consd__badge--draft       { background: var(--wam-muted-soft); color: var(--wam-text-muted); }
+    .wam-consd__badge--pending     { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-consd__badge--in_progress { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-consd__badge--resolved    { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-consd__badge--closed      { background: var(--wam-primary-soft); color: var(--wam-primary); }
+    .wam-consd__badge--cancelled   { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+
+    .wam-consd__badge--urgent { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+    .wam-consd__badge--high   { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-consd__badge--normal { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-consd__badge--low    { background: var(--wam-muted-soft); color: var(--wam-text-muted); }
+
+    /* Section */
+    .wam-consd__section {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-md);
+      margin-bottom: var(--wam-space-md);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-consd__section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed var(--wam-border-soft);
+    }
+
+    .wam-consd__section-count {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--wam-text-muted);
+      padding: 2px 8px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius-pill);
+    }
+
+    /* Info rows */
+    .wam-consd__info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 0.86rem;
+      border-bottom: 1px dashed var(--wam-border-soft);
+    }
+    .wam-consd__info-row:last-child { border-bottom: 0; }
+
+    .wam-consd__info-label {
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+
+    .wam-consd__info-value {
+      color: var(--wam-text);
+      font-weight: 700;
+      text-align: left;
+      word-break: break-word;
+      flex: 1 1 auto;
+    }
+
+    /* Original message box */
+    .wam-consd__message-box {
+      padding: var(--wam-space-md);
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius);
+      font-size: 0.87rem;
+      color: var(--wam-text);
+      line-height: 1.9;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Replies */
+    .wam-consd__replies {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wam-consd__reply {
+      padding: 12px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius);
+      border-right: 3px solid var(--wam-primary-light);
+    }
+
+    .wam-consd__reply--user {
+      background: var(--wam-primary-soft);
+      border-right-color: var(--wam-primary);
+    }
+
+    .wam-consd__reply--staff {
+      background: var(--wam-info-soft);
+      border-right-color: var(--wam-info);
+    }
+
+    .wam-consd__reply-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .wam-consd__reply-author {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--wam-text);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .wam-consd__reply-time {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-consd__reply-text {
+      font-size: 0.85rem;
+      color: var(--wam-text);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Reply form */
+    .wam-consd__reply-form {
+      margin-top: var(--wam-space-md);
+      padding-top: var(--wam-space-md);
+      border-top: 1px dashed var(--wam-border-soft);
+    }
+
+    .wam-consd__textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      font-family: inherit;
+      font-size: 0.87rem;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      resize: vertical;
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+    .wam-consd__textarea:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-consd__reply-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    /* Status changer */
+    .wam-consd__status-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .wam-consd__status-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-muted);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-consd__status-btn:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary);
+    }
+
+    .wam-consd__status-btn.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    /* Action bar */
+    .wam-consd__action-bar {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: var(--wam-bg-alt);
+      border-top: 1px solid var(--wam-border);
+      padding: 12px var(--wam-space-lg);
+      padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      gap: 8px;
+      z-index: var(--wam-z-sticky);
+      box-shadow: 0 -4px 12px rgba(11, 59, 35, 0.08);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .wam-consd__action-bar .wam-btn {
+      flex: 1 1 0;
+      padding: 12px;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    /* Empty */
+    .wam-consd__empty {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+    .wam-consd__empty-icon {
+      font-size: 3rem;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+    .wam-consd__empty-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-text);
+      margin: 0 0 8px;
+    }
+    .wam-consd__empty-text {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0 0 var(--wam-space-md);
+      line-height: 1.7;
+    }
+
+    /* Toast */
+    .wam-consd__toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .wam-consd__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .wam-consd__main { padding: var(--wam-space-md); }
+      .wam-consd__hero { padding: var(--wam-space-md); }
+      .wam-consd__hero-subject { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+
+<body data-page="consultation-details">
+
+  <div class="wam-consd" id="consdRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-consd__topbar">
+      <div class="wam-consd__topbar-info">
+        <a href="consultations.html" class="wam-consd__topbar-back" id="backLink">↩ بازگشت</a>
+        <h1 class="wam-consd__topbar-title" id="pageTitle">💬 جزئیات مشاوره</h1>
+      </div>
+      <div class="wam-consd__topbar-actions">
+        <button type="button" class="wam-consd__icon-btn" id="refreshBtn" title="بروزرسانی">🔄</button>
+        <button type="button" class="wam-consd__icon-btn" id="shareBtn" title="اشتراک‌گذاری">📤</button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-consd__main" id="cdMain">
+
+      <!-- ═══ HERO ═══ -->
+      <section class="wam-consd__hero" id="heroSection">
+        <!-- توسط JS پر می‌شود -->
+      </section>
+
+      <!-- ═══ اطلاعات ═══ -->
+      <section class="wam-consd__section" id="infoSection">
+        <h2 class="wam-consd__section-title">
+          <span>📋 اطلاعات مشاوره</span>
+        </h2>
+        <div id="infoContent"></div>
+      </section>
+
+      <!-- ═══ پیام اصلی ═══ -->
+      <section class="wam-consd__section">
+        <h2 class="wam-consd__section-title">
+          <span>✉️ پیام اصلی</span>
+        </h2>
+        <div class="wam-consd__message-box" id="messageBox">—</div>
+      </section>
+
+      <!-- ═══ تغییر وضعیت (فقط staff) ═══ -->
+      <section class="wam-consd__section" id="statusSection" style="display:none;">
+        <h2 class="wam-consd__section-title">
+          <span>⚙️ تغییر وضعیت</span>
+        </h2>
+        <div class="wam-consd__status-list" id="statusList">
+          <button type="button" class="wam-consd__status-btn" data-status="pending">⏳ در انتظار</button>
+          <button type="button" class="wam-consd__status-btn" data-status="in_progress">🔎 در حال بررسی</button>
+          <button type="button" class="wam-consd__status-btn" data-status="resolved">✓ حل‌شده</button>
+          <button type="button" class="wam-consd__status-btn" data-status="closed">🔒 بسته‌شده</button>
+          <button type="button" class="wam-consd__status-btn" data-status="cancelled">✕ لغو‌شده</button>
+        </div>
+      </section>
+
+      <!-- ═══ پاسخ‌ها ═══ -->
+      <section class="wam-consd__section">
+        <h2 class="wam-consd__section-title">
+          <span>💬 پاسخ‌ها</span>
+          <span class="wam-consd__section-count" id="repliesCount">۰</span>
+        </h2>
+        <div class="wam-consd__replies" id="repliesList">
+          <!-- توسط JS پر می‌شود -->
+        </div>
+
+        <!-- فرم پاسخ -->
+        <div class="wam-consd__reply-form" id="replyForm">
+          <textarea id="replyText" class="wam-consd__textarea"
+                    placeholder="پاسخ خود را بنویسید..."></textarea>
+          <div class="wam-consd__reply-actions">
+            <button type="button" class="wam-btn wam-btn--primary" id="replySubmitBtn">
+              📤 ارسال پاسخ
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ Empty ═══ -->
+      <div class="wam-consd__empty" id="emptyState" style="display:none;">
+        <div class="wam-consd__empty-icon">❓</div>
+        <h3 class="wam-consd__empty-title">مشاوره یافت نشد</h3>
+        <p class="wam-consd__empty-text">
+          مشاوره‌ای با این شناسه در سیستم وجود ندارد یا حذف شده است.
+        </p>
+        <a href="consultations.html" class="wam-btn wam-btn--primary">↩ بازگشت به مشاوره‌ها</a>
+      </div>
+
+    </main>
+
+    <!-- ═══ ACTION BAR ═══ -->
+    <div class="wam-consd__action-bar" id="actionBar" style="display:none;">
+      <button type="button" class="wam-btn wam-btn--outline" id="cancelBtn">
+        ✕ لغو مشاوره
+      </button>
+      <button type="button" class="wam-btn wam-btn--primary" id="focusReplyBtn">
+        💬 نوشتن پاسخ
+      </button>
+    </div>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="wam-consd__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       CONSULTATION DETAILS CONTROLLER
+       - خواندن ?id= از URL
+       - نمایش کامل مشاوره
+       - ارسال پاسخ + تغییر وضعیت
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_CONS = 'wamPayConsultations';
+
+      var state = {
+        user: null,
+        consultation: null
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function fmtTime(ts) {
+        if (!ts) return '';
+        try {
+          return new Date(ts).toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+        } catch (_) { return ''; }
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = Date.now() - ts;
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه پیش';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت پیش';
+        return Math.round(abs / 86400000) + ' روز پیش';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function getParam(name) {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          return params.get(name) || '';
+        } catch (_) { return ''; }
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کاربر', username: 'user', role: 'applicant', id: 'user' };
+      }
+
+      function roleOf() {
+        var u = state.user;
+        return (u && (u.role || u.userRole)) || 'applicant';
+      }
+
+      function isStaff() {
+        var r = roleOf();
+        return r === 'super_admin' || r === 'admin' || r === 'verifier' || r === 'broker';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function typeLabel(t) {
+        var map = {
+          question: '❓ سؤال', complaint: '⚠️ شکایت',
+          suggestion: '💡 پیشنهاد', request: '📋 درخواست',
+          followup: '📌 پیگیری'
+        };
+        return map[t] || t || 'مشاوره';
+      }
+
+      function typeIcon(t) {
+        var map = {
+          question: '❓', complaint: '⚠️', suggestion: '💡',
+          request: '📋', followup: '📌'
+        };
+        return map[t] || '💬';
+      }
+
+      function statusLabel(s) {
+        var map = {
+          draft: 'پیش‌نویس', pending: 'در انتظار',
+          in_progress: 'در حال بررسی', resolved: 'حل‌شده',
+          closed: 'بسته‌شده', cancelled: 'لغو‌شده'
+        };
+        return map[s] || s || '—';
+      }
+
+      function priorityLabel(p) {
+        var map = { urgent: '🚨 فوری', high: '⚠️ بالا', normal: 'عادی', low: 'کم' };
+        return map[p] || p || 'عادی';
+      }
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadConsultation() {
+        var id = getParam('id');
+        if (!id) return null;
+        var all = readJSON(STORAGE_CONS, []);
+        if (!Array.isArray(all)) return null;
+        return all.find(function (c) { return c && c.id === id; }) || null;
+      }
+
+      function persistConsultation() {
+        if (!state.consultation) return false;
+        var all = readJSON(STORAGE_CONS, []);
+        if (!Array.isArray(all)) all = [];
+        for (var i = 0; i < all.length; i++) {
+          if (all[i].id === state.consultation.id) {
+            all[i] = state.consultation;
+            break;
+          }
+        }
+        return writeJSON(STORAGE_CONS, all);
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function renderHero() {
+        var c = state.consultation;
+        var hero = $('heroSection');
+        if (!hero || !c) return;
+
+        var st = c.status || 'pending';
+        var prio = c.priority || 'normal';
+        var icon = typeIcon(c.type);
+
+        hero.innerHTML = '' +
+          '<div class="wam-consd__hero-head">' +
+            '<div class="wam-consd__hero-icon wam-consd__hero-icon--' + esc(c.type) + '">' + icon + '</div>' +
+            '<div class="wam-consd__hero-body">' +
+              '<h2 class="wam-consd__hero-subject">' + esc(c.subject || 'بدون موضوع') + '</h2>' +
+              '<div class="wam-consd__hero-id">' + esc(c.id) + '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="wam-consd__hero-badges">' +
+            '<span class="wam-consd__badge wam-consd__badge--' + esc(st) + '">' +
+              statusLabel(st) +
+            '</span>' +
+            '<span class="wam-consd__badge wam-consd__badge--' + esc(prio) + '">' +
+              priorityLabel(prio) +
+            '</span>' +
+            '<span class="wam-consd__badge">' + typeLabel(c.type) + '</span>' +
+          '</div>';
+      }
+
+      function row(label, value, dir) {
+        return '' +
+          '<div class="wam-consd__info-row">' +
+            '<span class="wam-consd__info-label">' + esc(label) + ':</span>' +
+            '<span class="wam-consd__info-value"' + (dir ? ' dir="' + dir + '"' : '') + '>' +
+              esc(value) +
+            '</span>' +
+          '</div>';
+      }
+
+      function renderInfo() {
+        var c = state.consultation;
+        var el = $('infoContent');
+        if (!el || !c) return;
+
+        el.innerHTML = '' +
+          row('ایجادکننده', c.userName || '—') +
+          row('تاریخ ایجاد', fmtDate(c.createdAt) + ' ' + fmtTime(c.createdAt)) +
+          (c.updatedAt && c.updatedAt !== c.createdAt ? row('آخرین بروزرسانی', relTime(c.updatedAt)) : '') +
+          (c.caseId ? row('پرونده مرتبط', c.caseId, 'ltr') : '') +
+          (c.resolvedAt ? row('تاریخ حل', fmtDate(c.resolvedAt) + ' ' + fmtTime(c.resolvedAt)) : '');
+      }
+
+      function renderMessage() {
+        var c = state.consultation;
+        var el = $('messageBox');
+        if (!el || !c) return;
+        el.textContent = c.message || '—';
+      }
+
+      function renderStatusSection() {
+        var c = state.consultation;
+        if (!c) return;
+
+        if (!isStaff()) {
+          var sec = $('statusSection');
+          if (sec) sec.style.display = 'none';
+          return;
+        }
+
+        var sec2 = $('statusSection');
+        if (sec2) sec2.style.display = '';
+
+        var st = c.status || 'pending';
+        $$('.wam-consd__status-btn').forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.getAttribute('data-status') === st);
+        });
+      }
+
+      function renderReplies() {
+        var c = state.consultation;
+        var container = $('repliesList');
+        var countEl = $('repliesCount');
+        if (!container || !c) return;
+
+        var replies = Array.isArray(c.replies) ? c.replies : [];
+        if (countEl) countEl.textContent = toFa(replies.length);
+
+        if (replies.length === 0) {
+          container.innerHTML =
+            '<div style="text-align:center;padding:20px;color:var(--wam-text-muted);font-size:0.85rem;">' +
+              'هنوز پاسخی ثبت نشده است.' +
+            '</div>';
+          return;
+        }
+
+        var html = '';
+        replies.forEach(function (r) {
+          var isStaffReply = r.by && r.by !== c.userName;
+          var cls = isStaffReply ? 'wam-consd__reply--staff' : 'wam-consd__reply--user';
+          html += '' +
+            '<div class="wam-consd__reply ' + cls + '">' +
+              '<div class="wam-consd__reply-head">' +
+                '<span class="wam-consd__reply-author">' +
+                  (isStaffReply ? '👤 ' : '💬 ') + esc(r.by || 'کاربر') +
+                '</span>' +
+                '<span class="wam-consd__reply-time">' + relTime(r.at) + '</span>' +
+              '</div>' +
+              '<div class="wam-consd__reply-text">' + esc(r.text || '') + '</div>' +
+            '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      // ═══════════════════════════════════
+      // اکشن‌ها
+      // ═══════════════════════════════════
+
+      function addReply() {
+        var c = state.consultation;
+        if (!c) return;
+
+        var text = (($('replyText') || {}).value || '').trim();
+        if (!text || text.length < 2) {
+          showToast('متن پاسخ الزامی است.');
+          return;
+        }
+
+        if (!Array.isArray(c.replies)) c.replies = [];
+        c.replies.push({
+          by: state.user.name || state.user.username || 'کاربر',
+          at: Date.now(),
+          text: text
+        });
+        c.updatedAt = Date.now();
+
+        // اگر staff پاسخ داد و مشاوره pending بود → in_progress
+        if (isStaff() && c.status === 'pending') {
+          c.status = 'in_progress';
+        }
+
+        if (!persistConsultation()) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        if ($('replyText')) $('replyText').value = '';
+        renderReplies();
+        renderHero();
+        renderStatusSection();
+
+        emitEvent('consultation:replied', {
+          id: c.id,
+          by: state.user.name || state.user.username
+        });
+
+        showToast('✓ پاسخ ثبت شد');
+      }
+
+      function changeStatus(newStatus) {
+        var c = state.consultation;
+        if (!c || !isStaff()) return;
+
+        c.status = newStatus;
+        c.updatedAt = Date.now();
+        if (newStatus === 'resolved') {
+          c.resolvedAt = Date.now();
+        }
+
+        if (!persistConsultation()) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        renderHero();
+        renderStatusSection();
+
+        emitEvent('consultation:status-changed', {
+          id: c.id,
+          status: newStatus
+        });
+
+        showToast('✓ وضعیت به‌روزرسانی شد');
+      }
+
+      function cancelConsultation() {
+        var c = state.consultation;
+        if (!c) return;
+
+        // فقط ایجادکننده یا staff
+        var isOwner = c.userId === (state.user.id || state.user.username);
+        if (!isOwner && !isStaff()) {
+          showToast('شما اجازه لغو این مشاوره را ندارید.');
+          return;
+        }
+
+        if (!confirm('آیا از لغو این مشاوره مطمئن هستید؟')) return;
+
+        c.status = 'cancelled';
+        c.updatedAt = Date.now();
+
+        if (!persistConsultation()) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        renderHero();
+        renderStatusSection();
+
+        emitEvent('consultation:cancelled', { id: c.id });
+
+        showToast('✓ مشاوره لغو شد');
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Reply submit
+        if ($('replySubmitBtn')) {
+          $('replySubmitBtn').addEventListener('click', addReply);
+        }
+
+        // Ctrl+Enter برای ارسال
+        if ($('replyText')) {
+          $('replyText').addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+              e.preventDefault();
+              addReply();
+            }
+          });
+        }
+
+        // Status buttons
+        $$('.wam-consd__status-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var st = btn.getAttribute('data-status');
+            if (st) changeStatus(st);
+          });
+        });
+
+        // Refresh
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            state.consultation = loadConsultation();
+            if (state.consultation) renderAll();
+            $('refreshBtn').textContent = '✓';
+            setTimeout(function () { $('refreshBtn').textContent = '🔄'; }, 900);
+          });
+        }
+
+        // Share
+        if ($('shareBtn')) {
+          $('shareBtn').addEventListener('click', function () {
+            if (!state.consultation) return;
+            var url = window.location.href;
+            if (navigator.share) {
+              navigator.share({
+                title: state.consultation.subject || 'مشاوره وام پی',
+                text: 'جزئیات مشاوره ' + state.consultation.id,
+                url: url
+              }).catch(function () {});
+            } else if (navigator.clipboard) {
+              navigator.clipboard.writeText(url).then(function () {
+                showToast('✓ لینک کپی شد');
+              }).catch(function () {});
+            } else {
+              showToast(url);
+            }
+          });
+        }
+
+        // Cancel
+        if ($('cancelBtn')) {
+          $('cancelBtn').addEventListener('click', cancelConsultation);
+        }
+
+        // Focus reply
+        if ($('focusReplyBtn')) {
+          $('focusReplyBtn').addEventListener('click', function () {
+            var t = $('replyText');
+            if (t) {
+              t.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              setTimeout(function () { t.focus(); }, 400);
+            }
+          });
+        }
+
+        // Back
+        if ($('backLink')) {
+          $('backLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.history.length > 1) window.history.back();
+            else window.location.href = 'consultations.html';
+          });
+        }
+      }
+
+      // ═══════════════════════════════════
+      // رندر کلی
+      // ═══════════════════════════════════
+
+      function renderAll() {
+        if (!state.consultation) return;
+        renderHero();
+        renderInfo();
+        renderMessage();
+        renderStatusSection();
+        renderReplies();
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        state.user = currentUser();
+        state.consultation = loadConsultation();
+
+        if (!state.consultation) {
+          if ($('cdMain')) {
+            $$('.wam-consd__section').forEach(function (s) { s.style.display = 'none'; });
+            $$('.wam-consd__hero').forEach(function (s) { s.style.display = 'none'; });
+            if ($('actionBar')) $('actionBar').style.display = 'none';
+            if ($('emptyState')) $('emptyState').style.display = '';
+          }
+          return;
+        }
+
+        // اگر پیام خوانده‌نشده بود
+        if (!state.consultation.isRead) {
+          state.consultation.isRead = true;
+          persistConsultation();
+        }
+
+        renderAll();
+        bindEvents();
+
+        // Action bar
+        var bar = $('actionBar');
+        if (bar) {
+          bar.style.display = 'flex';
+
+          // مخفی کردن دکمه لغو اگر قبلاً لغو/حل شده
+          var cancelBtn = $('cancelBtn');
+          var st = state.consultation.status;
+          if (cancelBtn && (st === 'cancelled' || st === 'closed' || st === 'resolved')) {
+            cancelBtn.style.display = 'none';
+            // اگر دکمه پنهان شد، دکمه دوم تمام عرض شود
+            var focusBtn = $('focusReplyBtn');
+            if (focusBtn) focusBtn.style.flex = '1 1 100%';
+          }
+        }
+
+        emitEvent('consultation:viewed', {
+          id: state.consultation.id,
+          role: roleOf()
+        });
+
+        // auto-refresh هر ۶۰ ثانیه
+        setInterval(function () {
+          var latest = loadConsultation();
+          if (latest && JSON.stringify(latest) !== JSON.stringify(state.consultation)) {
+            state.consultation = latest;
+            renderAll();
+          }
+        }, 60000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

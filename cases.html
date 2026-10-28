@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="پرونده‌ها — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>پرونده‌ها | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       SHARED CASES PAGE
+       ═══════════════════════════════════════ */
+
+    .wam-cases {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 32px;
+    }
+
+    .wam-cases__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-cases__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-cases__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+    .wam-cases__topbar-back:hover {
+      color: var(--wam-primary-light);
+    }
+
+    .wam-cases__topbar-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-cases__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-cases__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-cases__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+    .wam-cases__icon-btn.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+    }
+
+    .wam-cases__main {
+      padding: var(--wam-space-lg);
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Search */
+    .wam-cases__search {
+      position: relative;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-cases__search input {
+      width: 100%;
+      padding: 11px 42px 11px 42px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-cases__search input:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-cases__search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      color: var(--wam-text-muted);
+      pointer-events: none;
+    }
+
+    .wam-cases__search-clear {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--wam-text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: none;
+    }
+    .wam-cases__search-clear.is-visible { display: inline-flex; }
+
+    /* Stats */
+    .wam-cases__stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-cases__stat {
+      padding: 12px 10px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      text-align: center;
+      box-shadow: var(--wam-shadow-sm);
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      color: var(--wam-text);
+    }
+
+    .wam-cases__stat:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-cases__stat-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.1;
+    }
+
+    .wam-cases__stat-value--warning { color: var(--wam-warning-text); }
+    .wam-cases__stat-value--success { color: var(--wam-success-text); }
+    .wam-cases__stat-value--danger  { color: var(--wam-danger-text); }
+    .wam-cases__stat-value--info    { color: var(--wam-info-text); }
+
+    .wam-cases__stat-label {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+      margin-top: 4px;
+    }
+
+    /* Filter chips */
+    .wam-cases__filters {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      margin-bottom: var(--wam-space-md);
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .wam-cases__filters::-webkit-scrollbar { display: none; }
+
+    .wam-cases__filter-chip {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .wam-cases__filter-chip:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary-light);
+    }
+
+    .wam-cases__filter-chip.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-cases__filter-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .wam-cases__filter-chip.is-active .wam-cases__filter-count {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    /* Sort row */
+    .wam-cases__sort-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-cases__sort-select {
+      padding: 5px 10px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      font-size: 0.75rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      cursor: pointer;
+    }
+
+    /* Grid */
+    .wam-cases__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--wam-space-md);
+    }
+
+    /* Card */
+    .wam-cases__card {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-right: 4px solid var(--wam-muted);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-md);
+      box-shadow: var(--wam-shadow-sm);
+      cursor: pointer;
+      transition: all var(--wam-t);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wam-cases__card:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .wam-cases__card--draft       { border-right-color: var(--wam-muted); }
+    .wam-cases__card--pending     { border-right-color: var(--wam-warning); }
+    .wam-cases__card--in_review   { border-right-color: var(--wam-info); }
+    .wam-cases__card--approved    { border-right-color: var(--wam-success); }
+    .wam-cases__card--rejected    { border-right-color: var(--wam-danger); }
+    .wam-cases__card--completed   { border-right-color: var(--wam-primary-light); }
+
+    .wam-cases__card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .wam-cases__card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-size: 1.15rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .wam-cases__card-title-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-cases__card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-cases__card-id {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      font-family: 'Menlo', monospace;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .wam-cases__card-amount {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .wam-cases__card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 0.75rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-cases__card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--wam-border-soft);
+      margin-top: auto;
+    }
+
+    .wam-cases__card-progress {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wam-cases__card-progress-bar {
+      flex: 1 1 auto;
+      height: 6px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius-pill);
+      overflow: hidden;
+      max-width: 120px;
+    }
+
+    .wam-cases__card-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--wam-primary-light), var(--wam-gold));
+      border-radius: var(--wam-radius-pill);
+      transition: width var(--wam-t);
+    }
+
+    .wam-cases__card-progress-label {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .wam-cases__status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.7rem;
+      font-weight: 800;
+      background: var(--wam-muted-soft);
+      color: var(--wam-text-muted);
+      white-space: nowrap;
+    }
+
+    .wam-cases__status-badge--draft     { background: var(--wam-muted-soft); color: var(--wam-text-muted); }
+    .wam-cases__status-badge--pending   { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-cases__status-badge--in_review { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-cases__status-badge--approved  { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-cases__status-badge--rejected  { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+    .wam-cases__status-badge--completed { background: var(--wam-primary-soft); color: var(--wam-primary); }
+
+    /* Empty */
+    .wam-cases__empty {
+      text-align: center;
+      padding: 56px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+
+    .wam-cases__empty-icon {
+      font-size: 2.6rem;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+
+    .wam-cases__empty-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 6px;
+    }
+
+    .wam-cases__empty-text {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0 0 var(--wam-space-md);
+      line-height: 1.7;
+    }
+
+    /* Pagination */
+    .wam-cases__pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: var(--wam-space-lg);
+      flex-wrap: wrap;
+    }
+
+    .wam-cases__page-btn {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 8px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      color: var(--wam-text);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wam-cases__page-btn:hover:not(:disabled) {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary);
+    }
+
+    .wam-cases__page-btn.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-cases__page-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .wam-cases__page-info {
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+      margin: 0 var(--wam-space-sm);
+    }
+
+    /* Role indicator */
+    .wam-cases__role-notice {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--wam-info-soft);
+      color: var(--wam-info-text);
+      border-radius: var(--wam-radius);
+      font-size: 0.8rem;
+      margin-bottom: var(--wam-space-md);
+      border: 1px solid transparent;
+    }
+
+    .wam-cases__role-notice--info {
+      background: var(--wam-info-soft);
+      color: var(--wam-info-text);
+    }
+
+    .wam-cases__role-notice-icon {
+      font-size: 1rem;
+      flex: 0 0 auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .wam-cases__main { padding: var(--wam-space-md); }
+      .wam-cases__grid {
+        grid-template-columns: 1fr;
+      }
+      .wam-cases__stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+      }
+      .wam-cases__stat { padding: 10px 6px; }
+      .wam-cases__stat-value { font-size: 1.05rem; }
+      .wam-cases__stat-label { font-size: 0.62rem; }
+    }
+
+    @media (min-width: 900px) {
+      .wam-cases__main { padding: var(--wam-space-xl) var(--wam-space-lg); }
+    }
+  </style>
+</head>
+
+<body data-page="cases">
+
+  <div class="wam-cases" id="casesRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-cases__topbar">
+      <div class="wam-cases__topbar-info">
+        <a href="#" class="wam-cases__topbar-back" id="backLink">↩ بازگشت</a>
+        <h1 class="wam-cases__topbar-title">📁 پرونده‌ها</h1>
+      </div>
+      <div class="wam-cases__topbar-actions">
+        <button type="button" class="wam-cases__icon-btn" id="refreshBtn" title="بروزرسانی">🔄</button>
+        <button type="button" class="wam-cases__icon-btn" id="exportBtn" title="خروجی CSV">⬇</button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-cases__main">
+
+      <!-- Role notice -->
+      <div class="wam-cases__role-notice wam-cases__role-notice--info" id="roleNotice" hidden>
+        <span class="wam-cases__role-notice-icon">ℹ️</span>
+        <span id="roleNoticeText">نمایش پرونده‌های مرتبط با شما</span>
+      </div>
+
+      <!-- Search -->
+      <div class="wam-cases__search">
+        <input type="text" id="searchInput" placeholder="جستجوی عنوان، شناسه، متقاضی یا کارگزار...">
+        <span class="wam-cases__search-icon">🔍</span>
+        <button type="button" class="wam-cases__search-clear" id="searchClear" aria-label="پاک">✕</button>
+      </div>
+
+      <!-- Stats -->
+      <section class="wam-cases__stats">
+        <button type="button" class="wam-cases__stat" data-status="all">
+          <div class="wam-cases__stat-value" id="statTotal">۰</div>
+          <div class="wam-cases__stat-label">کل</div>
+        </button>
+        <button type="button" class="wam-cases__stat" data-status="pending">
+          <div class="wam-cases__stat-value wam-cases__stat-value--warning" id="statPending">۰</div>
+          <div class="wam-cases__stat-label">در انتظار</div>
+        </button>
+        <button type="button" class="wam-cases__stat" data-status="in_review">
+          <div class="wam-cases__stat-value wam-cases__stat-value--info" id="statInReview">۰</div>
+          <div class="wam-cases__stat-label">در بررسی</div>
+        </button>
+        <button type="button" class="wam-cases__stat" data-status="approved">
+          <div class="wam-cases__stat-value wam-cases__stat-value--success" id="statApproved">۰</div>
+          <div class="wam-cases__stat-label">تأییدشده</div>
+        </button>
+        <button type="button" class="wam-cases__stat" data-status="rejected">
+          <div class="wam-cases__stat-value wam-cases__stat-value--danger" id="statRejected">۰</div>
+          <div class="wam-cases__stat-label">ردشده</div>
+        </button>
+      </section>
+
+      <!-- Filter chips -->
+      <div class="wam-cases__filters" id="filterChips">
+        <button type="button" class="wam-cases__filter-chip is-active" data-status="all">
+          همه <span class="wam-cases__filter-count" data-count="all">۰</span>
+        </button>
+        <button type="button" class="wam-cases__filter-chip" data-status="draft">
+          پیش‌نویس <span class="wam-cases__filter-count" data-count="draft">۰</span>
+        </button>
+        <button type="button" class="wam-cases__filter-chip" data-status="pending">
+          در انتظار <span class="wam-cases__filter-count" data-count="pending">۰</span>
+        </button>
+        <button type="button" class="wam-cases__filter-chip" data-status="in_review">
+          در بررسی <span class="wam-cases__filter-count" data-count="in_review">۰</span>
+        </button>
+        <button type="button" class="wam-cases__filter-chip" data-status="approved">
+          تأییدشده <span class="wam-cases__filter-count" data-count="approved">۰</span>
+        </button>
+        <button type="button" class="wam-cases__filter-chip" data-status="rejected">
+          ردشده <span class="wam-cases__filter-count" data-count="rejected">۰</span>
+        </button>
+        <button type="button" class="wam-cases__filter-chip" data-status="completed">
+          تکمیل‌شده <span class="wam-cases__filter-count" data-count="completed">۰</span>
+        </button>
+      </div>
+
+      <!-- Sort row -->
+      <div class="wam-cases__sort-row">
+        <span id="resultsCount">۰ پرونده</span>
+        <select class="wam-cases__sort-select" id="sortSelect">
+          <option value="newest">جدیدترین</option>
+          <option value="oldest">قدیمی‌ترین</option>
+          <option value="amount_high">مبلغ: زیاد به کم</option>
+          <option value="amount_low">مبلغ: کم به زیاد</option>
+          <option value="progress">بیشترین پیشرفت</option>
+        </select>
+      </div>
+
+      <!-- Grid -->
+      <div class="wam-cases__grid" id="casesGrid">
+        <!-- توسط JS پر می‌شود -->
+      </div>
+
+      <!-- Empty -->
+      <div class="wam-cases__empty" id="emptyState" style="display:none;">
+        <div class="wam-cases__empty-icon">📭</div>
+        <h3 class="wam-cases__empty-title" id="emptyTitle">پرونده‌ای یافت نشد</h3>
+        <p class="wam-cases__empty-text" id="emptyText">
+          با فیلترهای فعلی پرونده‌ای وجود ندارد.
+        </p>
+        <a href="dashboard.html" class="wam-btn wam-btn--primary">
+          ↩ بازگشت به داشبورد
+        </a>
+      </div>
+
+      <!-- Pagination -->
+      <div class="wam-cases__pagination" id="pagination" style="display:none;">
+        <button type="button" class="wam-cases__page-btn" id="prevPage" disabled>‹</button>
+        <span class="wam-cases__page-info" id="pageInfo">1 از 1</span>
+        <button type="button" class="wam-cases__page-btn" id="nextPage" disabled>›</button>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       CASES CONTROLLER (Shared)
+       - لیست پرونده‌ها با فیلتر نقش‌محور
+       - جستجو + فیلتر + مرتب + صفحه‌بندی
+       - نقش‌محور: super_admin/admin/verifier = همه
+                   broker = پرونده‌های خودش
+                   applicant = درخواست‌های خودش
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_CASES = 'wamPayCases';
+      var PAGE_SIZE = 12;
+
+      var state = {
+        user: null,
+        all: [],
+        filtered: [],
+        status: 'all',
+        query: '',
+        sort: 'newest',
+        page: 1
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کاربر', username: 'user', role: 'applicant', id: 'user' };
+      }
+
+      function currentUserId() {
+        var u = state.user;
+        return (u && (u.id || u.username)) || 'user';
+      }
+
+      function roleOf() {
+        var u = state.user;
+        return (u && (u.role || u.userRole)) || 'applicant';
+      }
+
+      function canSeeAll() {
+        var r = roleOf();
+        return r === 'super_admin' || r === 'admin' || r === 'verifier';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری نقش‌محور
+      // ═══════════════════════════════════
+
+      function loadCases() {
+        var all = readJSON(STORAGE_CASES, []);
+        if (!Array.isArray(all)) return [];
+
+        var me = currentUserId();
+        var myName = (state.user && state.user.name) || '';
+        var role = roleOf();
+
+        if (canSeeAll()) return all;
+
+        if (role === 'broker') {
+          return all.filter(function (c) {
+            if (!c) return false;
+            return c.brokerId === me ||
+                   (c.brokerName && myName && c.brokerName === myName) ||
+                   (!c.brokerId && !c.brokerName);
+          });
+        }
+
+        // applicant
+        return all.filter(function (c) {
+          if (!c) return false;
+          return c.applicantId === me ||
+                 (c.applicantName && myName && c.applicantName === myName) ||
+                 (!c.applicantId && !c.applicantName);
+        });
+      }
+
+      function applyRoleNotice() {
+        var el = $('roleNotice');
+        var txt = $('roleNoticeText');
+        if (!el || !txt) return;
+
+        var role = roleOf();
+        var label = {
+          super_admin: '👑 مدیر ارشد',
+          admin: '⚙️ ادمین کل',
+          verifier: '🔍 اعتبارسنج',
+          broker: '💼 کارگزار',
+          applicant: '👤 متقاضی'
+        }[role] || role;
+
+        if (canSeeAll()) {
+          txt.textContent = 'نمایش همه پرونده‌های سیستم (' + label + ')';
+          el.hidden = false;
+        } else if (role === 'broker') {
+          txt.textContent = 'نمایش پرونده‌های مرتبط با شما (' + label + ')';
+          el.hidden = false;
+        } else if (role === 'applicant') {
+          txt.textContent = 'نمایش درخواست‌های شما (' + label + ')';
+          el.hidden = false;
+        } else {
+          el.hidden = true;
+        }
+      }
+
+      // ═══════════════════════════════════
+      // آمار
+      // ═══════════════════════════════════
+
+      function updateStats() {
+        var list = state.all;
+        var counts = {
+          all: list.length,
+          draft: 0, pending: 0, in_review: 0,
+          approved: 0, rejected: 0, completed: 0
+        };
+
+        list.forEach(function (c) {
+          var st = c.status || 'pending';
+          if (counts[st] != null) counts[st]++;
+        });
+
+        if ($('statTotal')) $('statTotal').textContent = toFa(counts.all);
+        if ($('statPending')) $('statPending').textContent = toFa(counts.pending);
+        if ($('statInReview')) $('statInReview').textContent = toFa(counts.in_review);
+        if ($('statApproved')) $('statApproved').textContent = toFa(counts.approved);
+        if ($('statRejected')) $('statRejected').textContent = toFa(counts.rejected);
+
+        Object.keys(counts).forEach(function (k) {
+          var el = document.querySelector('[data-count="' + k + '"]');
+          if (el) el.textContent = toFa(counts[k]);
+        });
+      }
+
+      // ═══════════════════════════════════
+      // فیلتر و مرتب
+      // ═══════════════════════════════════
+
+      function applyFilters() {
+        var q = state.query.toLowerCase();
+        var st = state.status;
+
+        state.filtered = state.all.filter(function (c) {
+          if (st !== 'all' && (c.status || 'pending') !== st) return false;
+          if (q) {
+            var hay = [
+              c.title, c.id, c.applicantName, c.brokerName,
+              c.type, c.status
+            ].join(' ').toLowerCase();
+            if (hay.indexOf(q) < 0) return false;
+          }
+          return true;
+        });
+
+        // مرتب‌سازی
+        var s = state.sort;
+        state.filtered.sort(function (a, b) {
+          if (s === 'oldest') return (a.createdAt || 0) - (b.createdAt || 0);
+          if (s === 'amount_high') return (Number(b.amount) || 0) - (Number(a.amount) || 0);
+          if (s === 'amount_low') return (Number(a.amount) || 0) - (Number(b.amount) || 0);
+          if (s === 'progress') return progressOf(b) - progressOf(a);
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+
+        state.page = 1;
+        render();
+      }
+
+      // ═══════════════════════════════════
+      // Helper
+      // ═══════════════════════════════════
+
+      function progressOf(c) {
+        if (typeof c.progress === 'number') return Math.max(0, Math.min(100, c.progress));
+        var map = {
+          draft: 10, pending: 30, in_review: 55,
+          approved: 80, completed: 100, rejected: 20
+        };
+        return map[c.status] || 0;
+      }
+
+      function statusLabel(s) {
+        var map = {
+          draft: 'پیش‌نویس', pending: 'در انتظار', in_review: 'در بررسی',
+          approved: 'تأییدشده', rejected: 'ردشده', completed: 'تکمیل‌شده'
+        };
+        return map[s] || s || '—';
+      }
+
+      function typeLabel(t) {
+        var map = {
+          home: '🏠 مسکن', car: '🚗 خودرو', personal: '👤 شخصی',
+          business: '💼 کسب‌وکار', equipment: '🏭 تجهیزات',
+          education: '🎓 تحصیلی'
+        };
+        return map[t] || t || 'وام';
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function render() {
+        var grid = $('casesGrid');
+        var empty = $('emptyState');
+        var pagination = $('pagination');
+        var countEl = $('resultsCount');
+
+        if (countEl) countEl.textContent = toFa(state.filtered.length) + ' پرونده';
+
+        if (state.filtered.length === 0) {
+          if (grid) grid.innerHTML = '';
+          if (empty) {
+            empty.style.display = '';
+            var et = $('emptyTitle');
+            var ex = $('emptyText');
+            if (state.query || state.status !== 'all') {
+              if (et) et.textContent = 'نتیجه‌ای یافت نشد';
+              if (ex) ex.textContent = 'با فیلترهای فعلی پرونده‌ای وجود ندارد.';
+            } else {
+              if (et) et.textContent = 'هنوز پرونده‌ای وجود ندارد';
+              if (ex) ex.textContent = 'به‌محض ثبت اولین پرونده، اینجا نمایش داده می‌شود.';
+            }
+          }
+          if (pagination) pagination.style.display = 'none';
+          return;
+        }
+
+        if (empty) empty.style.display = 'none';
+
+        var totalPages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+        if (state.page > totalPages) state.page = totalPages;
+        var start = (state.page - 1) * PAGE_SIZE;
+        var slice = state.filtered.slice(start, start + PAGE_SIZE);
+
+        var html = '';
+        slice.forEach(function (c) {
+          html += renderCard(c);
+        });
+        if (grid) grid.innerHTML = html;
+
+        // Bind card click
+        grid.querySelectorAll('.wam-cases__card').forEach(function (card) {
+          card.addEventListener('click', function () {
+            var id = card.getAttribute('data-id');
+            if (id) window.location.href = 'case-details.html?id=' + encodeURIComponent(id);
+          });
+        });
+
+        // Pagination
+        if (pagination) pagination.style.display = '';
+        if ($('pageInfo')) $('pageInfo').textContent = toFa(state.page) + ' از ' + toFa(totalPages);
+        if ($('prevPage')) $('prevPage').disabled = state.page <= 1;
+        if ($('nextPage')) $('nextPage').disabled = state.page >= totalPages;
+      }
+
+      function renderCard(c) {
+        var st = c.status || 'pending';
+        var prog = progressOf(c);
+        var icon = typeLabel(c.type).split(' ')[0] || '📁';
+
+        return '' +
+          '<div class="wam-cases__card wam-cases__card--' + esc(st) + '" data-id="' + esc(c.id) + '">' +
+            '<div class="wam-cases__card-head">' +
+              '<div class="wam-cases__card-icon">' + icon + '</div>' +
+              '<div class="wam-cases__card-title-wrap">' +
+                '<p class="wam-cases__card-title">' + esc(c.title || 'بدون عنوان') + '</p>' +
+                '<div class="wam-cases__card-id">' + esc(c.id) + '</div>' +
+              '</div>' +
+              '<div class="wam-cases__card-amount">' + fmtAmount(c.amount) + '</div>' +
+            '</div>' +
+
+            '<div class="wam-cases__card-meta">' +
+              (c.applicantName ? '<span>👤 ' + esc(c.applicantName) + '</span>' : '') +
+              (c.brokerName ? '<span>💼 ' + esc(c.brokerName) + '</span>' : '') +
+              (c.createdAt ? '<span>🗓 ' + esc(fmtDate(c.createdAt)) + '</span>' : '') +
+            '</div>' +
+
+            '<div class="wam-cases__card-footer">' +
+              '<div class="wam-cases__card-progress">' +
+                '<div class="wam-cases__card-progress-bar">' +
+                  '<div class="wam-cases__card-progress-fill" style="width:' + prog + '%;"></div>' +
+                '</div>' +
+                '<span class="wam-cases__card-progress-label">' + toFa(prog) + '٪</span>' +
+              '</div>' +
+              '<span class="wam-cases__status-badge wam-cases__status-badge--' + esc(st) + '">' +
+                statusLabel(st) +
+              '</span>' +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // CSV Export
+      // ═══════════════════════════════════
+
+      function exportCSV() {
+        var rows = [];
+        rows.push(['ID', 'Title', 'Applicant', 'Broker', 'Type', 'Amount', 'Status', 'Progress', 'CreatedAt']);
+        state.filtered.forEach(function (c) {
+          rows.push([
+            c.id || '',
+            (c.title || '').replace(/,/g, ' '),
+            c.applicantName || '',
+            c.brokerName || '',
+            c.type || '',
+            c.amount || 0,
+            c.status || '',
+            progressOf(c) + '%',
+            c.createdAt ? new Date(c.createdAt).toISOString().slice(0, 10) : ''
+          ]);
+        });
+        var csv = '\uFEFF' + rows.map(function (r) { return r.join(','); }).join('\n');
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'cases-' + Date.now() + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        emitEvent('cases:exported', { count: state.filtered.length });
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Search
+        var input = $('searchInput');
+        var clearBtn = $('searchClear');
+        if (input) {
+          input.addEventListener('input', function () {
+            state.query = input.value || '';
+            if (clearBtn) clearBtn.classList.toggle('is-visible', state.query.length > 0);
+            applyFilters();
+          });
+        }
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function () {
+            if (input) input.value = '';
+            state.query = '';
+            clearBtn.classList.remove('is-visible');
+            applyFilters();
+          });
+        }
+
+        // Filter chips
+        $$('.wam-cases__filter-chip').forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            $$('.wam-cases__filter-chip').forEach(function (x) {
+              x.classList.remove('is-active');
+            });
+            chip.classList.add('is-active');
+            state.status = chip.getAttribute('data-status') || 'all';
+            applyFilters();
+          });
+        });
+
+        // Stat box click → filter
+        $$('.wam-cases__stat').forEach(function (stat) {
+          stat.addEventListener('click', function () {
+            var s = stat.getAttribute('data-status');
+            if (!s) return;
+            state.status = s;
+            $$('.wam-cases__filter-chip').forEach(function (x) {
+              x.classList.toggle('is-active', x.getAttribute('data-status') === s);
+            });
+            applyFilters();
+          });
+        });
+
+        // Sort
+        var sortSelect = $('sortSelect');
+        if (sortSelect) {
+          sortSelect.addEventListener('change', function () {
+            state.sort = sortSelect.value;
+            applyFilters();
+          });
+        }
+
+        // Refresh
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            state.all = loadCases();
+            updateStats();
+            applyFilters();
+            $('refreshBtn').textContent = '✓';
+            setTimeout(function () { $('refreshBtn').textContent = '🔄'; }, 900);
+          });
+        }
+
+        // Export
+        if ($('exportBtn')) {
+          $('exportBtn').addEventListener('click', exportCSV);
+        }
+
+        // Pagination
+        if ($('prevPage')) $('prevPage').addEventListener('click', function () {
+          if (state.page > 1) { state.page--; render(); try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_){} }
+        });
+        if ($('nextPage')) $('nextPage').addEventListener('click', function () {
+          var totalPages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+          if (state.page < totalPages) { state.page++; render(); try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_){} }
+        });
+
+        // Back
+        if ($('backLink')) {
+          $('backLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.history.length > 1) {
+              window.history.back();
+            } else {
+              window.location.href = 'dashboard.html';
+            }
+          });
+        }
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        state.user = currentUser();
+        state.all = loadCases();
+        applyRoleNotice();
+        updateStats();
+        applyFilters();
+        bindEvents();
+
+        // auto-refresh
+        setInterval(function () {
+          state.all = loadCases();
+          updateStats();
+          applyFilters();
+        }, 60000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="تنظیمات سیستم — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>تنظیمات | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ─── استایل اختصاصی تنظیمات ─── */
+
+    .wam-admin__settings-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: var(--wam-space-lg);
+      align-items: start;
+    }
+
+    /* منوی کناری تنظیمات */
+    .wam-admin__settings-nav {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      padding: 8px;
+      position: sticky;
+      top: 84px;
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-admin__settings-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--wam-radius);
+      color: var(--wam-text);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      width: 100%;
+      text-align: right;
+      font-family: inherit;
+      transition: background var(--wam-t), color var(--wam-t);
+      margin-bottom: 2px;
+    }
+
+    .wam-admin__settings-nav-item:hover {
+      background: var(--wam-bg-muted);
+    }
+
+    .wam-admin__settings-nav-item.is-active {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-weight: 800;
+    }
+
+    .wam-admin__settings-nav-icon {
+      font-size: 1.05rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* پنل تنظیمات */
+    .wam-admin__settings-panel {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      box-shadow: var(--wam-shadow-sm);
+      min-height: 400px;
+    }
+
+    .wam-admin__settings-section {
+      display: none;
+      padding: var(--wam-space-lg);
+    }
+
+    .wam-admin__settings-section.is-active {
+      display: block;
+      animation: wam-set-in 0.3s ease both;
+    }
+
+    .wam-admin__settings-header {
+      padding-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border-soft);
+      margin-bottom: var(--wam-space-lg);
+    }
+
+    .wam-admin__settings-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wam-admin__settings-desc {
+      font-size: 0.82rem;
+      color: var(--wam-text-muted);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* ردیف تنظیم */
+    .wam-admin__setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 14px 0;
+      border-bottom: 1px dashed var(--wam-border-soft);
+    }
+
+    .wam-admin__setting-row:last-child {
+      border-bottom: 0;
+    }
+
+    .wam-admin__setting-info {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-admin__setting-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 3px;
+    }
+
+    .wam-admin__setting-hint {
+      font-size: 0.74rem;
+      color: var(--wam-text-muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .wam-admin__setting-control {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 120px;
+      justify-content: flex-end;
+    }
+
+    .wam-admin__setting-control .wam-input,
+    .wam-admin__setting-control .wam-select {
+      min-width: 140px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+    }
+
+    /* دکمه‌های پایین */
+    .wam-admin__settings-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      padding-top: var(--wam-space-md);
+      margin-top: var(--wam-space-md);
+      border-top: 1px solid var(--wam-border-soft);
+    }
+
+    /* نمایش پیام ذخیره */
+    .wam-admin__save-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 12px 22px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-success);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: var(--wam-shadow-md);
+      z-index: var(--wam-z-toast);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .wam-admin__save-toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* کارت شیشه‌ای */
+    .wam-admin__setting-card {
+      padding: 14px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    @keyframes wam-set-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ریسپانسیو */
+    @media (max-width: 900px) {
+      .wam-admin__settings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .wam-admin__settings-nav {
+        position: static;
+        display: flex;
+        overflow-x: auto;
+        gap: 4px;
+        padding: 6px;
+        scrollbar-width: none;
+      }
+
+      .wam-admin__settings-nav::-webkit-scrollbar { display: none; }
+
+      .wam-admin__settings-nav-item {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        margin: 0;
+      }
+
+      .wam-admin__settings-nav-label {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wam-admin__setting-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .wam-admin__setting-control {
+        justify-content: flex-start;
+        min-width: 0;
+      }
+
+      .wam-admin__settings-actions {
+        flex-direction: column;
+      }
+
+      .wam-admin__settings-actions .wam-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body data-page="admin-settings">
+
+  <div class="wam-admin" id="adminRoot">
+
+    <div class="wam-admin__overlay" id="adminOverlay"></div>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="wam-admin__sidebar" aria-label="منوی مدیریت">
+      <div class="wam-admin__brand">
+        <span class="wam-admin__brand-icon">و</span>
+        <span>وام پی</span>
+      </div>
+
+      <nav class="wam-admin__nav" role="navigation">
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">اصلی</div>
+          <a class="wam-admin__nav-item" href="admin-dashboard.html">
+            <span class="wam-admin__nav-icon">📊</span>
+            <span>داشبورد</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">مدیریت</div>
+          <a class="wam-admin__nav-item" href="admin-users.html">
+            <span class="wam-admin__nav-icon">👥</span>
+            <span>کاربران</span>
+            <span class="wam-admin__nav-badge" data-badge="users" hidden>0</span>
+          </a>
+          <a class="wam-admin__nav-item" href="admin-cases.html">
+            <span class="wam-admin__nav-icon">📁</span>
+            <span>پرونده‌ها</span>
+          </a>
+          <a class="wam-admin__nav-item" href="admin-approvals.html">
+            <span class="wam-admin__nav-icon">✓</span>
+            <span>تأییدها</span>
+            <span class="wam-admin__nav-badge" data-badge="approvals" hidden>0</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">مالی</div>
+          <a class="wam-admin__nav-item" href="payments.html">
+            <span class="wam-admin__nav-icon">💳</span>
+            <span>پرداخت‌ها</span>
+          </a>
+          <a class="wam-admin__nav-item" href="financial-reports.html">
+            <span class="wam-admin__nav-icon">📈</span>
+            <span>گزارشات</span>
+          </a>
+          <a class="wam-admin__nav-item" href="advanced-reports.html">
+            <span class="wam-admin__nav-icon">📊</span>
+            <span>گزارشات پیشرفته</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">سیستم</div>
+          <a class="wam-admin__nav-item" href="follow-ups.html">
+            <span class="wam-admin__nav-icon">📌</span>
+            <span>پیگیری‌ها</span>
+            <span class="wam-admin__nav-badge" data-badge="followups" hidden>0</span>
+          </a>
+          <a class="wam-admin__nav-item" href="dashboard.html">
+            <span class="wam-admin__nav-icon">🧩</span>
+            <span>داشبورد عمومی</span>
+          </a>
+          <a class="wam-admin__nav-item is-active" href="admin-settings.html">
+            <span class="wam-admin__nav-icon">⚙️</span>
+            <span>تنظیمات</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group" style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+          <button type="button" class="wam-admin__nav-item" id="adminLogoutBtn">
+            <span class="wam-admin__nav-icon">🚪</span>
+            <span>خروج از حساب</span>
+          </button>
+        </div>
+
+      </nav>
+    </aside>
+
+    <!-- ═══ MAIN ═══ -->
+    <div class="wam-admin__main">
+
+      <header class="wam-admin__topbar">
+        <button type="button" class="wam-admin__menu-toggle" id="adminMenuToggle" aria-label="باز کردن منو">☰</button>
+        <h1 class="wam-admin__topbar-title">⚙️ تنظیمات سیستم</h1>
+        <div class="wam-admin__topbar-actions">
+          <button type="button" class="wam-btn wam-btn--ghost wam-btn--sm" id="resetAllBtn" title="بازگردانی پیش‌فرض">
+            ↺ بازگردانی
+          </button>
+          <div class="wam-admin__user" id="adminUserChip">
+            <span class="wam-admin__user-avatar" id="adminUserAvatar">م</span>
+            <span id="adminUserName">مدیر</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="wam-admin__content">
+
+        <nav class="wam-admin__breadcrumb">
+          <a href="admin-dashboard.html">خانه</a>
+          <span class="wam-admin__breadcrumb-sep">/</span>
+          <span>تنظیمات</span>
+        </nav>
+
+        <div class="wam-admin__settings-grid">
+
+          <!-- منوی تنظیمات -->
+          <aside class="wam-admin__settings-nav">
+            <button type="button" class="wam-admin__settings-nav-item is-active" data-section="general">
+              <span class="wam-admin__settings-nav-icon">🏢</span>
+              <span class="wam-admin__settings-nav-label">عمومی</span>
+            </button>
+            <button type="button" class="wam-admin__settings-nav-item" data-section="security">
+              <span class="wam-admin__settings-nav-icon">🔒</span>
+              <span class="wam-admin__settings-nav-label">امنیت</span>
+            </button>
+            <button type="button" class="wam-admin__settings-nav-item" data-section="notifications">
+              <span class="wam-admin__settings-nav-icon">🔔</span>
+              <span class="wam-admin__settings-nav-label">اعلان‌ها</span>
+            </button>
+            <button type="button" class="wam-admin__settings-nav-item" data-section="appearance">
+              <span class="wam-admin__settings-nav-icon">🎨</span>
+              <span class="wam-admin__settings-nav-label">ظاهر</span>
+            </button>
+            <button type="button" class="wam-admin__settings-nav-item" data-section="financial">
+              <span class="wam-admin__settings-nav-icon">💰</span>
+              <span class="wam-admin__settings-nav-label">مالی</span>
+            </button>
+            <button type="button" class="wam-admin__settings-nav-item" data-section="backup">
+              <span class="wam-admin__settings-nav-icon">💾</span>
+              <span class="wam-admin__settings-nav-label">پشتیبان‌گیری</span>
+            </button>
+            <button type="button" class="wam-admin__settings-nav-item" data-section="about">
+              <span class="wam-admin__settings-nav-icon">ℹ️</span>
+              <span class="wam-admin__settings-nav-label">درباره</span>
+            </button>
+          </aside>
+
+          <!-- پنل تنظیمات -->
+          <div class="wam-admin__settings-panel">
+
+            <!-- ═══ عمومی ═══ -->
+            <section class="wam-admin__settings-section is-active" data-section="general">
+              <header class="wam-admin__settings-header">
+                <h2 class="wam-admin__settings-title">🏢 تنظیمات عمومی</h2>
+                <p class="wam-admin__settings-desc">
+                  اطلاعات پایه سازمان، واحد پول، زبان و زمان سیستم.
+                </p>
+              </header>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">نام سازمان</p>
+                  <p class="wam-admin__setting-hint">در هدر و فاکتورها نمایش داده می‌شود.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <input type="text" class="wam-input" id="setOrgName" placeholder="وام پی" value="وام پی">
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">واحد پول</p>
+                  <p class="wam-admin__setting-hint">واحد پول پیش‌فرض برای مبالغ.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <select class="wam-select" id="setCurrency">
+                    <option value="IRR">ریال ایران</option>
+                    <option value="IRT">تومان</option>
+                    <option value="USD">دلار آمریکا</option>
+                    <option value="EUR">یورو</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">منطقه زمانی</p>
+                  <p class="wam-admin__setting-hint">برای ثبت تاریخ و ساعت.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <select class="wam-select" id="setTimezone">
+                    <option value="Asia/Tehran">تهران (UTC+3:30)</option>
+                    <option value="Asia/Dubai">دبی (UTC+4)</option>
+                    <option value="UTC">UTC</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">تقویم</p>
+                  <p class="wam-admin__setting-hint">نمایش تاریخ به‌صورت شمسی یا میلادی.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <select class="wam-select" id="setCalendar">
+                    <option value="jalali">شمسی (جلالی)</option>
+                    <option value="gregorian">میلادی</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">زبان پیش‌فرض</p>
+                  <p class="wam-admin__setting-hint">زبان رابط کاربری.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <select class="wam-select" id="setLang">
+                    <option value="fa">فارسی</option>
+                    <option value="en">انگلیسی</option>
+                  </select>
+                </div>
+              </div>
+            </section>
+
+            <!-- ═══ امنیت ═══ -->
+            <section class="wam-admin__settings-section" data-section="security">
+              <header class="wam-admin__settings-header">
+                <h2 class="wam-admin__settings-title">🔒 تنظیمات امنیت</h2>
+                <p class="wam-admin__settings-desc">
+                  سیاست‌های رمز عبور، ورود و نشست‌های کاربری.
+                </p>
+              </header>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">حداقل طول رمز عبور</p>
+                  <p class="wam-admin__setting-hint">تعداد کاراکترهای الزامی (پیشنهاد: ۸).</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <input type="number" class="wam-input" id="setMinPassLen" min="6" max="32" value="8">
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">الزام ترکیب حرف و عدد</p>
+                  <p class="wam-admin__setting-hint">کاربر باید حرف و عدد در رمز داشته باشد.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <label class="wam-switch">
+                    <input type="checkbox" id="setRequireAlnum" checked>
+                    <span class="wam-switch__slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">الزام کاراکتر خاص</p>
+                  <p class="wam-admin__setting-hint">حداقل یک کاراکتر خاص (!@#$).</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <label class="wam-switch">
+                    <input type="checkbox" id="setRequireSpecial">
+                    <span class="wam-switch__slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">قفل پس از تلاش ناموفق</p>
+                  <p class="wam-admin__setting-hint">تعداد تلاش‌های اشتباه قبل از قفل موقت.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <input type="number" class="wam-input" id="setMaxAttempts" min="3" max="10" value="5">
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">مدت نشست (دقیقه)</p>
+                  <p class="wam-admin__setting-hint">پس از این مدت، ورود دوباره لازم است.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <input type="number" class="wam-input" id="setSessionMinutes" min="5" max="1440" value="60">
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">ورود دو مرحله‌ای</p>
+                  <p class="wam-admin__setting-hint">ارسال کد تأیید پیامکی هنگام ورود.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <label class="wam-switch">
+                    <input type="checkbox" id="setTwoFactor">
+                    <span class="wam-switch__slider"></span>
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <!-- ═══ اعلان‌ها ═══ -->
+            <section class="wam-admin__settings-section" data-section="notifications">
+              <header class="wam-admin__settings-header">
+                <h2 class="wam-admin__settings-title">🔔 تنظیمات اعلان‌ها</h2>
+                <p class="wam-admin__settings-desc">
+                  مدیریت اعلان‌ها و اطلاع‌رسانی به کاربران.
+                </p>
+              </header>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">اعلان پیامکی</p>
+                  <p class="wam-admin__setting-hint">ارسال پیامک برای رویدادهای مهم.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <label class="wam-switch">
+                    <input type="checkbox" id="setSmsNotif" checked>
+                    <span class="wam-switch__slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">اعلان ایمیلی</p>
+                  <p class="wam-admin__setting-hint">ارسال ایمیل برای تأییدها و تغییرات.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <label class="wam-switch">
+                    <input type="checkbox" id="setEmailNotif" checked>
+                    <span class="wam-switch__slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">اعلان درون‌برنامه</p>
+                  <p class="wam-admin__setting-hint">نمایش اعلان‌ها در پنل کاربری.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <label class="wam-switch">
+                    <input type="checkbox" id="setInAppNotif" checked>
+                    <span class="wam-switch__slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">اعلان پرونده جدید</p>
+                  <p class="wam-admin__setting-hint">اطلاع به مدیران هنگام ایجاد پرونده.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <label class="wam-switch">
+                    <input type="checkbox" id="setNotifyNewCase" checked>
+                    <span class="wam-switch__slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">اعلان پرداخت</p>
+                  <p class="wam-admin__setting-hint">اطلاع هنگام انجام یا تأیید پرداخت.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <label class="wam-switch">
+                    <input type="checkbox" id="setNotifyPayment" checked>
+                    <span class="wam-switch__slider"></span>
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <!-- ═══ ظاهر ═══ -->
+            <section class="wam-admin__settings-section" data-section="appearance">
+              <header class="wam-admin__settings-header">
+                <h2 class="wam-admin__settings-title">🎨 تنظیمات ظاهری</h2>
+                <p class="wam-admin__settings-desc">
+                  ظاهر سیستم، رنگ‌ها و چیدمان.
+                </p>
+              </header>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">تم رنگی</p>
+                  <p class="wam-admin__setting-hint">رنگ اصلی رابط کاربری.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <select class="wam-select" id="setTheme">
+                    <option value="green">سبز (پیش‌فرض)</option>
+                    <option value="blue">آبی</option>
+                    <option value="purple">بنفش</option>
+                    <option value="dark-green">سبز تیره</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">حالت نمایش</p>
+                  <p class="wam-admin__setting-hint">روشن، تیره یا خودکار.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <select class="wam-select" id="setThemeMode">
+                    <option value="light">روشن</option>
+                    <option value="dark">تیره</option>
+                    <option value="auto">خودکار</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">فونت</p>
+                  <p class="wam-admin__setting-hint">فونت پیش‌فرض نمایش متن.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <select class="wam-select" id="setFont">
+                    <option value="Vazirmatn">وزیرمتن (پیش‌فرض)</option>
+                    <option value="Tahoma">تاهوما</option>
+                    <option value="IRANSans">ایران‌سنس</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">چیدمان پیش‌فرض داشبورد</p>
+                  <p class="wam-admin__setting-hint">ویجت‌های نمایش‌داده‌شده در داشبورد.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <select class="wam-select" id="setDashLayout">
+                    <option value="full">کامل</option>
+                    <option value="compact">فشرده</option>
+                  </select>
+                </div>
+              </div>
+            </section>
+
+            <!-- ═══ مالی ═══ -->
+            <section class="wam-admin__settings-section" data-section="financial">
+              <header class="wam-admin__settings-header">
+                <h2 class="wam-admin__settings-title">💰 تنظیمات مالی</h2>
+                <p class="wam-admin__settings-desc">
+                  پارامترهای مالی و محاسباتی سیستم.
+                </p>
+              </header>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">نرخ سود پیش‌فرض (%)</p>
+                  <p class="wam-admin__setting-hint">نرخ سود سالانه در محاسبات.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <input type="number" class="wam-input" id="setDefaultRate" min="0" max="100" step="0.5" value="18">
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">حداکثر مبلغ وام (میلیون ریال)</p>
+                  <p class="wam-admin__setting-hint">سقف مجاز برای هر پرونده.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <input type="number" class="wam-input" id="setMaxLoan" min="1" value="5000">
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">حداقل مبلغ وام (میلیون ریال)</p>
+                  <p class="wam-admin__setting-hint">کمترین مبلغ قابل درخواست.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <input type="number" class="wam-input" id="setMinLoan" min="1" value="50">
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">کمیسیون کارگزار (%)</p>
+                  <p class="wam-admin__setting-hint">درصد کمیسیون از هر پرونده.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <input type="number" class="wam-input" id="setBrokerCommission" min="0" max="50" step="0.5" value="5">
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">مدت بازپرداخت پیش‌فرض (ماه)</p>
+                  <p class="wam-admin__setting-hint">تعداد اقساط پیش‌فرض.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <input type="number" class="wam-input" id="setDefaultTerm" min="1" max="120" value="36">
+                </div>
+              </div>
+            </section>
+
+            <!-- ═══ پشتیبان‌گیری ═══ -->
+            <section class="wam-admin__settings-section" data-section="backup">
+              <header class="wam-admin__settings-header">
+                <h2 class="wam-admin__settings-title">💾 پشتیبان‌گیری و بازیابی</h2>
+                <p class="wam-admin__settings-desc">
+                  ذخیره اطلاعات در فایل JSON و بازیابی از آن.
+                </p>
+              </header>
+
+              <div class="wam-admin__setting-card">
+                <p class="wam-admin__setting-label">📤 خروجی گرفتن از داده‌ها</p>
+                <p class="wam-admin__setting-hint" style="margin-bottom:12px;">
+                  تمام داده‌های سیستم (کاربران، پرونده‌ها، تأییدها، تنظیمات) در یک فایل JSON ذخیره می‌شود.
+                </p>
+                <button type="button" class="wam-btn wam-btn--primary" id="exportBackupBtn">
+                  ⬇ دانلود فایل پشتیبان
+                </button>
+              </div>
+
+              <div class="wam-admin__setting-card">
+                <p class="wam-admin__setting-label">📥 بازیابی از فایل</p>
+                <p class="wam-admin__setting-hint" style="margin-bottom:12px;">
+                  فایل JSON پشتیبان را انتخاب کنید. ⚠️ این عمل داده‌های فعلی را جایگزین می‌کند.
+                </p>
+                <input type="file" id="importBackupInput" accept="application/json,.json" style="display:none;">
+                <button type="button" class="wam-btn wam-btn--gold" id="importBackupBtn">
+                  📂 انتخاب فایل پشتیبان
+                </button>
+              </div>
+
+              <div class="wam-admin__setting-card" style="background:var(--wam-danger-soft);">
+                <p class="wam-admin__setting-label" style="color:var(--wam-danger-text);">⚠️ پاک کردن همه داده‌ها</p>
+                <p class="wam-admin__setting-hint" style="margin-bottom:12px;color:var(--wam-danger-text);">
+                  تمام داده‌های برنامه حذف و به حالت اولیه بازمی‌گردد. این عمل قابل بازگشت نیست.
+                </p>
+                <button type="button" class="wam-btn wam-btn--danger" id="clearAllBtn">
+                  🗑 حذف تمام داده‌ها
+                </button>
+              </div>
+            </section>
+
+            <!-- ═══ درباره ═══ -->
+            <section class="wam-admin__settings-section" data-section="about">
+              <header class="wam-admin__settings-header">
+                <h2 class="wam-admin__settings-title">ℹ️ درباره وام پی</h2>
+                <p class="wam-admin__settings-desc">
+                  اطلاعات نسخه و سازنده.
+                </p>
+              </header>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">نام پروژه</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <span class="wam-badge wam-badge--primary">وام پی</span>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">نسخه</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <span class="wam-badge wam-badge--gold" id="aboutVersion">1.0.0</span>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">تکنولوژی</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <span style="font-size:0.82rem;">HTML + CSS + Vanilla JS</span>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">دیتابیس</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <span style="font-size:0.82rem;">localStorage</span>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">شعار</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <span style="font-size:0.82rem;">مسیر هوشمند تأمین مالی</span>
+                </div>
+              </div>
+
+              <div class="wam-admin__setting-row">
+                <div class="wam-admin__setting-info">
+                  <p class="wam-admin__setting-label">فضای ذخیره‌سازی</p>
+                  <p class="wam-admin__setting-hint">میزان داده‌های ذخیره‌شده در مرورگر.</p>
+                </div>
+                <div class="wam-admin__setting-control">
+                  <span style="font-size:0.82rem;font-weight:700;" id="aboutStorageSize">— KB</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- ═══ دکمه‌های ذخیره ═══ -->
+            <div class="wam-admin__settings-actions">
+              <button type="button" class="wam-btn" id="reloadSettingsBtn">
+                ↺ بازخوانی
+              </button>
+              <button type="button" class="wam-btn wam-btn--primary" id="saveSettingsBtn">
+                💾 ذخیره تنظیمات
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div class="wam-admin__save-toast" id="saveToast">✓ تنظیمات ذخیره شد</div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+  <script src="js/bundle-admin.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       ADMIN SETTINGS CONTROLLER
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_KEY = 'wamPaySettings';
+      var APP_VERSION = '1.0.0';
+
+      // ─── DEFAULTS ───
+      var DEFAULTS = {
+        orgName: 'وام پی',
+        currency: 'IRR',
+        timezone: 'Asia/Tehran',
+        calendar: 'jalali',
+        lang: 'fa',
+
+        minPassLen: 8,
+        requireAlnum: true,
+        requireSpecial: false,
+        maxAttempts: 5,
+        sessionMinutes: 60,
+        twoFactor: false,
+
+        smsNotif: true,
+        emailNotif: true,
+        inAppNotif: true,
+        notifyNewCase: true,
+        notifyPayment: true,
+
+        theme: 'green',
+        themeMode: 'light',
+        font: 'Vazirmatn',
+        dashLayout: 'full',
+
+        defaultRate: 18,
+        maxLoan: 5000,
+        minLoan: 50,
+        brokerCommission: 5,
+        defaultTerm: 36
+      };
+
+      // ─── DOM refs ───
+      var adminRoot   = $('adminRoot');
+      var menuToggle  = $('adminMenuToggle');
+      var overlay     = $('adminOverlay');
+      var logoutBtn   = $('adminLogoutBtn');
+      var userChip    = $('adminUserChip');
+      var userAvatar  = $('adminUserAvatar');
+      var userName    = $('adminUserName');
+
+      var resetAllBtn = $('resetAllBtn');
+      var reloadBtn   = $('reloadSettingsBtn');
+      var saveBtn     = $('saveSettingsBtn');
+      var saveToast   = $('saveToast');
+
+      var exportBackupBtn = $('exportBackupBtn');
+      var importBackupBtn = $('importBackupBtn');
+      var importInput     = $('importBackupInput');
+      var clearAllBtn     = $('clearAllBtn');
+
+      var aboutStorageSize = $('aboutStorageSize');
+      var aboutVersion     = $('aboutVersion');
+
+      // ═══════════════════════════════════
+      // ذخیره / بارگذاری
+      // ═══════════════════════════════════
+
+      function loadSettings() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          var obj = raw ? JSON.parse(raw) : {};
+          return Object.assign({}, DEFAULTS, obj || {});
+        } catch (_) {
+          return Object.assign({}, DEFAULTS);
+        }
+      }
+
+      function persistSettings(obj) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+          return true;
+        } catch (_) { return false; }
+      }
+
+      function applyToUI(s) {
+        // عمومی
+        if ($('setOrgName')) $('setOrgName').value = s.orgName;
+        if ($('setCurrency')) $('setCurrency').value = s.currency;
+        if ($('setTimezone')) $('setTimezone').value = s.timezone;
+        if ($('setCalendar')) $('setCalendar').value = s.calendar;
+        if ($('setLang')) $('setLang').value = s.lang;
+
+        // امنیت
+        if ($('setMinPassLen')) $('setMinPassLen').value = s.minPassLen;
+        if ($('setRequireAlnum')) $('setRequireAlnum').checked = !!s.requireAlnum;
+        if ($('setRequireSpecial')) $('setRequireSpecial').checked = !!s.requireSpecial;
+        if ($('setMaxAttempts')) $('setMaxAttempts').value = s.maxAttempts;
+        if ($('setSessionMinutes')) $('setSessionMinutes').value = s.sessionMinutes;
+        if ($('setTwoFactor')) $('setTwoFactor').checked = !!s.twoFactor;
+
+        // اعلان‌ها
+        if ($('setSmsNotif')) $('setSmsNotif').checked = !!s.smsNotif;
+        if ($('setEmailNotif')) $('setEmailNotif').checked = !!s.emailNotif;
+        if ($('setInAppNotif')) $('setInAppNotif').checked = !!s.inAppNotif;
+        if ($('setNotifyNewCase')) $('setNotifyNewCase').checked = !!s.notifyNewCase;
+        if ($('setNotifyPayment')) $('setNotifyPayment').checked = !!s.notifyPayment;
+
+        // ظاهر
+        if ($('setTheme')) $('setTheme').value = s.theme;
+        if ($('setThemeMode')) $('setThemeMode').value = s.themeMode;
+        if ($('setFont')) $('setFont').value = s.font;
+        if ($('setDashLayout')) $('setDashLayout').value = s.dashLayout;
+
+        // مالی
+        if ($('setDefaultRate')) $('setDefaultRate').value = s.defaultRate;
+        if ($('setMaxLoan')) $('setMaxLoan').value = s.maxLoan;
+        if ($('setMinLoan')) $('setMinLoan').value = s.minLoan;
+        if ($('setBrokerCommission')) $('setBrokerCommission').value = s.brokerCommission;
+        if ($('setDefaultTerm')) $('setDefaultTerm').value = s.defaultTerm;
+      }
+
+      function readFromUI() {
+        return {
+          orgName: ($('setOrgName') || {}).value || DEFAULTS.orgName,
+          currency: ($('setCurrency') || {}).value || DEFAULTS.currency,
+          timezone: ($('setTimezone') || {}).value || DEFAULTS.timezone,
+          calendar: ($('setCalendar') || {}).value || DEFAULTS.calendar,
+          lang: ($('setLang') || {}).value || DEFAULTS.lang,
+
+          minPassLen: parseInt(($('setMinPassLen') || {}).value, 10) || DEFAULTS.minPassLen,
+          requireAlnum: !!($('setRequireAlnum') || {}).checked,
+          requireSpecial: !!($('setRequireSpecial') || {}).checked,
+          maxAttempts: parseInt(($('setMaxAttempts') || {}).value, 10) || DEFAULTS.maxAttempts,
+          sessionMinutes: parseInt(($('setSessionMinutes') || {}).value, 10) || DEFAULTS.sessionMinutes,
+          twoFactor: !!($('setTwoFactor') || {}).checked,
+
+          smsNotif: !!($('setSmsNotif') || {}).checked,
+          emailNotif: !!($('setEmailNotif') || {}).checked,
+          inAppNotif: !!($('setInAppNotif') || {}).checked,
+          notifyNewCase: !!($('setNotifyNewCase') || {}).checked,
+          notifyPayment: !!($('setNotifyPayment') || {}).checked,
+
+          theme: ($('setTheme') || {}).value || DEFAULTS.theme,
+          themeMode: ($('setThemeMode') || {}).value || DEFAULTS.themeMode,
+          font: ($('setFont') || {}).value || DEFAULTS.font,
+          dashLayout: ($('setDashLayout') || {}).value || DEFAULTS.dashLayout,
+
+          defaultRate: parseFloat(($('setDefaultRate') || {}).value) || DEFAULTS.defaultRate,
+          maxLoan: parseInt(($('setMaxLoan') || {}).value, 10) || DEFAULTS.maxLoan,
+          minLoan: parseInt(($('setMinLoan') || {}).value, 10) || DEFAULTS.minLoan,
+          brokerCommission: parseFloat(($('setBrokerCommission') || {}).value) || DEFAULTS.brokerCommission,
+          defaultTerm: parseInt(($('setDefaultTerm') || {}).value, 10) || DEFAULTS.defaultTerm
+        };
+      }
+
+      // ═══════════════════════════════════
+      // ناوبری بین بخش‌ها
+      // ═══════════════════════════════════
+
+      function switchSection(name) {
+        $$('.wam-admin__settings-nav-item').forEach(function (b) {
+          b.classList.toggle('is-active', b.getAttribute('data-section') === name);
+        });
+        $$('.wam-admin__settings-section').forEach(function (s) {
+          s.classList.toggle('is-active', s.getAttribute('data-section') === name);
+        });
+        // بروزرسانی اندازه در بخش درباره
+        if (name === 'about') updateStorageSize();
+      }
+
+      $$('.wam-admin__settings-nav-item').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          switchSection(btn.getAttribute('data-section'));
+        });
+      });
+
+      // ═══════════════════════════════════
+      // نمایش Toast
+      // ═══════════════════════════════════
+
+      var toastTimer = null;
+      function showToast(msg) {
+        if (!saveToast) return;
+        saveToast.textContent = msg;
+        saveToast.classList.add('is-visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          saveToast.classList.remove('is-visible');
+        }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // ذخیره
+      // ═══════════════════════════════════
+
+      function validate(s) {
+        if (s.minPassLen < 6 || s.minPassLen > 32) return 'طول رمز باید بین ۶ تا ۳۲ باشد.';
+        if (s.maxAttempts < 3 || s.maxAttempts > 10) return 'تعداد تلاش باید بین ۳ تا ۱۰ باشد.';
+        if (s.sessionMinutes < 5 || s.sessionMinutes > 1440) return 'مدت نشست باید بین ۵ تا ۱۴۴۰ دقیقه باشد.';
+        if (s.minLoan >= s.maxLoan) return 'حداقل مبلغ وام باید کمتر از حداکثر باشد.';
+        if (s.defaultRate < 0 || s.defaultRate > 100) return 'نرخ سود باید بین ۰ تا ۱۰۰ باشد.';
+        if (s.brokerCommission < 0 || s.brokerCommission > 50) return 'کمیسیون باید بین ۰ تا ۵۰ باشد.';
+        return null;
+      }
+
+      function saveAll() {
+        var s = readFromUI();
+        var err = validate(s);
+        if (err) {
+          alert(err);
+          return;
+        }
+
+        if (!persistSettings(s)) {
+          alert('خطا در ذخیره‌سازی. دوباره تلاش کنید.');
+          return;
+        }
+
+        showToast('✓ تنظیمات ذخیره شد');
+        emitEvent('admin:settings-saved', s);
+        applySideEffects(s);
+      }
+
+      function applySideEffects(s) {
+        // اعمال فونت
+        try {
+          document.body.style.fontFamily =
+            "'" + s.font + "', -apple-system, BlinkMacSystemFont, sans-serif";
+        } catch (_) {}
+
+        // theme mode
+        try {
+          if (s.themeMode === 'dark') {
+            document.body.setAttribute('data-theme-mode', 'dark');
+          } else if (s.themeMode === 'light') {
+            document.body.setAttribute('data-theme-mode', 'light');
+          } else {
+            document.body.removeAttribute('data-theme-mode');
+          }
+        } catch (_) {}
+
+        // تم رنگی
+        try {
+          var themes = {
+            green: { primary: '#0b3b23', primaryLight: '#105b35' },
+            blue: { primary: '#0d2e4e', primaryLight: '#1c4e7e' },
+            purple: { primary: '#3a1d5c', primaryLight: '#5a2c8c' },
+            'dark-green': { primary: '#052518', primaryLight: '#0b3b23' }
+          };
+          var t = themes[s.theme];
+          if (t) {
+            document.documentElement.style.setProperty('--wam-primary', t.primary);
+            document.documentElement.style.setProperty('--wam-primary-light', t.primaryLight);
+          }
+        } catch (_) {}
+      }
+
+      // ═══════════════════════════════════
+      // بازخوانی / بازگردانی
+      // ═══════════════════════════════════
+
+      if (reloadBtn) {
+        reloadBtn.addEventListener('click', function () {
+          applyToUI(loadSettings());
+          showToast('↺ تنظیمات بازخوانی شد');
+        });
+      }
+
+      if (resetAllBtn) {
+        resetAllBtn.addEventListener('click', function () {
+          if (!confirm('همه تنظیمات به حالت پیش‌فرض بازگردانده شود؟')) return;
+          persistSettings(Object.assign({}, DEFAULTS));
+          applyToUI(DEFAULTS);
+          applySideEffects(DEFAULTS);
+          showToast('↺ بازگردانی به پیش‌فرض');
+          emitEvent('admin:settings-reset', {});
+        });
+      }
+
+      if (saveBtn) {
+        saveBtn.addEventListener('click', saveAll);
+      }
+
+      // ═══════════════════════════════════
+      // پشتیبان‌گیری
+      // ═══════════════════════════════════
+
+      var BACKUP_KEYS = [
+        'wamPayUsers',
+        'wamPayCases',
+        'wamPayApprovals',
+        'wamPayFollowUps',
+        'wamPayFollowUpsPrefs',
+        'wamPayDashboardPrefs',
+        'wamPaySettings',
+        'wamPayCurrentUser',
+        'wamPayPasswordResets'
+      ];
+
+      function exportBackup() {
+        var data = {
+          __meta: {
+            app: 'wamPay',
+            version: APP_VERSION,
+            exportedAt: Date.now()
+          }
+        };
+        BACKUP_KEYS.forEach(function (k) {
+          try {
+            var v = localStorage.getItem(k);
+            data[k] = v ? JSON.parse(v) : null;
+          } catch (_) {
+            data[k] = null;
+          }
+        });
+
+        var json = JSON.stringify(data, null, 2);
+        var blob = new Blob([json], { type: 'application/json;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'wampay-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+
+        showToast('✓ فایل پشتیبان دانلود شد');
+        emitEvent('admin:backup-exported', {});
+      }
+
+      function importBackup(file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            var data = JSON.parse(e.target.result);
+            if (!data || typeof data !== 'object') throw new Error('فایل معتبر نیست');
+
+            if (!confirm('بازیابی از این فایل انجام شود؟ داده‌های فعلی جایگزین خواهند شد.')) return;
+
+            BACKUP_KEYS.forEach(function (k) {
+              if (data[k] != null) {
+                try {
+                  localStorage.setItem(k, JSON.stringify(data[k]));
+                } catch (_) {}
+              }
+            });
+
+            showToast('✓ بازیابی با موفقیت انجام شد');
+            emitEvent('admin:backup-imported', {});
+            setTimeout(function () { window.location.reload(); }, 1000);
+          } catch (err) {
+            alert('خطا در خواندن فایل: ' + err.message);
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      if (exportBackupBtn) exportBackupBtn.addEventListener('click', exportBackup);
+      if (importBackupBtn) {
+        importBackupBtn.addEventListener('click', function () {
+          if (importInput) importInput.click();
+        });
+      }
+      if (importInput) {
+        importInput.addEventListener('change', function (e) {
+          var f = e.target.files && e.target.files[0];
+          if (f) importBackup(f);
+          importInput.value = '';
+        });
+      }
+
+      if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', function () {
+          if (!confirm('⚠️ تمام داده‌های برنامه حذف شود؟ این عمل قابل بازگشت نیست.')) return;
+          if (!confirm('مطمئن هستید؟ آخرین فرصت برای انصراف.')) return;
+
+          BACKUP_KEYS.forEach(function (k) {
+            try { localStorage.removeItem(k); } catch (_) {}
+          });
+
+          showToast('🗑 همه داده‌ها حذف شد');
+          emitEvent('admin:all-data-cleared', {});
+          setTimeout(function () {
+            window.location.replace('login.html');
+          }, 1400);
+        });
+      }
+
+      // ═══════════════════════════════════
+      // اندازه فضای ذخیره‌سازی
+      // ═══════════════════════════════════
+
+      function updateStorageSize() {
+        try {
+          var total = 0;
+          for (var i = 0; i < localStorage.length; i++) {
+            var k = localStorage.key(i);
+            if (!k || k.indexOf('wamPay') !== 0) continue;
+            var v = localStorage.getItem(k) || '';
+            total += k.length + v.length;
+          }
+          var kb = (total * 2) / 1024;
+          if (aboutStorageSize) {
+            aboutStorageSize.textContent =
+              kb < 1024 ? kb.toFixed(1) + ' KB' : (kb / 1024).toFixed(2) + ' MB';
+          }
+        } catch (_) {
+          if (aboutStorageSize) aboutStorageSize.textContent = '—';
+        }
+      }
+
+      if (aboutVersion) aboutVersion.textContent = APP_VERSION;
+
+      // ═══════════════════════════════════
+      // Sidebar mobile
+      // ═══════════════════════════════════
+
+      function openSidebar() {
+        adminRoot.classList.add('is-sidebar-open');
+        overlay.classList.add('is-open');
+      }
+      function closeSidebar() {
+        adminRoot.classList.remove('is-sidebar-open');
+        overlay.classList.remove('is-open');
+      }
+      function toggleSidebar() {
+        if (adminRoot.classList.contains('is-sidebar-open')) closeSidebar();
+        else openSidebar();
+      }
+      if (menuToggle) menuToggle.addEventListener('click', toggleSidebar);
+      if (overlay) overlay.addEventListener('click', closeSidebar);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeSidebar();
+      });
+
+      // کاربر جاری
+      function applyCurrentUser() {
+        try {
+          var raw = localStorage.getItem('wamPayCurrentUser');
+          if (!raw) return;
+          var u = JSON.parse(raw);
+          var displayName = u.name || u.username || 'مدیر';
+          var initial = displayName.trim().charAt(0).toUpperCase() || 'م';
+          if (userAvatar) userAvatar.textContent = initial;
+          if (userName) userName.textContent = displayName;
+        } catch (_) {}
+      }
+
+      // Logout
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+          if (!confirm('از حساب کاربری خارج می‌شوید؟')) return;
+          try {
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayRemember');
+          } catch (_) {}
+          emitEvent('auth:logout');
+          window.location.replace('login.html');
+        });
+      }
+
+      if (userChip) {
+        userChip.addEventListener('click', function () {
+          alert('به‌زودی: منوی کاربر');
+        });
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        applyCurrentUser();
+        var s = loadSettings();
+        applyToUI(s);
+        applySideEffects(s);
+        updateStorageSize();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

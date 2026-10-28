@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="کیف پول — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>کیف پول | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       SHARED WALLET (General-purpose)
+       ═══════════════════════════════════════ */
+
+    .wam-wallet {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 100px;
+    }
+
+    .wam-wallet__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-wallet__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-wallet__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+    .wam-wallet__topbar-back:hover { color: var(--wam-primary-light); }
+
+    .wam-wallet__topbar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-wallet__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-wallet__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-wallet__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+    .wam-wallet__icon-btn--primary {
+      background: var(--wam-primary-light);
+      color: #fff;
+    }
+    .wam-wallet__icon-btn--primary:hover {
+      background: var(--wam-primary);
+    }
+
+    .wam-wallet__main {
+      padding: var(--wam-space-lg);
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Hero card */
+    .wam-wallet__hero {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 55%, #1a6b42 100%);
+      color: #fff;
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-xl) var(--wam-space-lg);
+      margin-bottom: var(--wam-space-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wam-wallet__hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.28), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-wallet__hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.18), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-wallet__hero-label {
+      font-size: 0.82rem;
+      opacity: 0.85;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-wallet__hero-value {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #f4d477;
+      line-height: 1.1;
+      margin-bottom: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-wallet__hero-unit {
+      font-size: 0.85rem;
+      opacity: 0.85;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 20px;
+    }
+
+    .wam-wallet__hero-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .wam-wallet__hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 14px;
+      border-radius: var(--wam-radius);
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-wallet__hero-btn:hover {
+      background: rgba(255, 255, 255, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .wam-wallet__hero-btn--gold {
+      background: var(--wam-gold);
+      color: #3a2a00;
+      border-color: var(--wam-gold);
+    }
+    .wam-wallet__hero-btn--gold:hover {
+      background: var(--wam-gold-light);
+    }
+
+    /* Summary grid */
+    .wam-wallet__summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-wallet__summary-card {
+      padding: 14px 10px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      box-shadow: var(--wam-shadow-sm);
+      text-align: center;
+    }
+
+    .wam-wallet__summary-label {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .wam-wallet__summary-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.1;
+    }
+    .wam-wallet__summary-value--warning { color: var(--wam-warning-text); }
+    .wam-wallet__summary-value--success { color: var(--wam-success-text); }
+    .wam-wallet__summary-value--gold    { color: #7a5a00; }
+
+    /* Tabs */
+    .wam-wallet__tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      margin-bottom: var(--wam-space-md);
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .wam-wallet__tabs::-webkit-scrollbar { display: none; }
+
+    .wam-wallet__tab {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 14px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .wam-wallet__tab:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary-light);
+    }
+
+    .wam-wallet__tab.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-wallet__tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .wam-wallet__tab.is-active .wam-wallet__tab-count {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    /* Transaction row */
+    .wam-wallet__tx {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      margin-bottom: 8px;
+      transition: all var(--wam-t);
+    }
+
+    .wam-wallet__tx:hover {
+      box-shadow: var(--wam-shadow);
+      transform: translateY(-1px);
+    }
+
+    .wam-wallet__tx-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--wam-radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex: 0 0 auto;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+    }
+
+    .wam-wallet__tx-icon--in {
+      background: var(--wam-success-soft);
+      color: var(--wam-success);
+    }
+    .wam-wallet__tx-icon--out {
+      background: var(--wam-danger-soft);
+      color: var(--wam-danger);
+    }
+    .wam-wallet__tx-icon--pending {
+      background: var(--wam-warning-soft);
+      color: var(--wam-warning-text);
+    }
+    .wam-wallet__tx-icon--commission {
+      background: var(--wam-gold-soft);
+      color: #7a5a00;
+    }
+
+    .wam-wallet__tx-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-wallet__tx-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-wallet__tx-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-wallet__tx-amount {
+      font-size: 0.95rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .wam-wallet__tx-amount--in {
+      color: var(--wam-success);
+    }
+    .wam-wallet__tx-amount--out {
+      color: var(--wam-danger);
+    }
+    .wam-wallet__tx-amount--pending {
+      color: var(--wam-warning-text);
+    }
+    .wam-wallet__tx-amount--commission {
+      color: #7a5a00;
+    }
+
+    /* Transaction status badge */
+    .wam-wallet__tx-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 1px 8px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.65rem;
+      font-weight: 800;
+      background: var(--wam-muted-soft);
+      color: var(--wam-text-muted);
+      white-space: nowrap;
+    }
+    .wam-wallet__tx-badge--pending { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-wallet__tx-badge--approved { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-wallet__tx-badge--rejected { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+
+    /* Section */
+    .wam-wallet__section {
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-wallet__section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 12px;
+    }
+
+    .wam-wallet__section-count {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--wam-text-muted);
+      padding: 2px 8px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius-pill);
+    }
+
+    /* Empty */
+    .wam-wallet__empty {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+
+    .wam-wallet__empty-icon {
+      font-size: 2.4rem;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+
+    .wam-wallet__empty-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 6px;
+    }
+
+    .wam-wallet__empty-text {
+      font-size: 0.82rem;
+      color: var(--wam-text-muted);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Modal */
+    .wam-wallet__modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 59, 35, 0.5);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: var(--wam-z-modal);
+      padding: 0;
+    }
+    .wam-wallet__modal.is-open { display: flex; }
+
+    .wam-wallet__modal-box {
+      background: var(--wam-bg-alt);
+      width: 100%;
+      max-width: 560px;
+      border-radius: var(--wam-radius-lg) var(--wam-radius-lg) 0 0;
+      padding: var(--wam-space-lg);
+      padding-bottom: calc(var(--wam-space-lg) + env(safe-area-inset-bottom, 0px));
+      animation: wam-slide-up 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .wam-wallet__modal-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border-soft);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-wallet__modal-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      flex: 1 1 auto;
+    }
+
+    .wam-wallet__modal-close {
+      background: transparent;
+      border: 0;
+      font-size: 1.2rem;
+      color: var(--wam-text-muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .wam-wallet__modal-close:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    .wam-wallet__modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .wam-wallet__modal-actions .wam-btn {
+      flex: 1 1 0;
+    }
+
+    .wam-wallet__field {
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-wallet__label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin-bottom: 6px;
+    }
+
+    .wam-wallet__input,
+    .wam-wallet__select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.87rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-wallet__input:focus,
+    .wam-wallet__select:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    /* Quick amount chips */
+    .wam-wallet__quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .wam-wallet__chip {
+      padding: 5px 12px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-muted);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-wallet__chip:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary);
+    }
+
+    /* Toast */
+    .wam-wallet__toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .wam-wallet__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* FAB */
+    .wam-wallet__fab {
+      position: fixed;
+      bottom: 24px;
+      left: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--wam-gold);
+      color: #3a2a00;
+      font-size: 1.6rem;
+      font-weight: 800;
+      border: 0;
+      box-shadow: 0 6px 18px rgba(212, 166, 42, 0.45);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--wam-t), box-shadow var(--wam-t);
+      z-index: calc(var(--wam-z-sticky) - 1);
+      font-family: inherit;
+    }
+    .wam-wallet__fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 24px rgba(212, 166, 42, 0.55);
+    }
+
+    @media (max-width: 640px) {
+      .wam-wallet__main { padding: var(--wam-space-md); }
+      .wam-wallet__hero { padding: var(--wam-space-lg); }
+      .wam-wallet__hero-value { font-size: 2rem; }
+      .wam-wallet__summary { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .wam-wallet__summary-card { padding: 12px 8px; }
+      .wam-wallet__summary-value { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+
+<body data-page="wallet">
+
+  <div class="wam-wallet" id="walletRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-wallet__topbar">
+      <div class="wam-wallet__topbar-info">
+        <a href="#" class="wam-wallet__topbar-back" id="backLink">↩ بازگشت</a>
+        <h1 class="wam-wallet__topbar-title">💰 کیف پول</h1>
+      </div>
+      <div class="wam-wallet__topbar-actions">
+        <button type="button" class="wam-wallet__icon-btn" id="refreshBtn" title="بروزرسانی">🔄</button>
+        <button type="button" class="wam-wallet__icon-btn" id="exportBtn" title="خروجی">⬇</button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-wallet__main">
+
+      <!-- ═══ HERO ═══ -->
+      <section class="wam-wallet__hero">
+        <div class="wam-wallet__hero-label">
+          <span>💳</span>
+          <span>موجودی قابل برداشت</span>
+        </div>
+        <div class="wam-wallet__hero-value" id="heroBalance">۰</div>
+        <div class="wam-wallet__hero-unit">میلیون ریال</div>
+
+        <div class="wam-wallet__hero-actions">
+          <button type="button" class="wam-wallet__hero-btn wam-wallet__hero-btn--gold" id="topupBtn">
+            ➕ شارژ / واریز
+          </button>
+          <button type="button" class="wam-wallet__hero-btn" id="withdrawBtn">
+            💸 درخواست تسویه
+          </button>
+        </div>
+      </section>
+
+      <!-- ═══ SUMMARY ═══ -->
+      <section class="wam-wallet__summary">
+        <div class="wam-wallet__summary-card">
+          <div class="wam-wallet__summary-label">📥 کل واریز</div>
+          <div class="wam-wallet__summary-value wam-wallet__summary-value--success" id="summaryIn">۰</div>
+        </div>
+        <div class="wam-wallet__summary-card">
+          <div class="wam-wallet__summary-label">📤 کل برداشت</div>
+          <div class="wam-wallet__summary-value wam-wallet__summary-value--warning" id="summaryOut">۰</div>
+        </div>
+        <div class="wam-wallet__summary-card">
+          <div class="wam-wallet__summary-label">💰 کمیسیون</div>
+          <div class="wam-wallet__summary-value wam-wallet__summary-value--gold" id="summaryCommission">۰</div>
+        </div>
+      </section>
+
+      <!-- ═══ TABS ═══ -->
+      <div class="wam-wallet__tabs" id="tabsBar">
+        <button type="button" class="wam-wallet__tab is-active" data-tab="all">
+          همه <span class="wam-wallet__tab-count" data-count="all">۰</span>
+        </button>
+        <button type="button" class="wam-wallet__tab" data-tab="in">
+          📥 واریز <span class="wam-wallet__tab-count" data-count="in">۰</span>
+        </button>
+        <button type="button" class="wam-wallet__tab" data-tab="out">
+          📤 برداشت <span class="wam-wallet__tab-count" data-count="out">۰</span>
+        </button>
+        <button type="button" class="wam-wallet__tab" data-tab="commission">
+          💰 کمیسیون <span class="wam-wallet__tab-count" data-count="commission">۰</span>
+        </button>
+        <button type="button" class="wam-wallet__tab" data-tab="pending">
+          ⏳ در انتظار <span class="wam-wallet__tab-count" data-count="pending">۰</span>
+        </button>
+      </div>
+
+      <!-- ═══ TRANSACTIONS ═══ -->
+      <section class="wam-wallet__section">
+        <h2 class="wam-wallet__section-title">
+          <span>📜 تراکنش‌ها</span>
+          <span class="wam-wallet__section-count" id="txCount">۰</span>
+        </h2>
+
+        <div id="txList">
+          <!-- توسط JS پر می‌شود -->
+        </div>
+
+        <div class="wam-wallet__empty" id="emptyState" style="display:none;">
+          <div class="wam-wallet__empty-icon">💭</div>
+          <h3 class="wam-wallet__empty-title">هنوز تراکنشی ندارید</h3>
+          <p class="wam-wallet__empty-text">
+            با اولین واریز یا دریافت کمیسیون، تراکنش‌ها اینجا نمایش داده می‌شوند.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ═══ FAB ═══ -->
+    <button type="button" class="wam-wallet__fab" id="fabBtn" aria-label="شارژ">➕</button>
+
+    <!-- ═══ MODAL: شارژ / واریز ═══ -->
+    <div class="wam-wallet__modal" id="topupModal" role="dialog" aria-modal="true">
+      <div class="wam-wallet__modal-box">
+
+        <div class="wam-wallet__modal-head">
+          <h3 class="wam-wallet__modal-title">➕ شارژ کیف پول</h3>
+          <button type="button" class="wam-wallet__modal-close" id="topupModalClose" aria-label="بستن">✕</button>
+        </div>
+
+        <div class="wam-wallet__field">
+          <label class="wam-wallet__label" for="topupAmount">مبلغ (میلیون ریال) *</label>
+          <input type="number" id="topupAmount" class="wam-wallet__input"
+                 min="0.1" step="0.1" placeholder="مثال: 100" dir="ltr">
+
+          <div class="wam-wallet__quick-chips">
+            <button type="button" class="wam-wallet__chip" data-quick="10">۱۰</button>
+            <button type="button" class="wam-wallet__chip" data-quick="50">۵۰</button>
+            <button type="button" class="wam-wallet__chip" data-quick="100">۱۰۰</button>
+            <button type="button" class="wam-wallet__chip" data-quick="500">۵۰۰</button>
+            <button type="button" class="wam-wallet__chip" data-quick="1000">۱۰۰۰</button>
+          </div>
+        </div>
+
+        <div class="wam-wallet__field">
+          <label class="wam-wallet__label" for="topupMethod">روش واریز</label>
+          <select id="topupMethod" class="wam-wallet__select">
+            <option value="bank">🏦 کارت به کارت بانکی</option>
+            <option value="gateway">💳 درگاه پرداخت آنلاین</option>
+            <option value="cash">💵 نقدی</option>
+          </select>
+        </div>
+
+        <div class="wam-wallet__field">
+          <label class="wam-wallet__label" for="topupRef">شماره پیگیری (اختیاری)</label>
+          <input type="text" id="topupRef" class="wam-wallet__input"
+                 placeholder="شماره رسید یا پیگیری" dir="ltr">
+        </div>
+
+        <div class="wam-wallet__modal-actions">
+          <button type="button" class="wam-btn" id="topupCancelBtn">انصراف</button>
+          <button type="button" class="wam-btn wam-btn--primary" id="topupSubmitBtn">
+            💰 ثبت واریز
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ MODAL: درخواست تسویه ═══ -->
+    <div class="wam-wallet__modal" id="withdrawModal" role="dialog" aria-modal="true">
+      <div class="wam-wallet__modal-box">
+
+        <div class="wam-wallet__modal-head">
+          <h3 class="wam-wallet__modal-title">💸 درخواست تسویه</h3>
+          <button type="button" class="wam-wallet__modal-close" id="withdrawModalClose" aria-label="بستن">✕</button>
+        </div>
+
+        <div style="padding:12px;background:var(--wam-primary-soft);border-radius:var(--wam-radius);margin-bottom:16px;font-size:0.85rem;">
+          <div style="font-weight:700;color:var(--wam-primary);margin-bottom:4px;">موجودی قابل برداشت</div>
+          <div style="font-size:1.2rem;font-weight:800;color:var(--wam-primary);">
+            <span id="withdrawBalance">۰</span>
+            <span style="font-size:0.8rem;">میلیون ریال</span>
+          </div>
+        </div>
+
+        <div class="wam-wallet__field">
+          <label class="wam-wallet__label" for="withdrawAmount">مبلغ درخواستی (میلیون ریال) *</label>
+          <input type="number" id="withdrawAmount" class="wam-wallet__input"
+                 min="1" step="1" placeholder="مبلغ موردنظر" dir="ltr">
+
+          <div class="wam-wallet__quick-chips">
+            <button type="button" class="wam-wallet__chip" data-withdraw="25">۲۵٪</button>
+            <button type="button" class="wam-wallet__chip" data-withdraw="50">۵۰٪</button>
+            <button type="button" class="wam-wallet__chip" data-withdraw="75">۷۵٪</button>
+            <button type="button" class="wam-wallet__chip" data-withdraw="100">همه</button>
+          </div>
+        </div>
+
+        <div class="wam-wallet__field">
+          <label class="wam-wallet__label" for="withdrawIban">شماره شبا مقصد *</label>
+          <input type="text" id="withdrawIban" class="wam-wallet__input"
+                 placeholder="IR..." dir="ltr" maxlength="26">
+          <p style="font-size:0.72rem;color:var(--wam-text-muted);margin-top:4px;line-height:1.6;">
+            شماره شبا با IR شروع می‌شود (۲۴ رقم پس از IR).
+          </p>
+        </div>
+
+        <div class="wam-wallet__field">
+          <label class="wam-wallet__label" for="withdrawNote">توضیحات (اختیاری)</label>
+          <input type="text" id="withdrawNote" class="wam-wallet__input"
+                 placeholder="توضیحات اضافه">
+        </div>
+
+        <div style="padding:10px 12px;background:var(--wam-warning-soft);border-radius:var(--wam-radius);font-size:0.78rem;color:var(--wam-warning-text);line-height:1.7;margin-bottom:16px;">
+          ⚠️ درخواست تسویه معمولاً ۱-۳ روز کاری پس از تأیید مدیر، پرداخت می‌شود.
+        </div>
+
+        <div class="wam-wallet__modal-actions">
+          <button type="button" class="wam-btn" id="withdrawCancelBtn">انصراف</button>
+          <button type="button" class="wam-btn wam-btn--primary" id="withdrawSubmitBtn">
+            💸 ارسال درخواست
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="wam-wallet__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       SHARED WALLET CONTROLLER
+       - تراکنش‌های واریز/برداشت/کمیسیون
+       - ذخیره در wamPayWalletTransactions
+       - Aggregated per user
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_TX = 'wamPayWalletTransactions';
+
+      var state = {
+        user: null,
+        all: [],
+        filtered: [],
+        tab: 'all'
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function fmtAmountFine(n) {
+        if (n == null || isNaN(n)) return '۰';
+        try {
+          return Number(n).toLocaleString('fa-IR', {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1
+          });
+        } catch (_) { return String(n); }
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function fmtTime(ts) {
+        if (!ts) return '';
+        try {
+          return new Date(ts).toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+        } catch (_) { return ''; }
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = Date.now() - ts;
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه پیش';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت پیش';
+        return Math.round(abs / 86400000) + ' روز پیش';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کاربر', username: 'user', role: 'applicant', id: 'user' };
+      }
+
+      function currentUserId() {
+        var u = state.user;
+        return (u && (u.id || u.username)) || 'user';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function uid() {
+        return 'tx_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6);
+      }
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadTransactions() {
+        var all = readJSON(STORAGE_TX, []);
+        if (!Array.isArray(all)) return [];
+
+        var me = currentUserId();
+        return all.filter(function (tx) {
+          if (!tx) return false;
+          return tx.userId === me;
+        }).sort(function (a, b) {
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+      }
+
+      function saveTransactions(all) {
+        return writeJSON(STORAGE_TX, all);
+      }
+
+      function seedIfEmpty() {
+        var all = readJSON(STORAGE_TX, []);
+        var me = currentUserId();
+        var hasMine = Array.isArray(all) && all.some(function (tx) {
+          return tx && tx.userId === me;
+        });
+        if (hasMine) return;
+
+        var now = Date.now();
+        var meName = (state.user && state.user.name) || 'کاربر';
+
+        var samples = [
+          {
+            id: uid(),
+            userId: me,
+            userName: meName,
+            type: 'in',
+            method: 'bank',
+            title: 'شارژ اولیه کیف پول',
+            amount: 100,
+            status: 'approved',
+            ref: 'BANK-12345',
+            createdAt: now - 86400000 * 30,
+            approvedAt: now - 86400000 * 30
+          },
+          {
+            id: uid(),
+            userId: me,
+            userName: meName,
+            type: 'commission',
+            method: 'auto',
+            title: 'کمیسیون پرونده وام مسکن C-ABC12',
+            amount: 25,
+            status: 'approved',
+            caseId: 'C-ABC12',
+            createdAt: now - 86400000 * 20,
+            approvedAt: now - 86400000 * 20
+          },
+          {
+            id: uid(),
+            userId: me,
+            userName: meName,
+            type: 'out',
+            method: 'bank',
+            title: 'تسویه به شبا IR...5678',
+            amount: 30,
+            status: 'approved',
+            iban: 'IR123456789012345678901234',
+            createdAt: now - 86400000 * 15,
+            approvedAt: now - 86400000 * 14
+          },
+          {
+            id: uid(),
+            userId: me,
+            userName: meName,
+            type: 'out',
+            method: 'bank',
+            title: 'درخواست تسویه',
+            amount: 20,
+            status: 'pending',
+            iban: 'IR123456789012345678901234',
+            createdAt: now - 86400000 * 2
+          },
+          {
+            id: uid(),
+            userId: me,
+            userName: meName,
+            type: 'commission',
+            method: 'auto',
+            title: 'کمیسیون پرونده وام خودرو C-DEF34',
+            amount: 12,
+            status: 'approved',
+            caseId: 'C-DEF34',
+            createdAt: now - 86400000 * 5,
+            approvedAt: now - 86400000 * 5
+          }
+        ];
+
+        if (!Array.isArray(all)) all = [];
+        all = all.concat(samples);
+        saveTransactions(all);
+      }
+
+      // ═══════════════════════════════════
+      // محاسبه
+      // ═══════════════════════════════════
+
+      function computeSummary() {
+        var list = state.all;
+        var sum = { in: 0, out: 0, commission: 0, pendingIn: 0, pendingOut: 0 };
+        var counts = { all: list.length, in: 0, out: 0, commission: 0, pending: 0 };
+
+        list.forEach(function (tx) {
+          var amt = Number(tx.amount) || 0;
+          var isApproved = tx.status === 'approved';
+          var isPending = tx.status === 'pending';
+
+          if (tx.type === 'in') {
+            counts.in++;
+            if (isApproved) sum.in += amt;
+            if (isPending) sum.pendingIn += amt;
+          } else if (tx.type === 'out') {
+            counts.out++;
+            if (isApproved) sum.out += amt;
+            if (isPending) sum.pendingOut += amt;
+          } else if (tx.type === 'commission') {
+            counts.commission++;
+            if (isApproved) sum.commission += amt;
+          }
+
+          if (isPending) counts.pending++;
+        });
+
+        // موجودی = approved in + commission - out
+        var balance = sum.in + sum.commission - sum.out;
+
+        return {
+          balance: balance,
+          sumIn: sum.in,
+          sumOut: sum.out,
+          sumCommission: sum.commission,
+          pendingIn: sum.pendingIn,
+          pendingOut: sum.pendingOut,
+          counts: counts
+        };
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function renderSummary() {
+        var s = computeSummary();
+
+        if ($('heroBalance')) $('heroBalance').textContent = fmtAmount(s.balance);
+        if ($('summaryIn')) $('summaryIn').textContent = fmtAmount(s.sumIn);
+        if ($('summaryOut')) $('summaryOut').textContent = fmtAmount(s.sumOut);
+        if ($('summaryCommission')) $('summaryCommission').textContent = fmtAmount(s.sumCommission);
+        if ($('withdrawBalance')) $('withdrawBalance').textContent = fmtAmount(s.balance);
+
+        Object.keys(s.counts).forEach(function (k) {
+          var el = document.querySelector('[data-count="' + k + '"]');
+          if (el) el.textContent = toFa(s.counts[k]);
+        });
+      }
+
+      function applyTabFilter() {
+        var tab = state.tab;
+        if (tab === 'all') return state.all;
+        if (tab === 'pending') return state.all.filter(function (tx) { return tx.status === 'pending'; });
+        return state.all.filter(function (tx) { return tx.type === tab; });
+      }
+
+      function renderTransactions() {
+        var container = $('txList');
+        var empty = $('emptyState');
+        if (!container) return;
+
+        state.filtered = applyTabFilter();
+
+        if ($('txCount')) $('txCount').textContent = toFa(state.filtered.length);
+
+        if (state.filtered.length === 0) {
+          container.innerHTML = '';
+          if (empty) empty.style.display = '';
+          return;
+        }
+        if (empty) empty.style.display = 'none';
+
+        var html = '';
+        state.filtered.forEach(function (tx) {
+          html += renderTx(tx);
+        });
+        container.innerHTML = html;
+      }
+
+      function renderTx(tx) {
+        var type = tx.type || 'in';
+        var isPending = tx.status === 'pending';
+        var isRejected = tx.status === 'rejected';
+
+        var iconMap = { in: '↓', out: '↑', commission: '💰' };
+        var icon = iconMap[type] || '💵';
+
+        var iconClass = 'wam-wallet__tx-icon--' + type;
+        if (isPending) iconClass = 'wam-wallet__tx-icon--pending';
+
+        var amountClass = 'wam-wallet__tx-amount--' + type;
+        if (isPending) amountClass = 'wam-wallet__tx-amount--pending';
+
+        var sign = (type === 'in' || type === 'commission') ? '+' : '−';
+
+        var badge = '';
+        if (isPending) {
+          badge = '<span class="wam-wallet__tx-badge wam-wallet__tx-badge--pending">⏳ در انتظار</span>';
+        } else if (isRejected) {
+          badge = '<span class="wam-wallet__tx-badge wam-wallet__tx-badge--rejected">✕ ردشده</span>';
+        }
+
+        var meta = [];
+        meta.push('🗓 ' + fmtDate(tx.createdAt) + ' • ' + fmtTime(tx.createdAt));
+        if (tx.ref) meta.push('🔖 ' + esc(tx.ref));
+        if (tx.iban) meta.push('🏦 ' + esc(tx.iban.substring(0, 10)) + '...');
+        if (tx.caseId) meta.push('📁 ' + esc(tx.caseId));
+
+        return '' +
+          '<div class="wam-wallet__tx" data-id="' + esc(tx.id) + '">' +
+            '<div class="wam-wallet__tx-icon ' + iconClass + '">' + icon + '</div>' +
+            '<div class="wam-wallet__tx-body">' +
+              '<p class="wam-wallet__tx-title">' + esc(tx.title || 'تراکنش') + '</p>' +
+              '<div class="wam-wallet__tx-meta">' + meta.join(' • ') + '</div>' +
+            '</div>' +
+            '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">' +
+              '<div class="wam-wallet__tx-amount ' + amountClass + '">' +
+                sign + fmtAmountFine(tx.amount) +
+              '</div>' +
+              badge +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // Modal شارژ
+      // ═══════════════════════════════════
+
+      function openTopupModal() {
+        if ($('topupAmount')) $('topupAmount').value = '';
+        if ($('topupMethod')) $('topupMethod').value = 'bank';
+        if ($('topupRef')) $('topupRef').value = '';
+
+        var m = $('topupModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('topupAmount')) $('topupAmount').focus(); }, 150);
+      }
+
+      function closeTopupModal() {
+        var m = $('topupModal');
+        if (m) m.classList.remove('is-open');
+      }
+
+      function submitTopup() {
+        var amount = parseFloat(($('topupAmount') || {}).value) || 0;
+        var method = ($('topupMethod') || {}).value || 'bank';
+        var ref = (($('topupRef') || {}).value || '').trim();
+
+        if (amount <= 0) {
+          showToast('مبلغ معتبر وارد کنید.');
+          return;
+        }
+
+        var all = readJSON(STORAGE_TX, []);
+        if (!Array.isArray(all)) all = [];
+
+        var me = state.user;
+        var newTx = {
+          id: uid(),
+          userId: currentUserId(),
+          userName: me.name || me.username || 'کاربر',
+          type: 'in',
+          method: method,
+          title: 'واریز به کیف پول',
+          amount: amount,
+          status: 'pending', // واریزهای دستی نیازمند تأیید مدیر
+          ref: ref,
+          createdAt: Date.now()
+        };
+
+        all.push(newTx);
+
+        if (!saveTransactions(all)) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        state.all = loadTransactions();
+        renderSummary();
+        renderTransactions();
+        closeTopupModal();
+
+        emitEvent('wallet:topup-requested', {
+          id: newTx.id,
+          amount: amount,
+          method: method
+        });
+
+        showToast('✓ درخواست واریز ثبت شد (در انتظار تأیید)');
+      }
+
+      // ═══════════════════════════════════
+      // Modal تسویه
+      // ═══════════════════════════════════
+
+      function openWithdrawModal() {
+        var s = computeSummary();
+        if (s.balance <= 0) {
+          showToast('موجودی قابل برداشت ندارید.');
+          return;
+        }
+
+        if ($('withdrawAmount')) $('withdrawAmount').value = '';
+        if ($('withdrawIban')) $('withdrawIban').value = '';
+        if ($('withdrawNote')) $('withdrawNote').value = '';
+        if ($('withdrawBalance')) $('withdrawBalance').textContent = fmtAmount(s.balance);
+
+        var m = $('withdrawModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('withdrawAmount')) $('withdrawAmount').focus(); }, 150);
+      }
+
+      function closeWithdrawModal() {
+        var m = $('withdrawModal');
+        if (m) m.classList.remove('is-open');
+      }
+
+      function submitWithdraw() {
+        var amount = parseFloat(($('withdrawAmount') || {}).value) || 0;
+        var iban = (($('withdrawIban') || {}).value || '').trim().toUpperCase();
+        var note = (($('withdrawNote') || {}).value || '').trim();
+
+        var s = computeSummary();
+
+        if (amount <= 0) {
+          showToast('مبلغ معتبر وارد کنید.');
+          return;
+        }
+        if (amount > s.balance) {
+          showToast('مبلغ بیش از موجودی است.');
+          return;
+        }
+        if (!/^IR\d{24}$/.test(iban)) {
+          showToast('شماره شبا معتبر نیست.');
+          return;
+        }
+
+        var all = readJSON(STORAGE_TX, []);
+        if (!Array.isArray(all)) all = [];
+
+        var me = state.user;
+        var newTx = {
+          id: uid(),
+          userId: currentUserId(),
+          userName: me.name || me.username || 'کاربر',
+          type: 'out',
+          method: 'bank',
+          title: 'درخواست تسویه',
+          amount: amount,
+          status: 'pending',
+          iban: iban,
+          note: note,
+          createdAt: Date.now()
+        };
+
+        all.push(newTx);
+
+        if (!saveTransactions(all)) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        state.all = loadTransactions();
+        renderSummary();
+        renderTransactions();
+        closeWithdrawModal();
+
+        emitEvent('wallet:withdraw-requested', {
+          id: newTx.id,
+          amount: amount,
+          iban: iban
+        });
+
+        showToast('✓ درخواست تسویه ثبت شد');
+      }
+
+      // ═══════════════════════════════════
+      // Export
+      // ═══════════════════════════════════
+
+      function exportCSV() {
+        var rows = [];
+        rows.push(['ID', 'Date', 'Type', 'Title', 'Amount', 'Status', 'Ref', 'IBAN', 'CaseID']);
+
+        state.filtered.forEach(function (tx) {
+          rows.push([
+            tx.id || '',
+            tx.createdAt ? new Date(tx.createdAt).toISOString().slice(0, 10) : '',
+            tx.type || '',
+            (tx.title || '').replace(/,/g, ' '),
+            tx.amount || 0,
+            tx.status || '',
+            tx.ref || '',
+            tx.iban || '',
+            tx.caseId || ''
+          ]);
+        });
+
+        var csv = '\uFEFF' + rows.map(function (r) { return r.join(','); }).join('\n');
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'wallet-' + Date.now() + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+
+        showToast('✓ خروجی CSV دانلود شد');
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Tabs
+        $$('.wam-wallet__tab').forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            $$('.wam-wallet__tab').forEach(function (x) { x.classList.remove('is-active'); });
+            tab.classList.add('is-active');
+            state.tab = tab.getAttribute('data-tab') || 'all';
+            renderTransactions();
+          });
+        });
+
+        // Refresh
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            state.all = loadTransactions();
+            renderSummary();
+            renderTransactions();
+            $('refreshBtn').textContent = '✓';
+            setTimeout(function () { $('refreshBtn').textContent = '🔄'; }, 900);
+          });
+        }
+
+        // Export
+        if ($('exportBtn')) $('exportBtn').addEventListener('click', exportCSV);
+
+        // Topup
+        if ($('topupBtn')) $('topupBtn').addEventListener('click', openTopupModal);
+        if ($('fabBtn')) $('fabBtn').addEventListener('click', openTopupModal);
+
+        // Withdraw
+        if ($('withdrawBtn')) $('withdrawBtn').addEventListener('click', openWithdrawModal);
+
+        // Topup modal
+        if ($('topupModalClose')) $('topupModalClose').addEventListener('click', closeTopupModal);
+        if ($('topupCancelBtn')) $('topupCancelBtn').addEventListener('click', closeTopupModal);
+        if ($('topupSubmitBtn')) $('topupSubmitBtn').addEventListener('click', submitTopup);
+        var tm = $('topupModal');
+        if (tm) {
+          tm.addEventListener('click', function (e) {
+            if (e.target === tm) closeTopupModal();
+          });
+        }
+
+        // Quick chips (topup)
+        $$('[data-quick]').forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            var v = chip.getAttribute('data-quick');
+            if (v && $('topupAmount')) $('topupAmount').value = v;
+          });
+        });
+
+        // Withdraw modal
+        if ($('withdrawModalClose')) $('withdrawModalClose').addEventListener('click', closeWithdrawModal);
+        if ($('withdrawCancelBtn')) $('withdrawCancelBtn').addEventListener('click', closeWithdrawModal);
+        if ($('withdrawSubmitBtn')) $('withdrawSubmitBtn').addEventListener('click', submitWithdraw);
+        var wm = $('withdrawModal');
+        if (wm) {
+          wm.addEventListener('click', function (e) {
+            if (e.target === wm) closeWithdrawModal();
+          });
+        }
+
+        // Quick chips (withdraw)
+        $$('[data-withdraw]').forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            var pct = parseInt(chip.getAttribute('data-withdraw'), 10) || 100;
+            var s = computeSummary();
+            var amt = Math.floor(s.balance * pct / 100);
+            if ($('withdrawAmount')) $('withdrawAmount').value = amt;
+          });
+        });
+
+        // IBAN uppercase + IR prefix
+        if ($('withdrawIban')) {
+          $('withdrawIban').addEventListener('input', function () {
+            var v = $('withdrawIban').value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            if (v.indexOf('IR') !== 0 && v.length > 0) v = 'IR' + v;
+            $('withdrawIban').value = v.slice(0, 26);
+          });
+        }
+
+        // Back
+        if ($('backLink')) {
+          $('backLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.history.length > 1) window.history.back();
+            else window.location.href = 'dashboard.html';
+          });
+        }
+
+        // Esc
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            closeTopupModal();
+            closeWithdrawModal();
+          }
+        });
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        state.user = currentUser();
+        seedIfEmpty();
+        state.all = loadTransactions();
+        renderSummary();
+        renderTransactions();
+        bindEvents();
+
+        emitEvent('wallet:opened', {});
+
+        // auto-refresh
+        setInterval(function () {
+          state.all = loadTransactions();
+          renderSummary();
+          renderTransactions();
+        }, 60000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

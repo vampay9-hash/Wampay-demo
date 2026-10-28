@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="مشاوره‌ها — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>مشاوره‌ها | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       CONSULTATIONS LIST (Shared)
+       ═══════════════════════════════════════ */
+
+    .wam-cons {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 100px;
+    }
+
+    .wam-cons__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-cons__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-cons__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+    .wam-cons__topbar-back:hover { color: var(--wam-primary-light); }
+
+    .wam-cons__topbar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-cons__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-cons__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-cons__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+    .wam-cons__icon-btn--primary {
+      background: var(--wam-primary-light);
+      color: #fff;
+    }
+    .wam-cons__icon-btn--primary:hover {
+      background: var(--wam-primary);
+      color: #fff;
+    }
+
+    .wam-cons__main {
+      padding: var(--wam-space-lg);
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Stats */
+    .wam-cons__stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-cons__stat {
+      padding: 12px 10px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      text-align: center;
+      box-shadow: var(--wam-shadow-sm);
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      color: var(--wam-text);
+    }
+
+    .wam-cons__stat:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-cons__stat-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.1;
+    }
+    .wam-cons__stat-value--warning { color: var(--wam-warning-text); }
+    .wam-cons__stat-value--success { color: var(--wam-success-text); }
+    .wam-cons__stat-value--info    { color: var(--wam-info-text); }
+    .wam-cons__stat-value--danger  { color: var(--wam-danger-text); }
+
+    .wam-cons__stat-label {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+      margin-top: 4px;
+    }
+
+    /* Search */
+    .wam-cons__search {
+      position: relative;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-cons__search input {
+      width: 100%;
+      padding: 11px 42px 11px 42px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-cons__search input:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-cons__search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      color: var(--wam-text-muted);
+      pointer-events: none;
+    }
+
+    .wam-cons__search-clear {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--wam-text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: none;
+    }
+    .wam-cons__search-clear.is-visible { display: inline-flex; }
+
+    /* Filter chips */
+    .wam-cons__filters {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      margin-bottom: var(--wam-space-md);
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .wam-cons__filters::-webkit-scrollbar { display: none; }
+
+    .wam-cons__chip {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .wam-cons__chip:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary-light);
+    }
+
+    .wam-cons__chip.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-cons__chip-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .wam-cons__chip.is-active .wam-cons__chip-count {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    /* Sort */
+    .wam-cons__sort-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-cons__sort-select {
+      padding: 5px 10px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      font-size: 0.75rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      cursor: pointer;
+    }
+
+    /* Grid */
+    .wam-cons__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--wam-space-md);
+    }
+
+    /* Card */
+    .wam-cons__card {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-right: 4px solid var(--wam-muted);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-md);
+      box-shadow: var(--wam-shadow-sm);
+      cursor: pointer;
+      transition: all var(--wam-t);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wam-cons__card:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .wam-cons__card--draft     { border-right-color: var(--wam-muted); }
+    .wam-cons__card--pending   { border-right-color: var(--wam-warning); }
+    .wam-cons__card--in_progress { border-right-color: var(--wam-info); }
+    .wam-cons__card--resolved  { border-right-color: var(--wam-success); }
+    .wam-cons__card--closed    { border-right-color: var(--wam-primary-light); }
+    .wam-cons__card--cancelled { border-right-color: var(--wam-danger); }
+
+    .wam-cons__card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .wam-cons__card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-size: 1.15rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .wam-cons__card-title-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-cons__card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-cons__card-id {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      font-family: 'Menlo', monospace;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .wam-cons__card-priority {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.65rem;
+      font-weight: 800;
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+
+    .wam-cons__card-priority--urgent {
+      background: var(--wam-danger-soft);
+      color: var(--wam-danger-text);
+    }
+    .wam-cons__card-priority--high {
+      background: var(--wam-warning-soft);
+      color: var(--wam-warning-text);
+    }
+    .wam-cons__card-priority--normal {
+      background: var(--wam-info-soft);
+      color: var(--wam-info-text);
+    }
+    .wam-cons__card-priority--low {
+      background: var(--wam-muted-soft);
+      color: var(--wam-text-muted);
+    }
+
+    .wam-cons__card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 0.75rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-cons__card-preview {
+      font-size: 0.82rem;
+      color: var(--wam-text-muted);
+      line-height: 1.7;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .wam-cons__card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--wam-border-soft);
+      margin-top: auto;
+    }
+
+    .wam-cons__card-stats {
+      display: flex;
+      gap: 10px;
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-cons__card-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .wam-cons__status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.7rem;
+      font-weight: 800;
+      background: var(--wam-muted-soft);
+      color: var(--wam-text-muted);
+      white-space: nowrap;
+    }
+
+    .wam-cons__status-badge--draft       { background: var(--wam-muted-soft); color: var(--wam-text-muted); }
+    .wam-cons__status-badge--pending     { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-cons__status-badge--in_progress { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-cons__status-badge--resolved    { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-cons__status-badge--closed      { background: var(--wam-primary-soft); color: var(--wam-primary); }
+    .wam-cons__status-badge--cancelled   { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+
+    /* Type icon colors */
+    .wam-cons__card-icon--question  { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-cons__card-icon--complaint { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+    .wam-cons__card-icon--suggestion { background: var(--wam-gold-soft); color: #7a5a00; }
+    .wam-cons__card-icon--request   { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-cons__card-icon--followup  { background: var(--wam-primary-soft); color: var(--wam-primary); }
+
+    /* Empty */
+    .wam-cons__empty {
+      text-align: center;
+      padding: 56px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+
+    .wam-cons__empty-icon {
+      font-size: 2.6rem;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+
+    .wam-cons__empty-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 6px;
+    }
+
+    .wam-cons__empty-text {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0 0 var(--wam-space-md);
+      line-height: 1.7;
+    }
+
+    /* Pagination */
+    .wam-cons__pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: var(--wam-space-lg);
+      flex-wrap: wrap;
+    }
+
+    .wam-cons__page-btn {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 8px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      color: var(--wam-text);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wam-cons__page-btn:hover:not(:disabled) {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary);
+    }
+
+    .wam-cons__page-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .wam-cons__page-info {
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+      margin: 0 var(--wam-space-sm);
+    }
+
+    /* FAB */
+    .wam-cons__fab {
+      position: fixed;
+      bottom: 24px;
+      left: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--wam-gold);
+      color: #3a2a00;
+      font-size: 1.6rem;
+      font-weight: 800;
+      border: 0;
+      box-shadow: 0 6px 18px rgba(212, 166, 42, 0.45);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--wam-t), box-shadow var(--wam-t);
+      z-index: calc(var(--wam-z-sticky) - 1);
+      font-family: inherit;
+    }
+    .wam-cons__fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 24px rgba(212, 166, 42, 0.55);
+    }
+
+    /* Modal */
+    .wam-cons__modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 59, 35, 0.5);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: var(--wam-z-modal);
+      padding: 0;
+    }
+    .wam-cons__modal.is-open { display: flex; }
+
+    .wam-cons__modal-box {
+      background: var(--wam-bg-alt);
+      width: 100%;
+      max-width: 560px;
+      border-radius: var(--wam-radius-lg) var(--wam-radius-lg) 0 0;
+      padding: var(--wam-space-lg);
+      padding-bottom: calc(var(--wam-space-lg) + env(safe-area-inset-bottom, 0px));
+      animation: wam-slide-up 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .wam-cons__modal-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border-soft);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-cons__modal-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      flex: 1 1 auto;
+    }
+
+    .wam-cons__modal-close {
+      background: transparent;
+      border: 0;
+      font-size: 1.2rem;
+      color: var(--wam-text-muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .wam-cons__modal-close:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    .wam-cons__modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .wam-cons__modal-actions .wam-btn {
+      flex: 1 1 0;
+    }
+
+    /* Toast */
+    .wam-cons__toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .wam-cons__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .wam-cons__main { padding: var(--wam-space-md); }
+      .wam-cons__grid { grid-template-columns: 1fr; }
+      .wam-cons__stats { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .wam-cons__stat { padding: 10px 6px; }
+      .wam-cons__stat-value { font-size: 1.05rem; }
+      .wam-cons__stat-label { font-size: 0.62rem; }
+    }
+
+    @media (min-width: 900px) {
+      .wam-cons__main { padding: var(--wam-space-xl) var(--wam-space-lg); }
+    }
+  </style>
+</head>
+
+<body data-page="consultations">
+
+  <div class="wam-cons" id="consRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-cons__topbar">
+      <div class="wam-cons__topbar-info">
+        <a href="#" class="wam-cons__topbar-back" id="backLink">↩ بازگشت</a>
+        <h1 class="wam-cons__topbar-title">💬 مشاوره‌ها</h1>
+      </div>
+      <div class="wam-cons__topbar-actions">
+        <button type="button" class="wam-cons__icon-btn" id="refreshBtn" title="بروزرسانی">🔄</button>
+        <button type="button" class="wam-cons__icon-btn wam-cons__icon-btn--primary" id="newBtn" title="مشاوره جدید">➕</button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-cons__main">
+
+      <!-- Stats -->
+      <section class="wam-cons__stats">
+        <button type="button" class="wam-cons__stat" data-status="all">
+          <div class="wam-cons__stat-value" id="statTotal">۰</div>
+          <div class="wam-cons__stat-label">کل</div>
+        </button>
+        <button type="button" class="wam-cons__stat" data-status="pending">
+          <div class="wam-cons__stat-value wam-cons__stat-value--warning" id="statPending">۰</div>
+          <div class="wam-cons__stat-label">در انتظار</div>
+        </button>
+        <button type="button" class="wam-cons__stat" data-status="in_progress">
+          <div class="wam-cons__stat-value wam-cons__stat-value--info" id="statInProgress">۰</div>
+          <div class="wam-cons__stat-label">در حال بررسی</div>
+        </button>
+        <button type="button" class="wam-cons__stat" data-status="resolved">
+          <div class="wam-cons__stat-value wam-cons__stat-value--success" id="statResolved">۰</div>
+          <div class="wam-cons__stat-label">حل‌شده</div>
+        </button>
+        <button type="button" class="wam-cons__stat" data-status="cancelled">
+          <div class="wam-cons__stat-value wam-cons__stat-value--danger" id="statCancelled">۰</div>
+          <div class="wam-cons__stat-label">لغو‌شده</div>
+        </button>
+      </section>
+
+      <!-- Search -->
+      <div class="wam-cons__search">
+        <input type="text" id="searchInput" placeholder="جستجوی عنوان، شناسه، متقاضی...">
+        <span class="wam-cons__search-icon">🔍</span>
+        <button type="button" class="wam-cons__search-clear" id="searchClear" aria-label="پاک">✕</button>
+      </div>
+
+      <!-- Filter chips (type) -->
+      <div class="wam-cons__filters" id="typeChips">
+        <button type="button" class="wam-cons__chip is-active" data-type="all">
+          همه انواع <span class="wam-cons__chip-count" data-count="all">۰</span>
+        </button>
+        <button type="button" class="wam-cons__chip" data-type="question">
+          ❓ سؤال <span class="wam-cons__chip-count" data-count="question">۰</span>
+        </button>
+        <button type="button" class="wam-cons__chip" data-type="complaint">
+          ⚠️ شکایت <span class="wam-cons__chip-count" data-count="complaint">۰</span>
+        </button>
+        <button type="button" class="wam-cons__chip" data-type="suggestion">
+          💡 پیشنهاد <span class="wam-cons__chip-count" data-count="suggestion">۰</span>
+        </button>
+        <button type="button" class="wam-cons__chip" data-type="request">
+          📋 درخواست <span class="wam-cons__chip-count" data-count="request">۰</span>
+        </button>
+        <button type="button" class="wam-cons__chip" data-type="followup">
+          📌 پیگیری <span class="wam-cons__chip-count" data-count="followup">۰</span>
+        </button>
+      </div>
+
+      <!-- Sort -->
+      <div class="wam-cons__sort-row">
+        <span id="resultsCount">۰ مشاوره</span>
+        <select class="wam-cons__sort-select" id="sortSelect">
+          <option value="newest">جدیدترین</option>
+          <option value="oldest">قدیمی‌ترین</option>
+          <option value="priority">اولویت</option>
+          <option value="unread">خوانده‌نشده‌ها</option>
+        </select>
+      </div>
+
+      <!-- Grid -->
+      <div class="wam-cons__grid" id="consGrid">
+        <!-- توسط JS پر می‌شود -->
+      </div>
+
+      <!-- Empty -->
+      <div class="wam-cons__empty" id="emptyState" style="display:none;">
+        <div class="wam-cons__empty-icon">💬</div>
+        <h3 class="wam-cons__empty-title" id="emptyTitle">مشاوره‌ای یافت نشد</h3>
+        <p class="wam-cons__empty-text" id="emptyText">
+          با فیلترهای فعلی مشاوره‌ای وجود ندارد.
+        </p>
+        <button type="button" class="wam-btn wam-btn--primary" id="emptyNewBtn">
+          ➕ ثبت مشاوره جدید
+        </button>
+      </div>
+
+      <!-- Pagination -->
+      <div class="wam-cons__pagination" id="pagination" style="display:none;">
+        <button type="button" class="wam-cons__page-btn" id="prevPage" disabled>‹</button>
+        <span class="wam-cons__page-info" id="pageInfo">1 از 1</span>
+        <button type="button" class="wam-cons__page-btn" id="nextPage" disabled>›</button>
+      </div>
+
+    </main>
+
+    <!-- ═══ FAB ═══ -->
+    <button type="button" class="wam-cons__fab" id="fabBtn" aria-label="مشاوره جدید">➕</button>
+
+    <!-- ═══ MODAL: مشاوره جدید ═══ -->
+    <div class="wam-cons__modal" id="newModal" role="dialog" aria-modal="true">
+      <div class="wam-cons__modal-box">
+
+        <div class="wam-cons__modal-head">
+          <h3 class="wam-cons__modal-title">💬 مشاوره جدید</h3>
+          <button type="button" class="wam-cons__modal-close" id="newModalClose" aria-label="بستن">✕</button>
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="newType">نوع مشاوره *</label>
+          <select id="newType" class="wam-select">
+            <option value="question">❓ سؤال</option>
+            <option value="request">📋 درخواست</option>
+            <option value="complaint">⚠️ شکایت</option>
+            <option value="suggestion">💡 پیشنهاد</option>
+            <option value="followup">📌 پیگیری</option>
+          </select>
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="newPriority">اولویت</label>
+          <select id="newPriority" class="wam-select">
+            <option value="normal">عادی</option>
+            <option value="high">بالا</option>
+            <option value="urgent">فوری</option>
+            <option value="low">کم</option>
+          </select>
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="newSubject">موضوع *</label>
+          <input type="text" id="newSubject" class="wam-input"
+                 placeholder="موضوع مشاوره را در یک جمله بنویسید">
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="newMessage">پیام *</label>
+          <textarea id="newMessage" class="wam-input"
+                    style="min-height:100px;resize:vertical;"
+                    placeholder="توضیحات کامل خود را وارد کنید..."></textarea>
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="newCaseId">شناسه پرونده (اختیاری)</label>
+          <input type="text" id="newCaseId" class="wam-input"
+                 placeholder="مثال: C-ABC12" dir="ltr">
+          <p class="wam-field__hint">اگر مشاوره مربوط به پرونده خاصی است، شناسه آن را وارد کنید.</p>
+        </div>
+
+        <div class="wam-cons__modal-actions">
+          <button type="button" class="wam-btn" id="newCancelBtn">انصراف</button>
+          <button type="button" class="wam-btn wam-btn--primary" id="newSubmitBtn">
+            💬 ثبت مشاوره
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="wam-cons__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       CONSULTATIONS LIST CONTROLLER
+       - لیست مشاوره‌ها با فیلتر نقش‌محور
+       - ایجاد مشاوره جدید
+       - جستجو + فیلتر + مرتب + صفحه‌بندی
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_CONS = 'wamPayConsultations';
+      var PAGE_SIZE = 12;
+
+      var state = {
+        user: null,
+        all: [],
+        filtered: [],
+        status: 'all',
+        type: 'all',
+        query: '',
+        sort: 'newest',
+        page: 1
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = Date.now() - ts;
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه پیش';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت پیش';
+        return Math.round(abs / 86400000) + ' روز پیش';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کاربر', username: 'user', role: 'applicant', id: 'user' };
+      }
+
+      function currentUserId() {
+        var u = state.user;
+        return (u && (u.id || u.username)) || 'user';
+      }
+
+      function roleOf() {
+        var u = state.user;
+        return (u && (u.role || u.userRole)) || 'applicant';
+      }
+
+      function canSeeAll() {
+        var r = roleOf();
+        return r === 'super_admin' || r === 'admin' || r === 'verifier' || r === 'broker';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function genId() {
+        return 'CS-' + Date.now().toString(36).toUpperCase().slice(-5) +
+               Math.random().toString(36).slice(2, 4).toUpperCase();
+      }
+
+      function typeLabel(t) {
+        var map = {
+          question: '❓ سؤال', complaint: '⚠️ شکایت',
+          suggestion: '💡 پیشنهاد', request: '📋 درخواست',
+          followup: '📌 پیگیری'
+        };
+        return map[t] || t || 'مشاوره';
+      }
+
+      function typeIcon(t) {
+        var map = {
+          question: '❓', complaint: '⚠️', suggestion: '💡',
+          request: '📋', followup: '📌'
+        };
+        return map[t] || '💬';
+      }
+
+      function statusLabel(s) {
+        var map = {
+          draft: 'پیش‌نویس', pending: 'در انتظار',
+          in_progress: 'در حال بررسی', resolved: 'حل‌شده',
+          closed: 'بسته‌شده', cancelled: 'لغو‌شده'
+        };
+        return map[s] || s || '—';
+      }
+
+      function priorityLabel(p) {
+        var map = { urgent: '🚨 فوری', high: '⚠️ بالا', normal: 'عادی', low: 'کم' };
+        return map[p] || p || 'عادی';
+      }
+
+      var PRIORITY_WEIGHT = { urgent: 4, high: 3, normal: 2, low: 1 };
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadConsultations() {
+        var all = readJSON(STORAGE_CONS, []);
+        if (!Array.isArray(all)) return [];
+
+        if (canSeeAll()) return all;
+
+        var me = currentUserId();
+        var myName = (state.user && state.user.name) || '';
+
+        return all.filter(function (c) {
+          if (!c) return false;
+          return c.userId === me ||
+                 (c.userName && myName && c.userName === myName);
+        });
+      }
+
+      function seedIfEmpty() {
+        var all = readJSON(STORAGE_CONS, []);
+        if (Array.isArray(all) && all.length > 0) return;
+
+        var now = Date.now();
+        var me = currentUserId();
+        var meName = (state.user && state.user.name) || 'کاربر';
+
+        var samples = [
+          {
+            id: 'CS-' + now.toString(36).toUpperCase().slice(-5) + 'A',
+            type: 'question',
+            priority: 'normal',
+            subject: 'شرایط وام مسکن برای زوجین',
+            message: 'سلام، من و همسرم قصد خرید مسکن داریم. آیا وام مسکن برای زوجین شرایط خاصی دارد؟',
+            userId: me, userName: meName,
+            status: 'pending',
+            isRead: false,
+            replies: [],
+            caseId: null,
+            createdAt: now - 1000 * 60 * 60 * 2,
+            updatedAt: now - 1000 * 60 * 60 * 2
+          },
+          {
+            id: 'CS-' + now.toString(36).toUpperCase().slice(-5) + 'B',
+            type: 'request',
+            priority: 'high',
+            subject: 'درخواست تمدید مهلت بازپرداخت',
+            message: 'به دلیل مشکلات مالی، درخواست تمدید مهلت بازپرداخت قسط سوم را دارم.',
+            userId: me, userName: meName,
+            status: 'in_progress',
+            isRead: true,
+            replies: [
+              { by: 'پشتیبانی', at: now - 1000 * 60 * 60 * 24, text: 'در حال بررسی درخواست شما هستیم.' }
+            ],
+            caseId: 'C-ABC12',
+            createdAt: now - 1000 * 60 * 60 * 24 * 2,
+            updatedAt: now - 1000 * 60 * 60 * 24
+          },
+          {
+            id: 'CS-' + now.toString(36).toUpperCase().slice(-5) + 'C',
+            type: 'suggestion',
+            priority: 'low',
+            subject: 'پیشنهاد افزودن اپلیکیشن موبایل',
+            message: 'اگر اپلیکیشن موبایل داشته باشید، بسیار کاربردی می‌شود.',
+            userId: me, userName: meName,
+            status: 'resolved',
+            isRead: true,
+            replies: [
+              { by: 'پشتیبانی', at: now - 1000 * 60 * 60 * 24 * 3, text: 'ممنون از پیشنهاد شما. در برنامه توسعه قرار گرفت.' }
+            ],
+            caseId: null,
+            createdAt: now - 1000 * 60 * 60 * 24 * 5,
+            updatedAt: now - 1000 * 60 * 60 * 24 * 3
+          }
+        ];
+
+        if (!Array.isArray(all)) all = [];
+        all = all.concat(samples);
+        writeJSON(STORAGE_CONS, all);
+      }
+
+      // ═══════════════════════════════════
+      // آمار
+      // ═══════════════════════════════════
+
+      function updateStats() {
+        var list = state.all;
+        var counts = {
+          total: list.length,
+          pending: 0, in_progress: 0,
+          resolved: 0, cancelled: 0, closed: 0, draft: 0
+        };
+
+        list.forEach(function (c) {
+          var st = c.status || 'pending';
+          if (counts[st] != null) counts[st]++;
+        });
+
+        if ($('statTotal')) $('statTotal').textContent = toFa(counts.total);
+        if ($('statPending')) $('statPending').textContent = toFa(counts.pending);
+        if ($('statInProgress')) $('statInProgress').textContent = toFa(counts.in_progress);
+        if ($('statResolved')) $('statResolved').textContent = toFa(counts.resolved);
+        if ($('statCancelled')) $('statCancelled').textContent = toFa(counts.cancelled);
+
+        // Type counts
+        var typeCounts = { all: list.length, question: 0, complaint: 0, suggestion: 0, request: 0, followup: 0 };
+        list.forEach(function (c) {
+          if (typeCounts[c.type] != null) typeCounts[c.type]++;
+        });
+
+        Object.keys(typeCounts).forEach(function (k) {
+          var el = document.querySelector('[data-count="' + k + '"]');
+          if (el) el.textContent = toFa(typeCounts[k]);
+        });
+      }
+
+      // ═══════════════════════════════════
+      // فیلتر و مرتب
+      // ═══════════════════════════════════
+
+      function applyFilters() {
+        var q = state.query.toLowerCase();
+        var st = state.status;
+        var ty = state.type;
+
+        state.filtered = state.all.filter(function (c) {
+          if (st !== 'all' && (c.status || 'pending') !== st) return false;
+          if (ty !== 'all' && c.type !== ty) return false;
+          if (q) {
+            var hay = [
+              c.subject, c.message, c.id, c.userName, c.caseId
+            ].join(' ').toLowerCase();
+            if (hay.indexOf(q) < 0) return false;
+          }
+          return true;
+        });
+
+        var s = state.sort;
+        state.filtered.sort(function (a, b) {
+          if (s === 'oldest') return (a.createdAt || 0) - (b.createdAt || 0);
+          if (s === 'priority') {
+            var wa = PRIORITY_WEIGHT[a.priority] || 0;
+            var wb = PRIORITY_WEIGHT[b.priority] || 0;
+            if (wa !== wb) return wb - wa;
+            return (b.createdAt || 0) - (a.createdAt || 0);
+          }
+          if (s === 'unread') {
+            if (a.isRead === b.isRead) return (b.createdAt || 0) - (a.createdAt || 0);
+            return a.isRead ? 1 : -1;
+          }
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+
+        state.page = 1;
+        render();
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function render() {
+        var grid = $('consGrid');
+        var empty = $('emptyState');
+        var pagination = $('pagination');
+        var countEl = $('resultsCount');
+
+        if (countEl) countEl.textContent = toFa(state.filtered.length) + ' مشاوره';
+
+        if (state.filtered.length === 0) {
+          if (grid) grid.innerHTML = '';
+          if (empty) {
+            empty.style.display = '';
+            var et = $('emptyTitle');
+            var ex = $('emptyText');
+            if (state.query || state.status !== 'all' || state.type !== 'all') {
+              if (et) et.textContent = 'نتیجه‌ای یافت نشد';
+              if (ex) ex.textContent = 'با فیلترهای فعلی مشاوره‌ای وجود ندارد.';
+            } else {
+              if (et) et.textContent = 'هنوز مشاوره‌ای ندارید';
+              if (ex) ex.textContent = 'برای ارسال سؤال یا درخواست، روی دکمه زیر بزنید.';
+            }
+          }
+          if (pagination) pagination.style.display = 'none';
+          return;
+        }
+
+        if (empty) empty.style.display = 'none';
+
+        var totalPages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+        if (state.page > totalPages) state.page = totalPages;
+        var start = (state.page - 1) * PAGE_SIZE;
+        var slice = state.filtered.slice(start, start + PAGE_SIZE);
+
+        var html = '';
+        slice.forEach(function (c) {
+          html += renderCard(c);
+        });
+        if (grid) grid.innerHTML = html;
+
+        // Bind click
+        grid.querySelectorAll('.wam-cons__card').forEach(function (card) {
+          card.addEventListener('click', function () {
+            var id = card.getAttribute('data-id');
+            if (id) window.location.href = 'consultation-details.html?id=' + encodeURIComponent(id);
+          });
+        });
+
+        if (pagination) pagination.style.display = '';
+        if ($('pageInfo')) $('pageInfo').textContent = toFa(state.page) + ' از ' + toFa(totalPages);
+        if ($('prevPage')) $('prevPage').disabled = state.page <= 1;
+        if ($('nextPage')) $('nextPage').disabled = state.page >= totalPages;
+      }
+
+      function renderCard(c) {
+        var st = c.status || 'pending';
+        var prio = c.priority || 'normal';
+        var icon = typeIcon(c.type);
+        var repliesCount = (c.replies || []).length;
+
+        var unreadBadge = !c.isRead ? '<span style="width:8px;height:8px;border-radius:50%;background:var(--wam-danger);display:inline-block;margin-left:6px;"></span>' : '';
+
+        return '' +
+          '<div class="wam-cons__card wam-cons__card--' + esc(st) + '" data-id="' + esc(c.id) + '">' +
+            '<div class="wam-cons__card-head">' +
+              '<div class="wam-cons__card-icon wam-cons__card-icon--' + esc(c.type) + '">' + icon + '</div>' +
+              '<div class="wam-cons__card-title-wrap">' +
+                '<p class="wam-cons__card-title">' + unreadBadge + esc(c.subject || 'بدون موضوع') + '</p>' +
+                '<div class="wam-cons__card-id">' + esc(c.id) + '</div>' +
+              '</div>' +
+              '<span class="wam-cons__card-priority wam-cons__card-priority--' + esc(prio) + '">' +
+                priorityLabel(prio) +
+              '</span>' +
+            '</div>' +
+
+            (c.message ? '<div class="wam-cons__card-preview">' + esc(c.message) + '</div>' : '') +
+
+            '<div class="wam-cons__card-meta">' +
+              (c.caseId ? '<span>📁 ' + esc(c.caseId) + '</span>' : '') +
+              (c.createdAt ? '<span>🗓 ' + esc(relTime(c.createdAt)) + '</span>' : '') +
+              (c.userName && canSeeAll() ? '<span>👤 ' + esc(c.userName) + '</span>' : '') +
+            '</div>' +
+
+            '<div class="wam-cons__card-footer">' +
+              '<div class="wam-cons__card-stats">' +
+                (repliesCount > 0 ? '<span class="wam-cons__card-stat">💬 ' + toFa(repliesCount) + ' پاسخ</span>' : '') +
+              '</div>' +
+              '<span class="wam-cons__status-badge wam-cons__status-badge--' + esc(st) + '">' +
+                statusLabel(st) +
+              '</span>' +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // مشاوره جدید
+      // ═══════════════════════════════════
+
+      function openNewModal() {
+        if ($('newType')) $('newType').value = 'question';
+        if ($('newPriority')) $('newPriority').value = 'normal';
+        if ($('newSubject')) $('newSubject').value = '';
+        if ($('newMessage')) $('newMessage').value = '';
+        if ($('newCaseId')) $('newCaseId').value = '';
+
+        var m = $('newModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('newSubject')) $('newSubject').focus(); }, 150);
+      }
+
+      function closeNewModal() {
+        var m = $('newModal');
+        if (m) m.classList.remove('is-open');
+      }
+
+      function submitNew() {
+        var type = ($('newType') || {}).value || 'question';
+        var priority = ($('newPriority') || {}).value || 'normal';
+        var subject = (($('newSubject') || {}).value || '').trim();
+        var message = (($('newMessage') || {}).value || '').trim();
+        var caseId = (($('newCaseId') || {}).value || '').trim();
+
+        if (!subject || subject.length < 3) {
+          alert('موضوع مشاوره الزامی است (حداقل ۳ کاراکتر).');
+          if ($('newSubject')) $('newSubject').focus();
+          return;
+        }
+        if (!message || message.length < 5) {
+          alert('پیام مشاوره الزامی است (حداقل ۵ کاراکتر).');
+          if ($('newMessage')) $('newMessage').focus();
+          return;
+        }
+
+        var user = state.user;
+        var newCons = {
+          id: genId(),
+          type: type,
+          priority: priority,
+          subject: subject,
+          message: message,
+          userId: currentUserId(),
+          userName: user.name || user.username || 'کاربر',
+          status: 'pending',
+          isRead: true,
+          replies: [],
+          caseId: caseId || null,
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        };
+
+        var all = readJSON(STORAGE_CONS, []);
+        if (!Array.isArray(all)) all = [];
+        all.push(newCons);
+
+        if (!writeJSON(STORAGE_CONS, all)) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        emitEvent('consultation:created', { id: newCons.id, consultation: newCons });
+
+        closeNewModal();
+        state.all = loadConsultations();
+        updateStats();
+        applyFilters();
+
+        showToast('✓ مشاوره ثبت شد');
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Search
+        var input = $('searchInput');
+        var clearBtn = $('searchClear');
+        if (input) {
+          input.addEventListener('input', function () {
+            state.query = input.value || '';
+            if (clearBtn) clearBtn.classList.toggle('is-visible', state.query.length > 0);
+            applyFilters();
+          });
+        }
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function () {
+            if (input) input.value = '';
+            state.query = '';
+            clearBtn.classList.remove('is-visible');
+            applyFilters();
+          });
+        }
+
+        // Stat box click → filter
+        $$('.wam-cons__stat').forEach(function (stat) {
+          stat.addEventListener('click', function () {
+            var s = stat.getAttribute('data-status');
+            if (!s) return;
+            state.status = s;
+            applyFilters();
+          });
+        });
+
+        // Type chips
+        $$('.wam-cons__chip').forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            $$('.wam-cons__chip').forEach(function (x) {
+              x.classList.remove('is-active');
+            });
+            chip.classList.add('is-active');
+            state.type = chip.getAttribute('data-type') || 'all';
+            applyFilters();
+          });
+        });
+
+        // Sort
+        var sortSelect = $('sortSelect');
+        if (sortSelect) {
+          sortSelect.addEventListener('change', function () {
+            state.sort = sortSelect.value;
+            applyFilters();
+          });
+        }
+
+        // Refresh
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            state.all = loadConsultations();
+            updateStats();
+            applyFilters();
+            $('refreshBtn').textContent = '✓';
+            setTimeout(function () { $('refreshBtn').textContent = '🔄'; }, 900);
+          });
+        }
+
+        // New
+        if ($('newBtn')) $('newBtn').addEventListener('click', openNewModal);
+        if ($('fabBtn')) $('fabBtn').addEventListener('click', openNewModal);
+        if ($('emptyNewBtn')) $('emptyNewBtn').addEventListener('click', openNewModal);
+
+        // Modal
+        if ($('newModalClose')) $('newModalClose').addEventListener('click', closeNewModal);
+        if ($('newCancelBtn')) $('newCancelBtn').addEventListener('click', closeNewModal);
+        if ($('newSubmitBtn')) $('newSubmitBtn').addEventListener('click', submitNew);
+        var m = $('newModal');
+        if (m) {
+          m.addEventListener('click', function (e) {
+            if (e.target === m) closeNewModal();
+          });
+        }
+
+        // Pagination
+        if ($('prevPage')) $('prevPage').addEventListener('click', function () {
+          if (state.page > 1) { state.page--; render(); try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_){} }
+        });
+        if ($('nextPage')) $('nextPage').addEventListener('click', function () {
+          var totalPages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+          if (state.page < totalPages) { state.page++; render(); try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_){} }
+        });
+
+        // Back
+        if ($('backLink')) {
+          $('backLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.history.length > 1) window.history.back();
+            else window.location.href = 'dashboard.html';
+          });
+        }
+
+        // Esc
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeNewModal();
+        });
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        state.user = currentUser();
+        seedIfEmpty();
+        state.all = loadConsultations();
+        updateStats();
+        applyFilters();
+        bindEvents();
+
+        // auto-refresh
+        setInterval(function () {
+          state.all = loadConsultations();
+          updateStats();
+          applyFilters();
+        }, 60000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

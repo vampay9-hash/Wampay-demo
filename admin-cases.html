@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="مدیریت پرونده‌ها — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>پرونده‌ها | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* استایل اختصاصی پرونده‌ها */
+    .wam-admin__case-row-amount {
+      font-weight: 800;
+      color: var(--wam-primary);
+      white-space: nowrap;
+      font-size: 0.85rem;
+    }
+
+    .wam-admin__status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--wam-muted-soft);
+      color: var(--wam-text-muted);
+    }
+
+    .wam-admin__status-pill--draft      { background: var(--wam-muted-soft); color: var(--wam-text-muted); }
+    .wam-admin__status-pill--pending    { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-admin__status-pill--in_review  { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-admin__status-pill--approved   { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-admin__status-pill--rejected   { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+    .wam-admin__status-pill--completed  { background: var(--wam-primary-soft); color: var(--wam-primary); }
+
+    .wam-admin__progress {
+      width: 100%;
+      max-width: 100px;
+      height: 6px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius-pill);
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .wam-admin__progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--wam-primary-light), var(--wam-gold));
+      border-radius: var(--wam-radius-pill);
+      transition: width var(--wam-t);
+    }
+  </style>
+</head>
+
+<body data-page="admin-cases">
+
+  <div class="wam-admin" id="adminRoot">
+
+    <div class="wam-admin__overlay" id="adminOverlay"></div>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="wam-admin__sidebar" aria-label="منوی مدیریت">
+      <div class="wam-admin__brand">
+        <span class="wam-admin__brand-icon">و</span>
+        <span>وام پی</span>
+      </div>
+
+      <nav class="wam-admin__nav" role="navigation">
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">اصلی</div>
+          <a class="wam-admin__nav-item" href="admin-dashboard.html">
+            <span class="wam-admin__nav-icon">📊</span>
+            <span>داشبورد</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">مدیریت</div>
+          <a class="wam-admin__nav-item" href="admin-users.html">
+            <span class="wam-admin__nav-icon">👥</span>
+            <span>کاربران</span>
+            <span class="wam-admin__nav-badge" data-badge="users" hidden>0</span>
+          </a>
+          <a class="wam-admin__nav-item is-active" href="admin-cases.html">
+            <span class="wam-admin__nav-icon">📁</span>
+            <span>پرونده‌ها</span>
+          </a>
+          <a class="wam-admin__nav-item" href="admin-approvals.html">
+            <span class="wam-admin__nav-icon">✓</span>
+            <span>تأییدها</span>
+            <span class="wam-admin__nav-badge" data-badge="approvals" hidden>0</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">مالی</div>
+          <a class="wam-admin__nav-item" href="payments.html">
+            <span class="wam-admin__nav-icon">💳</span>
+            <span>پرداخت‌ها</span>
+          </a>
+          <a class="wam-admin__nav-item" href="financial-reports.html">
+            <span class="wam-admin__nav-icon">📈</span>
+            <span>گزارشات</span>
+          </a>
+          <a class="wam-admin__nav-item" href="advanced-reports.html">
+            <span class="wam-admin__nav-icon">📊</span>
+            <span>گزارشات پیشرفته</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">سیستم</div>
+          <a class="wam-admin__nav-item" href="follow-ups.html">
+            <span class="wam-admin__nav-icon">📌</span>
+            <span>پیگیری‌ها</span>
+            <span class="wam-admin__nav-badge" data-badge="followups" hidden>0</span>
+          </a>
+          <a class="wam-admin__nav-item" href="dashboard.html">
+            <span class="wam-admin__nav-icon">🧩</span>
+            <span>داشبورد عمومی</span>
+          </a>
+          <a class="wam-admin__nav-item" href="admin-settings.html">
+            <span class="wam-admin__nav-icon">⚙️</span>
+            <span>تنظیمات</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group" style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+          <button type="button" class="wam-admin__nav-item" id="adminLogoutBtn">
+            <span class="wam-admin__nav-icon">🚪</span>
+            <span>خروج از حساب</span>
+          </button>
+        </div>
+
+      </nav>
+    </aside>
+
+    <!-- ═══ MAIN ═══ -->
+    <div class="wam-admin__main">
+
+      <header class="wam-admin__topbar">
+        <button type="button" class="wam-admin__menu-toggle" id="adminMenuToggle" aria-label="باز کردن منو">☰</button>
+        <h1 class="wam-admin__topbar-title">📁 مدیریت پرونده‌ها</h1>
+        <div class="wam-admin__topbar-actions">
+          <button type="button" class="wam-btn wam-btn--ghost wam-btn--sm" id="exportBtn" title="خروجی CSV">
+            ⬇ CSV
+          </button>
+          <div class="wam-admin__user" id="adminUserChip">
+            <span class="wam-admin__user-avatar" id="adminUserAvatar">م</span>
+            <span id="adminUserName">مدیر</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="wam-admin__content">
+
+        <nav class="wam-admin__breadcrumb">
+          <a href="admin-dashboard.html">خانه</a>
+          <span class="wam-admin__breadcrumb-sep">/</span>
+          <span>پرونده‌ها</span>
+        </nav>
+
+        <!-- آمار -->
+        <section class="wam-admin__stats">
+          <div class="wam-admin__stat">
+            <div class="wam-admin__stat-head">
+              <span class="wam-admin__stat-label">کل پرونده‌ها</span>
+              <span class="wam-admin__stat-icon">📁</span>
+            </div>
+            <div class="wam-admin__stat-value" id="statTotal">0</div>
+          </div>
+
+          <div class="wam-admin__stat wam-admin__stat--warning">
+            <div class="wam-admin__stat-head">
+              <span class="wam-admin__stat-label">در انتظار</span>
+              <span class="wam-admin__stat-icon">⏳</span>
+            </div>
+            <div class="wam-admin__stat-value" id="statPending">0</div>
+          </div>
+
+          <div class="wam-admin__stat wam-admin__stat--success">
+            <div class="wam-admin__stat-head">
+              <span class="wam-admin__stat-label">تأییدشده</span>
+              <span class="wam-admin__stat-icon">✓</span>
+            </div>
+            <div class="wam-admin__stat-value" id="statApproved">0</div>
+          </div>
+
+          <div class="wam-admin__stat wam-admin__stat--gold">
+            <div class="wam-admin__stat-head">
+              <span class="wam-admin__stat-label">مجموع مبلغ</span>
+              <span class="wam-admin__stat-icon">💰</span>
+            </div>
+            <div class="wam-admin__stat-value" id="statAmount">0</div>
+            <div style="font-size:0.72rem;color:var(--wam-text-muted);">میلیون ریال</div>
+          </div>
+        </section>
+
+        <!-- فیلترها -->
+        <div class="wam-admin__filters">
+          <div class="wam-admin__search">
+            <input type="text" id="searchInput" placeholder="جستجوی عنوان، شناسه، متقاضی، کارگزار...">
+          </div>
+
+          <select class="wam-admin__filter-select" id="filterStatus">
+            <option value="">همه وضعیت‌ها</option>
+            <option value="draft">پیش‌نویس</option>
+            <option value="pending">در انتظار</option>
+            <option value="in_review">در بررسی</option>
+            <option value="approved">تأییدشده</option>
+            <option value="rejected">ردشده</option>
+            <option value="completed">تکمیل‌شده</option>
+          </select>
+
+          <select class="wam-admin__filter-select" id="filterType">
+            <option value="">همه انواع</option>
+            <option value="home">وام مسکن</option>
+            <option value="car">وام خودرو</option>
+            <option value="personal">وام شخصی</option>
+            <option value="business">وام کسب‌وکار</option>
+            <option value="equipment">وام تجهیزات</option>
+          </select>
+
+          <button type="button" class="wam-btn wam-btn--ghost wam-btn--sm" id="clearFiltersBtn">
+            ✖ پاک کردن
+          </button>
+        </div>
+
+        <!-- Bulk bar -->
+        <div class="wam-admin__bulk-bar is-hidden" id="bulkBar">
+          <span class="wam-admin__bulk-count" id="bulkCount">0</span>
+          <span>پرونده انتخاب شده</span>
+          <div class="wam-admin__bulk-actions">
+            <button type="button" class="wam-btn wam-btn--sm" data-bulk="assign">👤 تخصیص کارگزار</button>
+            <button type="button" class="wam-btn wam-btn--sm wam-btn--danger" data-bulk="delete">🗑 حذف</button>
+          </div>
+        </div>
+
+        <!-- جدول پرونده‌ها -->
+        <div class="wam-admin__table-wrap">
+          <table class="wam-admin__table wam-table--responsive" id="casesTable">
+            <thead>
+              <tr>
+                <th class="wam-admin__table-col-check">
+                  <input type="checkbox" id="selectAllCheck">
+                </th>
+                <th>شناسه</th>
+                <th>عنوان پرونده</th>
+                <th>متقاضی</th>
+                <th>نوع</th>
+                <th>مبلغ</th>
+                <th>پیشرفت</th>
+                <th>وضعیت</th>
+                <th>تاریخ</th>
+                <th class="wam-admin__table-col-actions">عملیات</th>
+              </tr>
+            </thead>
+            <tbody id="casesTableBody">
+              <!-- توسط JS پر می‌شود -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty -->
+        <div class="wam-admin__empty" id="emptyState" style="display:none;">
+          <div class="wam-admin__empty-icon">📭</div>
+          <h3 class="wam-admin__empty-title">پرونده‌ای یافت نشد</h3>
+          <p class="wam-admin__empty-text">
+            با فیلترهای فعلی پرونده‌ای وجود ندارد.
+          </p>
+        </div>
+
+        <!-- صفحه‌بندی -->
+        <div class="wam-admin__pagination" id="pagination" style="display:none;">
+          <button type="button" class="wam-admin__page-btn" id="prevPage" disabled>‹</button>
+          <span class="wam-admin__page-info" id="pageInfo">1 از 1</span>
+          <button type="button" class="wam-admin__page-btn" id="nextPage" disabled>›</button>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+  <script src="js/bundle-admin.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       ADMIN CASES CONTROLLER
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+
+      var STORAGE_KEY = 'wamPayCases';
+      var PAGE_SIZE = 10;
+
+      var state = {
+        cases: [],
+        filtered: [],
+        page: 1,
+        selected: {}
+      };
+
+      // DOM refs
+      var adminRoot   = $('adminRoot');
+      var menuToggle  = $('adminMenuToggle');
+      var overlay     = $('adminOverlay');
+      var logoutBtn   = $('adminLogoutBtn');
+      var userChip    = $('adminUserChip');
+      var userAvatar  = $('adminUserAvatar');
+      var userName    = $('adminUserName');
+      var exportBtn   = $('exportBtn');
+
+      var statTotal   = $('statTotal');
+      var statPending = $('statPending');
+      var statApproved= $('statApproved');
+      var statAmount  = $('statAmount');
+
+      var searchInput = $('searchInput');
+      var filterStatus= $('filterStatus');
+      var filterType  = $('filterType');
+      var clearBtn    = $('clearFiltersBtn');
+
+      var bulkBar     = $('bulkBar');
+      var bulkCount   = $('bulkCount');
+
+      var tableBody   = $('casesTableBody');
+      var tableEl     = $('casesTable');
+      var emptyState  = $('emptyState');
+      var selectAllChk= $('selectAllCheck');
+
+      var pagination  = $('pagination');
+      var prevPageBtn = $('prevPage');
+      var nextPageBtn = $('nextPage');
+      var pageInfo    = $('pageInfo');
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function fmtAmount(n) {
+        if (n == null) return '—';
+        try { return Number(n).toLocaleString('fa-IR'); } catch (_) { return String(n); }
+      }
+
+      function uid() {
+        return 'C-' + Date.now().toString(36).toUpperCase().slice(-5) +
+               Math.random().toString(36).slice(2, 4).toUpperCase();
+      }
+
+      function readCases() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          var arr = raw ? JSON.parse(raw) : [];
+          return Array.isArray(arr) ? arr : [];
+        } catch (_) { return []; }
+      }
+
+      function saveCases(arr) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+          return true;
+        } catch (_) { return false; }
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function statusLabel(s) {
+        var map = {
+          draft: 'پیش‌نویس',
+          pending: 'در انتظار',
+          in_review: 'در بررسی',
+          approved: 'تأییدشده',
+          rejected: 'ردشده',
+          completed: 'تکمیل‌شده'
+        };
+        return map[s] || s || '—';
+      }
+
+      function typeLabel(t) {
+        var map = {
+          home: '🏠 وام مسکن',
+          car: '🚗 وام خودرو',
+          personal: '👤 وام شخصی',
+          business: '💼 وام کسب‌وکار',
+          equipment: '🏭 وام تجهیزات'
+        };
+        return map[t] || t || '—';
+      }
+
+      function progressOf(c) {
+        if (typeof c.progress === 'number') return Math.max(0, Math.min(100, c.progress));
+        // محاسبه بر اساس وضعیت
+        var map = { draft: 10, pending: 30, in_review: 55, approved: 80, completed: 100, rejected: 20 };
+        return map[c.status] || 0;
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری و فیلتر
+      // ═══════════════════════════════════
+
+      function load() {
+        state.cases = readCases();
+        state.cases.sort(function (a, b) {
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+        applyFilters();
+        updateStats();
+      }
+
+      function applyFilters() {
+        var q = (searchInput.value || '').trim().toLowerCase();
+        var s = filterStatus.value;
+        var t = filterType.value;
+
+        state.filtered = state.cases.filter(function (c) {
+          if (s && c.status !== s) return false;
+          if (t && c.type !== t) return false;
+          if (!q) return true;
+          var hay = [
+            c.id, c.title, c.applicantName, c.brokerName, c.type, c.status
+          ].join(' ').toLowerCase();
+          return hay.indexOf(q) >= 0;
+        });
+
+        state.page = 1;
+        render();
+      }
+
+      // ═══════════════════════════════════
+      // آمار
+      // ═══════════════════════════════════
+
+      function updateStats() {
+        var total = state.cases.length;
+        var pending = 0, approved = 0, amount = 0;
+
+        state.cases.forEach(function (c) {
+          if (c.status === 'pending' || c.status === 'in_review' || c.status === 'draft') pending++;
+          if (c.status === 'approved' || c.status === 'completed') approved++;
+          amount += Number(c.amount) || 0;
+        });
+
+        if (statTotal) statTotal.textContent = total;
+        if (statPending) statPending.textContent = pending;
+        if (statApproved) statApproved.textContent = approved;
+        if (statAmount) statAmount.textContent = fmtAmount(amount);
+
+        // badge
+        var badge = document.querySelector('[data-badge="cases"]');
+        if (badge) {
+          if (pending > 0) { badge.hidden = false; badge.textContent = pending > 99 ? '99+' : pending; }
+          else badge.hidden = true;
+        }
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function render() {
+        var list = state.filtered;
+        var totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+        if (state.page > totalPages) state.page = totalPages;
+
+        var start = (state.page - 1) * PAGE_SIZE;
+        var slice = list.slice(start, start + PAGE_SIZE);
+
+        if (list.length === 0) {
+          if (tableEl) tableEl.style.display = 'none';
+          if (emptyState) emptyState.style.display = '';
+          if (pagination) pagination.style.display = 'none';
+          return;
+        }
+        if (tableEl) tableEl.style.display = '';
+        if (emptyState) emptyState.style.display = 'none';
+
+        var html = '';
+        for (var i = 0; i < slice.length; i++) {
+          var c = slice[i];
+          var isChecked = !!state.selected[c.id];
+          var prog = progressOf(c);
+          var status = c.status || 'pending';
+
+          html += '<tr data-id="' + esc(c.id) + '" class="' +
+                  (isChecked ? 'is-selected ' : '') + '">';
+
+          html += '<td class="wam-admin__table-col-check" data-label="">' +
+                  '<input type="checkbox" class="row-check" data-id="' + esc(c.id) + '"' +
+                  (isChecked ? ' checked' : '') + '></td>';
+
+          html += '<td data-label="شناسه">' +
+                  '<code style="direction:ltr;display:inline-block;font-size:0.78rem;">' +
+                  esc(c.id) + '</code></td>';
+
+          html += '<td data-label="عنوان">' +
+                  '<div style="font-weight:700;color:var(--wam-text);">' + esc(c.title || '—') + '</div>' +
+                  (c.brokerName ? '<div style="font-size:0.72rem;color:var(--wam-text-muted);">کارگزار: ' + esc(c.brokerName) + '</div>' : '') +
+                  '</td>';
+
+          html += '<td data-label="متقاضی">' + esc(c.applicantName || '—') + '</td>';
+          html += '<td data-label="نوع">' + typeLabel(c.type) + '</td>';
+          html += '<td data-label="مبلغ"><span class="wam-admin__case-row-amount">' +
+                  fmtAmount(c.amount) + '</span></td>';
+
+          html += '<td data-label="پیشرفت">' +
+                  '<div style="display:flex;align-items:center;gap:8px;">' +
+                  '<div class="wam-admin__progress"><div class="wam-admin__progress-fill" style="width:' + prog + '%;"></div></div>' +
+                  '<span style="font-size:0.72rem;color:var(--wam-text-muted);">' + prog + '%</span>' +
+                  '</div></td>';
+
+          html += '<td data-label="وضعیت">' +
+                  '<span class="wam-admin__status-pill wam-admin__status-pill--' + esc(status) + '">' +
+                  statusLabel(status) + '</span></td>';
+
+          html += '<td data-label="تاریخ">' + esc(fmtDate(c.createdAt)) + '</td>';
+
+          html += '<td class="wam-admin__table-col-actions" data-label="عملیات">' +
+                  '<div class="wam-admin__row-actions">' +
+                  '<button type="button" class="wam-admin__row-action" data-action="view" data-id="' + esc(c.id) + '" title="مشاهده">👁</button>' +
+                  '<button type="button" class="wam-admin__row-action wam-admin__row-action--gold" data-action="edit" data-id="' + esc(c.id) + '" title="ویرایش">✏</button>' +
+                  '<button type="button" class="wam-admin__row-action wam-admin__row-action--danger" data-action="delete" data-id="' + esc(c.id) + '" title="حذف">🗑</button>' +
+                  '</div></td>';
+
+          html += '</tr>';
+        }
+
+        if (tableBody) tableBody.innerHTML = html;
+
+        if (pagination) pagination.style.display = '';
+        if (pageInfo) pageInfo.textContent = state.page + ' از ' + totalPages;
+        if (prevPageBtn) prevPageBtn.disabled = state.page <= 1;
+        if (nextPageBtn) nextPageBtn.disabled = state.page >= totalPages;
+
+        updateSelectAll();
+        updateBulkBar();
+      }
+
+      function updateSelectAll() {
+        if (!selectAllChk) return;
+        var start = (state.page - 1) * PAGE_SIZE;
+        var visible = state.filtered.slice(start, start + PAGE_SIZE);
+        var allChecked = visible.length > 0 && visible.every(function (c) { return !!state.selected[c.id]; });
+        selectAllChk.checked = allChecked;
+      }
+
+      function updateBulkBar() {
+        var ids = Object.keys(state.selected).filter(function (k) { return state.selected[k]; });
+        if (bulkBar) bulkBar.classList.toggle('is-hidden', ids.length === 0);
+        if (bulkCount) bulkCount.textContent = ids.length;
+      }
+
+      // ═══════════════════════════════════
+      // عملیات
+      // ═══════════════════════════════════
+
+      function deleteCase(id) {
+        var c = state.cases.find(function (x) { return x.id === id; });
+        if (!c) return;
+        if (!confirm('پرونده «' + (c.title || c.id) + '» حذف شود؟')) return;
+        var list = state.cases.filter(function (x) { return x.id !== id; });
+        saveCases(list);
+        delete state.selected[id];
+        load();
+        emitEvent('admin:case-deleted', { id: id });
+      }
+
+      function viewCase(id) {
+        var c = state.cases.find(function (x) { return x.id === id; });
+        if (!c) return;
+        var msg = 'اطلاعات پرونده\n\n' +
+                  'شناسه: ' + c.id + '\n' +
+                  'عنوان: ' + (c.title || '—') + '\n' +
+                  'متقاضی: ' + (c.applicantName || '—') + '\n' +
+                  'کارگزار: ' + (c.brokerName || '—') + '\n' +
+                  'نوع: ' + typeLabel(c.type) + '\n' +
+                  'مبلغ: ' + fmtAmount(c.amount) + ' میلیون ریال\n' +
+                  'وضعیت: ' + statusLabel(c.status) + '\n' +
+                  'پیشرفت: ' + progressOf(c) + '%\n' +
+                  'تاریخ ایجاد: ' + fmtDate(c.createdAt);
+        alert(msg);
+
+        // همچنین می‌توانیم به case-details.html هدایت کنیم
+        // window.location.href = 'case-details.html?id=' + encodeURIComponent(id);
+      }
+
+      function editCase(id) {
+        var c = state.cases.find(function (x) { return x.id === id; });
+        if (!c) return;
+
+        var newTitle = prompt('عنوان پرونده:', c.title || '');
+        if (newTitle == null) return;
+
+        var newStatus = prompt('وضعیت (draft/pending/in_review/approved/rejected/completed):', c.status || 'pending');
+        if (newStatus == null) return;
+
+        var newAmount = prompt('مبلغ (میلیون ریال):', String(c.amount || 0));
+        if (newAmount == null) return;
+
+        var list = state.cases.slice();
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].id === id) {
+            list[i].title = newTitle.trim() || list[i].title;
+            list[i].status = newStatus.trim() || list[i].status;
+            list[i].amount = Number(newAmount) || list[i].amount;
+            list[i].updatedAt = Date.now();
+            break;
+          }
+        }
+        saveCases(list);
+        load();
+        emitEvent('admin:case-updated', { id: id });
+      }
+
+      // ═══════════════════════════════════
+      // خروجی CSV
+      // ═══════════════════════════════════
+
+      function exportCSV() {
+        var rows = [];
+        rows.push(['ID', 'Title', 'Applicant', 'Broker', 'Type', 'Amount', 'Status', 'Progress', 'CreatedAt']);
+
+        state.filtered.forEach(function (c) {
+          rows.push([
+            c.id || '',
+            (c.title || '').replace(/,/g, ' '),
+            c.applicantName || '',
+            c.brokerName || '',
+            c.type || '',
+            c.amount || 0,
+            c.status || '',
+            progressOf(c) + '%',
+            fmtDate(c.createdAt)
+          ]);
+        });
+
+        var csv = '\uFEFF' + rows.map(function (r) { return r.join(','); }).join('\n');
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'cases-' + Date.now() + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      // Sidebar
+      function openSidebar() {
+        adminRoot.classList.add('is-sidebar-open');
+        overlay.classList.add('is-open');
+      }
+      function closeSidebar() {
+        adminRoot.classList.remove('is-sidebar-open');
+        overlay.classList.remove('is-open');
+      }
+      function toggleSidebar() {
+        if (adminRoot.classList.contains('is-sidebar-open')) closeSidebar();
+        else openSidebar();
+      }
+      if (menuToggle) menuToggle.addEventListener('click', toggleSidebar);
+      if (overlay) overlay.addEventListener('click', closeSidebar);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeSidebar();
+      });
+
+      // کاربر جاری
+      function applyCurrentUser() {
+        try {
+          var raw = localStorage.getItem('wamPayCurrentUser');
+          if (!raw) return;
+          var u = JSON.parse(raw);
+          var displayName = u.name || u.username || 'مدیر';
+          var initial = displayName.trim().charAt(0).toUpperCase() || 'م';
+          if (userAvatar) userAvatar.textContent = initial;
+          if (userName) userName.textContent = displayName;
+        } catch (_) {}
+      }
+
+      // Logout
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+          if (!confirm('از حساب کاربری خارج می‌شوید؟')) return;
+          try {
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayRemember');
+          } catch (_) {}
+          emitEvent('auth:logout');
+          window.location.replace('login.html');
+        });
+      }
+
+      if (userChip) {
+        userChip.addEventListener('click', function () {
+          alert('به‌زودی: منوی کاربر');
+        });
+      }
+
+      // Export
+      if (exportBtn) {
+        exportBtn.addEventListener('click', exportCSV);
+      }
+
+      // Filters
+      if (searchInput) searchInput.addEventListener('input', applyFilters);
+      if (filterStatus) filterStatus.addEventListener('change', applyFilters);
+      if (filterType) filterType.addEventListener('change', applyFilters);
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+          searchInput.value = '';
+          filterStatus.value = '';
+          filterType.value = '';
+          applyFilters();
+        });
+      }
+
+      // Select All
+      if (selectAllChk) {
+        selectAllChk.addEventListener('change', function () {
+          var start = (state.page - 1) * PAGE_SIZE;
+          var visible = state.filtered.slice(start, start + PAGE_SIZE);
+          var on = selectAllChk.checked;
+          visible.forEach(function (c) {
+            if (on) state.selected[c.id] = true;
+            else delete state.selected[c.id];
+          });
+          render();
+        });
+      }
+
+      // Table actions
+      if (tableBody) {
+        tableBody.addEventListener('click', function (e) {
+          var target = e.target;
+
+          if (target.classList && target.classList.contains('row-check')) {
+            var cid = target.getAttribute('data-id');
+            if (target.checked) state.selected[cid] = true;
+            else delete state.selected[cid];
+            updateBulkBar();
+            updateSelectAll();
+            var row = target.closest('tr');
+            if (row) row.classList.toggle('is-selected', target.checked);
+            return;
+          }
+
+          var btn = target.closest('[data-action]');
+          if (!btn) return;
+          var action = btn.getAttribute('data-action');
+          var id = btn.getAttribute('data-id');
+
+          if (action === 'view') viewCase(id);
+          else if (action === 'edit') editCase(id);
+          else if (action === 'delete') deleteCase(id);
+        });
+      }
+
+      // Bulk actions
+      document.querySelectorAll('[data-bulk]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var action = btn.getAttribute('data-bulk');
+          var ids = Object.keys(state.selected).filter(function (k) { return state.selected[k]; });
+          if (!ids.length) return;
+
+          if (action === 'delete') {
+            if (!confirm('حذف ' + ids.length + ' پرونده انتخاب‌شده؟')) return;
+            var list = state.cases.filter(function (c) { return ids.indexOf(c.id) === -1; });
+            saveCases(list);
+            state.selected = {};
+            load();
+            emitEvent('admin:cases-bulk-deleted', { count: ids.length });
+          } else if (action === 'assign') {
+            var broker = prompt('نام کارگزار برای تخصیص:');
+            if (!broker) return;
+            var list2 = state.cases.slice();
+            list2.forEach(function (c) {
+              if (ids.indexOf(c.id) >= 0) {
+                c.brokerName = broker;
+                c.updatedAt = Date.now();
+              }
+            });
+            saveCases(list2);
+            state.selected = {};
+            load();
+            emitEvent('admin:cases-bulk-assigned', { count: ids.length, broker: broker });
+          }
+        });
+      });
+
+      // Pagination
+      if (prevPageBtn) prevPageBtn.addEventListener('click', function () {
+        if (state.page > 1) { state.page--; render(); }
+      });
+      if (nextPageBtn) nextPageBtn.addEventListener('click', function () {
+        var totalPages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+        if (state.page < totalPages) { state.page++; render(); }
+      });
+
+      // ═══════════════════════════════════
+      // Seed + init
+      // ═══════════════════════════════════
+
+      function seed() {
+        if (state.cases.length > 0) return;
+        var now = Date.now();
+        var samples = [
+          { id: 'C-' + uid().slice(2, 7), title: 'وام مسکن ۵۰۰ میلیون ریالی', applicantName: 'علی رضایی', brokerName: 'حسن کریمی', type: 'home', amount: 500, status: 'pending', progress: 30, createdAt: now - 1000 * 60 * 60 * 24 * 3 },
+          { id: 'C-' + uid().slice(2, 7), title: 'وام خودرو ۲۰۰ میلیون ریالی', applicantName: 'مریم احمدی', brokerName: 'حسن کریمی', type: 'car', amount: 200, status: 'in_review', progress: 55, createdAt: now - 1000 * 60 * 60 * 24 * 5 },
+          { id: 'C-' + uid().slice(2, 7), title: 'وام شخصی ۵۰ میلیون ریالی', applicantName: 'سعید محمدی', brokerName: 'زهرا نوری', type: 'personal', amount: 50, status: 'approved', progress: 80, createdAt: now - 1000 * 60 * 60 * 24 * 7 },
+          { id: 'C-' + uid().slice(2, 7), title: 'وام تجهیزات ۱ میلیارد ریالی', applicantName: 'شرکت آریا', brokerName: 'زهرا نوری', type: 'equipment', amount: 1000, status: 'completed', progress: 100, createdAt: now - 1000 * 60 * 60 * 24 * 10 },
+          { id: 'C-' + uid().slice(2, 7), title: 'وام کسب‌وکار ۳۰۰ میلیون ریالی', applicantName: 'فاطمه تقوی', brokerName: 'حسن کریمی', type: 'business', amount: 300, status: 'rejected', progress: 20, createdAt: now - 1000 * 60 * 60 * 24 * 2 },
+          { id: 'C-' + uid().slice(2, 7), title: 'وام مسکن ۸۰۰ میلیون ریالی', applicantName: 'رضا کاظمی', brokerName: '—', type: 'home', amount: 800, status: 'draft', progress: 10, createdAt: now - 1000 * 60 * 60 * 24 * 1 }
+        ];
+        saveCases(samples);
+        state.cases = samples;
+      }
+
+      function init() {
+        applyCurrentUser();
+        seed();
+        load();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

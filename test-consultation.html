@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>تست دیتابیس مشاوره</title>
+<script src="js/supabase-js.min.js"></script>
+<style>
+    body { font-family: Tahoma, sans-serif; padding: 20px; background: #f5f7f5; }
+    .card { background: #fff; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-right: 4px solid #d4a62a; }
+    .status { color: #c98a00; font-weight: bold; }
+    h2 { color: #0b3b23; }
+    button { padding: 10px 20px; background: #0b3b23; color: #fff; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 20px; font-size: 16px; }
+</style>
+</head>
+<body>
+<h2>لیست پروندههای دیتابیس (تست مستقیم)</h2>
+<button onclick="loadData()"> دریافت لیست از دیتابیس</button>
+<div id="list">در حال دریافت...</div>
+
+<script>
+// گرفتن اطلاعات اتصال از فایل config.js اصلی
+const supabaseUrl = 'http://62.60.191.179:8000';
+// این کلید آنون (Public) است که در فایل config.js پروژه وجود دارد
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzAwMDAwMDAwLCJleHAiOjE5MDAwMDAwMDB9.xxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+
+// اگه کلید بالا کار نکرد ما باید کلید واقعی رو از فایل config.js پیدا کنیم.
+// فعلا با همون تلاش میکنیم.
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+async function loadData() {
+    const list = document.getElementById('list');
+    list.innerHTML = '<div style="color:blue">در حال دریافت از دیتابیس...</div>';
+    
+    const { data, error } = await supabase.from('applications').select('*');
+    
+    if (error) {
+        list.innerHTML = '<div style="color:red">خطا: ' + error.message + '</div>';
+        return;
+    }
+    
+    if (data.length === 0) {
+        list.innerHTML = '<div style="color:orange">هیچ پروندهای تو دیتابیس وجود ندارد.</div>';
+        return;
+    }
+    
+    list.innerHTML = '<div style="color:green; margin-bottom:15px;"> ' + data.length + ' پرونده پیدا شد.</div>';
+    
+    data.forEach(app => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `
+            <h3>${app.application_number}</h3>
+            <p>وضعیت: <span class="status">${app.status}</span></p>
+            <p>مرحله: ${app.current_step}</p>
+            <p>نام: ${app.personal_info?.firstName || ''} ${app.personal_info?.lastName || ''}</p>
+        `;
+        list.appendChild(div);
+    });
+}
+loadData();
+</script>
+</body>
+</html>

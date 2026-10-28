@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>راه‌اندازی مدیر کل | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23; --primary-light: #1a5c3a; --primary-dark: #062416;
+    --gold: #d4a62a; --gold-light: #f0c651;
+    --text: #1a2b22; --text-muted: #6b7d73;
+    --bg: #f4f7f4; --bg-card: #ffffff; --border: #e0e8e3;
+    --error: #c0392b; --success: #1e8e4a; --warning: #e67e22; --info: #2980b9;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px; --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+    background-image:
+        radial-gradient(circle at 10% 10%, rgba(212,166,42,0.06), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(11,59,35,0.08), transparent 40%);
+    display: flex; flex-direction: column;
+}
+
+/* Header پادشاهی */
+.setup-header {
+    background: linear-gradient(135deg, #062416 0%, #0b3b23 50%, #1a5c3a 100%);
+    color: #fff; padding: 16px 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    border-bottom: 3px solid var(--gold);
+    position: sticky; top: 0; z-index: 100;
+}
+.setup-header__inner {
+    max-width: 1100px; width: 100%; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.setup-logo {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 800; font-size: 20px; color: #fff; text-decoration: none;
+}
+.setup-logo__icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 0 24px rgba(212,166,42,0.6);
+    animation: crown-pulse 2s ease-in-out infinite;
+}
+@keyframes crown-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+.setup-header__actions { display: flex; gap: 8px; align-items: center; }
+.setup-theme-btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(212,166,42,0.3);
+    background: rgba(255,255,255,0.08); color: var(--gold-light);
+    cursor: pointer; font-size: 18px; transition: var(--transition);
+}
+.setup-theme-btn:hover { background: rgba(212,166,42,0.2); }
+
+/* Main */
+.setup-main {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 40px 20px; width: 100%;
+}
+
+/* Setup Card */
+.setup-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+    max-width: 560px; width: 100%; padding: 36px 32px;
+    position: relative; overflow: hidden;
+    animation: slideUp 0.5s ease;
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.setup-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    background-size: 200% 100%;
+    animation: goldShine 3s linear infinite;
+}
+@keyframes goldShine {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.setup-card__icon {
+    width: 80px; height: 80px; margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    box-shadow: 0 12px 32px rgba(212,166,42,0.4);
+    animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+.setup-card__title {
+    font-size: 26px; font-weight: 800;
+    text-align: center; margin-bottom: 8px;
+    color: var(--text);
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.setup-card__subtitle {
+    text-align: center; color: var(--text-muted);
+    font-size: 14px; margin-bottom: 28px;
+    line-height: 1.8;
+}
+
+/* Alert */
+.setup-alert {
+    padding: 14px 18px; border-radius: var(--radius-sm);
+    font-size: 13px; margin-bottom: 20px;
+    display: flex; gap: 10px; align-items: flex-start;
+    line-height: 1.8;
+}
+.setup-alert--info {
+    background: rgba(41,128,185,0.08); color: var(--info);
+    border-right: 4px solid var(--info);
+}
+.setup-alert--warning {
+    background: rgba(230,126,34,0.10); color: var(--warning);
+    border-right: 4px solid var(--warning);
+}
+.setup-alert--error {
+    background: rgba(192,57,43,0.08); color: var(--error);
+    border-right: 4px solid var(--error);
+}
+.setup-alert--success {
+    background: rgba(30,142,74,0.08); color: var(--success);
+    border-right: 4px solid var(--success);
+}
+.setup-alert--gold {
+    background: linear-gradient(135deg, rgba(212,166,42,0.12), rgba(11,59,35,0.05));
+    color: var(--primary);
+    border-right: 4px solid var(--gold);
+}
+[data-theme="dark"] .setup-alert--gold { color: var(--gold-light); }
+
+/* Form */
+.setup-field {
+    display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px;
+}
+.setup-label {
+    font-size: 14px; font-weight: 700; color: var(--text);
+    display: flex; align-items: center; gap: 6px;
+}
+.setup-label__required { color: var(--error); margin-right: 3px; }
+.setup-input-wrap { position: relative; }
+.setup-input {
+    width: 100%; padding: 14px 16px;
+    border-radius: var(--radius-sm); border: 2px solid var(--border);
+    background: var(--bg); color: var(--text);
+    font-family: inherit; font-size: 15px;
+    transition: var(--transition);
+}
+.setup-input:focus {
+    outline: none; border-color: var(--gold);
+    background: var(--bg-card);
+    box-shadow: 0 0 0 4px rgba(212,166,42,0.15);
+}
+.setup-input--error { border-color: var(--error); }
+.setup-input--ltr {
+    direction: ltr; text-align: left;
+    font-family: monospace; letter-spacing: 1px;
+}
+.setup-hint { font-size: 12px; color: var(--text-muted); }
+.setup-error {
+    font-size: 12px; color: var(--error); font-weight: 700;
+    display: none; align-items: center; gap: 4px;
+}
+.setup-error--show { display: flex; }
+
+/* Password toggle */
+.setup-pwd-toggle {
+    position: absolute; left: 12px; top: 50%;
+    transform: translateY(-50%);
+    background: transparent; border: none;
+    color: var(--text-muted); cursor: pointer;
+    font-size: 18px; padding: 8px;
+    transition: var(--transition);
+}
+.setup-pwd-toggle:hover { color: var(--gold); }
+
+/* Password strength */
+.pwd-strength {
+    display: flex; gap: 4px; margin-top: 6px;
+}
+.pwd-strength__bar {
+    flex: 1; height: 4px; border-radius: 2px;
+    background: var(--border);
+    transition: var(--transition);
+}
+.pwd-strength__bar--weak { background: var(--error); }
+.pwd-strength__bar--medium { background: var(--warning); }
+.pwd-strength__bar--strong { background: var(--success); }
+.pwd-strength__label {
+    font-size: 11px; font-weight: 700;
+    margin-top: 4px; text-align: left;
+}
+
+/* Install code box */
+.install-code-box {
+    background: linear-gradient(135deg, rgba(212,166,42,0.10), rgba(11,59,35,0.05));
+    border: 2px solid rgba(212,166,42,0.4);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px; margin-bottom: 20px;
+}
+.install-code-box__title {
+    font-size: 13px; font-weight: 800;
+    color: var(--primary); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+}
+[data-theme="dark"] .install-code-box__title { color: var(--gold-light); }
+.install-code-box__desc {
+    font-size: 12px; color: var(--text-muted);
+    line-height: 1.8; margin-bottom: 10px;
+}
+.install-code-box__code {
+    background: var(--bg-card);
+    border: 1.5px dashed var(--gold);
+    border-radius: 6px;
+    padding: 12px 16px; margin-top: 10px;
+    text-align: center;
+    font-family: monospace; font-size: 16px;
+    font-weight: 800; letter-spacing: 2px;
+    color: var(--gold);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    user-select: all;
+}
+.install-code-box__code:hover {
+    background: rgba(212,166,42,0.08);
+    border-style: solid;
+}
+.install-code-box__copy {
+    position: absolute; top: 8px; left: 8px;
+    background: var(--gold);
+    color: var(--primary-dark);
+    border: none; border-radius: 6px;
+    padding: 3px 8px;
+    font-family: inherit; font-size: 10px;
+    font-weight: 800; cursor: pointer;
+}
+
+/* Setup Lock */
+.setup-lock {
+    text-align: center; padding: 40px 20px;
+}
+.setup-lock__icon {
+    font-size: 80px; margin-bottom: 20px;
+    display: inline-block;
+    filter: drop-shadow(0 0 20px rgba(192,57,43,0.4));
+    animation: lock-shake 0.6s ease-in-out;
+}
+@keyframes lock-shake {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-8deg); }
+    40% { transform: rotate(8deg); }
+    60% { transform: rotate(-6deg); }
+    80% { transform: rotate(6deg); }
+}
+.setup-lock__title {
+    font-size: 22px; font-weight: 800;
+    color: var(--error); margin-bottom: 10px;
+}
+.setup-lock__desc {
+    font-size: 14px; color: var(--text-muted);
+    line-height: 1.9; margin-bottom: 24px;
+    max-width: 400px; margin-left: auto; margin-right: auto;
+}
+
+/* Buttons */
+.setup-btn {
+    width: 100%; padding: 15px 24px;
+    border-radius: var(--radius-sm); border: none;
+    font-family: inherit; font-size: 15px; font-weight: 800;
+    cursor: pointer; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-bottom: 10px;
+    text-decoration: none;
+}
+.setup-btn--gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--primary-dark);
+    box-shadow: 0 6px 20px rgba(212,166,42,0.35);
+}
+.setup-btn--gold:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(212,166,42,0.5);
+}
+.setup-btn--primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(11,59,35,0.25);
+}
+.setup-btn--primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(11,59,35,0.35);
+}
+.setup-btn--ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border);
+    margin-bottom: 0;
+}
+.setup-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.setup-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.setup-btn__spinner {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-top-color: var(--primary-dark);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: none;
+}
+.setup-btn--loading .setup-btn__spinner { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Success Screen */
+.setup-success {
+    text-align: center; padding: 30px 20px;
+}
+.setup-success__icon {
+    width: 100px; height: 100px; margin: 0 auto 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--success), #2ecc71);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px; color: #fff;
+    box-shadow: 0 12px 40px rgba(30,142,74,0.4);
+    animation: pop 0.6s cubic-bezier(0.68,-0.55,0.27,1.55);
+}
+@keyframes pop {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+.setup-success__title {
+    font-size: 24px; font-weight: 800;
+    color: var(--success); margin-bottom: 8px;
+}
+.setup-success__desc {
+    color: var(--text-muted); margin-bottom: 24px;
+    font-size: 14px; line-height: 1.9;
+}
+.setup-summary {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 18px; text-align: right;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+.setup-summary__row {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px dashed var(--border);
+    font-size: 14px;
+}
+.setup-summary__row:last-child { border-bottom: none; }
+.setup-summary__row span:first-child { color: var(--text-muted); }
+.setup-summary__row span:last-child {
+    font-weight: 800; font-family: monospace;
+    direction: ltr; text-align: right;
+}
+
+/* Footer */
+.setup-footer {
+    text-align: center; padding: 20px;
+    color: var(--text-muted); font-size: 12px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-card);
+}
+.setup-footer__row {
+    display: flex; justify-content: center;
+    align-items: center; gap: 8px; flex-wrap: wrap;
+}
+
+/* Toast */
+.setup-toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 24px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 9999; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px;
+    max-width: 90%; text-align: center;
+}
+.setup-toast--show { transform: translateX(-50%) translateY(0); }
+.setup-toast--error { background: var(--error); }
+.setup-toast--success { background: var(--success); }
+
+/* Responsive */
+@media (max-width: 640px) {
+    .setup-main { padding: 20px 14px; }
+    .setup-card { padding: 24px 20px; }
+    .setup-card__title { font-size: 22px; }
+    .setup-card__icon { width: 64px; height: 64px; font-size: 32px; }
+    .setup-header__actions { gap: 4px; }
+    .setup-logo { font-size: 16px; }
+    .setup-logo__icon { width: 38px; height: 38px; font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<header class="setup-header">
+    <div class="setup-header__inner">
+        <a href="index.html" class="setup-logo">
+            <div class="setup-logo__icon">👑</div>
+            <span>راه‌اندازی وام پی</span>
+        </a>
+        <div class="setup-header__actions">
+            <button class="setup-theme-btn" id="themeBtn">🌙</button>
+        </div>
+    </div>
+</header>
+
+<main class="setup-main" id="mainContainer">
+    <!-- محتوا با JS پر می‌شود -->
+</main>
+
+<footer class="setup-footer">
+    <div class="setup-footer__row">
+        <span>© ۱۴۰۵ — سامانه‌ی هوشمند تسهیلات وام پی</span>
+        <span>•</span>
+        <span id="versionInfo">نسخه‌ی راه‌اندازی v1.0</span>
+    </div>
+</footer>
+
+<div class="setup-toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<script>
+/* ============================================================
+   WAM PAY — Setup Admin Script v1.0
+   صفحه‌ی راه‌اندازی اولیه‌ی مدیر کل
+   ============================================================ */
+(function () {
+    'use strict';
+
+    // ===== Config =====
+    const CONFIG = {
+        installCode: 'WAMPAY-SETUP-2026',
+        adminId: 'super_admin_001',
+        minPasswordLength: 8
+    };
+
+    // ===== State =====
+    const state = {
+        hasExistingAdmin: false,
+        currentUser: null,
+        formData: {
+            fullName: '',
+            mobile: '',
+            password: '',
+            passwordConfirm: '',
+            installCode: ''
+        },
+        completed: false
+    };
+
+    // ===== Helpers =====
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+
+    function nowISO() { return new Date().toISOString(); }
+
+    function formatShamsiDate(iso) {
+        try {
+            const d = new Date(iso);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            return `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())} — ${fa(d.getHours())}:${fa(d.getMinutes())}`;
+        } catch { return '—'; }
+    }
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'setup-toast setup-toast--show';
+        if (type === 'error') el.classList.add('setup-toast--error');
+        if (type === 'success') el.classList.add('setup-toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('setup-toast--show'), 3500);
+    }
+
+    // ===== Check Existing Admin =====
+    function checkExistingAdmin() {
+        try {
+            const admins = JSON.parse(localStorage.getItem('wamPayAdmins') || '[]');
+            state.hasExistingAdmin = admins.some(a => a.role === 'super_admin' && a.status === 'active');
+            return state.hasExistingAdmin;
+        } catch (e) {
+            console.error('Check admin error:', e);
+            return false;
+        }
+    }
+
+    // ===== Hash Password =====
+    async function hashPassword(password) {
+        try {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password + 'wampay_salt_v1');
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        } catch (e) {
+            // Fallback
+            console.warn('SHA-256 unavailable, using simple hash');
+            let h = 0;
+            const str = password + 'wampay_salt_v1';
+            for (let i = 0; i < str.length; i++) {
+                h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+            }
+            return 'simple_' + Math.abs(h).toString(16);
+        }
+    }
+
+    // ===== Validators =====
+    const isValidMobile = (v) => /^09\d{9}$/.test(v);
+    const isValidName = (v) => v.trim().length >= 3;
+
+    function checkPasswordStrength(pwd) {
+        let score = 0;
+        if (pwd.length >= 8) score++;
+        if (pwd.length >= 12) score++;
+        if (/[a-z]/.test(pwd) && /[A-Z]/.test(pwd)) score++;
+        if (/\d/.test(pwd)) score++;
+        if (/[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/`~]/.test(pwd)) score++;
+
+        if (score <= 2) return { level: 'weak', label: 'ضعیف', color: 'var(--error)' };
+        if (score <= 3) return { level: 'medium', label: 'متوسط', color: 'var(--warning)' };
+        return { level: 'strong', label: 'قوی', color: 'var(--success)' };
+    }
+
+    function showError(id, show = true) {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('setup-error--show', show);
+    }
+
+    function markInputError(id, hasError) {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('setup-input--error', hasError);
+    }
+
+    // ===== Render Locked Screen =====
+    function renderLockedScreen() {
+        $('#mainContainer').innerHTML = `
+            <div class="setup-card">
+                <div class="setup-lock">
+                    <div class="setup-lock__icon">🔒</div>
+                    <div class="setup-lock__title">سیستم قبلاً راه‌اندازی شده</div>
+                    <div class="setup-lock__desc">
+                        یک مدیر کل در سامانه تعریف شده است. برای امنیت، صفحه‌ی
+                        راه‌اندازی بعد از اولین اجرا غیرفعال می‌شود.
+                    </div>
+
+                    <div class="setup-alert setup-alert--gold" style="text-align:right;margin-bottom:20px;">
+                        <span>💡</span>
+                        <span>
+                            <strong>نکته:</strong> اگر می‌خواهید مدیر کل را از ابتدا تعریف کنید،
+                            باید ابتدا کلیدهای <code style="font-family:monospace;background:rgba(0,0,0,0.06);padding:2px 6px;border-radius:4px;">wamPayAdmins</code>
+                            و <code style="font-family:monospace;background:rgba(0,0,0,0.06);padding:2px 6px;border-radius:4px;">wamPayCurrentUser</code>
+                            را از LocalStorage پاک کنید (از طریق پنل Developer یا Dev Tools).
+                        </span>
+                    </div>
+
+                    <a href="login.html" class="setup-btn setup-btn--primary" style="text-decoration:none;">
+                        <span>🚀 ورود به سامانه</span>
+                    </a>
+
+                    <button class="setup-btn setup-btn--ghost" id="resetLockBtn" style="margin-top:10px;">
+                        🔧 بازنشانی امن (فقط برای تست)
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Reset lock button
+        $('#resetLockBtn')?.addEventListener('click', () => {
+            if (!confirm('⚠️ این عملیات تمام ادمین‌های موجود را حذف می‌کند.\n\nآیا مطمئنید؟')) return;
+            localStorage.removeItem('wamPayAdmins');
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+            toast('✅ ادمین‌ها حذف شدند، در حال راه‌اندازی مجدد...', 'success');
+            setTimeout(() => window.location.reload(), 1200);
+        });
+    }
+
+    // ===== Render Setup Form =====
+    function renderSetupForm() {
+        $('#mainContainer').innerHTML = `
+            <div class="setup-card">
+                <div class="setup-card__icon">👑</div>
+                <h1 class="setup-card__title">راه‌اندازی مدیر کل</h1>
+                <p class="setup-card__subtitle">
+                    این صفحه فقط یک بار برای تعریف اولین مدیر کل اجرا می‌شود.
+                    اطلاعات را با دقت وارد کنید.
+                </p>
+
+                <!-- Info Alert -->
+                <div class="setup-alert setup-alert--info">
+                    <span>ℹ️</span>
+                    <span>
+                        <strong>توجه:</strong> پس از تکمیل این فرم، صفحه‌ی راه‌اندازی
+                        به‌طور خودکار <strong>قفل</strong> می‌شود و فقط از طریق
+                        <code style="font-family:monospace;background:rgba(0,0,0,0.06);padding:2px 6px;border-radius:4px;">login.html</code>
+                        می‌توانید وارد شوید.
+                    </span>
+                </div>
+
+                <!-- Install Code -->
+                <div class="install-code-box">
+                    <div class="install-code-box__title">
+                        <span>🔐</span>
+                        <span>کد امنیتی نصب</span>
+                    </div>
+                    <div class="install-code-box__desc">
+                        برای جلوگیری از اجرای ناخواسته، کد امنیتی زیر را یادداشت کنید
+                        و در فیلد «کد نصب» وارد نمایید.
+                    </div>
+                    <div class="install-code-box__code" id="installCodeDisplay" title="برای کپی کلیک کنید">
+                        ${CONFIG.installCode}
+                        <button class="install-code-box__copy" id="copyCodeBtn">📋 کپی</button>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form id="setupForm" autocomplete="off">
+
+                    <!-- Full Name -->
+                    <div class="setup-field">
+                        <label class="setup-label">
+                            <span>👤</span>
+                            <span>نام و نام خانوادگی <span class="setup-label__required">*</span></span>
+                        </label>
+                        <input type="text" id="fullName" class="setup-input"
+                               placeholder="مثال: علی رضایی" autocomplete="off">
+                        <div class="setup-error" id="fullNameError">
+                            <span>⚠️</span>
+                            <span>نام و نام خانوادگی باید حداقل ۳ حرف باشد</span>
+                        </div>
+                    </div>
+
+                    <!-- Mobile -->
+                    <div class="setup-field">
+                        <label class="setup-label">
+                            <span>📱</span>
+                            <span>شماره موبایل <span class="setup-label__required">*</span></span>
+                        </label>
+                        <input type="tel" id="mobile" class="setup-input setup-input--ltr"
+                               placeholder="09123456789" maxlength="11"
+                               inputmode="numeric" autocomplete="off" dir="ltr">
+                        <div class="setup-hint">شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود</div>
+                        <div class="setup-error" id="mobileError">
+                            <span>⚠️</span>
+                            <span>شماره موبایل معتبر نیست</span>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="setup-field">
+                        <label class="setup-label">
+                            <span>🔑</span>
+                            <span>رمز عبور <span class="setup-label__required">*</span></span>
+                        </label>
+                        <div class="setup-input-wrap">
+                            <input type="password" id="password" class="setup-input setup-input--ltr"
+                                   placeholder="حداقل ۸ کاراکتر" autocomplete="new-password" dir="ltr">
+                            <button type="button" class="setup-pwd-toggle" id="pwdToggle" tabindex="-1">👁️</button>
+                        </div>
+                        <div class="pwd-strength" id="pwdStrength" style="display:none;">
+                            <div class="pwd-strength__bar"></div>
+                            <div class="pwd-strength__bar"></div>
+                            <div class="pwd-strength__bar"></div>
+                            <div class="pwd-strength__bar"></div>
+                        </div>
+                        <div class="pwd-strength__label" id="pwdStrengthLabel" style="display:none;"></div>
+                        <div class="setup-hint">ترکیبی از حروف بزرگ، کوچک، عدد و نماد توصیه می‌شود</div>
+                        <div class="setup-error" id="passwordError">
+                            <span>⚠️</span>
+                            <span>رمز عبور باید حداقل ۸ کاراکتر باشد</span>
+                        </div>
+                    </div>
+
+                    <!-- Password Confirm -->
+                    <div class="setup-field">
+                        <label class="setup-label">
+                            <span>🔐</span>
+                            <span>تکرار رمز عبور <span class="setup-label__required">*</span></span>
+                        </label>
+                        <input type="password" id="passwordConfirm" class="setup-input setup-input--ltr"
+                               placeholder="رمز عبور را تکرار کنید" autocomplete="new-password" dir="ltr">
+                        <div class="setup-error" id="passwordConfirmError">
+                            <span>⚠️</span>
+                            <span>رمز عبور و تکرار آن یکسان نیستند</span>
+                        </div>
+                    </div>
+
+                    <!-- Install Code Input -->
+                    <div class="setup-field">
+                        <label class="setup-label">
+                            <span>🔐</span>
+                            <span>کد نصب <span class="setup-label__required">*</span></span>
+                        </label>
+                        <input type="text" id="installCode" class="setup-input setup-input--ltr"
+                               placeholder="کد امنیتی نصب" autocomplete="off" dir="ltr">
+                        <div class="setup-error" id="installCodeError">
+                            <span>⚠️</span>
+                            <span>کد نصب صحیح نیست</span>
+                        </div>
+                    </div>
+
+                    <!-- Warning -->
+                    <div class="setup-alert setup-alert--warning">
+                        <span>⚠️</span>
+                        <span>
+                            <strong>هشدار امنیتی:</strong> اطلاعات ورود را در جای امنی نگهداری کنید.
+                            در صورت فراموشی رمز، هیچ راه بازیابی خودکاری وجود ندارد و باید
+                            از طریق Console مرورگر بازیابی کنید.
+                        </span>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="setup-btn setup-btn--gold" id="submitBtn">
+                        <span class="setup-btn__spinner"></span>
+                        <span>👑 ایجاد مدیر کل و راه‌اندازی سامانه</span>
+                    </button>
+                </form>
+            </div>
+        `;
+
+        // Attach form events
+        attachFormEvents();
+    }
+
+    // ===== Attach Form Events =====
+    function attachFormEvents() {
+        // Copy install code
+        $('#copyCodeBtn')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            copyToClipboard(CONFIG.installCode);
+        });
+
+        $('#installCodeDisplay')?.addEventListener('click', () => {
+            copyToClipboard(CONFIG.installCode);
+        });
+
+        // Password toggle
+        $('#pwdToggle')?.addEventListener('click', () => {
+            const inp = $('#password');
+            const isPwd = inp.type === 'password';
+            inp.type = isPwd ? 'text' : 'password';
+            $('#pwdToggle').textContent = isPwd ? '🙈' : '👁️';
+        });
+
+        // Password strength
+        $('#password')?.addEventListener('input', (e) => {
+            const pwd = e.target.value;
+            const strength = $('#pwdStrength');
+            const label = $('#pwdStrengthLabel');
+            if (!pwd) {
+                strength.style.display = 'none';
+                label.style.display = 'none';
+                return;
+            }
+            strength.style.display = 'flex';
+            label.style.display = 'block';
+
+            const result = checkPasswordStrength(pwd);
+            const bars = strength.querySelectorAll('.pwd-strength__bar');
+            bars.forEach((bar, i) => {
+                bar.className = 'pwd-strength__bar';
+                if (result.level === 'weak' && i < 1) bar.classList.add('pwd-strength__bar--weak');
+                else if (result.level === 'medium' && i < 2) bar.classList.add('pwd-strength__bar--medium');
+                else if (result.level === 'strong' && i < 4) bar.classList.add('pwd-strength__bar--strong');
+            });
+
+            label.textContent = `قدرت رمز: ${result.label}`;
+            label.style.color = result.color;
+        });
+
+        // Mobile formatting
+        $('#mobile')?.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11);
+        });
+
+        // Form submit
+        $('#setupForm')?.addEventListener('submit', handleSubmit);
+    }
+
+    function copyToClipboard(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => {
+                toast('✅ کد کپی شد', 'success');
+            }).catch(() => fallbackCopy(text));
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+            toast('✅ کد کپی شد', 'success');
+        } catch (e) {
+            toast('کپی نشد، دستی یادداشت کنید', 'error');
+        }
+        document.body.removeChild(ta);
+    }
+
+    // ===== Handle Submit =====
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        const fullName = $('#fullName').value.trim();
+        const mobile = $('#mobile').value.trim();
+        const password = $('#password').value;
+        const passwordConfirm = $('#passwordConfirm').value;
+        const installCode = $('#installCode').value.trim();
+
+        // Reset errors
+        ['fullNameError', 'mobileError', 'passwordError', 'passwordConfirmError', 'installCodeError'].forEach(id => showError(id, false));
+        ['fullName', 'mobile', 'password', 'passwordConfirm', 'installCode'].forEach(id => markInputError(id, false));
+
+        let ok = true;
+
+        // Validate name
+        if (!isValidName(fullName)) {
+            showError('fullNameError', true);
+            markInputError('fullName', true);
+            ok = false;
+        }
+
+        // Validate mobile
+        if (!isValidMobile(mobile)) {
+            showError('mobileError', true);
+            markInputError('mobile', true);
+            ok = false;
+        }
+
+        // Validate password
+        if (password.length < CONFIG.minPasswordLength) {
+            showError('passwordError', true);
+            markInputError('password', true);
+            ok = false;
+        }
+
+        // Validate password confirm
+        if (password !== passwordConfirm) {
+            showError('passwordConfirmError', true);
+            markInputError('passwordConfirm', true);
+            ok = false;
+        }
+
+        // Validate install code
+        if (installCode !== CONFIG.installCode) {
+            showError('installCodeError', true);
+            markInputError('installCode', true);
+            ok = false;
+        }
+
+        if (!ok) {
+            toast('لطفاً خطاها را برطرف کنید', 'error');
+            return;
+        }
+
+        // Check mobile duplicate
+        const admins = JSON.parse(localStorage.getItem('wamPayAdmins') || '[]');
+        if (admins.some(a => a.mobile === mobile)) {
+            showError('mobileError', true);
+            markInputError('mobile', true);
+            toast('این شماره موبایل قبلاً ثبت شده است', 'error');
+            return;
+        }
+
+        // Show loading
+        const btn = $('#submitBtn');
+        btn.classList.add('setup-btn--loading');
+        btn.disabled = true;
+
+        // Hash password
+        const hashedPassword = await hashPassword(password);
+
+        setTimeout(async () => {
+            try {
+                // Create super admin
+                const superAdmin = {
+                    id: CONFIG.adminId + '_' + Date.now(),
+                    mobile: mobile,
+                    name: fullName,
+                    role: 'super_admin',
+                    status: 'active',
+                    password: hashedPassword,
+                    mustChangePassword: false,
+                    autoCreated: false,
+                    createdBy: 'setup_wizard',
+                    createdAt: nowISO(),
+                    updatedAt: nowISO(),
+                    lastLoginAt: null,
+                    setupCompletedAt: nowISO(),
+                    // دسترسی‌های کامل
+                    permissions: {
+                        canViewTransactions: true,
+                        canApproveSettlement: true,
+                        canReleaseEscrow: true,
+                        canModifyFees: true,
+                        canManageAdmins: true,
+                        canManageVerifiers: true,
+                        canManageUsers: true,
+                        canReviewCasesA: true,
+                        canApproveBrokerCaseStage1: true,
+                        canApproveBrokerCaseFinal: true,
+                        canApproveBrokers: true,
+                        canVerifyLandline: true,
+                        canVerifyBankInfo: true,
+                        canViewReports: true,
+                        canExportData: true
+                    }
+                };
+
+                // Save to localStorage
+                admins.push(superAdmin);
+                localStorage.setItem('wamPayAdmins', JSON.stringify(admins));
+
+                // Log the setup
+                try {
+                    const setupLog = JSON.parse(localStorage.getItem('wamPaySetupLog') || '[]');
+                    setupLog.push({
+                        id: 'setup_' + Date.now(),
+                        action: 'super_admin_created',
+                        adminId: superAdmin.id,
+                        adminName: fullName,
+                        adminMobile: mobile,
+                        at: nowISO(),
+                        device: navigator.userAgent.slice(0, 100)
+                    });
+                    localStorage.setItem('wamPaySetupLog', JSON.stringify(setupLog));
+                } catch (e) { /* silent */ }
+
+                // Save current user (auto login)
+                const currentUser = { ...superAdmin };
+                delete currentUser.password;
+                localStorage.setItem('wamPayCurrentUser', JSON.stringify(currentUser));
+                localStorage.setItem('wamPayToken', 'tok_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10));
+
+                state.completed = true;
+                state.currentUser = currentUser;
+
+                console.log('👑 [Setup] مدیر کل ساخته شد:', currentUser);
+
+                // Show success screen
+                renderSuccessScreen(superAdmin, fullName, mobile);
+
+            } catch (err) {
+                console.error('❌ Setup error:', err);
+                btn.classList.remove('setup-btn--loading');
+                btn.disabled = false;
+                toast('خطا در راه‌اندازی، دوباره تلاش کنید', 'error');
+            }
+        }, 800);
+    }
+
+    // ===== Render Success Screen =====
+    function renderSuccessScreen(admin, fullName, mobile) {
+        $('#mainContainer').innerHTML = `
+            <div class="setup-card">
+                <div class="setup-success">
+                    <div class="setup-success__icon">🎉</div>
+                    <h1 class="setup-success__title">راه‌اندازی موفق!</h1>
+                    <p class="setup-success__desc">
+                        مدیر کل با موفقیت ایجاد شد و شما به‌طور خودکار وارد شدید.
+                        <br>در حال انتقال به داشبورد پادشاهی...
+                    </p>
+
+                    <div class="setup-summary">
+                        <div class="setup-summary__row">
+                            <span>👤 نام</span>
+                            <span style="font-family:inherit;">${fullName}</span>
+                        </div>
+                        <div class="setup-summary__row">
+                            <span>📱 موبایل</span>
+                            <span>${mobile}</span>
+                        </div>
+                        <div class="setup-summary__row">
+                            <span>🎭 نقش</span>
+                            <span style="font-family:inherit;">👑 مدیر کل</span>
+                        </div>
+                        <div class="setup-summary__row">
+                            <span>📅 تاریخ راه‌اندازی</span>
+                            <span style="font-family:inherit;">${formatShamsiDate(nowISO())}</span>
+                        </div>
+                        <div class="setup-summary__row">
+                            <span>🆔 شناسه</span>
+                            <span>${admin.id}</span>
+                        </div>
+                    </div>
+
+                    <div class="setup-alert setup-alert--gold" style="text-align:right;">
+                        <span>📌</span>
+                        <span>
+                            <strong>مهم:</strong> اطلاعات ورود خود را در جای امنی نگهداری کنید.
+                            در صورت نیاز به ورود مجدد، از صفحه‌ی
+                            <code style="font-family:monospace;background:rgba(0,0,0,0.06);padding:2px 6px;border-radius:4px;">login.html</code>
+                            استفاده کنید.
+                        </span>
+                    </div>
+
+                    <a href="admin-super-dashboard.html" class="setup-btn setup-btn--primary" style="text-decoration:none;">
+                        <span>👑 ورود به داشبورد مدیر کل</span>
+                    </a>
+
+                    <button class="setup-btn setup-btn--ghost" id="laterBtn" style="margin-top:10px;">
+                        ⏰ بعداً (بمانم در همین صفحه)
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Auto-redirect after 5 seconds
+        const redirectTimer = setTimeout(() => {
+            window.location.href = 'admin-super-dashboard.html';
+        }, 5000);
+
+        // Cancel auto-redirect
+        $('#laterBtn')?.addEventListener('click', () => {
+            clearTimeout(redirectTimer);
+            toast('خب، هر وقت آماده بودی از دکمه‌ی بالا استفاده کن', 'info');
+        });
+
+        toast('🎉 راه‌اندازی با موفقیت انجام شد', 'success');
+    }
+
+    // ===== Theme =====
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        if (!btn) return;
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light');
+                btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark');
+                btn.textContent = '☀️';
+            }
+        });
+    }
+
+    // ===== Init =====
+    function init() {
+        initTheme();
+
+        const hasAdmin = checkExistingAdmin();
+
+        if (hasAdmin) {
+            console.log('%c🔒 [Setup] سیستم قبلاً راه‌اندازی شده', 'color:#c0392b;font-weight:bold;font-size:14px;');
+            renderLockedScreen();
+        } else {
+            console.log('%c👑 [Setup] آماده‌ی راه‌اندازی مدیر کل', 'color:#d4a62a;font-weight:bold;font-size:14px;');
+            renderSetupForm();
+        }
+
+        console.log('%c🚀 WAM PAY — Setup Admin v1.0', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

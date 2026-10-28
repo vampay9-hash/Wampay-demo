@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="دفتر ثبت وام‌ها — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>دفتر وام‌ها | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       LOAN REGISTER (Shared)
+       ═══════════════════════════════════════ */
+
+    .wam-lr {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 100px;
+    }
+
+    .wam-lr__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-lr__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-lr__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+    .wam-lr__topbar-back:hover { color: var(--wam-primary-light); }
+
+    .wam-lr__topbar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-lr__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-lr__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-lr__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+    .wam-lr__icon-btn--primary {
+      background: var(--wam-primary-light);
+      color: #fff;
+    }
+    .wam-lr__icon-btn--primary:hover {
+      background: var(--wam-primary);
+      color: #fff;
+    }
+
+    .wam-lr__main {
+      padding: var(--wam-space-lg);
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Stats */
+    .wam-lr__stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-lr__stat {
+      padding: 14px 12px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      box-shadow: var(--wam-shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .wam-lr__stat-label {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wam-lr__stat-value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.1;
+    }
+
+    .wam-lr__stat-value--warning { color: var(--wam-warning-text); }
+    .wam-lr__stat-value--success { color: var(--wam-success-text); }
+    .wam-lr__stat-value--danger  { color: var(--wam-danger-text); }
+    .wam-lr__stat-value--info    { color: var(--wam-info-text); }
+    .wam-lr__stat-value--gold    { color: #7a5a00; }
+
+    .wam-lr__stat-sub {
+      font-size: 0.68rem;
+      color: var(--wam-text-muted);
+    }
+
+    /* Search */
+    .wam-lr__search {
+      position: relative;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-lr__search input {
+      width: 100%;
+      padding: 11px 42px 11px 42px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-lr__search input:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-lr__search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      color: var(--wam-text-muted);
+      pointer-events: none;
+    }
+
+    .wam-lr__search-clear {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--wam-text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: none;
+    }
+    .wam-lr__search-clear.is-visible { display: inline-flex; }
+
+    /* Filter chips */
+    .wam-lr__filters {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      margin-bottom: var(--wam-space-md);
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .wam-lr__filters::-webkit-scrollbar { display: none; }
+
+    .wam-lr__chip {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .wam-lr__chip:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary-light);
+    }
+
+    .wam-lr__chip.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-lr__chip-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .wam-lr__chip.is-active .wam-lr__chip-count {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    /* Sort row */
+    .wam-lr__sort-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-lr__sort-select {
+      padding: 5px 10px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      font-size: 0.75rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      cursor: pointer;
+    }
+
+    /* Grid */
+    .wam-lr__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--wam-space-md);
+    }
+
+    /* Card */
+    .wam-lr__card {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-right: 4px solid var(--wam-primary-light);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-md);
+      box-shadow: var(--wam-shadow-sm);
+      cursor: pointer;
+      transition: all var(--wam-t);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wam-lr__card:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .wam-lr__card--active    { border-right-color: var(--wam-info); }
+    .wam-lr__card--approved  { border-right-color: var(--wam-success); }
+    .wam-lr__card--rejected  { border-right-color: var(--wam-danger); }
+    .wam-lr__card--pending   { border-right-color: var(--wam-warning); }
+    .wam-lr__card--closed    { border-right-color: var(--wam-muted); }
+    .wam-lr__card--disbursed { border-right-color: var(--wam-gold); }
+    .wam-lr__card--overdue   { border-right-color: var(--wam-danger); }
+
+    .wam-lr__card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .wam-lr__card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-size: 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .wam-lr__card-title-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-lr__card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-lr__card-id {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+      font-family: 'Menlo', monospace;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .wam-lr__card-amount {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .wam-lr__card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 0.75rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-lr__card-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* Installment progress */
+    .wam-lr__installments {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 10px 12px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius);
+    }
+
+    .wam-lr__installments-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--wam-text);
+    }
+
+    .wam-lr__installments-num {
+      font-size: 0.82rem;
+      color: var(--wam-primary);
+      font-weight: 800;
+    }
+
+    .wam-lr__installments-bar {
+      height: 6px;
+      background: var(--wam-bg-alt);
+      border-radius: var(--wam-radius-pill);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .wam-lr__installments-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--wam-primary-light), var(--wam-gold));
+      border-radius: var(--wam-radius-pill);
+      transition: width var(--wam-t);
+    }
+
+    .wam-lr__installments-fill--overdue {
+      background: linear-gradient(90deg, var(--wam-danger), #e74c3c);
+    }
+
+    .wam-lr__installments-detail {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      color: var(--wam-text-muted);
+    }
+
+    /* Card footer */
+    .wam-lr__card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--wam-border-soft);
+      margin-top: auto;
+    }
+
+    .wam-lr__next-due {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-lr__next-due-value {
+      font-weight: 700;
+      color: var(--wam-text);
+      font-size: 0.8rem;
+    }
+
+    .wam-lr__next-due-value--overdue {
+      color: var(--wam-danger);
+    }
+
+    .wam-lr__status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.68rem;
+      font-weight: 800;
+      background: var(--wam-muted-soft);
+      color: var(--wam-text-muted);
+      white-space: nowrap;
+    }
+
+    .wam-lr__status-badge--pending   { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-lr__status-badge--approved  { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-lr__status-badge--rejected  { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+    .wam-lr__status-badge--active    { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-lr__status-badge--disbursed { background: var(--wam-gold-soft); color: #7a5a00; }
+    .wam-lr__status-badge--closed    { background: var(--wam-muted-soft); color: var(--wam-text-muted); }
+    .wam-lr__status-badge--overdue   { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+
+    /* Empty */
+    .wam-lr__empty {
+      text-align: center;
+      padding: 56px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+
+    .wam-lr__empty-icon {
+      font-size: 2.6rem;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+
+    .wam-lr__empty-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 6px;
+    }
+
+    .wam-lr__empty-text {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0 0 var(--wam-space-md);
+      line-height: 1.7;
+    }
+
+    /* Pagination */
+    .wam-lr__pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: var(--wam-space-lg);
+      flex-wrap: wrap;
+    }
+
+    .wam-lr__page-btn {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 8px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      color: var(--wam-text);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wam-lr__page-btn:hover:not(:disabled) {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary);
+    }
+
+    .wam-lr__page-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .wam-lr__page-info {
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+      margin: 0 var(--wam-space-sm);
+    }
+
+    /* Modal */
+    .wam-lr__modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 59, 35, 0.5);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: var(--wam-z-modal);
+      padding: 0;
+    }
+    .wam-lr__modal.is-open { display: flex; }
+
+    .wam-lr__modal-box {
+      background: var(--wam-bg-alt);
+      width: 100%;
+      max-width: 560px;
+      border-radius: var(--wam-radius-lg) var(--wam-radius-lg) 0 0;
+      padding: var(--wam-space-lg);
+      padding-bottom: calc(var(--wam-space-lg) + env(safe-area-inset-bottom, 0px));
+      animation: wam-slide-up 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .wam-lr__modal-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border-soft);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-lr__modal-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      flex: 1 1 auto;
+    }
+
+    .wam-lr__modal-close {
+      background: transparent;
+      border: 0;
+      font-size: 1.2rem;
+      color: var(--wam-text-muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .wam-lr__modal-close:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    .wam-lr__modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .wam-lr__modal-actions .wam-btn {
+      flex: 1 1 0;
+    }
+
+    .wam-lr__field {
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-lr__label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin-bottom: 6px;
+    }
+
+    .wam-lr__input,
+    .wam-lr__select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.87rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-lr__input:focus,
+    .wam-lr__select:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    /* Progress bar in modal */
+    .wam-lr__modal-progress {
+      height: 8px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius-pill);
+      overflow: hidden;
+      margin: 8px 0;
+    }
+
+    .wam-lr__modal-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--wam-primary-light), var(--wam-gold));
+      border-radius: var(--wam-radius-pill);
+      transition: width var(--wam-t);
+    }
+
+    /* FAB */
+    .wam-lr__fab {
+      position: fixed;
+      bottom: 24px;
+      left: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--wam-gold);
+      color: #3a2a00;
+      font-size: 1.6rem;
+      font-weight: 800;
+      border: 0;
+      box-shadow: 0 6px 18px rgba(212, 166, 42, 0.45);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--wam-t), box-shadow var(--wam-t);
+      z-index: calc(var(--wam-z-sticky) - 1);
+      font-family: inherit;
+    }
+    .wam-lr__fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 24px rgba(212, 166, 42, 0.55);
+    }
+
+    /* Toast */
+    .wam-lr__toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .wam-lr__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .wam-lr__main { padding: var(--wam-space-md); }
+      .wam-lr__grid { grid-template-columns: 1fr; }
+      .wam-lr__stats { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+      .wam-lr__stat { padding: 12px 10px; }
+      .wam-lr__stat-value { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+
+<body data-page="loan-register">
+
+  <div class="wam-lr" id="lrRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-lr__topbar">
+      <div class="wam-lr__topbar-info">
+        <a href="#" class="wam-lr__topbar-back" id="backLink">↩ بازگشت</a>
+        <h1 class="wam-lr__topbar-title">📝 دفتر وام‌ها</h1>
+      </div>
+      <div class="wam-lr__topbar-actions">
+        <button type="button" class="wam-lr__icon-btn" id="exportBtn" title="خروجی CSV">⬇</button>
+        <button type="button" class="wam-lr__icon-btn" id="refreshBtn" title="بروزرسانی">🔄</button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-lr__main">
+
+      <!-- Stats -->
+      <section class="wam-lr__stats">
+        <div class="wam-lr__stat">
+          <div class="wam-lr__stat-label">📚 کل وام‌ها</div>
+          <div class="wam-lr__stat-value" id="statTotal">۰</div>
+          <div class="wam-lr__stat-sub" id="statTotalAmount">۰ میلیون ریال</div>
+        </div>
+
+        <div class="wam-lr__stat">
+          <div class="wam-lr__stat-label">🔵 فعال</div>
+          <div class="wam-lr__stat-value wam-lr__stat-value--info" id="statActive">۰</div>
+          <div class="wam-lr__stat-sub" id="statActiveAmount">۰ میلیون ریال</div>
+        </div>
+
+        <div class="wam-lr__stat">
+          <div class="wam-lr__stat-label">⚠️ عقب‌افتاده</div>
+          <div class="wam-lr__stat-value wam-lr__stat-value--danger" id="statOverdue">۰</div>
+          <div class="wam-lr__stat-sub" id="statOverdueAmount">۰ میلیون ریال</div>
+        </div>
+
+        <div class="wam-lr__stat">
+          <div class="wam-lr__stat-label">✓ تسویه‌شده</div>
+          <div class="wam-lr__stat-value wam-lr__stat-value--success" id="statClosed">۰</div>
+          <div class="wam-lr__stat-sub" id="statClosedAmount">۰ میلیون ریال</div>
+        </div>
+
+        <div class="wam-lr__stat">
+          <div class="wam-lr__stat-label">💰 مانده کل</div>
+          <div class="wam-lr__stat-value wam-lr__stat-value--gold" id="statRemaining">۰</div>
+          <div class="wam-lr__stat-sub">میلیون ریال</div>
+        </div>
+      </section>
+
+      <!-- Search -->
+      <div class="wam-lr__search">
+        <input type="text" id="searchInput" placeholder="جستجوی عنوان، شناسه، متقاضی، کارگزار...">
+        <span class="wam-lr__search-icon">🔍</span>
+        <button type="button" class="wam-lr__search-clear" id="searchClear" aria-label="پاک">✕</button>
+      </div>
+
+      <!-- Filters -->
+      <div class="wam-lr__filters" id="filterChips">
+        <button type="button" class="wam-lr__chip is-active" data-status="all">
+          همه <span class="wam-lr__chip-count" data-count="all">۰</span>
+        </button>
+        <button type="button" class="wam-lr__chip" data-status="pending">
+          در انتظار <span class="wam-lr__chip-count" data-count="pending">۰</span>
+        </button>
+        <button type="button" class="wam-lr__chip" data-status="approved">
+          تأییدشده <span class="wam-lr__chip-count" data-count="approved">۰</span>
+        </button>
+        <button type="button" class="wam-lr__chip" data-status="disbursed">
+          پرداخت‌شده <span class="wam-lr__chip-count" data-count="disbursed">۰</span>
+        </button>
+        <button type="button" class="wam-lr__chip" data-status="active">
+          فعال <span class="wam-lr__chip-count" data-count="active">۰</span>
+        </button>
+        <button type="button" class="wam-lr__chip" data-status="overdue">
+          عقب‌افتاده <span class="wam-lr__chip-count" data-count="overdue">۰</span>
+        </button>
+        <button type="button" class="wam-lr__chip" data-status="closed">
+          تسویه‌شده <span class="wam-lr__chip-count" data-count="closed">۰</span>
+        </button>
+        <button type="button" class="wam-lr__chip" data-status="rejected">
+          ردشده <span class="wam-lr__chip-count" data-count="rejected">۰</span>
+        </button>
+      </div>
+
+      <!-- Sort -->
+      <div class="wam-lr__sort-row">
+        <span id="resultsCount">۰ وام</span>
+        <select class="wam-lr__sort-select" id="sortSelect">
+          <option value="newest">جدیدترین</option>
+          <option value="oldest">قدیمی‌ترین</option>
+          <option value="amount_high">مبلغ: زیاد به کم</option>
+          <option value="amount_low">مبلغ: کم به زیاد</option>
+          <option value="progress">بیشترین پیشرفت</option>
+          <option value="due">نزدیک‌ترین مهلت</option>
+        </select>
+      </div>
+
+      <!-- Grid -->
+      <div class="wam-lr__grid" id="loanGrid">
+        <!-- توسط JS پر می‌شود -->
+      </div>
+
+      <!-- Empty -->
+      <div class="wam-lr__empty" id="emptyState" style="display:none;">
+        <div class="wam-lr__empty-icon">📭</div>
+        <h3 class="wam-lr__empty-title" id="emptyTitle">وامی یافت نشد</h3>
+        <p class="wam-lr__empty-text" id="emptyText">
+          با فیلترهای فعلی وامی وجود ندارد.
+        </p>
+        <a href="case-details-wizard.html" class="wam-btn wam-btn--primary">
+          ➕ ثبت وام جدید
+        </a>
+      </div>
+
+      <!-- Pagination -->
+      <div class="wam-lr__pagination" id="pagination" style="display:none;">
+        <button type="button" class="wam-lr__page-btn" id="prevPage" disabled>‹</button>
+        <span class="wam-lr__page-info" id="pageInfo">1 از 1</span>
+        <button type="button" class="wam-lr__page-btn" id="nextPage" disabled>›</button>
+      </div>
+
+    </main>
+
+    <!-- ═══ FAB ═══ -->
+    <button type="button" class="wam-lr__fab" id="fabBtn" aria-label="وام جدید">➕</button>
+
+    <!-- ═══ MODAL: پرداخت قسط ═══ -->
+    <div class="wam-lr__modal" id="paymentModal" role="dialog" aria-modal="true">
+      <div class="wam-lr__modal-box">
+
+        <div class="wam-lr__modal-head">
+          <h3 class="wam-lr__modal-title">💳 ثبت پرداخت قسط</h3>
+          <button type="button" class="wam-lr__modal-close" id="paymentModalClose" aria-label="بستن">✕</button>
+        </div>
+
+        <div id="paymentLoanInfo" style="padding:12px;background:var(--wam-bg-muted);border-radius:var(--wam-radius);margin-bottom:16px;font-size:0.85rem;line-height:1.7;"></div>
+
+        <div class="wam-lr__field">
+          <label class="wam-lr__label">پیشرفت پرداخت</label>
+          <div class="wam-lr__modal-progress">
+            <div class="wam-lr__modal-progress-fill" id="paymentProgressFill" style="width:0%;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--wam-text-muted);">
+            <span id="paymentPaidCount">۰ از ۰</span>
+            <span id="paymentRemaining">۰ باقیمانده</span>
+          </div>
+        </div>
+
+        <div class="wam-lr__field">
+          <label class="wam-lr__label" for="paymentAmount">مبلغ قسط (میلیون ریال)</label>
+          <input type="number" id="paymentAmount" class="wam-lr__input" min="0.1" step="0.1" dir="ltr">
+        </div>
+
+        <div class="wam-lr__field">
+          <label class="wam-lr__label" for="paymentDate">تاریخ پرداخت</label>
+          <input type="date" id="paymentDate" class="wam-lr__input" dir="ltr">
+        </div>
+
+        <div class="wam-lr__field">
+          <label class="wam-lr__label" for="paymentNote">توضیحات (اختیاری)</label>
+          <input type="text" id="paymentNote" class="wam-lr__input" placeholder="مثال: پرداخت از طریق کارت به کارت">
+        </div>
+
+        <div class="wam-lr__modal-actions">
+          <button type="button" class="wam-btn" id="paymentCancelBtn">انصراف</button>
+          <button type="button" class="wam-btn wam-btn--primary" id="paymentSubmitBtn">
+            💳 ثبت پرداخت
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="wam-lr__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       LOAN REGISTER CONTROLLER (Shared)
+       - لیست وام‌های ثبت‌شده از wamPayCases (approved/disbursed/active)
+       - محاسبه پیشرفت اقساط
+       - ثبت پرداخت قسط
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_CASES = 'wamPayCases';
+      var STORAGE_PAYMENTS = 'wamPayLoanPayments';
+      var PAGE_SIZE = 12;
+
+      var state = {
+        user: null,
+        all: [],
+        filtered: [],
+        payments: {},
+        status: 'all',
+        query: '',
+        sort: 'newest',
+        page: 1,
+        currentLoanId: null
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function fmtAmountFine(n) {
+        if (n == null || isNaN(n)) return '۰';
+        try {
+          return Number(n).toLocaleString('fa-IR', {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1
+          });
+        } catch (_) { return String(n); }
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = ts - Date.now();
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت';
+        return Math.round(abs / 86400000) + ' روز';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کاربر', username: 'user', role: 'applicant', id: 'user' };
+      }
+
+      function currentUserId() {
+        var u = state.user;
+        return (u && (u.id || u.username)) || 'user';
+      }
+
+      function roleOf() {
+        var u = state.user;
+        return (u && (u.role || u.userRole)) || 'applicant';
+      }
+
+      function canSeeAll() {
+        var r = roleOf();
+        return r === 'super_admin' || r === 'admin' || r === 'verifier' || r === 'broker';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function typeLabel(t) {
+        var map = {
+          home: '🏠 مسکن', car: '🚗 خودرو', personal: '👤 شخصی',
+          business: '💼 کسب‌وکار', equipment: '🏭 تجهیزات',
+          education: '🎓 تحصیلی'
+        };
+        return map[t] || t || 'وام';
+      }
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // محاسبه اقساط
+      // ═══════════════════════════════════
+
+      function calcMonthly(principal, rateYear, months) {
+        if (!principal || !months) return 0;
+        var r = (rateYear / 100) / 12;
+        var p = principal;
+        var n = months;
+        if (r === 0) return p / n;
+        var pow = Math.pow(1 + r, n);
+        return (p * r * pow) / (pow - 1);
+      }
+
+      function getLoanStatus(loan) {
+        // اگر وضعیت پرونده pending/approved/rejected باشد → همان
+        if (loan.status === 'pending') return 'pending';
+        if (loan.status === 'approved') return 'approved';
+        if (loan.status === 'rejected') return 'rejected';
+
+        // اگر completed/active → بر اساس پرداخت‌ها
+        var payments = state.payments[loan.id] || { count: 0, total: 0 };
+        var term = Number(loan.term) || 0;
+        var paidCount = payments.count || 0;
+
+        if (term > 0 && paidCount >= term) return 'closed';
+
+        // چک عقب‌افتاده
+        if (isOverdue(loan, payments)) return 'overdue';
+
+        return 'active';
+      }
+
+      function isOverdue(loan, payments) {
+        if (!loan || loan.status === 'rejected') return false;
+        var term = Number(loan.term) || 0;
+        var paidCount = (payments && payments.count) || 0;
+        if (paidCount >= term) return false;
+
+        // محاسبه تعداد قسطی که باید تا الان پرداخت شده باشد
+        var createdAt = loan.submittedAt || loan.createdAt || 0;
+        if (!createdAt) return false;
+        var monthsSince = Math.floor((Date.now() - createdAt) / (86400000 * 30));
+        if (monthsSince < 0) monthsSince = 0;
+
+        return paidCount < monthsSince;
+      }
+
+      function getProgress(loan) {
+        var payments = state.payments[loan.id] || { count: 0, total: 0 };
+        var term = Number(loan.term) || 0;
+        var paidCount = payments.count || 0;
+        if (term <= 0) return 0;
+        return Math.min(100, Math.round((paidCount / term) * 100));
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadLoans() {
+        var all = readJSON(STORAGE_CASES, []);
+        if (!Array.isArray(all)) return [];
+
+        // فیلتر: فقط پرونده‌های approved/completed/disbursed (وام‌های واقعی)
+        var loans = all.filter(function (c) {
+          if (!c) return false;
+          // فیلتر بر اساس role
+          if (!canSeeAll()) {
+            var me = currentUserId();
+            var myName = (state.user && state.user.name) || '';
+            var match = c.applicantId === me ||
+                        (c.applicantName && myName && c.applicantName === myName) ||
+                        c.brokerId === me ||
+                        (c.brokerName && myName && c.brokerName === myName);
+            if (!match) return false;
+          }
+          // فیلتر وضعیت: وام‌های در جریان
+          return c.status === 'approved' ||
+                 c.status === 'completed' ||
+                 c.status === 'pending' ||
+                 c.status === 'in_review';
+        });
+
+        return loans;
+      }
+
+      function loadPayments() {
+        var all = readJSON(STORAGE_PAYMENTS, {});
+        return all && typeof all === 'object' ? all : {};
+      }
+
+      function savePayments(p) {
+        return writeJSON(STORAGE_PAYMENTS, p);
+      }
+
+      function seedIfEmpty() {
+        var cases = readJSON(STORAGE_CASES, []);
+        var payments = readJSON(STORAGE_PAYMENTS, {});
+
+        if (Array.isArray(cases) && cases.length > 0 &&
+            payments && Object.keys(payments).length > 0) return;
+
+        // اگر هیچ وام approved/completed موجود نیست، نمونه بساز
+        var hasLoans = Array.isArray(cases) && cases.some(function (c) {
+          return c && (c.status === 'approved' || c.status === 'completed');
+        });
+
+        if (!hasLoans) {
+          var now = Date.now();
+          var samples = [
+            {
+              id: 'C-' + now.toString(36).toUpperCase().slice(-5) + 'L1',
+              title: 'وام مسکن ۵۰۰ میلیونی',
+              applicantName: 'علی رضایی',
+              applicantPhone: '09120000001',
+              type: 'home', amount: 500, term: 60, rate: 18,
+              status: 'approved', progress: 80,
+              brokerName: 'حسن کریمی',
+              submittedAt: now - 86400000 * 90,
+              createdAt: now - 86400000 * 100,
+              updatedAt: now - 86400000 * 30
+            },
+            {
+              id: 'C-' + now.toString(36).toUpperCase().slice(-5) + 'L2',
+              title: 'وام خودرو ۲۰۰ میلیونی',
+              applicantName: 'مریم احمدی',
+              applicantPhone: '09120000002',
+              type: 'car', amount: 200, term: 36, rate: 16,
+              status: 'approved', progress: 80,
+              brokerName: 'زهرا نوری',
+              submittedAt: now - 86400000 * 45,
+              createdAt: now - 86400000 * 50,
+              updatedAt: now - 86400000 * 20
+            },
+            {
+              id: 'C-' + now.toString(36).toUpperCase().slice(-5) + 'L3',
+              title: 'وام شخصی ۸۰ میلیونی',
+              applicantName: 'رضا کاظمی',
+              applicantPhone: '09120000003',
+              type: 'personal', amount: 80, term: 24, rate: 20,
+              status: 'approved', progress: 80,
+              brokerName: 'حسن کریمی',
+              submittedAt: now - 86400000 * 180,
+              createdAt: now - 86400000 * 190,
+              updatedAt: now - 86400000 * 10
+            }
+          ];
+          if (!Array.isArray(cases)) cases = [];
+          cases = cases.concat(samples);
+          writeJSON(STORAGE_CASES, cases);
+        }
+
+        // پرداخت‌های نمونه
+        if (!payments || Object.keys(payments).length === 0) {
+          var p = {};
+          // پرداخت‌های وام ۱: 5 از 60
+          var id1 = (Array.isArray(cases) && cases[cases.length - 3]) ? cases[cases.length - 3].id : 'C-L1';
+          p[id1] = { count: 5, total: 500 * 0.03, lastPaymentAt: now - 86400000 * 30, history: [] };
+          // پرداخت‌های وام ۲: 3 از 36
+          var id2 = (Array.isArray(cases) && cases[cases.length - 2]) ? cases[cases.length - 2].id : 'C-L2';
+          p[id2] = { count: 3, total: 200 * 0.03, lastPaymentAt: now - 86400000 * 20, history: [] };
+          // وام ۳: عقب‌افتاده (2 از 24 در 6 ماه)
+          var id3 = (Array.isArray(cases) && cases[cases.length - 1]) ? cases[cases.length - 1].id : 'C-L3';
+          p[id3] = { count: 2, total: 80 * 0.04, lastPaymentAt: now - 86400000 * 120, history: [] };
+
+          writeJSON(STORAGE_PAYMENTS, p);
+        }
+      }
+
+      // ═══════════════════════════════════
+      // آمار
+      // ═══════════════════════════════════
+
+      function updateStats() {
+        var list = state.all;
+        var stats = {
+          total: { count: 0, amount: 0 },
+          active: { count: 0, amount: 0 },
+          overdue: { count: 0, amount: 0 },
+          closed: { count: 0, amount: 0 },
+          remaining: 0
+        };
+        var byStatus = { all: 0, pending: 0, approved: 0, disbursed: 0, active: 0, overdue: 0, closed: 0, rejected: 0 };
+
+        list.forEach(function (loan) {
+          var amt = Number(loan.amount) || 0;
+          var st = getLoanStatus(loan);
+          stats.total.count++;
+          stats.total.amount += amt;
+          byStatus.all++;
+          if (byStatus[st] != null) byStatus[st]++;
+
+          if (st === 'active') {
+            stats.active.count++;
+            stats.active.amount += amt;
+          } else if (st === 'overdue') {
+            stats.overdue.count++;
+            stats.overdue.amount += amt;
+          } else if (st === 'closed') {
+            stats.closed.count++;
+            stats.closed.amount += amt;
+          } else if (st === 'approved') {
+            byStatus.approved++;
+          }
+
+          // مانده: مبلغ - پرداخت‌ها
+          var payments = state.payments[loan.id] || { total: 0 };
+          var paid = Number(payments.total) || 0;
+          if (st !== 'closed' && st !== 'rejected') {
+            stats.remaining += Math.max(0, amt - paid);
+          }
+        });
+
+        if ($('statTotal')) $('statTotal').textContent = toFa(stats.total.count);
+        if ($('statTotalAmount')) $('statTotalAmount').textContent = fmtAmount(stats.total.amount) + ' میلیون ریال';
+        if ($('statActive')) $('statActive').textContent = toFa(stats.active.count);
+        if ($('statActiveAmount')) $('statActiveAmount').textContent = fmtAmount(stats.active.amount) + ' میلیون ریال';
+        if ($('statOverdue')) $('statOverdue').textContent = toFa(stats.overdue.count);
+        if ($('statOverdueAmount')) $('statOverdueAmount').textContent = fmtAmount(stats.overdue.amount) + ' میلیون ریال';
+        if ($('statClosed')) $('statClosed').textContent = toFa(stats.closed.count);
+        if ($('statClosedAmount')) $('statClosedAmount').textContent = fmtAmount(stats.closed.amount) + ' میلیون ریال';
+        if ($('statRemaining')) $('statRemaining').textContent = fmtAmount(stats.remaining);
+
+        Object.keys(byStatus).forEach(function (k) {
+          var el = document.querySelector('[data-count="' + k + '"]');
+          if (el) el.textContent = toFa(byStatus[k]);
+        });
+      }
+
+      // ═══════════════════════════════════
+      // فیلتر و مرتب
+      // ═══════════════════════════════════
+
+      function applyFilters() {
+        var q = state.query.toLowerCase();
+        var st = state.status;
+
+        state.filtered = state.all.filter(function (loan) {
+          var loanStatus = getLoanStatus(loan);
+          if (st !== 'all' && loanStatus !== st) return false;
+          if (q) {
+            var hay = [
+              loan.title, loan.id, loan.applicantName,
+              loan.brokerName, loan.type
+            ].join(' ').toLowerCase();
+            if (hay.indexOf(q) < 0) return false;
+          }
+          return true;
+        });
+
+        // Sort
+        var s = state.sort;
+        state.filtered.sort(function (a, b) {
+          if (s === 'oldest') return (a.createdAt || 0) - (b.createdAt || 0);
+          if (s === 'amount_high') return (Number(b.amount) || 0) - (Number(a.amount) || 0);
+          if (s === 'amount_low') return (Number(a.amount) || 0) - (Number(b.amount) || 0);
+          if (s === 'progress') return getProgress(b) - getProgress(a);
+          if (s === 'due') {
+            var aP = state.payments[a.id] || {};
+            var bP = state.payments[b.id] || {};
+            var aCount = aP.count || 0;
+            var bCount = bP.count || 0;
+            return aCount - bCount;
+          }
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+
+        state.page = 1;
+        render();
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function render() {
+        var grid = $('loanGrid');
+        var empty = $('emptyState');
+        var pagination = $('pagination');
+        var countEl = $('resultsCount');
+
+        if (countEl) countEl.textContent = toFa(state.filtered.length) + ' وام';
+
+        if (state.filtered.length === 0) {
+          if (grid) grid.innerHTML = '';
+          if (empty) {
+            empty.style.display = '';
+            var et = $('emptyTitle');
+            var ex = $('emptyText');
+            if (state.query || state.status !== 'all') {
+              if (et) et.textContent = 'نتیجه‌ای یافت نشد';
+              if (ex) ex.textContent = 'با فیلترهای فعلی وامی وجود ندارد.';
+            } else {
+              if (et) et.textContent = 'هنوز وامی ثبت نشده';
+              if (ex) ex.textContent = 'اولین وام خود را از طریق ویزارد ثبت کنید.';
+            }
+          }
+          if (pagination) pagination.style.display = 'none';
+          return;
+        }
+
+        if (empty) empty.style.display = 'none';
+
+        var totalPages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+        if (state.page > totalPages) state.page = totalPages;
+        var start = (state.page - 1) * PAGE_SIZE;
+        var slice = state.filtered.slice(start, start + PAGE_SIZE);
+
+        var html = '';
+        slice.forEach(function (loan) {
+          html += renderCard(loan);
+        });
+        if (grid) grid.innerHTML = html;
+
+        // Bind payment buttons
+        grid.querySelectorAll('[data-act="pay"]').forEach(function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var id = btn.getAttribute('data-id');
+            openPaymentModal(id);
+          });
+        });
+
+        // Bind card click → case-details
+        grid.querySelectorAll('.wam-lr__card').forEach(function (card) {
+          card.addEventListener('click', function (e) {
+            if (e.target.closest('[data-act]')) return;
+            var id = card.getAttribute('data-id');
+            if (id) window.location.href = 'case-details.html?id=' + encodeURIComponent(id);
+          });
+        });
+
+        if (pagination) pagination.style.display = '';
+        if ($('pageInfo')) $('pageInfo').textContent = toFa(state.page) + ' از ' + toFa(totalPages);
+        if ($('prevPage')) $('prevPage').disabled = state.page <= 1;
+        if ($('nextPage')) $('nextPage').disabled = state.page >= totalPages;
+      }
+
+      function renderCard(loan) {
+        var st = getLoanStatus(loan);
+        var progress = getProgress(loan);
+        var payments = state.payments[loan.id] || { count: 0, total: 0 };
+        var term = Number(loan.term) || 0;
+        var paidCount = payments.count || 0;
+        var remaining = Math.max(0, term - paidCount);
+        var monthly = calcMonthly(loan.amount, loan.rate, loan.term);
+
+        var statusLabelMap = {
+          pending: 'در انتظار',
+          approved: 'تأییدشده',
+          disbursed: 'پرداخت‌شده',
+          active: 'فعال',
+          overdue: 'عقب‌افتاده',
+          closed: 'تسویه‌شده',
+          rejected: 'ردشده'
+        };
+
+        // تاریخ قسط بعدی
+        var nextDueDate = '';
+        var nextDueTs = null;
+        if (st === 'active' || st === 'overdue' || st === 'disbursed') {
+          var lastPaymentAt = payments.lastPaymentAt || (loan.submittedAt || loan.createdAt);
+          nextDueTs = lastPaymentAt + 86400000 * 30;
+          nextDueDate = fmtDate(nextDueTs);
+        }
+
+        var isOverdueNow = st === 'overdue';
+        var nextDueCls = 'wam-lr__next-due-value' + (isOverdueNow ? ' wam-lr__next-due-value--overdue' : '');
+
+        var nextDueBlock = '';
+        if (nextDueTs) {
+          nextDueBlock = '' +
+            '<div class="wam-lr__next-due">' +
+              '<span>' + (isOverdueNow ? '⚠️ عقب‌افتاده' : '⏰ قسط بعدی') + '</span>' +
+              '<span class="' + nextDueCls + '">' + nextDueDate + '</span>' +
+            '</div>';
+        }
+
+        return '' +
+          '<div class="wam-lr__card wam-lr__card--' + esc(st) + '" data-id="' + esc(loan.id) + '">' +
+            '<div class="wam-lr__card-head">' +
+              '<div class="wam-lr__card-icon">' + (typeLabel(loan.type).split(' ')[0] || '📁') + '</div>' +
+              '<div class="wam-lr__card-title-wrap">' +
+                '<p class="wam-lr__card-title">' + esc(loan.title || 'وام بدون عنوان') + '</p>' +
+                '<div class="wam-lr__card-id">' + esc(loan.id) + '</div>' +
+              '</div>' +
+              '<div class="wam-lr__card-amount">' + fmtAmount(loan.amount) + '</div>' +
+            '</div>' +
+
+            '<div class="wam-lr__card-meta">' +
+              (loan.applicantName ? '<span class="wam-lr__card-meta-item">👤 ' + esc(loan.applicantName) + '</span>' : '') +
+              (loan.brokerName ? '<span class="wam-lr__card-meta-item">💼 ' + esc(loan.brokerName) + '</span>' : '') +
+            '</div>' +
+
+            '<div class="wam-lr__installments">' +
+              '<div class="wam-lr__installments-head">' +
+                '<span>اقساط پرداخت‌شده</span>' +
+                '<span class="wam-lr__installments-num">' + toFa(paidCount) + ' از ' + toFa(term) + '</span>' +
+              '</div>' +
+              '<div class="wam-lr__installments-bar">' +
+                '<div class="wam-lr__installments-fill' + (isOverdueNow ? ' wam-lr__installments-fill--overdue' : '') + '" ' +
+                'style="width:' + progress + '%;"></div>' +
+              '</div>' +
+              '<div class="wam-lr__installments-detail">' +
+                '<span>ماهانه: ' + fmtAmount(monthly) + ' م.ر</span>' +
+                '<span>' + toFa(remaining) + ' باقی‌مانده</span>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="wam-lr__card-footer">' +
+              (nextDueBlock || '<div class="wam-lr__next-due"><span>وضعیت</span><span class="wam-lr__next-due-value">' + statusLabelMap[st] + '</span></div>') +
+              '<button type="button" class="wam-btn wam-btn--primary wam-btn--sm" data-act="pay" data-id="' + esc(loan.id) + '">' +
+                (st === 'closed' ? '👁 مشاهده' : '💳 پرداخت') +
+              '</button>' +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // Modal پرداخت
+      // ═══════════════════════════════════
+
+      function openPaymentModal(loanId) {
+        var loan = state.all.find(function (l) { return l.id === loanId; });
+        if (!loan) return;
+
+        state.currentLoanId = loanId;
+        var payments = state.payments[loanId] || { count: 0, total: 0 };
+        var term = Number(loan.term) || 0;
+        var paidCount = payments.count || 0;
+        var progress = getProgress(loan);
+        var monthly = calcMonthly(loan.amount, loan.rate, loan.term);
+
+        if ($('paymentLoanInfo')) {
+          $('paymentLoanInfo').innerHTML =
+            '<div><strong>' + esc(loan.title || 'وام') + '</strong></div>' +
+            '<div style="color:var(--wam-text-muted);font-size:0.78rem;margin-top:4px;">' +
+              'شناسه: ' + esc(loan.id) + ' — متقاضی: ' + esc(loan.applicantName || '—') +
+            '</div>' +
+            '<div style="color:var(--wam-text-muted);font-size:0.78rem;margin-top:2px;">' +
+              'مبلغ کل: ' + fmtAmount(loan.amount) + ' م.ر — مدت: ' + toFa(term) + ' ماه — قسط: ' + fmtAmount(monthly) + ' م.ر' +
+            '</div>';
+        }
+
+        if ($('paymentProgressFill')) $('paymentProgressFill').style.width = progress + '%';
+        if ($('paymentPaidCount')) $('paymentPaidCount').textContent = toFa(paidCount) + ' از ' + toFa(term);
+        if ($('paymentRemaining')) $('paymentRemaining').textContent = toFa(term - paidCount) + ' باقی‌مانده';
+        if ($('paymentAmount')) $('paymentAmount').value = monthly ? monthly.toFixed(1) : '';
+
+        // تاریخ امروز پیش‌فرض
+        if ($('paymentDate')) {
+          var today = new Date();
+          var iso = today.toISOString().slice(0, 10);
+          $('paymentDate').value = iso;
+        }
+        if ($('paymentNote')) $('paymentNote').value = '';
+
+        var m = $('paymentModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('paymentAmount')) $('paymentAmount').focus(); }, 150);
+      }
+
+      function closePaymentModal() {
+        var m = $('paymentModal');
+        if (m) m.classList.remove('is-open');
+        state.currentLoanId = null;
+      }
+
+      function submitPayment() {
+        var id = state.currentLoanId;
+        if (!id) return;
+
+        var loan = state.all.find(function (l) { return l.id === id; });
+        if (!loan) return;
+
+        var amount = parseFloat(($('paymentAmount') || {}).value) || 0;
+        var dateStr = ($('paymentDate') || {}).value || '';
+        var note = (($('paymentNote') || {}).value || '').trim();
+
+        if (amount <= 0) {
+          showToast('مبلغ پرداخت معتبر نیست.');
+          return;
+        }
+
+        var payments = state.payments[id] || { count: 0, total: 0, history: [] };
+        payments.count = (payments.count || 0) + 1;
+        payments.total = (Number(payments.total) || 0) + amount;
+        payments.lastPaymentAt = dateStr ? new Date(dateStr).getTime() : Date.now();
+        if (!Array.isArray(payments.history)) payments.history = [];
+        payments.history.push({
+          at: payments.lastPaymentAt,
+          amount: amount,
+          note: note,
+          by: state.user.name || state.user.username || 'کاربر'
+        });
+
+        state.payments[id] = payments;
+
+        if (!savePayments(state.payments)) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        emitEvent('loan:payment-registered', {
+          loanId: id,
+          amount: amount,
+          count: payments.count
+        });
+
+        closePaymentModal();
+        state.all = loadLoans();
+        state.payments = loadPayments();
+        updateStats();
+        applyFilters();
+
+        showToast('✓ پرداخت قسط ثبت شد');
+      }
+
+      // ═══════════════════════════════════
+      // CSV Export
+      // ═══════════════════════════════════
+
+      function exportCSV() {
+        var rows = [];
+        rows.push(['ID', 'Title', 'Applicant', 'Broker', 'Type', 'Amount', 'Term', 'Rate', 'PaidCount', 'PaidTotal', 'Status', 'Progress']);
+
+        state.filtered.forEach(function (loan) {
+          var p = state.payments[loan.id] || {};
+          rows.push([
+            loan.id || '',
+            (loan.title || '').replace(/,/g, ' '),
+            loan.applicantName || '',
+            loan.brokerName || '',
+            loan.type || '',
+            loan.amount || 0,
+            loan.term || 0,
+            loan.rate || 0,
+            p.count || 0,
+            p.total || 0,
+            getLoanStatus(loan),
+            getProgress(loan) + '%'
+          ]);
+        });
+
+        var csv = '\uFEFF' + rows.map(function (r) { return r.join(','); }).join('\n');
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'loans-' + Date.now() + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+
+        showToast('✓ خروجی CSV دانلود شد');
+        emitEvent('loan-register:exported', { count: state.filtered.length });
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Search
+        var input = $('searchInput');
+        var clearBtn = $('searchClear');
+        if (input) {
+          input.addEventListener('input', function () {
+            state.query = input.value || '';
+            if (clearBtn) clearBtn.classList.toggle('is-visible', state.query.length > 0);
+            applyFilters();
+          });
+        }
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function () {
+            if (input) input.value = '';
+            state.query = '';
+            clearBtn.classList.remove('is-visible');
+            applyFilters();
+          });
+        }
+
+        // Filter chips
+        $$('.wam-lr__chip').forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            $$('.wam-lr__chip').forEach(function (x) { x.classList.remove('is-active'); });
+            chip.classList.add('is-active');
+            state.status = chip.getAttribute('data-status') || 'all';
+            applyFilters();
+          });
+        });
+
+        // Sort
+        var sortSelect = $('sortSelect');
+        if (sortSelect) {
+          sortSelect.addEventListener('change', function () {
+            state.sort = sortSelect.value;
+            applyFilters();
+          });
+        }
+
+        // Refresh
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            state.all = loadLoans();
+            state.payments = loadPayments();
+            updateStats();
+            applyFilters();
+            $('refreshBtn').textContent = '✓';
+            setTimeout(function () { $('refreshBtn').textContent = '🔄'; }, 900);
+          });
+        }
+
+        // Export
+        if ($('exportBtn')) $('exportBtn').addEventListener('click', exportCSV);
+
+        // FAB
+        if ($('fabBtn')) {
+          $('fabBtn').addEventListener('click', function () {
+            window.location.href = 'case-details-wizard.html';
+          });
+        }
+
+        // Payment modal
+        if ($('paymentModalClose')) $('paymentModalClose').addEventListener('click', closePaymentModal);
+        if ($('paymentCancelBtn')) $('paymentCancelBtn').addEventListener('click', closePaymentModal);
+        if ($('paymentSubmitBtn')) $('paymentSubmitBtn').addEventListener('click', submitPayment);
+        var m = $('paymentModal');
+        if (m) {
+          m.addEventListener('click', function (e) {
+            if (e.target === m) closePaymentModal();
+          });
+        }
+
+        // Pagination
+        if ($('prevPage')) $('prevPage').addEventListener('click', function () {
+          if (state.page > 1) { state.page--; render(); try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_){} }
+        });
+        if ($('nextPage')) $('nextPage').addEventListener('click', function () {
+          var totalPages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+          if (state.page < totalPages) { state.page++; render(); try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_){} }
+        });
+
+        // Back
+        if ($('backLink')) {
+          $('backLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.history.length > 1) window.history.back();
+            else window.location.href = 'dashboard.html';
+          });
+        }
+
+        // Esc
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closePaymentModal();
+        });
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        state.user = currentUser();
+        seedIfEmpty();
+        state.all = loadLoans();
+        state.payments = loadPayments();
+        updateStats();
+        applyFilters();
+        bindEvents();
+
+        // auto-refresh
+        setInterval(function () {
+          state.all = loadLoans();
+          state.payments = loadPayments();
+          updateStats();
+          applyFilters();
+        }, 60000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

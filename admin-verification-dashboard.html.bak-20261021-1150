@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="داشبورد اعتبارسنجی — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>اعتبارسنجی | وام پی</title>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       DASHBOARD: VERIFICATION
+       ═══════════════════════════════════════ */
+
+    .wam-verify {
+      min-height: 100vh;
+      background: var(--wam-bg);
+    }
+
+    /* ── Header ── */
+    .wam-verify__header {
+      background: linear-gradient(135deg, #0b3b23 0%, #1a5c3a 100%);
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 8px 24px rgba(11, 59, 35, 0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 3px solid #d4a62a;
+    }
+
+    .wam-verify__header-inner {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .wam-verify__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 17px;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .wam-verify__logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #d4a62a, #f0c651);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 20px rgba(212, 166, 42, 0.5);
+    }
+
+    .wam-verify__header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wam-verify__btn-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(212, 166, 42, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+      color: #f0c651;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+    }
+
+    .wam-verify__btn-icon:hover {
+      background: rgba(212, 166, 42, 0.2);
+    }
+
+    .wam-verify__user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px 6px 6px;
+      border-radius: 10px;
+      background: rgba(212, 166, 42, 0.15);
+      border: 1px solid rgba(212, 166, 42, 0.3);
+      cursor: pointer;
+    }
+
+    .wam-verify__user-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d4a62a, #f0c651);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #062416;
+      font-weight: 800;
+    }
+
+    .wam-verify__user-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .wam-verify__user-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .wam-verify__user-role {
+      font-size: 11px;
+      color: #f0c651;
+    }
+
+    /* ── Main ── */
+    .wam-verify__main {
+      padding: 24px 28px 100px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .wam-verify__title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #0b3b23;
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wam-verify__subtitle {
+      font-size: 14px;
+      color: var(--wam-text-muted);
+      margin: 0 0 22px;
+    }
+
+    /* ── Stats ── */
+    .wam-verify__stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .wam-verify__stat {
+      background: var(--wam-bg-alt);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(11, 59, 35, 0.06);
+      border: 1px solid var(--wam-border);
+      border-right: 4px solid var(--wam-primary);
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .wam-verify__stat:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(11, 59, 35, 0.1);
+    }
+
+    .wam-verify__stat--warning { border-right-color: #e67e22; }
+    .wam-verify__stat--success { border-right-color: #1e8e4a; }
+    .wam-verify__stat--error   { border-right-color: #c0392b; }
+    .wam-verify__stat--info    { border-right-color: #2980b9; }
+
+    .wam-verify__stat-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .wam-verify__stat-label {
+      font-size: 12px;
+      color: var(--wam-text-muted);
+      margin-bottom: 4px;
+    }
+
+    .wam-verify__stat-value {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    /* ── Tabs ── */
+    .wam-verify__tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--wam-bg-muted);
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      border: 1px solid var(--wam-border);
+    }
+
+    .wam-verify__tab {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--wam-text-muted);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-verify__tab:hover { color: var(--wam-text); }
+
+    .wam-verify__tab.is-active {
+      background: linear-gradient(135deg, #0b3b23, #1a5c3a);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(11, 59, 35, 0.25);
+    }
+
+    .wam-verify__tab-count {
+      background: rgba(0, 0, 0, 0.1);
+      padding: 1px 7px;
+      border-radius: 99px;
+      font-size: 10px;
+    }
+
+    .wam-verify__tab.is-active .wam-verify__tab-count {
+      background: rgba(212, 166, 42, 0.3);
+      color: #f0c651;
+    }
+
+    /* ── Search ── */
+    .wam-verify__search {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .wam-verify__search input {
+      width: 100%;
+      padding: 12px 44px 12px 16px;
+      border-radius: 10px;
+      border: 1.5px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      color: var(--wam-text);
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .wam-verify__search input:focus {
+      outline: none;
+      border-color: var(--wam-primary);
+    }
+
+    .wam-verify__search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--wam-text-muted);
+      pointer-events: none;
+    }
+
+    /* ── Cards ── */
+    .wam-verify__card {
+      background: var(--wam-bg-alt);
+      border-radius: 14px;
+      padding: 18px;
+      border: 1px solid var(--wam-border);
+      border-right: 4px solid var(--wam-warning);
+      margin-bottom: 12px;
+      transition: all 0.25s;
+    }
+
+    .wam-verify__card:hover {
+      box-shadow: 0 8px 24px rgba(11, 59, 35, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .wam-verify__card[data-status="approved"] { border-right-color: #1e8e4a; }
+    .wam-verify__card[data-status="rejected"] { border-right-color: #c0392b; }
+    .wam-verify__card[data-status="pending"]  { border-right-color: #e67e22; }
+    .wam-verify__card[data-status="under_review"] { border-right-color: #2980b9; }
+
+    .wam-verify__card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .wam-verify__card-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--wam-text);
+      margin: 0 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wam-verify__card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--wam-text-muted);
+      margin-bottom: 10px;
+    }
+
+    .wam-verify__card-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wam-verify__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .wam-verify__badge--pending {
+      background: rgba(230, 126, 34, 0.15);
+      color: #e67e22;
+    }
+
+    .wam-verify__badge--approved {
+      background: rgba(30, 142, 74, 0.15);
+      color: #1e8e4a;
+    }
+
+    .wam-verify__badge--rejected {
+      background: rgba(192, 57, 43, 0.15);
+      color: #c0392b;
+    }
+
+    .wam-verify__badge--under_review {
+      background: rgba(41, 128, 185, 0.15);
+      color: #2980b9;
+    }
+
+    /* ── Documents ── */
+    .wam-verify__docs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+      padding: 12px;
+      background: var(--wam-bg-muted);
+      border-radius: 10px;
+    }
+
+    .wam-verify__doc {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .wam-verify__doc:hover {
+      border-color: var(--wam-primary);
+      background: var(--wam-primary-soft);
+    }
+
+    .wam-verify__doc-icon {
+      font-size: 16px;
+    }
+
+    /* ── Actions ── */
+    .wam-verify__actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-top: 12px;
+      border-top: 1px dashed var(--wam-border);
+    }
+
+    .wam-verify__btn {
+      padding: 9px 18px;
+      border-radius: 9px;
+      border: none;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-verify__btn--approve {
+      background: linear-gradient(135deg, #1e8e4a, #2ea05a);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(30, 142, 74, 0.25);
+    }
+
+    .wam-verify__btn--approve:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(30, 142, 74, 0.35);
+    }
+
+    .wam-verify__btn--reject {
+      background: linear-gradient(135deg, #c0392b, #e74c3c);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(192, 57, 43, 0.25);
+    }
+
+    .wam-verify__btn--reject:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(192, 57, 43, 0.35);
+    }
+
+    .wam-verify__btn--ghost {
+      background: transparent;
+      color: var(--wam-text-muted);
+      border: 1.5px solid var(--wam-border);
+    }
+
+    .wam-verify__btn--ghost:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    /* ── Empty ── */
+    .wam-verify__empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-verify__empty-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .wam-verify__empty-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--wam-text);
+      margin: 0 0 8px;
+    }
+
+    .wam-verify__empty-text {
+      font-size: 14px;
+      margin: 0;
+    }
+
+    /* ── Modal ── */
+    .wam-verify__modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .wam-verify__modal.is-open {
+      display: flex;
+    }
+
+    .wam-verify__modal-box {
+      background: var(--wam-bg-alt);
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+    }
+
+    .wam-verify__modal-head {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--wam-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .wam-verify__modal-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--wam-text);
+      margin: 0;
+    }
+
+    .wam-verify__modal-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: none;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .wam-verify__modal-body {
+      padding: 20px 22px;
+    }
+
+    .wam-verify__modal-footer {
+      padding: 16px 22px;
+      border-top: 1px solid var(--wam-border);
+      display: flex;
+      gap: 10px;
+      justify-content: flex-start;
+    }
+
+    .wam-verify__field {
+      margin-bottom: 16px;
+    }
+
+    .wam-verify__field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin-bottom: 6px;
+    }
+
+    .wam-verify__textarea {
+      width: 100%;
+      min-height: 90px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1.5px solid var(--wam-border);
+      background: var(--wam-bg);
+      color: var(--wam-text);
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+    }
+
+    .wam-verify__textarea:focus {
+      outline: none;
+      border-color: var(--wam-primary);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .wam-verify__stats { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .wam-verify__main { padding: 16px 14px 100px; }
+      .wam-verify__title { font-size: 20px; }
+      .wam-verify__header { padding: 12px 16px; }
+      .wam-verify__user-info { display: none; }
+      .wam-verify__card { padding: 14px; }
+    }
+  </style>
+</head>
+
+<body data-page="admin-verification">
+
+<div class="wam-verify" id="verifyRoot">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="wam-verify__header">
+    <div class="wam-verify__header-inner">
+
+      <a href="admin-dashboard.html" class="wam-verify__logo">
+        <div class="wam-verify__logo-icon">🔍</div>
+        <span>اعتبارسنجی</span>
+      </a>
+
+      <div class="wam-verify__header-actions">
+        <button type="button" class="wam-verify__btn-icon" id="refreshBtn" title="به‌روزرسانی">🔄</button>
+        <button type="button" class="wam-verify__btn-icon" id="themeBtn" title="تغییر تم">🌙</button>
+        <div class="wam-verify__user" id="userChip">
+          <div class="wam-verify__user-avatar" id="userAvatar">🔍</div>
+          <div class="wam-verify__user-info">
+            <div class="wam-verify__user-name" id="userName">کارشناس</div>
+            <div class="wam-verify__user-role">🔍 اعتبارسنجی</div>
+          </div>
+        </div>
+        <button type="button" class="wam-verify__btn-icon" id="logoutBtn" title="خروج">🚪</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="wam-verify__main">
+
+    <h1 class="wam-verify__title">🔍 داشبورد اعتبارسنجی</h1>
+    <p class="wam-verify__subtitle">بررسی و تأیید پرونده‌های ارسالی متقاضیان</p>
+
+    <!-- آمار -->
+    <div class="wam-verify__stats">
+      <div class="wam-verify__stat wam-verify__stat--warning">
+        <div class="wam-verify__stat-icon">⏳</div>
+        <div class="wam-verify__stat-label">در انتظار بررسی</div>
+        <div class="wam-verify__stat-value" id="statPending">۰</div>
+      </div>
+      <div class="wam-verify__stat wam-verify__stat--info">
+        <div class="wam-verify__stat-icon">🔍</div>
+        <div class="wam-verify__stat-label">در حال بررسی</div>
+        <div class="wam-verify__stat-value" id="statReviewing">۰</div>
+      </div>
+      <div class="wam-verify__stat wam-verify__stat--success">
+        <div class="wam-verify__stat-icon">✅</div>
+        <div class="wam-verify__stat-label">تأیید شده</div>
+        <div class="wam-verify__stat-value" id="statApproved">۰</div>
+      </div>
+      <div class="wam-verify__stat wam-verify__stat--error">
+        <div class="wam-verify__stat-icon">❌</div>
+        <div class="wam-verify__stat-label">رد شده</div>
+        <div class="wam-verify__stat-value" id="statRejected">۰</div>
+      </div>
+    </div>
+
+    <!-- تب‌ها -->
+    <div class="wam-verify__tabs">
+      <button type="button" class="wam-verify__tab is-active" data-tab="all">
+        📋 همه
+        <span class="wam-verify__tab-count" id="cntAll">۰</span>
+      </button>
+      <button type="button" class="wam-verify__tab" data-tab="pending">
+        ⏳ در انتظار
+        <span class="wam-verify__tab-count" id="cntPending">۰</span>
+      </button>
+      <button type="button" class="wam-verify__tab" data-tab="under_review">
+        🔍 در بررسی
+        <span class="wam-verify__tab-count" id="cntReviewing">۰</span>
+      </button>
+      <button type="button" class="wam-verify__tab" data-tab="approved">
+        ✅ تأیید شده
+        <span class="wam-verify__tab-count" id="cntApproved">۰</span>
+      </button>
+      <button type="button" class="wam-verify__tab" data-tab="rejected">
+        ❌ رد شده
+        <span class="wam-verify__tab-count" id="cntRejected">۰</span>
+      </button>
+    </div>
+
+    <!-- جستجو -->
+    <div class="wam-verify__search">
+      <input type="text" id="searchInput" placeholder="جستجو بر اساس شماره پرونده، نام متقاضی...">
+      <span class="wam-verify__search-icon">🔍</span>
+    </div>
+
+    <!-- لیست پرونده‌ها -->
+    <div id="casesList"></div>
+
+    <!-- حالت خالی -->
+    <div class="wam-verify__empty" id="emptyState" style="display:none;">
+      <div class="wam-verify__empty-icon">🎉</div>
+      <h3 class="wam-verify__empty-title">همه چیز مرتب است!</h3>
+      <p class="wam-verify__empty-text" id="emptyText">
+        در حال حاضر پرونده‌ای در انتظار بررسی نیست.
+      </p>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- ═══ MODAL ═══ -->
+<div class="wam-verify__modal" id="decisionModal">
+  <div class="wam-verify__modal-box">
+
+    <div class="wam-verify__modal-head">
+      <h3 class="wam-verify__modal-title" id="modalTitle">تأیید پرونده</h3>
+      <button type="button" class="wam-verify__modal-close" id="modalClose">✕</button>
+    </div>
+
+    <div class="wam-verify__modal-body">
+      <div class="wam-verify__field">
+        <label class="wam-verify__field-label" id="reasonLabel">یادداشت (اختیاری)</label>
+        <textarea class="wam-verify__textarea" id="reasonInput" placeholder="توضیحات خود را وارد کنید..."></textarea>
+      </div>
+    </div>
+
+    <div class="wam-verify__modal-footer">
+      <button type="button" class="wam-verify__btn wam-verify__btn--ghost" id="cancelBtn">انصراف</button>
+      <button type="button" class="wam-verify__btn wam-verify__btn--approve" id="confirmBtn">✅ تأیید نهایی</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🆕 Supabase Scripts (فاز ۴) -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/storage.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/storage-adapter.js"></script>
+<script src="js/auth-bridge.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => document.querySelectorAll(s);
+  const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+
+  // ═══════════════════════════════════
+  // State
+  // ═══════════════════════════════════
+  const state = {
+    user: null,
+    cases: [],
+    filtered: [],
+    currentTab: 'all',
+    searchQuery: '',
+    action: null
+  };
+
+  // ═══════════════════════════════════
+  // Auth check
+  // ═══════════════════════════════════
+  function checkAuth() {
+    try {
+      const raw = localStorage.getItem('wamPayCurrentUser');
+      if (!raw) {
+        console.warn('⚠️ کاربر لاگین نیست');
+        window.location.href = 'login.html';
+        return false;
+      }
+      const user = JSON.parse(raw);
+      
+      const allowedRoles = ['super_admin', 'admin', 'verification_admin', 'deputy_admin'];
+      if (!allowedRoles.includes(user.role)) {
+        console.warn('⚠️ دسترسی غیرمجاز:', user.role);
+        window.location.href = 'login.html';
+        return false;
+      }
+
+      state.user = user;
+      return true;
+    } catch (e) {
+      console.error('❌ checkAuth:', e);
+      window.location.href = 'login.html';
+      return false;
+    }
+  }
+
+  // ═══════════════════════════════════
+  // Load data from Supabase (v1.1 — بهینه‌شده)
+  // ═══════════════════════════════════
+  async function loadData() {
+    console.log('🔄 [Verification] بارگذاری داده‌ها...');
+
+    if (window.WAM_SB && window.WAM_SB.client) {
+      try {
+        console.log('☁️ [Verification] خواندن از Supabase...');
+
+        // 🆕 فقط فیلدهای ضروری + بدون order برای جلوگیری از timeout
+        const { data, error } = await window.WAM_SB.client
+          .from('applications')
+          .select('id, application_number, user_id, loan_type, loan_bank, loan_amount, status, current_step, total_steps, personal_info, financial_info, created_at, updated_at')
+          .limit(100);
+
+        if (!error && data) {
+          // 🆕 مرتب‌سازی سمت کلاینت (به جای سرور)
+          const sorted = data.slice().sort((a, b) => {
+            const da = new Date(a.created_at || 0).getTime();
+            const db = new Date(b.created_at || 0).getTime();
+            return db - da;
+          });
+
+          state.cases = sorted.map(a => ({
+            id: a.id,
+            caseNumber: a.application_number,
+            userId: a.user_id,
+            loanType: a.loan_type,
+            loanBank: a.loan_bank,
+            loanAmount: a.loan_amount,
+            status: a.status,
+            currentStep: a.current_step,
+            personalInfo: a.personal_info || {},
+            financialInfo: a.financial_info || {},
+            documents: {},  // 🆕 برای دمو خالی
+            createdAt: a.created_at,
+            updatedAt: a.updated_at
+          }));
+
+          console.log(`✅ [Verification] ${state.cases.length} پرونده از Supabase`);
+        } else if (error) {
+          console.warn('⚠️ خطا در Supabase:', error.message);
+          state.cases = [];
+        }
+      } catch (e) {
+        console.warn('⚠️ خطا:', e.message);
+        state.cases = [];
+      }
+    } else {
+      console.warn('⚠️ WAM_SB نیست');
+      state.cases = [];
+    }
+
+    applyFilters();
+    updateStats();
+  }
+
+  // ═══════════════════════════════════
+  // Filters
+  // ═══════════════════════════════════
+  function applyFilters() {
+    let list = state.cases.slice();
+
+    if (state.currentTab !== 'all') {
+      list = list.filter(c => c.status === state.currentTab);
+    }
+
+    if (state.searchQuery) {
+      const q = state.searchQuery.toLowerCase();
+      list = list.filter(c => {
+        const hay = [
+          c.caseNumber,
+          c.personalInfo.firstName,
+          c.personalInfo.lastName,
+          c.personalInfo.mobile,
+          c.personalInfo.nationalId,
+          c.loanType
+        ].join(' ').toLowerCase();
+        return hay.includes(q);
+      });
+    }
+
+    state.filtered = list;
+    render();
+  }
+
+  // ═══════════════════════════════════
+  // Stats
+  // ═══════════════════════════════════
+  function updateStats() {
+    const all = state.cases;
+    const pending = all.filter(c => c.status === 'submitted' || c.status === 'pending').length;
+    const reviewing = all.filter(c => c.status === 'under_review').length;
+    const approved = all.filter(c => c.status === 'approved' || c.status === 'completed').length;
+    const rejected = all.filter(c => c.status === 'rejected').length;
+
+    $('#statPending').textContent = faNum(pending);
+    $('#statReviewing').textContent = faNum(reviewing);
+    $('#statApproved').textContent = faNum(approved);
+    $('#statRejected').textContent = faNum(rejected);
+
+    $('#cntAll').textContent = faNum(all.length);
+    $('#cntPending').textContent = faNum(pending);
+    $('#cntReviewing').textContent = faNum(reviewing);
+    $('#cntApproved').textContent = faNum(approved);
+    $('#cntRejected').textContent = faNum(rejected);
+  }
+
+  // ═══════════════════════════════════
+  // Render
+  // ═══════════════════════════════════
+  function render() {
+    const list = state.filtered;
+    const box = $('#casesList');
+    const empty = $('#emptyState');
+
+    if (list.length === 0) {
+      box.innerHTML = '';
+      empty.style.display = 'block';
+      $('#emptyText').textContent = state.currentTab === 'all'
+        ? 'هیچ پرونده‌ای برای بررسی وجود ندارد.'
+        : `هیچ پرونده‌ای در وضعیت "${getTabLabel(state.currentTab)}" نیست.`;
+      return;
+    }
+
+    empty.style.display = 'none';
+
+    box.innerHTML = list.map(c => renderCard(c)).join('');
+
+    box.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const action = btn.dataset.action;
+        const id = btn.dataset.id;
+        const item = state.cases.find(x => x.id === id);
+        if (!item) return;
+
+        if (action === 'approve') openModal('approve', item);
+        else if (action === 'reject') openModal('reject', item);
+        else if (action === 'review') changeStatus(item, 'under_review');
+        else if (action === 'view') viewDetails(item);
+      });
+    });
+  }
+
+  function getTabLabel(tab) {
+    const labels = {
+      all: 'همه',
+      pending: 'در انتظار',
+      under_review: 'در بررسی',
+      approved: 'تأیید شده',
+      rejected: 'رد شده'
+    };
+    return labels[tab] || tab;
+  }
+
+  function renderCard(c) {
+    const status = c.status || 'pending';
+    const statusLabel = {
+      draft: '📝 پیش‌نویس',
+      submitted: '⏳ در انتظار',
+      pending: '⏳ در انتظار',
+      under_review: '🔍 در بررسی',
+      approved: '✅ تأیید شده',
+      completed: '🎉 تکمیل شده',
+      rejected: '❌ رد شده'
+    }[status] || '⏳ در انتظار';
+
+    const statusClass = (status === 'approved' || status === 'completed') ? 'approved'
+                     : status === 'rejected' ? 'rejected'
+                     : status === 'under_review' ? 'under_review'
+                     : 'pending';
+
+    const fullName = `${c.personalInfo.firstName || ''} ${c.personalInfo.lastName || ''}`.trim() || 'نامشخص';
+    const mobile = c.personalInfo.mobile || '—';
+    const nationalId = c.personalInfo.nationalId || '—';
+    const loanAmount = (c.loanAmount || 0).toLocaleString('fa-IR');
+    const loanType = {
+      resalat: 'قرض‌الحسنه رسالت',
+      mehr: 'قرض‌الحسنه مهر',
+      sepah: 'سپه',
+      melli: 'ملی',
+      housing: 'مسکن',
+      personal: 'شخصی',
+      car: 'خودرو',
+      business: 'کسب‌وکار',
+      education: 'تحصیلی',
+      qarz_hasaneh: 'قرض‌الحسنه'
+    }[c.loanType] || c.loanType || '—';
+
+    const date = c.createdAt ? new Date(c.createdAt).toLocaleDateString('fa-IR') : '—';
+
+    const docs = c.documents || {};
+    const docKeys = Object.keys(docs);
+    const docsHtml = docKeys.length > 0
+      ? docKeys.slice(0, 6).map(k => `
+          <div class="wam-verify__doc" title="${k}">
+            <span class="wam-verify__doc-icon">📎</span>
+            <span>${k.slice(0, 15)}</span>
+          </div>
+        `).join('')
+      : '<div style="color:var(--wam-text-muted);font-size:12px;padding:6px">📭 مدرکی بارگذاری نشده</div>';
+
+    let actions = '';
+    if (status === 'submitted' || status === 'pending' || status === 'draft') {
+      actions = `
+        <button type="button" class="wam-verify__btn wam-verify__btn--approve" data-action="approve" data-id="${c.id}">✅ تأیید</button>
+        <button type="button" class="wam-verify__btn wam-verify__btn--reject" data-action="reject" data-id="${c.id}">❌ رد</button>
+        <button type="button" class="wam-verify__btn wam-verify__btn--ghost" data-action="review" data-id="${c.id}">🔍 شروع بررسی</button>
+      `;
+    } else if (status === 'under_review') {
+      actions = `
+        <button type="button" class="wam-verify__btn wam-verify__btn--approve" data-action="approve" data-id="${c.id}">✅ تأیید</button>
+        <button type="button" class="wam-verify__btn wam-verify__btn--reject" data-action="reject" data-id="${c.id}">❌ رد</button>
+        <button type="button" class="wam-verify__btn wam-verify__btn--ghost" data-action="view" data-id="${c.id}">👁 جزئیات</button>
+      `;
+    } else {
+      actions = `
+        <button type="button" class="wam-verify__btn wam-verify__btn--ghost" data-action="view" data-id="${c.id}">👁 جزئیات</button>
+      `;
+    }
+
+    return `
+      <div class="wam-verify__card" data-status="${statusClass}">
+        <div class="wam-verify__card-head">
+          <div>
+            <h4 class="wam-verify__card-title">
+              📁 ${c.caseNumber || 'بدون شماره'}
+            </h4>
+            <div class="wam-verify__card-meta">
+              <span>👤 ${fullName}</span>
+              <span>📱 ${mobile}</span>
+              <span>🆔 ${nationalId}</span>
+            </div>
+          </div>
+          <span class="wam-verify__badge wam-verify__badge--${statusClass}">${statusLabel}</span>
+        </div>
+
+        <div class="wam-verify__card-meta">
+          <span>💰 ${loanAmount} تومان</span>
+          <span>🏦 ${loanType}</span>
+          <span>📅 ${date}</span>
+        </div>
+
+        <div class="wam-verify__docs">
+          ${docsHtml}
+        </div>
+
+        <div class="wam-verify__actions">
+          ${actions}
+        </div>
+      </div>
+    `;
+  }
+
+  // ═══════════════════════════════════
+  // Modal
+  // ═══════════════════════════════════
+  function openModal(type, item) {
+    state.action = { type, item };
+    $('#modalTitle').textContent = type === 'approve' ? '✅ تأیید پرونده' : '❌ رد پرونده';
+    $('#reasonLabel').textContent = type === 'approve' ? 'یادداشت (اختیاری)' : 'دلیل رد (اجباری)';
+    $('#confirmBtn').className = 'wam-verify__btn wam-verify__btn--' + (type === 'approve' ? 'approve' : 'reject');
+    $('#confirmBtn').textContent = type === 'approve' ? '✅ تأیید نهایی' : '❌ رد نهایی';
+    $('#reasonInput').value = '';
+    $('#decisionModal').classList.add('is-open');
+    setTimeout(() => $('#reasonInput').focus(), 150);
+  }
+
+  function closeModal() {
+    $('#decisionModal').classList.remove('is-open');
+    state.action = null;
+  }
+
+  async function confirmAction() {
+    if (!state.action) return;
+    const { type, item } = state.action;
+    const reason = $('#reasonInput').value.trim();
+
+    if (type === 'reject' && !reason) {
+      alert('لطفاً دلیل رد را وارد کنید.');
+      return;
+    }
+
+    const newStatus = type === 'approve' ? 'approved' : 'rejected';
+
+    if (window.WAM_SB && window.WAM_SB.client) {
+      try {
+        const { error } = await window.WAM_SB.client
+          .from('applications')
+          .update({
+            status: newStatus,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', item.id);
+
+        if (error) {
+          console.warn('⚠️ خطا در آپدیت Supabase:', error.message);
+        } else {
+          console.log(`✅ پرونده ${item.caseNumber} → ${newStatus}`);
+        }
+      } catch (e) {
+        console.warn('⚠️ خطا:', e.message);
+      }
+    }
+
+    const localItem = state.cases.find(c => c.id === item.id);
+    if (localItem) {
+      localItem.status = newStatus;
+      localItem.updatedAt = new Date().toISOString();
+    }
+
+    closeModal();
+    applyFilters();
+    updateStats();
+
+    showToast(type === 'approve' ? '✅ پرونده تأیید شد' : '❌ پرونده رد شد', type === 'approve' ? 'success' : 'error');
+  }
+
+  async function changeStatus(item, newStatus) {
+    if (window.WAM_SB && window.WAM_SB.client) {
+      try {
+        await window.WAM_SB.client
+          .from('applications')
+          .update({ status: newStatus, updated_at: new Date().toISOString() })
+          .eq('id', item.id);
+      } catch (e) {
+        console.warn('⚠️ خطا:', e.message);
+      }
+    }
+    const localItem = state.cases.find(c => c.id === item.id);
+    if (localItem) localItem.status = newStatus;
+    applyFilters();
+    updateStats();
+    showToast('🔍 وضعیت به «در بررسی» تغییر کرد', 'info');
+  }
+
+  function viewDetails(item) {
+    const fullName = `${item.personalInfo.firstName || ''} ${item.personalInfo.lastName || ''}`.trim();
+    alert(
+      '📁 جزئیات پرونده\n\n' +
+      'شماره: ' + (item.caseNumber || '—') + '\n' +
+      'متقاضی: ' + (fullName || '—') + '\n' +
+      'موبایل: ' + (item.personalInfo.mobile || '—') + '\n' +
+      'کد ملی: ' + (item.personalInfo.nationalId || '—') + '\n' +
+      'مبلغ وام: ' + (item.loanAmount || 0).toLocaleString('fa-IR') + ' تومان\n' +
+      'نوع وام: ' + (item.loanType || '—') + '\n' +
+      'وضعیت: ' + (item.status || '—')
+    );
+  }
+
+  // ═══════════════════════════════════
+  // Toast
+  // ═══════════════════════════════════
+  function showToast(msg, type = 'info') {
+    const t = document.createElement('div');
+    t.style.cssText = `
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      background: ${type === 'success' ? '#1e8e4a' : type === 'error' ? '#c0392b' : '#0b3b23'};
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 9999;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+      transition: transform 0.35s;
+    `;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.style.transform = 'translateX(-50%) translateY(0)', 50);
+    setTimeout(() => {
+      t.style.transform = 'translateX(-50%) translateY(120%)';
+      setTimeout(() => t.remove(), 400);
+    }, 3000);
+  }
+
+  // ═══════════════════════════════════
+  // User & Theme
+  // ═══════════════════════════════════
+  function applyUser() {
+    if (!state.user) return;
+    const name = state.user.name || state.user.username || 'کارشناس';
+    $('#userName').textContent = name;
+    $('#userAvatar').textContent = name.charAt(0).toUpperCase();
+  }
+
+  function initTheme() {
+    const saved = localStorage.getItem('wamPayTheme');
+    if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    const btn = $('#themeBtn');
+    if (btn) {
+      btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('wamPayTheme', 'light');
+          btn.textContent = '🌙';
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('wamPayTheme', 'dark');
+          btn.textContent = '☀️';
+        }
+      });
+    }
+  }
+
+  // ═══════════════════════════════════
+  // Events
+  // ═══════════════════════════════════
+  function attachEvents() {
+    $$('.wam-verify__tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        $$('.wam-verify__tab').forEach(t => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        state.currentTab = tab.dataset.tab;
+        applyFilters();
+      });
+    });
+
+    const searchInput = $('#searchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        state.searchQuery = e.target.value.trim();
+        applyFilters();
+      });
+    }
+
+    $('#refreshBtn')?.addEventListener('click', async () => {
+      const btn = $('#refreshBtn');
+      btn.textContent = '⏳';
+      await loadData();
+      btn.textContent = '🔄';
+      showToast('✅ به‌روزرسانی شد', 'success');
+    });
+
+    $('#logoutBtn')?.addEventListener('click', () => {
+      if (!confirm('از حساب خارج می‌شوید؟')) return;
+      localStorage.removeItem('wamPayCurrentUser');
+      localStorage.removeItem('wamPayToken');
+      window.location.href = 'login.html';
+    });
+
+    $('#modalClose')?.addEventListener('click', closeModal);
+    $('#cancelBtn')?.addEventListener('click', closeModal);
+    $('#confirmBtn')?.addEventListener('click', confirmAction);
+    $('#decisionModal')?.addEventListener('click', (e) => {
+      if (e.target === $('#decisionModal')) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  }
+
+  // ═══════════════════════════════════
+  // Init
+  // ═══════════════════════════════════
+  async function init() {
+    if (!checkAuth()) return;
+    applyUser();
+    initTheme();
+    attachEvents();
+    await loadData();
+
+    console.log('%c🔍 WAM PAY — Verification Dashboard v1.1', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+    console.log('%c👤 کاربر:', 'color:#0b3b23;font-weight:bold;', state.user.name);
+    console.log('%c📁 پرونده‌ها:', 'color:#0b3b23;font-weight:bold;', state.cases.length);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+
+</body>
+</html>

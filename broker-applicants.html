@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="متقاضیان من — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>متقاضیان | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/broker-panel.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ─── استایل اختصاصی متقاضیان ─── */
+
+    .wam-broker__search {
+      position: relative;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-broker__search input {
+      width: 100%;
+      padding: 11px 42px 11px 42px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-broker__search input:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-broker__search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      color: var(--wam-text-muted);
+      pointer-events: none;
+    }
+
+    .wam-broker__search-clear {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--wam-text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: none;
+    }
+    .wam-broker__search-clear.is-visible { display: inline-flex; }
+
+    /* تب‌های وضعیت */
+    .wam-broker__tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      margin-bottom: var(--wam-space-md);
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .wam-broker__tabs::-webkit-scrollbar { display: none; }
+
+    .wam-broker__tab {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .wam-broker__tab.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-broker__tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .wam-broker__tab.is-active .wam-broker__tab-count {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    /* کارت متقاضی */
+    .wam-broker__applicant-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: var(--wam-space-md);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      margin-bottom: 10px;
+      box-shadow: var(--wam-shadow-sm);
+      transition: all var(--wam-t);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .wam-broker__applicant-card:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .wam-broker__applicant-avatar-lg {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      flex: 0 0 auto;
+      color: #fff;
+      background: linear-gradient(135deg, #0b3b23, #105b35);
+      box-shadow: 0 4px 10px rgba(11, 59, 35, 0.18);
+    }
+
+    .wam-broker__applicant-avatar-lg[data-color="1"] { background: linear-gradient(135deg, #1c4e7e, #2d7cb0); }
+    .wam-broker__applicant-avatar-lg[data-color="2"] { background: linear-gradient(135deg, #5a2c8c, #8e4cc7); }
+    .wam-broker__applicant-avatar-lg[data-color="3"] { background: linear-gradient(135deg, #8a6d00, #d4a62a); }
+    .wam-broker__applicant-avatar-lg[data-color="4"] { background: linear-gradient(135deg, #2e9e5b, #4cc47b); }
+    .wam-broker__applicant-avatar-lg[data-color="5"] { background: linear-gradient(135deg, #a12e21, #c0392b); }
+
+    .wam-broker__applicant-info-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-broker__applicant-name-lg {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--wam-text);
+      margin: 0 0 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-broker__applicant-meta-lg {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-broker__applicant-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .wam-broker__applicant-stats {
+      display: flex;
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .wam-broker__stat-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 8px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+    }
+
+    .wam-broker__stat-mini--active {
+      background: var(--wam-warning-soft);
+      color: var(--wam-warning-text);
+    }
+
+    .wam-broker__stat-mini--approved {
+      background: var(--wam-success-soft);
+      color: var(--wam-success-text);
+    }
+
+    .wam-broker__applicant-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 0 0 auto;
+    }
+
+    .wam-broker__icon-btn-sm {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-broker__icon-btn-sm:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      transform: scale(1.05);
+    }
+
+    .wam-broker__icon-btn-sm--primary {
+      background: var(--wam-primary-light);
+      color: #fff;
+    }
+    .wam-broker__icon-btn-sm--primary:hover {
+      background: var(--wam-primary);
+      color: #fff;
+    }
+
+    /* Modal جزئیات */
+    .wam-broker__modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 59, 35, 0.5);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: var(--wam-z-modal);
+      padding: 0;
+    }
+    .wam-broker__modal.is-open { display: flex; }
+
+    .wam-broker__modal-box {
+      background: var(--wam-bg-alt);
+      width: 100%;
+      max-width: 560px;
+      border-radius: var(--wam-radius-lg) var(--wam-radius-lg) 0 0;
+      padding: var(--wam-space-lg);
+      padding-bottom: calc(var(--wam-space-lg) + env(safe-area-inset-bottom, 0px));
+      animation: wam-slide-up 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .wam-broker__modal-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border-soft);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-broker__modal-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      flex: 1 1 auto;
+    }
+
+    .wam-broker__modal-close {
+      background: transparent;
+      border: 0;
+      font-size: 1.2rem;
+      color: var(--wam-text-muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .wam-broker__modal-close:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    .wam-broker__detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 0;
+      font-size: 0.85rem;
+      border-bottom: 1px dashed var(--wam-border-soft);
+    }
+
+    .wam-broker__detail-row:last-child { border-bottom: 0; }
+
+    .wam-broker__detail-label {
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+
+    .wam-broker__detail-value {
+      color: var(--wam-text);
+      font-weight: 700;
+      text-align: left;
+      word-break: break-word;
+      flex: 1 1 auto;
+    }
+
+    .wam-broker__modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .wam-broker__modal-actions .wam-btn {
+      flex: 1 1 0;
+    }
+  </style>
+</head>
+
+<body data-page="broker-applicants">
+
+  <div class="wam-broker" id="brokerRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-broker__topbar">
+      <div class="wam-broker__topbar-info">
+        <a href="broker-dashboard.html" style="color:inherit;text-decoration:none;font-size:0.75rem;opacity:0.85;">
+          ↩ بازگشت
+        </a>
+        <span class="wam-broker__topbar-name">👥 متقاضیان</span>
+      </div>
+      <div class="wam-broker__topbar-actions">
+        <button type="button" class="wam-broker__icon-btn" id="addApplicantBtn" title="افزودن متقاضی">
+          ➕
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-broker__main">
+
+      <!-- جستجو -->
+      <div class="wam-broker__search">
+        <input type="text" id="searchInput" placeholder="جستجوی نام، موبایل یا ایمیل...">
+        <span class="wam-broker__search-icon">🔍</span>
+        <button type="button" class="wam-broker__search-clear" id="searchClear" aria-label="پاک">✕</button>
+      </div>
+
+      <!-- تب‌ها -->
+      <div class="wam-broker__tabs" id="tabsBar">
+        <button type="button" class="wam-broker__tab is-active" data-tab="all">
+          همه <span class="wam-broker__tab-count" data-count="all">0</span>
+        </button>
+        <button type="button" class="wam-broker__tab" data-tab="active">
+          فعال <span class="wam-broker__tab-count" data-count="active">0</span>
+        </button>
+        <button type="button" class="wam-broker__tab" data-tab="with_cases">
+          دارای پرونده <span class="wam-broker__tab-count" data-count="with_cases">0</span>
+        </button>
+        <button type="button" class="wam-broker__tab" data-tab="no_cases">
+          بدون پرونده <span class="wam-broker__tab-count" data-count="no_cases">0</span>
+        </button>
+      </div>
+
+      <!-- لیست -->
+      <div id="applicantsList">
+        <!-- توسط JS پر می‌شود -->
+      </div>
+
+      <!-- Empty -->
+      <div class="wam-broker__empty" id="emptyState" style="display:none;">
+        <div class="wam-broker__empty-icon">👥</div>
+        <p class="wam-broker__empty-title" id="emptyTitle">متقاضی‌ای یافت نشد</p>
+        <p class="wam-broker__empty-text" id="emptyText">
+          هنوز متقاضی‌ای اضافه نکرده‌اید.
+        </p>
+        <button type="button" class="wam-btn wam-btn--primary" id="emptyCta">
+          ➕ افزودن اولین متقاضی
+        </button>
+      </div>
+
+      <div style="height: 20px;"></div>
+
+    </main>
+
+    <!-- ═══ FAB ═══ -->
+    <button type="button" class="wam-broker__fab" id="brokerFab" aria-label="افزودن متقاضی">➕</button>
+
+    <!-- ═══ BOTTOM NAV ═══ -->
+    <nav class="wam-broker__bottomnav" role="navigation">
+      <a href="broker-dashboard.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">🏠</span>
+        <span class="wam-broker__nav-label">خانه</span>
+      </a>
+      <a href="broker-cases.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">📁</span>
+        <span class="wam-broker__nav-label">پرونده‌ها</span>
+      </a>
+      <a href="broker-wizard.html" class="wam-broker__nav-item wam-broker__nav-item--cta">
+        <span class="wam-broker__nav-icon">➕</span>
+        <span class="wam-broker__nav-label">جدید</span>
+      </a>
+      <a href="broker-applicants.html" class="wam-broker__nav-item is-active">
+        <span class="wam-broker__nav-icon">👥</span>
+        <span class="wam-broker__nav-label">متقاضیان</span>
+      </a>
+      <a href="broker-profile.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">👤</span>
+        <span class="wam-broker__nav-label">پروفایل</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- ═══ MODAL: افزودن/ویرایش متقاضی ═══ -->
+  <div class="wam-broker__modal" id="applicantModal" role="dialog" aria-modal="true">
+    <div class="wam-broker__modal-box">
+
+      <div class="wam-broker__modal-head">
+        <h3 class="wam-broker__modal-title" id="applicantModalTitle">➕ افزودن متقاضی</h3>
+        <button type="button" class="wam-broker__modal-close" id="applicantModalClose" aria-label="بستن">✕</button>
+      </div>
+
+      <form id="applicantForm" novalidate>
+
+        <input type="hidden" id="apId" value="">
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="apName">
+            نام و نام خانوادگی <span style="color:var(--wam-danger)">*</span>
+          </label>
+          <input type="text" id="apName" class="wam-input" placeholder="مثال: علی رضایی" required>
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="apPhone">
+            موبایل <span style="color:var(--wam-danger)">*</span>
+          </label>
+          <input type="tel" id="apPhone" class="wam-input" placeholder="09xxxxxxxxx"
+                 inputmode="numeric" maxlength="11" dir="ltr" required>
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="apNationalId">کد ملی</label>
+          <input type="text" id="apNationalId" class="wam-input" placeholder="۱۰ رقم"
+                 inputmode="numeric" maxlength="10" dir="ltr">
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="apEmail">ایمیل</label>
+          <input type="email" id="apEmail" class="wam-input" placeholder="example@mail.com"
+                 dir="ltr" spellcheck="false">
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" for="apAddress">آدرس</label>
+          <textarea id="apAddress" class="wam-textarea" placeholder="آدرس محل سکونت..."></textarea>
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-check">
+            <input type="checkbox" id="apActive" checked>
+            <span>متقاضی فعال است</span>
+          </label>
+        </div>
+
+        <div class="wam-broker__modal-actions">
+          <button type="button" class="wam-btn" id="applicantCancelBtn">انصراف</button>
+          <button type="submit" class="wam-btn wam-btn--primary">
+            💾 ذخیره
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: جزئیات متقاضی ═══ -->
+  <div class="wam-broker__modal" id="detailModal" role="dialog" aria-modal="true">
+    <div class="wam-broker__modal-box">
+
+      <div class="wam-broker__modal-head">
+        <h3 class="wam-broker__modal-title">👤 جزئیات متقاضی</h3>
+        <button type="button" class="wam-broker__modal-close" id="detailModalClose" aria-label="بستن">✕</button>
+      </div>
+
+      <div id="detailBody">
+        <!-- توسط JS پر می‌شود -->
+      </div>
+
+      <div class="wam-broker__modal-actions">
+        <button type="button" class="wam-btn" id="detailCloseBtn">بستن</button>
+        <button type="button" class="wam-btn wam-btn--primary" id="detailNewCaseBtn">
+          ➕ پرونده جدید
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+  <script src="js/bundle-broker.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       BROKER APPLICANTS CONTROLLER
+       - لیست متقاضیان کارگزار
+       - افزودن/ویرایش/حذف
+       - جستجو + تب‌ها
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_KEY = 'wamPayBrokerApplicants';
+      var STORAGE_CASES = 'wamPayCases';
+
+      var state = {
+        all: [],
+        filtered: [],
+        tab: 'all',
+        query: '',
+        editingId: null,
+        currentDetailId: null
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function uid() {
+        return 'ap_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6);
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کارگزار', username: 'broker', role: 'broker', id: 'broker' };
+      }
+
+      function currentUserId() {
+        var u = currentUser();
+        return u.id || u.username || 'broker';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function colorIndex(id) {
+        var s = String(id || '');
+        var h = 0;
+        for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 5;
+        return h + 1;
+      }
+
+      // ═══════════════════════════════════
+      // داده‌ها
+      // ═══════════════════════════════════
+
+      function loadApplicants() {
+        var all = readJSON(STORAGE_KEY, []);
+        if (!Array.isArray(all)) return [];
+        var me = currentUserId();
+        return all.filter(function (a) {
+          return a && (a.brokerId === me || !a.brokerId);
+        });
+      }
+
+      function casesByApplicant() {
+        var all = readJSON(STORAGE_CASES, []);
+        var map = {};
+        if (!Array.isArray(all)) return map;
+        var me = currentUserId();
+        all.forEach(function (c) {
+          if (!c) return;
+          if (c.brokerId && c.brokerId !== me) return;
+          var key = c.applicantId || c.applicantPhone || c.applicantName;
+          if (!key) return;
+          if (!map[key]) map[key] = { total: 0, active: 0, approved: 0 };
+          map[key].total++;
+          if (c.status === 'approved' || c.status === 'completed') map[key].approved++;
+          else if (c.status !== 'rejected') map[key].active++;
+        });
+        return map;
+      }
+
+      function saveApplicants(arr) {
+        // ذخیره فقط برای کارگزار جاری
+        var all = readJSON(STORAGE_KEY, []);
+        if (!Array.isArray(all)) all = [];
+        var me = currentUserId();
+        // حذف موارد قبلی این کارگزار
+        all = all.filter(function (a) { return a && a.brokerId !== me; });
+        // افزودن موارد جدید
+        arr.forEach(function (a) { all.push(a); });
+        return writeJSON(STORAGE_KEY, all);
+      }
+
+      // ═══════════════════════════════════
+      // فیلتر و رندر
+      // ═══════════════════════════════════
+
+      function applyFilters() {
+        var q = state.query.toLowerCase();
+        var tab = state.tab;
+        var casesMap = casesByApplicant();
+
+        state.filtered = state.all.filter(function (a) {
+          var key = a.id || a.phone || a.name;
+          var stats = casesMap[key] || { total: 0 };
+          var key2 = a.phone || a.name;
+          var stats2 = casesMap[key2] || stats;
+
+          if (tab === 'active' && a.status === 'inactive') return false;
+          if (tab === 'with_cases' && (stats.total + (stats2.total - stats.total)) === 0) return false;
+          if (tab === 'no_cases' && (stats.total + (stats2.total - stats.total)) > 0) return false;
+
+          if (q) {
+            var hay = [a.name, a.phone, a.email, a.nationalId, a.address]
+                      .join(' ').toLowerCase();
+            if (hay.indexOf(q) < 0) return false;
+          }
+          return true;
+        });
+
+        render();
+        updateTabCounts(casesMap);
+      }
+
+      function updateTabCounts(casesMap) {
+        var all = state.all.length;
+        var active = state.all.filter(function (a) { return a.status !== 'inactive'; }).length;
+        var withCases = 0, noCases = 0;
+
+        state.all.forEach(function (a) {
+          var key1 = a.id || a.phone || a.name;
+          var key2 = a.phone || a.name;
+          var s = casesMap[key1] || casesMap[key2] || { total: 0 };
+          if (s.total > 0) withCases++;
+          else noCases++;
+        });
+
+        setCount('all', all);
+        setCount('active', active);
+        setCount('with_cases', withCases);
+        setCount('no_cases', noCases);
+      }
+
+      function setCount(tab, n) {
+        var el = document.querySelector('[data-count="' + tab + '"]');
+        if (el) el.textContent = toFa(n);
+      }
+
+      function render() {
+        var container = $('applicantsList');
+        var empty = $('emptyState');
+
+        if (!container) return;
+
+        if (state.filtered.length === 0) {
+          container.innerHTML = '';
+          if (empty) {
+            empty.style.display = '';
+            var et = $('emptyTitle');
+            var ex = $('emptyText');
+            var ec = $('emptyCta');
+            if (state.query || state.tab !== 'all') {
+              if (et) et.textContent = 'نتیجه‌ای یافت نشد';
+              if (ex) ex.textContent = 'با فیلترهای فعلی متقاضی‌ای وجود ندارد.';
+              if (ec) ec.style.display = 'none';
+            } else {
+              if (et) et.textContent = 'هنوز متقاضی‌ای ندارید';
+              if (ex) ex.textContent = 'اولین متقاضی خود را اضافه کنید.';
+              if (ec) ec.style.display = '';
+            }
+          }
+          return;
+        }
+
+        if (empty) empty.style.display = 'none';
+
+        var casesMap = casesByApplicant();
+        var html = '';
+        state.filtered.forEach(function (a) {
+          html += renderApplicantCard(a, casesMap);
+        });
+        container.innerHTML = html;
+
+        // bind events
+        container.querySelectorAll('.wam-broker__applicant-card').forEach(function (card) {
+          card.addEventListener('click', function (e) {
+            if (e.target.closest('[data-act]')) return;
+            var id = card.getAttribute('data-id');
+            openDetail(id);
+          });
+        });
+
+        container.querySelectorAll('[data-act]').forEach(function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var act = btn.getAttribute('data-act');
+            var id = btn.getAttribute('data-id');
+            if (act === 'call') callApplicant(id);
+            else if (act === 'edit') openEditModal(id);
+            else if (act === 'new-case') newCaseFor(id);
+          });
+        });
+      }
+
+      function renderApplicantCard(a, casesMap) {
+        var initial = (a.name || 'U').trim().charAt(0).toUpperCase();
+        var ci = colorIndex(a.id || a.phone || a.name);
+        var key1 = a.id || a.phone || a.name;
+        var key2 = a.phone || a.name;
+        var s = casesMap[key1] || casesMap[key2] || { total: 0, active: 0, approved: 0 };
+        var isInactive = a.status === 'inactive';
+
+        var statsHtml = '';
+        if (s.total > 0) {
+          statsHtml += '<span class="wam-broker__stat-mini">📁 ' + toFa(s.total) + '</span>';
+          if (s.active > 0) statsHtml += '<span class="wam-broker__stat-mini wam-broker__stat-mini--active">⏳ ' + toFa(s.active) + '</span>';
+          if (s.approved > 0) statsHtml += '<span class="wam-broker__stat-mini wam-broker__stat-mini--approved">✓ ' + toFa(s.approved) + '</span>';
+        }
+
+        return '' +
+          '<div class="wam-broker__applicant-card" data-id="' + esc(a.id) + '"' +
+            (isInactive ? ' style="opacity:0.6;"' : '') + '>' +
+            '<div class="wam-broker__applicant-avatar-lg" data-color="' + ci + '">' + esc(initial) + '</div>' +
+            '<div class="wam-broker__applicant-info-wrap">' +
+              '<p class="wam-broker__applicant-name-lg">' + esc(a.name || 'بدون نام') + '</p>' +
+              '<div class="wam-broker__applicant-meta-lg">' +
+                (a.phone ? '<span class="wam-broker__applicant-meta-item">📱 ' + esc(a.phone) + '</span>' : '') +
+                (a.email ? '<span class="wam-broker__applicant-meta-item">✉️ ' + esc(a.email) + '</span>' : '') +
+              '</div>' +
+              (statsHtml ? '<div class="wam-broker__applicant-stats">' + statsHtml + '</div>' : '') +
+            '</div>' +
+            '<div class="wam-broker__applicant-actions">' +
+              '<button type="button" class="wam-broker__icon-btn-sm wam-broker__icon-btn-sm--primary" ' +
+                'data-act="call" data-id="' + esc(a.id) + '" title="تماس">📞</button>' +
+              '<button type="button" class="wam-broker__icon-btn-sm" ' +
+                'data-act="edit" data-id="' + esc(a.id) + '" title="ویرایش">✏</button>' +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // Modal افزودن/ویرایش
+      // ═══════════════════════════════════
+
+      function openAddModal() {
+        state.editingId = null;
+        if ($('applicantModalTitle')) $('applicantModalTitle').textContent = '➕ افزودن متقاضی';
+        if ($('apId')) $('apId').value = '';
+        if ($('apName')) $('apName').value = '';
+        if ($('apPhone')) $('apPhone').value = '';
+        if ($('apNationalId')) $('apNationalId').value = '';
+        if ($('apEmail')) $('apEmail').value = '';
+        if ($('apAddress')) $('apAddress').value = '';
+        if ($('apActive')) $('apActive').checked = true;
+
+        var m = $('applicantModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('apName')) $('apName').focus(); }, 150);
+      }
+
+      function openEditModal(id) {
+        var a = state.all.find(function (x) { return x.id === id; });
+        if (!a) return;
+        state.editingId = id;
+        if ($('applicantModalTitle')) $('applicantModalTitle').textContent = '✏ ویرایش متقاضی';
+        if ($('apId')) $('apId').value = a.id;
+        if ($('apName')) $('apName').value = a.name || '';
+        if ($('apPhone')) $('apPhone').value = a.phone || '';
+        if ($('apNationalId')) $('apNationalId').value = a.nationalId || '';
+        if ($('apEmail')) $('apEmail').value = a.email || '';
+        if ($('apAddress')) $('apAddress').value = a.address || '';
+        if ($('apActive')) $('apActive').checked = a.status !== 'inactive';
+
+        var m = $('applicantModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('apName')) $('apName').focus(); }, 150);
+      }
+
+      function closeApplicantModal() {
+        var m = $('applicantModal');
+        if (m) m.classList.remove('is-open');
+        state.editingId = null;
+      }
+
+      function saveApplicant(e) {
+        if (e) e.preventDefault();
+
+        var name = ($('apName') || {}).value || '';
+        var phone = ($('apPhone') || {}).value || '';
+        var nationalId = ($('apNationalId') || {}).value || '';
+        var email = ($('apEmail') || {}).value || '';
+        var address = ($('apAddress') || {}).value || '';
+        var isActive = !!($('apActive') || {}).checked;
+
+        name = name.trim();
+        phone = phone.trim();
+        nationalId = nationalId.trim();
+        email = email.trim();
+        address = address.trim();
+
+        if (!name || name.length < 3) {
+          alert('نام و نام خانوادگی الزامی است.');
+          return;
+        }
+        if (!/^09\d{9}$/.test(phone)) {
+          alert('موبایل باید با ۰۹ شروع و ۱۱ رقم باشد.');
+          return;
+        }
+        if (nationalId && !/^\d{10}$/.test(nationalId)) {
+          alert('کد ملی باید ۱۰ رقم باشد.');
+          return;
+        }
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+          alert('ایمیل معتبر نیست.');
+          return;
+        }
+
+        var all = state.all.slice();
+        var me = currentUserId();
+        var user = currentUser();
+
+        if (state.editingId) {
+          // ویرایش
+          for (var i = 0; i < all.length; i++) {
+            if (all[i].id === state.editingId) {
+              all[i].name = name;
+              all[i].phone = phone;
+              all[i].nationalId = nationalId;
+              all[i].email = email;
+              all[i].address = address;
+              all[i].status = isActive ? 'active' : 'inactive';
+              all[i].updatedAt = Date.now();
+              break;
+            }
+          }
+        } else {
+          // بررسی تکراری موبایل
+          var dup = all.some(function (x) { return x.phone === phone; });
+          if (dup) {
+            alert('این شماره موبایل قبلاً ثبت شده است.');
+            return;
+          }
+
+          all.push({
+            id: uid(),
+            brokerId: me,
+            brokerName: user.name || user.username || 'کارگزار',
+            name: name,
+            phone: phone,
+            nationalId: nationalId,
+            email: email,
+            address: address,
+            status: isActive ? 'active' : 'inactive',
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          });
+        }
+
+        if (!saveApplicants(all)) {
+          alert('خطا در ذخیره‌سازی.');
+          return;
+        }
+
+        emitEvent(state.editingId ? 'broker:applicant-updated' : 'broker:applicant-created', {
+          id: state.editingId || 'new'
+        });
+
+        closeApplicantModal();
+        load();
+      }
+
+      // ═══════════════════════════════════
+      // جزئیات
+      // ═══════════════════════════════════
+
+      function openDetail(id) {
+        var a = state.all.find(function (x) { return x.id === id; });
+        if (!a) return;
+        state.currentDetailId = id;
+
+        var casesMap = casesByApplicant();
+        var key1 = a.id || a.phone || a.name;
+        var key2 = a.phone || a.name;
+        var s = casesMap[key1] || casesMap[key2] || { total: 0, active: 0, approved: 0 };
+
+        var html = '';
+        html += '<div class="wam-broker__detail-row"><span class="wam-broker__detail-label">نام:</span><span class="wam-broker__detail-value">' + esc(a.name || '—') + '</span></div>';
+        html += '<div class="wam-broker__detail-row"><span class="wam-broker__detail-label">موبایل:</span><span class="wam-broker__detail-value" dir="ltr">' + esc(a.phone || '—') + '</span></div>';
+        html += '<div class="wam-broker__detail-row"><span class="wam-broker__detail-label">کد ملی:</span><span class="wam-broker__detail-value" dir="ltr">' + esc(a.nationalId || '—') + '</span></div>';
+        html += '<div class="wam-broker__detail-row"><span class="wam-broker__detail-label">ایمیل:</span><span class="wam-broker__detail-value" dir="ltr">' + esc(a.email || '—') + '</span></div>';
+        html += '<div class="wam-broker__detail-row"><span class="wam-broker__detail-label">آدرس:</span><span class="wam-broker__detail-value">' + esc(a.address || '—') + '</span></div>';
+        html += '<div class="wam-broker__detail-row"><span class="wam-broker__detail-label">وضعیت:</span><span class="wam-broker__detail-value">' + (a.status === 'inactive' ? 'غیرفعال' : 'فعال') + '</span></div>';
+        html += '<div class="wam-broker__detail-row"><span class="wam-broker__detail-label">کل پرونده‌ها:</span><span class="wam-broker__detail-value">' + toFa(s.total) + '</span></div>';
+        html += '<div class="wam-broker__detail-row"><span class="wam-broker__detail-label">فعال:</span><span class="wam-broker__detail-value">' + toFa(s.active) + '</span></div>';
+        html += '<div class="wam-broker__detail-row"><span class="wam-broker__detail-label">تأییدشده:</span><span class="wam-broker__detail-value">' + toFa(s.approved) + '</span></div>';
+
+        if ($('detailBody')) $('detailBody').innerHTML = html;
+        var m = $('detailModal');
+        if (m) m.classList.add('is-open');
+      }
+
+      function closeDetail() {
+        var m = $('detailModal');
+        if (m) m.classList.remove('is-open');
+        state.currentDetailId = null;
+      }
+
+      // ═══════════════════════════════════
+      // اکشن‌ها
+      // ═══════════════════════════════════
+
+      function callApplicant(id) {
+        var a = state.all.find(function (x) { return x.id === id; });
+        if (!a || !a.phone) {
+          alert('شماره تماس ثبت نشده.');
+          return;
+        }
+        window.location.href = 'tel:' + a.phone;
+      }
+
+      function newCaseFor(id) {
+        var a = state.all.find(function (x) { return x.id === id; });
+        if (!a) return;
+
+        // ذخیره اطلاعات برای pre-fill در ویزارد
+        try {
+          localStorage.setItem('wamPayWizardPrefill', JSON.stringify({
+            name: a.name,
+            phone: a.phone,
+            nationalId: a.nationalId,
+            email: a.email,
+            address: a.address,
+            applicantId: a.id
+          }));
+        } catch (_) {}
+
+        window.location.href = 'broker-wizard.html?from_applicant=' + encodeURIComponent(a.id);
+      }
+
+      // ═══════════════════════════════════
+      // Seed
+      // ═══════════════════════════════════
+
+      function seedIfEmpty() {
+        var all = readJSON(STORAGE_KEY, []);
+        var me = currentUserId();
+        var hasMine = Array.isArray(all) && all.some(function (a) {
+          return a && a.brokerId === me;
+        });
+        if (hasMine) return;
+
+        var now = Date.now();
+        var samples = [
+          { id: uid(), brokerId: me, brokerName: currentUser().name || 'کارگزار',
+            name: 'علی رضایی', phone: '09120000001', nationalId: '0012345678',
+            email: 'ali@example.com', address: 'تهران، خیابان ولیعصر',
+            status: 'active', createdAt: now - 86400000 * 10 },
+          { id: uid(), brokerId: me, brokerName: currentUser().name || 'کارگزار',
+            name: 'مریم احمدی', phone: '09120000002', nationalId: '0023456789',
+            email: 'maryam@example.com', address: 'اصفهان، خیابان چهارباغ',
+            status: 'active', createdAt: now - 86400000 * 7 },
+          { id: uid(), brokerId: me, brokerName: currentUser().name || 'کارگزار',
+            name: 'رضا کاظمی', phone: '09120000003', nationalId: '0034567890',
+            email: 'reza@example.com', address: 'شیراز، بلوار زند',
+            status: 'active', createdAt: now - 86400000 * 5 },
+          { id: uid(), brokerId: me, brokerName: currentUser().name || 'کارگزار',
+            name: 'فاطمه تقوی', phone: '09120000004', nationalId: '0045678901',
+            email: 'fateme@example.com', address: 'مشهد، بلوار وکیل‌آباد',
+            status: 'active', createdAt: now - 86400000 * 3 },
+          { id: uid(), brokerId: me, brokerName: currentUser().name || 'کارگزار',
+            name: 'سعید محمدی', phone: '09120000005', nationalId: '0056789012',
+            email: '', address: 'تبریز، خیابان امام',
+            status: 'inactive', createdAt: now - 86400000 * 15 }
+        ];
+
+        if (!Array.isArray(all)) all = [];
+        all = all.concat(samples);
+        writeJSON(STORAGE_KEY, all);
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // جستجو
+        var input = $('searchInput');
+        var clearBtn = $('searchClear');
+        if (input) {
+          input.addEventListener('input', function () {
+            state.query = input.value || '';
+            if (clearBtn) clearBtn.classList.toggle('is-visible', state.query.length > 0);
+            applyFilters();
+          });
+        }
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function () {
+            if (input) input.value = '';
+            state.query = '';
+            clearBtn.classList.remove('is-visible');
+            applyFilters();
+          });
+        }
+
+        // تب‌ها
+        $$('.wam-broker__tab').forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            $$('.wam-broker__tab').forEach(function (x) { x.classList.remove('is-active'); });
+            tab.classList.add('is-active');
+            state.tab = tab.getAttribute('data-tab') || 'all';
+            applyFilters();
+          });
+        });
+
+        // دکمه افزودن
+        if ($('addApplicantBtn')) $('addApplicantBtn').addEventListener('click', openAddModal);
+        if ($('emptyCta')) $('emptyCta').addEventListener('click', openAddModal);
+        if ($('brokerFab')) $('brokerFab').addEventListener('click', openAddModal);
+
+        // Modal
+        if ($('applicantModalClose')) $('applicantModalClose').addEventListener('click', closeApplicantModal);
+        if ($('applicantCancelBtn')) $('applicantCancelBtn').addEventListener('click', closeApplicantModal);
+        var m1 = $('applicantModal');
+        if (m1) {
+          m1.addEventListener('click', function (e) {
+            if (e.target === m1) closeApplicantModal();
+          });
+        }
+
+        // Form
+        if ($('applicantForm')) $('applicantForm').addEventListener('submit', saveApplicant);
+
+        // موبایل: فقط عدد
+        if ($('apPhone')) {
+          $('apPhone').addEventListener('input', function () {
+            $('apPhone').value = $('apPhone').value.replace(/\D/g, '').slice(0, 11);
+          });
+        }
+        if ($('apNationalId')) {
+          $('apNationalId').addEventListener('input', function () {
+            $('apNationalId').value = $('apNationalId').value.replace(/\D/g, '').slice(0, 10);
+          });
+        }
+
+        // Detail modal
+        if ($('detailModalClose')) $('detailModalClose').addEventListener('click', closeDetail);
+        if ($('detailCloseBtn')) $('detailCloseBtn').addEventListener('click', closeDetail);
+        var m2 = $('detailModal');
+        if (m2) {
+          m2.addEventListener('click', function (e) {
+            if (e.target === m2) closeDetail();
+          });
+        }
+        if ($('detailNewCaseBtn')) {
+          $('detailNewCaseBtn').addEventListener('click', function () {
+            if (state.currentDetailId) newCaseFor(state.currentDetailId);
+          });
+        }
+
+        // Esc
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            closeApplicantModal();
+            closeDetail();
+          }
+        });
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function load() {
+        state.all = loadApplicants();
+        state.all.sort(function (a, b) {
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+        applyFilters();
+      }
+
+      function init() {
+        seedIfEmpty();
+        load();
+        bindEvents();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

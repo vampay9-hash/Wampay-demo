@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="مدیریت تأییدها — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>تأییدها | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* استایل اختصاصی تأییدها */
+    .wam-admin__approval-card {
+      display: flex;
+      gap: var(--wam-space-md);
+      padding: var(--wam-space-md);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-right: 4px solid var(--wam-warning);
+      border-radius: var(--wam-radius-md);
+      margin-bottom: var(--wam-space-md);
+      transition: box-shadow var(--wam-t), transform var(--wam-t);
+    }
+
+    .wam-admin__approval-card:hover {
+      box-shadow: var(--wam-shadow);
+      transform: translateY(-1px);
+    }
+
+    .wam-admin__approval-card[data-type="user"]     { border-right-color: var(--wam-primary-light); }
+    .wam-admin__approval-card[data-type="case"]     { border-right-color: var(--wam-info); }
+    .wam-admin__approval-card[data-type="payment"]  { border-right-color: var(--wam-gold); }
+    .wam-admin__approval-card[data-type="contract"] { border-right-color: var(--wam-success); }
+
+    .wam-admin__approval-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--wam-radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex: 0 0 auto;
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    .wam-admin__approval-icon[data-type="user"]     { background: var(--wam-primary-soft); color: var(--wam-primary); }
+    .wam-admin__approval-icon[data-type="case"]     { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-admin__approval-icon[data-type="payment"]  { background: var(--wam-gold-soft); color: #7a5a00; }
+    .wam-admin__approval-icon[data-type="contract"] { background: var(--wam-success-soft); color: var(--wam-success-text); }
+
+    .wam-admin__approval-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-admin__approval-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .wam-admin__approval-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--wam-text);
+      margin: 0;
+    }
+
+    .wam-admin__approval-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.74rem;
+      color: var(--wam-text-muted);
+      margin-bottom: 8px;
+    }
+
+    .wam-admin__approval-desc {
+      font-size: 0.82rem;
+      color: var(--wam-text-muted);
+      line-height: 1.7;
+      margin: 0 0 10px;
+    }
+
+    .wam-admin__approval-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .wam-admin__approval-actions .wam-btn {
+      flex: 0 0 auto;
+    }
+
+    .wam-admin__approval-status {
+      margin-right: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.7rem;
+      font-weight: 800;
+      background: var(--wam-warning-soft);
+      color: var(--wam-warning-text);
+    }
+
+    .wam-admin__approval-status--approved {
+      background: var(--wam-success-soft);
+      color: var(--wam-success-text);
+    }
+
+    .wam-admin__approval-status--rejected {
+      background: var(--wam-danger-soft);
+      color: var(--wam-danger-text);
+    }
+
+    .wam-admin__approval-status--pending {
+      background: var(--wam-warning-soft);
+      color: var(--wam-warning-text);
+    }
+
+    /* تب‌ها */
+    .wam-admin__tabs .wam-admin__tab-count {
+      background: var(--wam-muted-soft);
+    }
+
+    .wam-admin__tabs .wam-admin__tab.is-active .wam-admin__tab-count {
+      background: var(--wam-gold-soft);
+      color: #7a5a00;
+    }
+
+    /* Modal reject/approve */
+    #approvalModal .wam-modal__box { max-width: 540px; }
+
+    .wam-admin__decision-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-bg-muted);
+      margin-bottom: var(--wam-space-md);
+      font-size: 0.85rem;
+    }
+
+    .wam-admin__decision-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex: 0 0 auto;
+    }
+
+    .wam-admin__decision-icon--approve { background: var(--wam-success-soft); color: var(--wam-success); }
+    .wam-admin__decision-icon--reject  { background: var(--wam-danger-soft); color: var(--wam-danger); }
+  </style>
+</head>
+
+<body data-page="admin-approvals">
+
+  <div class="wam-admin" id="adminRoot">
+
+    <div class="wam-admin__overlay" id="adminOverlay"></div>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="wam-admin__sidebar" aria-label="منوی مدیریت">
+      <div class="wam-admin__brand">
+        <span class="wam-admin__brand-icon">و</span>
+        <span>وام پی</span>
+      </div>
+
+      <nav class="wam-admin__nav" role="navigation">
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">اصلی</div>
+          <a class="wam-admin__nav-item" href="admin-dashboard.html">
+            <span class="wam-admin__nav-icon">📊</span>
+            <span>داشبورد</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">مدیریت</div>
+          <a class="wam-admin__nav-item" href="admin-users.html">
+            <span class="wam-admin__nav-icon">👥</span>
+            <span>کاربران</span>
+            <span class="wam-admin__nav-badge" data-badge="users" hidden>0</span>
+          </a>
+          <a class="wam-admin__nav-item" href="admin-cases.html">
+            <span class="wam-admin__nav-icon">📁</span>
+            <span>پرونده‌ها</span>
+          </a>
+          <a class="wam-admin__nav-item is-active" href="admin-approvals.html">
+            <span class="wam-admin__nav-icon">✓</span>
+            <span>تأییدها</span>
+            <span class="wam-admin__nav-badge" data-badge="approvals" hidden>0</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">مالی</div>
+          <a class="wam-admin__nav-item" href="payments.html">
+            <span class="wam-admin__nav-icon">💳</span>
+            <span>پرداخت‌ها</span>
+          </a>
+          <a class="wam-admin__nav-item" href="financial-reports.html">
+            <span class="wam-admin__nav-icon">📈</span>
+            <span>گزارشات</span>
+          </a>
+          <a class="wam-admin__nav-item" href="advanced-reports.html">
+            <span class="wam-admin__nav-icon">📊</span>
+            <span>گزارشات پیشرفته</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">سیستم</div>
+          <a class="wam-admin__nav-item" href="follow-ups.html">
+            <span class="wam-admin__nav-icon">📌</span>
+            <span>پیگیری‌ها</span>
+            <span class="wam-admin__nav-badge" data-badge="followups" hidden>0</span>
+          </a>
+          <a class="wam-admin__nav-item" href="dashboard.html">
+            <span class="wam-admin__nav-icon">🧩</span>
+            <span>داشبورد عمومی</span>
+          </a>
+          <a class="wam-admin__nav-item" href="admin-settings.html">
+            <span class="wam-admin__nav-icon">⚙️</span>
+            <span>تنظیمات</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group" style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+          <button type="button" class="wam-admin__nav-item" id="adminLogoutBtn">
+            <span class="wam-admin__nav-icon">🚪</span>
+            <span>خروج از حساب</span>
+          </button>
+        </div>
+
+      </nav>
+    </aside>
+
+    <!-- ═══ MAIN ═══ -->
+    <div class="wam-admin__main">
+
+      <header class="wam-admin__topbar">
+        <button type="button" class="wam-admin__menu-toggle" id="adminMenuToggle" aria-label="باز کردن منو">☰</button>
+        <h1 class="wam-admin__topbar-title">✓ مدیریت تأییدها</h1>
+        <div class="wam-admin__topbar-actions">
+          <button type="button" class="wam-btn wam-btn--ghost wam-btn--sm" id="refreshBtn">🔄</button>
+          <div class="wam-admin__user" id="adminUserChip">
+            <span class="wam-admin__user-avatar" id="adminUserAvatar">م</span>
+            <span id="adminUserName">مدیر</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="wam-admin__content">
+
+        <nav class="wam-admin__breadcrumb">
+          <a href="admin-dashboard.html">خانه</a>
+          <span class="wam-admin__breadcrumb-sep">/</span>
+          <span>تأییدها</span>
+        </nav>
+
+        <!-- آمار -->
+        <section class="wam-admin__stats">
+          <div class="wam-admin__stat wam-admin__stat--warning">
+            <div class="wam-admin__stat-head">
+              <span class="wam-admin__stat-label">در انتظار</span>
+              <span class="wam-admin__stat-icon">⏳</span>
+            </div>
+            <div class="wam-admin__stat-value" id="statPending">0</div>
+          </div>
+
+          <div class="wam-admin__stat wam-admin__stat--success">
+            <div class="wam-admin__stat-head">
+              <span class="wam-admin__stat-label">تأییدشده</span>
+              <span class="wam-admin__stat-icon">✓</span>
+            </div>
+            <div class="wam-admin__stat-value" id="statApproved">0</div>
+          </div>
+
+          <div class="wam-admin__stat wam-admin__stat--danger">
+            <div class="wam-admin__stat-head">
+              <span class="wam-admin__stat-label">رد شده</span>
+              <span class="wam-admin__stat-icon">✕</span>
+            </div>
+            <div class="wam-admin__stat-value" id="statRejected">0</div>
+          </div>
+
+          <div class="wam-admin__stat">
+            <div class="wam-admin__stat-head">
+              <span class="wam-admin__stat-label">کل درخواست‌ها</span>
+              <span class="wam-admin__stat-icon">📋</span>
+            </div>
+            <div class="wam-admin__stat-value" id="statTotal">0</div>
+          </div>
+        </section>
+
+        <!-- فیلتر و تب‌ها -->
+        <div class="wam-admin__filters">
+          <div class="wam-admin__search">
+            <input type="text" id="searchInput" placeholder="جستجو در تأییدها...">
+          </div>
+
+          <select class="wam-admin__filter-select" id="filterType">
+            <option value="">همه انواع</option>
+            <option value="user">👤 کاربر</option>
+            <option value="case">📁 پرونده</option>
+            <option value="payment">💳 پرداخت</option>
+            <option value="contract">📝 قرارداد</option>
+          </select>
+
+          <button type="button" class="wam-btn wam-btn--ghost wam-btn--sm" id="clearFiltersBtn">
+            ✖ پاک کردن
+          </button>
+        </div>
+
+        <!-- تب‌ها -->
+        <div class="wam-admin__tabs" id="tabsBar">
+          <button type="button" class="wam-admin__tab is-active" data-tab="pending">
+            ⏳ در انتظار
+            <span class="wam-admin__tab-count" data-count="pending">0</span>
+          </button>
+          <button type="button" class="wam-admin__tab" data-tab="approved">
+            ✓ تأییدشده
+            <span class="wam-admin__tab-count" data-count="approved">0</span>
+          </button>
+          <button type="button" class="wam-admin__tab" data-tab="rejected">
+            ✕ ردشده
+            <span class="wam-admin__tab-count" data-count="rejected">0</span>
+          </button>
+          <button type="button" class="wam-admin__tab" data-tab="all">
+            📋 همه
+            <span class="wam-admin__tab-count" data-count="all">0</span>
+          </button>
+        </div>
+
+        <!-- لیست تأییدها -->
+        <div id="approvalsList">
+          <!-- توسط JS پر می‌شود -->
+        </div>
+
+        <!-- حالت خالی -->
+        <div class="wam-admin__empty" id="emptyState" style="display:none;">
+          <div class="wam-admin__empty-icon">🎉</div>
+          <h3 class="wam-admin__empty-title">همه چیز مرتب است!</h3>
+          <p class="wam-admin__empty-text" id="emptyText">
+            در حال حاضر تأییدیه‌ای در این وضعیت وجود ندارد.
+          </p>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- ═══ MODAL: تأیید/رد ═══ -->
+  <div class="wam-modal" id="approvalModal" role="dialog" aria-modal="true">
+    <div class="wam-modal__box">
+
+      <div class="wam-modal__header">
+        <h3 class="wam-modal__title" id="approvalModalTitle">تأیید درخواست</h3>
+        <button type="button" class="wam-modal__close" id="approvalModalClose" aria-label="بستن">✕</button>
+      </div>
+
+      <div class="wam-modal__body">
+
+        <div class="wam-admin__decision-info">
+          <div class="wam-admin__decision-icon" id="decisionIcon">✓</div>
+          <div>
+            <div style="font-weight:800;" id="decisionTitle">تأیید درخواست</div>
+            <div style="font-size:0.78rem;color:var(--wam-text-muted);" id="decisionSubtitle">
+              لطفاً اطلاعات را بررسی و تأیید کنید.
+            </div>
+          </div>
+        </div>
+
+        <div class="wam-field">
+          <label class="wam-field__label" id="reasonLabel">دلیل (اختیاری)</label>
+          <textarea id="reasonInput" class="wam-textarea" placeholder="توضیح یا دلیل تصمیم خود را وارد کنید..."></textarea>
+        </div>
+
+      </div>
+
+      <div class="wam-modal__footer">
+        <button type="button" class="wam-btn" id="approvalCancelBtn">انصراف</button>
+        <button type="button" class="wam-btn wam-btn--primary" id="approvalConfirmBtn">
+          ✓ تأیید نهایی
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+  <script src="js/bundle-admin.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       ADMIN APPROVALS CONTROLLER
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+
+      var STORAGE_KEY = 'wamPayApprovals';
+
+      var state = {
+        items: [],
+        filtered: [],
+        tab: 'pending',
+        action: null, // { type: 'approve'|'reject', id }
+        editingId: null
+      };
+
+      // ─── DOM refs ───
+      var adminRoot   = $('adminRoot');
+      var menuToggle  = $('adminMenuToggle');
+      var overlay     = $('adminOverlay');
+      var logoutBtn   = $('adminLogoutBtn');
+      var userChip    = $('adminUserChip');
+      var userAvatar  = $('adminUserAvatar');
+      var userName    = $('adminUserName');
+      var refreshBtn  = $('refreshBtn');
+
+      var statPending = $('statPending');
+      var statApproved= $('statApproved');
+      var statRejected= $('statRejected');
+      var statTotal   = $('statTotal');
+
+      var searchInput = $('searchInput');
+      var filterType  = $('filterType');
+      var clearBtn    = $('clearFiltersBtn');
+
+      var tabsBar     = $('tabsBar');
+      var listEl      = $('approvalsList');
+      var emptyState  = $('emptyState');
+      var emptyText   = $('emptyText');
+
+      var modal       = $('approvalModal');
+      var modalTitle  = $('approvalModalTitle');
+      var modalClose  = $('approvalModalClose');
+      var decisionIcon= $('decisionIcon');
+      var decisionTitle = $('decisionTitle');
+      var decisionSub = $('decisionSubtitle');
+      var reasonLabel = $('reasonLabel');
+      var reasonInput = $('reasonInput');
+      var cancelBtn   = $('approvalCancelBtn');
+      var confirmBtn  = $('approvalConfirmBtn');
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function fmtTime(ts) {
+        if (!ts) return '';
+        try {
+          return new Date(ts).toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+        } catch (_) { return ''; }
+      }
+
+      function uid() {
+        return 'ap_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6);
+      }
+
+      function readItems() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          var arr = raw ? JSON.parse(raw) : [];
+          return Array.isArray(arr) ? arr : [];
+        } catch (_) { return []; }
+      }
+
+      function saveItems(arr) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+          return true;
+        } catch (_) { return false; }
+      }
+
+      function typeIcon(t) {
+        var map = { user: '👤', case: '📁', payment: '💳', contract: '📝' };
+        return map[t] || '📋';
+      }
+
+      function typeLabel(t) {
+        var map = { user: 'کاربر', case: 'پرونده', payment: 'پرداخت', contract: 'قرارداد' };
+        return map[t] || '—';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری و فیلتر
+      // ═══════════════════════════════════
+
+      function load() {
+        state.items = readItems();
+        state.items.sort(function (a, b) {
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+        applyFilters();
+        updateStats();
+      }
+
+      function applyFilters() {
+        var q = (searchInput.value || '').trim().toLowerCase();
+        var t = filterType.value;
+        var tab = state.tab;
+
+        state.filtered = state.items.filter(function (it) {
+          if (tab !== 'all' && it.status !== tab) return false;
+          if (t && it.type !== t) return false;
+          if (!q) return true;
+          var hay = [
+            it.title, it.description, it.requesterName,
+            it.caseTitle, it.id, it.type
+          ].join(' ').toLowerCase();
+          return hay.indexOf(q) >= 0;
+        });
+
+        render();
+      }
+
+      // ═══════════════════════════════════
+      // آمار
+      // ═══════════════════════════════════
+
+      function updateStats() {
+        var p = 0, a = 0, r = 0, tot = state.items.length;
+        state.items.forEach(function (it) {
+          if (it.status === 'pending') p++;
+          else if (it.status === 'approved') a++;
+          else if (it.status === 'rejected') r++;
+        });
+
+        if (statPending) statPending.textContent = p;
+        if (statApproved) statApproved.textContent = a;
+        if (statRejected) statRejected.textContent = r;
+        if (statTotal) statTotal.textContent = tot;
+
+        // آپدیت tab counts
+        setCount('pending', p);
+        setCount('approved', a);
+        setCount('rejected', r);
+        setCount('all', tot);
+
+        // badge سایدبار
+        var badge = document.querySelector('[data-badge="approvals"]');
+        if (badge) {
+          if (p > 0) { badge.hidden = false; badge.textContent = p > 99 ? '99+' : p; }
+          else badge.hidden = true;
+        }
+      }
+
+      function setCount(tab, n) {
+        var el = document.querySelector('[data-count="' + tab + '"]');
+        if (el) el.textContent = n;
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function render() {
+        var list = state.filtered;
+
+        if (list.length === 0) {
+          if (listEl) listEl.innerHTML = '';
+          if (emptyState) emptyState.style.display = '';
+          if (emptyText) {
+            var msgs = {
+              pending: 'در حال حاضر هیچ درخواستی در انتظار تأیید نیست. 🎉',
+              approved: 'هیچ درخواستی تأیید نشده است.',
+              rejected: 'هیچ درخواستی رد نشده است.',
+              all: 'هیچ تأییدیه‌ای یافت نشد.'
+            };
+            emptyText.textContent = msgs[state.tab] || 'موردی یافت نشد.';
+          }
+          return;
+        }
+        if (emptyState) emptyState.style.display = 'none';
+
+        var html = '';
+        for (var i = 0; i < list.length; i++) {
+          var it = list[i];
+          html += _renderCard(it);
+        }
+        if (listEl) listEl.innerHTML = html;
+      }
+
+      function _renderCard(it) {
+        var icon = typeIcon(it.type);
+        var type = typeLabel(it.type);
+        var status = it.status || 'pending';
+        var statusLabel = status === 'approved' ? '✓ تأیید شده'
+                        : status === 'rejected' ? '✕ رد شده'
+                        : '⏳ در انتظار';
+        var statusCls = 'wam-admin__approval-status--' + status;
+
+        var actions = '';
+        if (status === 'pending') {
+          actions =
+            '<button type="button" class="wam-btn wam-btn--success wam-btn--sm" data-action="approve" data-id="' + esc(it.id) + '">' +
+            '✓ تأیید</button>' +
+            '<button type="button" class="wam-btn wam-btn--danger wam-btn--sm" data-action="reject" data-id="' + esc(it.id) + '">' +
+            '✕ رد</button>' +
+            '<button type="button" class="wam-btn wam-btn--ghost wam-btn--sm" data-action="view" data-id="' + esc(it.id) + '">' +
+            '👁 جزئیات</button>';
+        } else {
+          actions =
+            '<button type="button" class="wam-btn wam-btn--ghost wam-btn--sm" data-action="view" data-id="' + esc(it.id) + '">' +
+            '👁 جزئیات</button>';
+          if (it.decidedBy) {
+            actions += '<span style="font-size:0.72rem;color:var(--wam-text-muted);padding:8px 10px;">' +
+                       'توسط: ' + esc(it.decidedBy) + '</span>';
+          }
+        }
+
+        var reason = '';
+        if (it.decisionReason) {
+          reason = '<p class="wam-admin__approval-desc">📝 ' + esc(it.decisionReason) + '</p>';
+        } else if (it.description) {
+          reason = '<p class="wam-admin__approval-desc">' + esc(it.description) + '</p>';
+        }
+
+        return '' +
+          '<div class="wam-admin__approval-card" data-type="' + esc(it.type) + '" data-id="' + esc(it.id) + '">' +
+            '<div class="wam-admin__approval-icon" data-type="' + esc(it.type) + '">' + icon + '</div>' +
+            '<div class="wam-admin__approval-body">' +
+              '<div class="wam-admin__approval-head">' +
+                '<h4 class="wam-admin__approval-title">' + esc(it.title || 'بدون عنوان') + '</h4>' +
+                '<span class="wam-admin__approval-status ' + statusCls + '">' + statusLabel + '</span>' +
+              '</div>' +
+              '<div class="wam-admin__approval-meta">' +
+                '<span>🏷 ' + type + '</span>' +
+                (it.requesterName ? '<span>👤 ' + esc(it.requesterName) + '</span>' : '') +
+                (it.caseTitle ? '<span>📁 ' + esc(it.caseTitle) + '</span>' : '') +
+                '<span>🗓 ' + fmtDate(it.createdAt) + ' ' + fmtTime(it.createdAt) + '</span>' +
+              '</div>' +
+              reason +
+              '<div class="wam-admin__approval-actions">' + actions + '</div>' +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // Modal تصمیم
+      // ═══════════════════════════════════
+
+      function openDecisionModal(type, item) {
+        state.action = { type: type, id: item.id, item: item };
+        state.editingId = item.id;
+
+        if (type === 'approve') {
+          modalTitle.textContent = 'تأیید درخواست';
+          decisionIcon.className = 'wam-admin__decision-icon wam-admin__decision-icon--approve';
+          decisionIcon.textContent = '✓';
+          decisionTitle.textContent = 'تأیید درخواست';
+          decisionSub.textContent = 'با تأیید این درخواست، عملیات مربوطه انجام می‌شود.';
+          confirmBtn.className = 'wam-btn wam-btn--success';
+          confirmBtn.textContent = '✓ تأیید نهایی';
+          reasonLabel.textContent = 'توضیح (اختیاری)';
+          reasonInput.placeholder = 'توضیح یا یادداشت خود را وارد کنید...';
+        } else {
+          modalTitle.textContent = 'رد درخواست';
+          decisionIcon.className = 'wam-admin__decision-icon wam-admin__decision-icon--reject';
+          decisionIcon.textContent = '✕';
+          decisionTitle.textContent = 'رد درخواست';
+          decisionSub.textContent = 'لطفاً دلیل رد این درخواست را وارد کنید.';
+          confirmBtn.className = 'wam-btn wam-btn--danger';
+          confirmBtn.textContent = '✕ رد نهایی';
+          reasonLabel.textContent = 'دلیل رد *';
+          reasonInput.placeholder = 'دلیل رد را وارد کنید...';
+        }
+
+        reasonInput.value = '';
+        modal.classList.add('is-open');
+        setTimeout(function () { reasonInput.focus(); }, 150);
+      }
+
+      function closeDecisionModal() {
+        modal.classList.remove('is-open');
+        state.action = null;
+        state.editingId = null;
+      }
+
+      function confirmDecision() {
+        if (!state.action) return;
+        var item = state.action.item;
+        var type = state.action.type;
+        var reason = (reasonInput.value || '').trim();
+
+        if (type === 'reject' && !reason) {
+          alert('دلیل رد الزامی است.');
+          reasonInput.focus();
+          return;
+        }
+
+        var items = state.items.slice();
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].id === item.id) {
+            items[i].status = (type === 'approve') ? 'approved' : 'rejected';
+            items[i].decisionReason = reason;
+            items[i].decidedAt = Date.now();
+            items[i].decidedBy = getUserName();
+            break;
+          }
+        }
+
+        saveItems(items);
+        load();
+        closeDecisionModal();
+
+        emitEvent(type === 'approve' ? 'admin:approval-approved' : 'admin:approval-rejected', {
+          id: item.id,
+          type: item.type
+        });
+      }
+
+      function getUserName() {
+        try {
+          var raw = localStorage.getItem('wamPayCurrentUser');
+          if (!raw) return 'مدیر';
+          var u = JSON.parse(raw);
+          return u.name || u.username || 'مدیر';
+        } catch (_) { return 'مدیر'; }
+      }
+
+      // ═══════════════════════════════════
+      // جزئیات
+      // ═══════════════════════════════════
+
+      function showDetails(id) {
+        var it = state.items.find(function (x) { return x.id === id; });
+        if (!it) return;
+
+        var status = it.status || 'pending';
+        var statusLabel = status === 'approved' ? 'تأیید شده'
+                        : status === 'rejected' ? 'رد شده' : 'در انتظار';
+
+        var msg = 'جزئیات تأییدیه\n\n' +
+                  'عنوان: ' + (it.title || '—') + '\n' +
+                  'نوع: ' + typeLabel(it.type) + '\n' +
+                  'متقاضی: ' + (it.requesterName || '—') + '\n' +
+                  'وضعیت: ' + statusLabel + '\n' +
+                  'تاریخ ایجاد: ' + fmtDate(it.createdAt) + '\n' +
+                  (it.description ? '\nتوضیحات: ' + it.description : '') +
+                  (it.decisionReason ? '\n\nیادداشت تصمیم: ' + it.decisionReason : '') +
+                  (it.decidedBy ? '\nتصمیم توسط: ' + it.decidedBy : '');
+        alert(msg);
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      // Sidebar
+      function openSidebar() {
+        adminRoot.classList.add('is-sidebar-open');
+        overlay.classList.add('is-open');
+      }
+      function closeSidebar() {
+        adminRoot.classList.remove('is-sidebar-open');
+        overlay.classList.remove('is-open');
+      }
+      function toggleSidebar() {
+        if (adminRoot.classList.contains('is-sidebar-open')) closeSidebar();
+        else openSidebar();
+      }
+      if (menuToggle) menuToggle.addEventListener('click', toggleSidebar);
+      if (overlay) overlay.addEventListener('click', closeSidebar);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { closeSidebar(); closeDecisionModal(); }
+      });
+
+      // کاربر جاری
+      function applyCurrentUser() {
+        try {
+          var raw = localStorage.getItem('wamPayCurrentUser');
+          if (!raw) return;
+          var u = JSON.parse(raw);
+          var displayName = u.name || u.username || 'مدیر';
+          var initial = displayName.trim().charAt(0).toUpperCase() || 'م';
+          if (userAvatar) userAvatar.textContent = initial;
+          if (userName) userName.textContent = displayName;
+        } catch (_) {}
+      }
+
+      // Logout
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+          if (!confirm('از حساب کاربری خارج می‌شوید؟')) return;
+          try {
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayRemember');
+          } catch (_) {}
+          emitEvent('auth:logout');
+          window.location.replace('login.html');
+        });
+      }
+
+      // Refresh
+      if (refreshBtn) {
+        refreshBtn.addEventListener('click', function () {
+          load();
+          refreshBtn.textContent = '✓';
+          setTimeout(function () { refreshBtn.textContent = '🔄'; }, 900);
+        });
+      }
+
+      // User chip
+      if (userChip) {
+        userChip.addEventListener('click', function () {
+          alert('به‌زودی: منوی کاربر');
+        });
+      }
+
+      // Tabs
+      if (tabsBar) {
+        tabsBar.addEventListener('click', function (e) {
+          var tab = e.target.closest('.wam-admin__tab');
+          if (!tab) return;
+          tabsBar.querySelectorAll('.wam-admin__tab').forEach(function (t) {
+            t.classList.remove('is-active');
+          });
+          tab.classList.add('is-active');
+          state.tab = tab.getAttribute('data-tab');
+          applyFilters();
+        });
+      }
+
+      // Filters
+      if (searchInput) searchInput.addEventListener('input', applyFilters);
+      if (filterType) filterType.addEventListener('change', applyFilters);
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+          searchInput.value = '';
+          filterType.value = '';
+          applyFilters();
+        });
+      }
+
+      // List actions
+      if (listEl) {
+        listEl.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-action]');
+          if (!btn) return;
+          var action = btn.getAttribute('data-action');
+          var id = btn.getAttribute('data-id');
+          var it = state.items.find(function (x) { return x.id === id; });
+          if (!it) return;
+
+          if (action === 'approve') openDecisionModal('approve', it);
+          else if (action === 'reject') openDecisionModal('reject', it);
+          else if (action === 'view') showDetails(id);
+        });
+      }
+
+      // Modal
+      if (modalClose) modalClose.addEventListener('click', closeDecisionModal);
+      if (cancelBtn) cancelBtn.addEventListener('click', closeDecisionModal);
+      if (confirmBtn) confirmBtn.addEventListener('click', confirmDecision);
+      if (modal) modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeDecisionModal();
+      });
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function seed() {
+        // اگر خالی است، نمونه اضافه کن
+        if (state.items.length > 0) return;
+        var now = Date.now();
+        var samples = [
+          {
+            id: uid(), type: 'user',
+            title: 'درخواست فعال‌سازی کاربر جدید',
+            description: 'کاربر «مریم احمدی» درخواست فعال‌سازی حساب کارگزار را دارد.',
+            requesterName: 'مریم احمدی',
+            status: 'pending',
+            createdAt: now - 1000 * 60 * 30
+          },
+          {
+            id: uid(), type: 'case',
+            title: 'تأیید پرونده وام مسکن',
+            description: 'پرونده به مبلغ ۵۰۰ میلیون ریال آماده تأیید نهایی است.',
+            requesterName: 'کارگزار: علی رضایی',
+            caseTitle: 'وام مسکن — C-1001',
+            status: 'pending',
+            createdAt: now - 1000 * 60 * 90
+          },
+          {
+            id: uid(), type: 'payment',
+            title: 'تأیید پرداخت مرحله دوم',
+            description: 'پرداخت مبلغ ۱۲۰ میلیون ریال به حساب متقاضی.',
+            requesterName: 'خزانه‌داری',
+            caseTitle: 'وام خودرو — C-1002',
+            status: 'pending',
+            createdAt: now - 1000 * 60 * 60 * 4
+          },
+          {
+            id: uid(), type: 'contract',
+            title: 'تأیید قرارداد نهایی',
+            description: 'قرارداد بین بانک و متقاضی آماده امضا است.',
+            requesterName: 'واحد حقوقی',
+            caseTitle: 'وام تجهیزات — C-1003',
+            status: 'approved',
+            decidedBy: 'مدیر کل',
+            decidedAt: now - 1000 * 60 * 60 * 24,
+            decisionReason: 'همه موارد قانونی رعایت شده.',
+            createdAt: now - 1000 * 60 * 60 * 48
+          },
+          {
+            id: uid(), type: 'user',
+            title: 'درخواست ارتقای نقش',
+            description: 'ارتقا از متقاضی به کارگزار.',
+            requesterName: 'حسن کریمی',
+            status: 'rejected',
+            decidedBy: 'مدیر کل',
+            decidedAt: now - 1000 * 60 * 60 * 12,
+            decisionReason: 'مدارک ناقص است.',
+            createdAt: now - 1000 * 60 * 60 * 36
+          }
+        ];
+        saveItems(samples);
+        state.items = samples;
+      }
+
+      function init() {
+        applyCurrentUser();
+        seed();
+        load();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

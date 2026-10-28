@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ورود | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23;
+    --primary-light: #1a5c3a;
+    --primary-dark: #062416;
+    --gold: #d4a62a;
+    --gold-light: #f0c651;
+    --text: #1a2b22;
+    --text-muted: #6b7d73;
+    --bg: #f4f7f4;
+    --bg-card: #ffffff;
+    --border: #e0e8e3;
+    --error: #c0392b;
+    --success: #1e8e4a;
+    --warning: #e67e22;
+    --shadow-sm: 0 2px 8px rgba(11, 59, 35, 0.06);
+    --shadow-md: 0 8px 24px rgba(11, 59, 35, 0.10);
+    --shadow-lg: 0 16px 48px rgba(11, 59, 35, 0.18);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; line-height: 1.7;
+    display: flex; flex-direction: column;
+    transition: background 0.3s, color 0.3s;
+    background-image:
+        radial-gradient(circle at 10% 10%, rgba(212, 166, 42, 0.06), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(11, 59, 35, 0.08), transparent 40%);
+}
+
+.li-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: var(--shadow-md); position: sticky; top: 0; z-index: 100;
+}
+.li-header__inner {
+    max-width: 1100px; width: 100%; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.li-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 18px; color: #fff; text-decoration: none;
+}
+.li-logo__icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; box-shadow: 0 4px 12px rgba(212,166,42,0.4);
+}
+.li-header__actions { display: flex; gap: 8px; align-items: center; }
+.li-theme-btn {
+    width: 38px; height: 38px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: #fff;
+    cursor: pointer; font-size: 16px; transition: var(--transition);
+}
+.li-theme-btn:hover { background: rgba(255,255,255,0.18); }
+.li-home-link {
+    color: #fff; text-decoration: none; font-size: 13px;
+    padding: 8px 14px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: var(--transition);
+}
+.li-home-link:hover { background: rgba(255,255,255,0.12); }
+
+.li-main {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 40px 20px; width: 100%;
+}
+.li-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+    max-width: 480px; width: 100%; padding: 32px 28px;
+    animation: slideUp 0.4s ease;
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.li-card__title { font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 6px; }
+.li-card__subtitle { text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+.li-roles {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 8px; margin-bottom: 22px;
+    background: var(--bg); padding: 6px;
+    border-radius: var(--radius-sm); border: 1px solid var(--border);
+}
+.li-role-btn {
+    padding: 12px 8px; border: none; border-radius: 6px;
+    background: transparent; color: var(--text-muted);
+    font-family: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.li-role-btn:hover { color: var(--text); }
+.li-role-btn--active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; box-shadow: 0 4px 12px rgba(11,59,35,0.25);
+}
+.li-role-btn__icon { font-size: 20px; }
+.li-role-btn__label { font-size: 11px; }
+
+.li-alert {
+    padding: 14px 16px; border-radius: var(--radius-sm);
+    font-size: 13px; margin-bottom: 18px;
+    display: none; gap: 10px; align-items: flex-start;
+    line-height: 1.7;
+}
+.li-alert--show { display: flex; }
+.li-alert--info { background: rgba(41,128,185,0.08); color: #2980b9; border-right: 4px solid #2980b9; }
+.li-alert--warning { background: rgba(230,126,34,0.10); color: #d35400; border-right: 4px solid var(--warning); }
+.li-alert--error { background: rgba(192,57,43,0.10); color: var(--error); border-right: 4px solid var(--error); }
+.li-alert--success { background: rgba(30,142,74,0.10); color: var(--success); border-right: 4px solid var(--success); }
+
+.li-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.li-label { font-size: 14px; font-weight: 700; color: var(--text); }
+.li-label__required { color: var(--error); margin-right: 3px; }
+.li-input-wrap { position: relative; }
+.li-input {
+    width: 100%; padding: 14px 16px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border); background: var(--bg);
+    color: var(--text); font-family: inherit; font-size: 15px;
+    transition: var(--transition);
+}
+.li-input:focus {
+    outline: none; border-color: var(--primary);
+    background: var(--bg-card); box-shadow: 0 0 0 4px rgba(11,59,35,0.10);
+}
+.li-input--error { border-color: var(--error); }
+.li-input--ltr { direction: ltr; text-align: left; font-family: monospace; letter-spacing: 2px; }
+.li-input:disabled { opacity: 0.6; cursor: not-allowed; }
+.li-hint { font-size: 12px; color: var(--text-muted); }
+.li-error { font-size: 12px; color: var(--error); font-weight: 700; display: none; }
+.li-error--show { display: block; }
+
+.li-pwd-toggle {
+    position: absolute; left: 12px; top: 50%;
+    transform: translateY(-50%);
+    background: transparent; border: none;
+    color: var(--text-muted); cursor: pointer;
+    font-size: 16px; padding: 6px;
+}
+.li-pwd-toggle:hover { color: var(--primary); }
+
+.li-otp-wrap {
+    display: flex; gap: 10px; justify-content: center;
+    direction: ltr; margin: 18px 0;
+}
+.li-otp-input {
+    width: 52px; height: 60px; text-align: center;
+    font-size: 22px; font-weight: 800;
+    border-radius: var(--radius-sm); border: 2px solid var(--border);
+    background: var(--bg); color: var(--text);
+    font-family: inherit; transition: var(--transition);
+}
+.li-otp-input:focus {
+    outline: none; border-color: var(--primary);
+    background: var(--bg-card); box-shadow: 0 0 0 4px rgba(11,59,35,0.10);
+    transform: translateY(-2px);
+}
+.li-otp-info {
+    text-align: center; font-size: 13px;
+    color: var(--text-muted); margin-bottom: 8px;
+}
+.li-otp-info strong { color: var(--text); direction: ltr; display: inline-block; font-family: monospace; }
+.li-otp-timer { text-align: center; font-size: 12px; color: var(--warning); font-weight: 700; margin-top: 4px; }
+.li-resend-btn {
+    background: none; border: none; color: var(--primary);
+    font-family: inherit; font-weight: 700; cursor: pointer;
+    font-size: 13px; padding: 4px 8px; border-radius: 6px;
+    transition: var(--transition);
+}
+.li-resend-btn:hover:not(:disabled) { background: rgba(11,59,35,0.08); }
+.li-resend-btn:disabled { color: var(--text-muted); cursor: not-allowed; }
+
+.li-btn {
+    width: 100%; padding: 14px 20px; border-radius: var(--radius-sm);
+    border: none; font-family: inherit; font-size: 15px; font-weight: 800;
+    cursor: pointer; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-bottom: 10px;
+}
+.li-btn--primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; box-shadow: 0 6px 16px rgba(11,59,35,0.25);
+}
+.li-btn--primary:hover:not(:disabled) {
+    transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11,59,35,0.35);
+}
+.li-btn--primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.li-btn--gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--primary-dark); box-shadow: 0 6px 16px rgba(212,166,42,0.3);
+}
+.li-btn--gold:hover:not(:disabled) {
+    transform: translateY(-2px); box-shadow: 0 10px 24px rgba(212,166,42,0.45);
+}
+.li-btn--ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border); margin-bottom: 0;
+}
+.li-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.li-btn__spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.8s linear infinite; display: none;
+}
+.li-btn--loading .li-btn__spinner { display: block; }
+.li-btn--loading .li-btn__text { opacity: 0.75; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.li-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 20px 0; color: var(--text-muted); font-size: 12px;
+}
+.li-divider::before, .li-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.li-links { text-align: center; font-size: 13px; color: var(--text-muted); }
+.li-links a { color: var(--primary); font-weight: 700; text-decoration: none; margin: 0 4px; }
+.li-links a:hover { text-decoration: underline; }
+
+.li-footer {
+    text-align: center; padding: 20px; color: var(--text-muted);
+    font-size: 12px;
+}
+
+.li-toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 24px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 9999; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px;
+    max-width: 90%; text-align: center;
+}
+.li-toast--show { transform: translateX(-50%) translateY(0); }
+.li-toast--error { background: var(--error); }
+.li-toast--success { background: var(--success); }
+
+@media (max-width: 520px) {
+    .li-card { padding: 24px 20px; }
+    .li-card__title { font-size: 20px; }
+    .li-otp-input { width: 44px; height: 52px; font-size: 18px; }
+    .li-home-link { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="li-header">
+    <div class="li-header__inner">
+        <a href="index.html" class="li-logo">
+            <div class="li-logo__icon">💰</div>
+            <span>وام پی</span>
+        </a>
+        <div class="li-header__actions">
+            <button class="li-theme-btn" id="themeBtn" title="تغییر تم">🌙</button>
+            <a href="index.html" class="li-home-link">صفحه‌ی اصلی</a>
+        </div>
+    </div>
+</header>
+
+<main class="li-main">
+    <div class="li-card">
+        <h1 class="li-card__title">ورود به وام پی</h1>
+        <p class="li-card__subtitle">نقش خود را انتخاب کنید و وارد شوید</p>
+
+        <div class="li-roles" id="roleSelector">
+            <button class="li-role-btn li-role-btn--active" data-role="applicant">
+                <span class="li-role-btn__icon">👤</span>
+                <span class="li-role-btn__label">متقاضی</span>
+            </button>
+            <button class="li-role-btn" data-role="broker">
+                <span class="li-role-btn__icon">🤝</span>
+                <span class="li-role-btn__label">کارگزار</span>
+            </button>
+            <button class="li-role-btn" data-role="admin">
+                <span class="li-role-btn__icon">🏛️</span>
+                <span class="li-role-btn__label">ادمین</span>
+            </button>
+        </div>
+
+        <div class="li-alert" id="alert">
+            <span id="alertIcon">ℹ️</span>
+            <span id="alertText"></span>
+        </div>
+
+        <div class="li-field">
+            <label class="li-label">شماره موبایل <span class="li-label__required">*</span></label>
+            <input type="tel" id="mobileInput" class="li-input li-input--ltr"
+                   placeholder="09123456789" maxlength="11"
+                   inputmode="numeric" autocomplete="tel" dir="ltr">
+            <div class="li-error" id="mobileError">شماره موبایل معتبر نیست</div>
+        </div>
+
+        <div class="li-field" id="passwordField" style="display:none;">
+            <label class="li-label">رمز عبور <span class="li-label__required">*</span></label>
+            <div class="li-input-wrap">
+                <input type="password" id="passwordInput" class="li-input li-input--ltr"
+                       placeholder="••••••••" autocomplete="current-password" dir="ltr">
+                <button class="li-pwd-toggle" id="pwdToggle" type="button">👁️</button>
+            </div>
+            <div class="li-error" id="passwordError">رمز عبور را وارد کنید</div>
+        </div>
+
+        <div id="otpSection" style="display:none;">
+            <div class="li-otp-info">
+                کد تأیید به <strong id="otpMobile">09123456789</strong> ارسال شد
+            </div>
+            <div class="li-otp-wrap">
+                <input type="tel" class="li-otp-input" maxlength="1" inputmode="numeric" data-otp-index="0">
+                <input type="tel" class="li-otp-input" maxlength="1" inputmode="numeric" data-otp-index="1">
+                <input type="tel" class="li-otp-input" maxlength="1" inputmode="numeric" data-otp-index="2">
+                <input type="tel" class="li-otp-input" maxlength="1" inputmode="numeric" data-otp-index="3">
+                <input type="tel" class="li-otp-input" maxlength="1" inputmode="numeric" data-otp-index="4">
+            </div>
+            <div class="li-otp-timer" id="otpTimer">۰۲:۰۰</div>
+            <div style="text-align:center; margin-top:8px;">
+                <button class="li-resend-btn" id="resendBtn" disabled>ارسال مجدد کد</button>
+            </div>
+            <div class="li-error" id="otpError" style="text-align:center; margin-top:8px;">کد وارد شده صحیح نیست</div>
+        </div>
+
+        <button class="li-btn li-btn--primary" id="primaryBtn" style="margin-top:8px;">
+            <span class="li-btn__spinner"></span>
+            <span class="li-btn__text" id="primaryBtnText">ورود و ثبت‌نام</span>
+        </button>
+
+        <button class="li-btn li-btn--ghost" id="backBtn" style="display:none;">
+            ← بازگشت
+        </button>
+
+        <div class="li-divider">یا</div>
+
+        <div class="li-links">
+            <span>حساب کارگزاری ندارید؟</span>
+            <a href="broker-register.html">ثبت‌نام کارگزار</a>
+        </div>
+    </div>
+</main>
+
+<footer class="li-footer">
+    © ۱۴۰۵ — سامانه‌ی هوشمند تسهیلات وام پی
+</footer>
+
+<div class="li-toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<script src="js/supabase-js.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/storage-adapter.js"></script>
+<script src="js/auth-bridge.js"></script>
+
+<script>
+/* ============================================================
+   WAM PAY — Login Script v15.2 (UUID Fix Final)
+   - ✅ ستون users = phone_number (نه mobile)
+   - ✅ ساخت کاربر در Supabase با phone_number
+   - ✅ گرفتن UUID واقعی
+   ============================================================ */
+(function () {
+    'use strict';
+
+    const OTP_CONFIG = { mock: true, mockCode: '12345', length: 5, ttl: 120000, resendCooldown: 60000 };
+
+    const ROLE_REDIRECTS = {
+        'applicant': 'applicant-dashboard.html',
+        'broker': 'broker-dashboard.html',
+        'super_admin': 'admin-super-dashboard.html',
+        'admin': 'admin-super-dashboard.html',
+        'moderator': 'admin-super-dashboard.html',
+        'deputy_admin': 'admin-super-dashboard.html',
+        'verification_admin': 'admin-verification-dashboard.html',
+        'consultation_admin': 'admin-consultation-dashboard.html',
+        'broker_admin': 'admin-broker-dashboard.html',
+        'legal_admin': 'admin-legal-dashboard.html',
+        'accounting_admin': 'admin-accounting-dashboard.html',
+        'developer_admin': 'admin-super-dashboard.html',
+        'default': 'admin-super-dashboard.html'
+    };
+
+    function getRoleRedirect(role) {
+        if (!role) return ROLE_REDIRECTS['default'];
+        return ROLE_REDIRECTS[role] || ROLE_REDIRECTS['default'];
+    }
+
+    const state = { role: 'applicant', step: 'form', mobile: '', otpCode: '', otpExpiry: null, otpTimer: null, resendTimer: null, useSupabase: true };
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+
+    function hasSupabase() {
+        return typeof window.WAM_SB !== 'undefined' && window.WAM_SB && window.WAM_SB.client;
+    }
+
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'li-toast li-toast--show';
+        if (type === 'error') el.classList.add('li-toast--error');
+        if (type === 'success') el.classList.add('li-toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('li-toast--show'), 3500);
+    }
+
+    function showAlert(text, type = 'info') {
+        const el = $('#alert');
+        $('#alertIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+        $('#alertText').innerHTML = text;
+        el.className = 'li-alert li-alert--show li-alert--' + type;
+    }
+    function hideAlert() { $('#alert').classList.remove('li-alert--show'); }
+
+    function setRole(role) {
+        state.role = role;
+        $$('.li-role-btn').forEach(b => b.classList.toggle('li-role-btn--active', b.dataset.role === role));
+        hideAlert();
+        resetForm();
+        if (role === 'admin') {
+            $('#passwordField').style.display = 'flex';
+            $('#primaryBtnText').textContent = 'ورود به پنل ادمین';
+        } else {
+            $('#passwordField').style.display = 'none';
+            $('#primaryBtnText').textContent = role === 'broker' ? 'ورود کارگزار' : 'ورود و ثبت‌نام';
+        }
+        if (role === 'applicant') $('#mobileInput').placeholder = '09123456789';
+        else if (role === 'broker') $('#mobileInput').placeholder = 'شماره‌ای که ثبت‌نام کردید';
+        else $('#mobileInput').placeholder = 'شماره موبایل ادمین';
+    }
+
+    function resetForm() {
+        state.step = 'form'; state.mobile = ''; state.otpCode = '';
+        clearInterval(state.otpTimer); clearInterval(state.resendTimer);
+        $('#otpSection').style.display = 'none';
+        $('#backBtn').style.display = 'none';
+        $('#primaryBtn').style.display = 'flex';
+        $('#mobileInput').disabled = false;
+        $('#mobileInput').value = '';
+        $('#passwordInput').value = '';
+        $$('.li-otp-input').forEach(i => i.value = '');
+        $$('.li-error').forEach(e => e.classList.remove('li-error--show'));
+        $$('.li-input').forEach(e => e.classList.remove('li-input--error'));
+    }
+
+    function isValidMobile(v) { return /^09\d{9}$/.test(v); }
+    function markError(id, show = true) { const el = document.getElementById(id); if (el) el.classList.toggle('li-error--show', show); }
+    function markInputError(id, show = true) { const el = document.getElementById(id); if (el) el.classList.toggle('li-input--error', show); }
+
+    function startOtpTimer() {
+        clearInterval(state.otpTimer);
+        state.otpExpiry = Date.now() + OTP_CONFIG.ttl;
+        tick();
+        state.otpTimer = setInterval(tick, 1000);
+        function tick() {
+            const left = Math.max(0, state.otpExpiry - Date.now());
+            const m = Math.floor(left / 60000); const s = Math.floor((left % 60000) / 1000);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+            $('#otpTimer').textContent = `${fa(m)}:${fa(s)}`;
+            if (left <= 0) { clearInterval(state.otpTimer); $('#otpTimer').textContent = 'کد منقضی شد — دوباره بگیرید'; }
+        }
+    }
+
+    function startResendCooldown() {
+        const btn = $('#resendBtn');
+        let left = OTP_CONFIG.resendCooldown / 1000;
+        btn.disabled = true;
+        btn.textContent = `ارسال مجدد (${faNum(left)} ثانیه)`;
+        clearInterval(state.resendTimer);
+        state.resendTimer = setInterval(() => {
+            left--;
+            if (left <= 0) { clearInterval(state.resendTimer); btn.disabled = false; btn.textContent = 'ارسال مجدد کد'; }
+            else btn.textContent = `ارسال مجدد (${faNum(left)} ثانیه)`;
+        }, 1000);
+    }
+
+    function setupOtpInputs() {
+        $$('.li-otp-input').forEach((input, idx, all) => {
+            input.addEventListener('input', (e) => {
+                const v = e.target.value.replace(/\D/g, '');
+                e.target.value = v.slice(-1);
+                if (v && idx < all.length - 1) all[idx + 1].focus();
+                if (getOtpValue().length === OTP_CONFIG.length) setTimeout(() => handleVerifyOtp(), 200);
+            });
+            input.addEventListener('keydown', (e) => { if (e.key === 'Backspace' && !e.target.value && idx > 0) all[idx - 1].focus(); });
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const paste = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 5);
+                if (paste.length === 5) { paste.split('').forEach((ch, i) => all[i].value = ch); all[4].focus(); setTimeout(() => handleVerifyOtp(), 200); }
+            });
+        });
+    }
+
+    function getOtpValue() { return Array.from($$('.li-otp-input')).map(i => i.value).join(''); }
+    function resetOtpInputs() { $$('.li-otp-input').forEach(i => i.value = ''); $$('.li-otp-input')[0].focus(); }
+    function generateOtp() { if (OTP_CONFIG.mock) { console.log(`🧪 [MOCK OTP] کد: ${OTP_CONFIG.mockCode}`); return OTP_CONFIG.mockCode; } return Math.floor(Math.random() * 90000 + 10000).toString(); }
+
+    async function findUserSupabase(mobile) {
+        if (!hasSupabase()) return null;
+        try {
+            const { data: admin } = await window.WAM_SB.client.from('admins').select('*').eq('phone_number', mobile).maybeSingle();
+            if (admin) return { ...admin, _source: 'admins' };
+            const { data: user } = await window.WAM_SB.client.from('users').select('*').eq('phone_number', mobile).maybeSingle();
+            if (user) return { ...user, _source: 'users' };
+            return null;
+        } catch (e) { console.error('❌ findUserSupabase:', e); return null; }
+    }
+
+    function findUserLocal(mobile) {
+        const admins = JSON.parse(localStorage.getItem('wamPayAdmins') || '[]');
+        const admin = admins.find(a => a.mobile === mobile || a.phone_number === mobile);
+        if (admin) return { ...admin, _source: 'admins_local' };
+        const users = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+        const user = users.find(u => u.mobile === mobile || u.phone_number === mobile);
+        if (user) return { ...user, _source: 'users_local' };
+        return null;
+    }
+
+    async function findUser(mobile) {
+        if (state.useSupabase && hasSupabase()) {
+            const sbUser = await findUserSupabase(mobile);
+            if (sbUser) return sbUser;
+        }
+        return findUserLocal(mobile);
+    }
+
+    function handlePrimary() {
+        if (state.step === 'form') { if (state.role === 'admin') handleAdminLogin(); else handleSendOtp(); }
+        else if (state.step === 'otp') handleVerifyOtp();
+    }
+
+    async function handleSendOtp() {
+        const mobile = $('#mobileInput').value.trim();
+        markError('mobileError', false); markInputError('mobileInput', false);
+        if (!isValidMobile(mobile)) { markError('mobileError', true); markInputError('mobileInput', true); toast('شماره موبایل معتبر نیست', 'error'); return; }
+
+        const btn = $('#primaryBtn');
+        btn.classList.add('li-btn--loading'); btn.disabled = true;
+
+        try {
+            let user = await findUser(mobile);
+
+            if (state.role === 'broker') {
+                if (!user) { showAlert('شما هنوز به عنوان کارگزار ثبت‌نام نکرده‌اید.<br>لطفاً از طریق <a href="broker-register.html" style="color:inherit;font-weight:800;">فرم ثبت‌نام کارگزار</a> ثبت‌نام کنید.', 'warning'); toast('ابتدا ثبت‌نام کارگزار انجام دهید', 'error'); btn.classList.remove('li-btn--loading'); btn.disabled = false; return; }
+                if (user.role !== 'broker') { showAlert('این شماره با نقش کارگزار ثبت نشده است.', 'error'); btn.classList.remove('li-btn--loading'); btn.disabled = false; return; }
+                if (user.status === 'pending') { showAlert('⏳ حساب شما در انتظار تأیید است.', 'warning'); btn.classList.remove('li-btn--loading'); btn.disabled = false; return; }
+                if (user.status === 'suspended') { showAlert('حساب کاربری شما مسدود شده است.', 'error'); btn.classList.remove('li-btn--loading'); btn.disabled = false; return; }
+            }
+
+            if (state.role === 'applicant' && !user) {
+                // 🆕 ساخت کاربر در Supabase با ستون phone_number
+                if (hasSupabase()) {
+                    try {
+                        const { data: newDbUser, error: insertErr } = await window.WAM_SB.client
+                            .from('users')
+                            .insert({
+                                phone_number: mobile,   // ✅ ستون درست
+                                full_name: 'کاربر ' + mobile.slice(-4),
+                                role: 'applicant',
+                                status: 'active'
+                            })
+                            .select('id, phone_number, full_name, role, status')
+                            .single();
+                        
+                        if (insertErr) {
+                            console.warn('⚠️ خطا در ساخت کاربر Supabase:', insertErr.message);
+                        } else if (newDbUser) {
+                            user = {
+                                id: newDbUser.id,
+                                phone_number: newDbUser.phone_number,
+                                mobile: newDbUser.phone_number,
+                                full_name: newDbUser.full_name,
+                                name: newDbUser.full_name,
+                                role: newDbUser.role,
+                                status: newDbUser.status,
+                                _source: 'users'
+                            };
+                            console.log('✅ [Login] کاربر در Supabase ساخته شد:', newDbUser.id);
+                        }
+                    } catch (e) {
+                        console.warn('⚠️ خطا در ساخت کاربر Supabase:', e);
+                    }
+                }
+
+                // Fallback لوکال اگه Supabase کار نکرد
+                if (!user) {
+                    const users = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+                    user = {
+                        id: 'user_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+                        phone_number: mobile,
+                        mobile: mobile,
+                        name: 'کاربر ' + mobile.slice(-4),
+                        full_name: 'کاربر ' + mobile.slice(-4),
+                        role: 'applicant',
+                        status: 'active',
+                        autoCreated: true,
+                        createdAt: new Date().toISOString()
+                    };
+                    users.push(user);
+                    localStorage.setItem('wamPayUsers', JSON.stringify(users));
+                    console.log('✅ [Login] کاربر لوکال ساخته شد (Supabase در دسترس نبود):', user.id);
+                }
+            }
+
+            state.mobile = mobile;
+            state.otpCode = generateOtp();
+
+            setTimeout(() => {
+                btn.classList.remove('li-btn--loading'); btn.disabled = false;
+                state.step = 'otp';
+                $('#primaryBtnText').textContent = 'تأیید و ورود';
+                $('#otpMobile').textContent = mobile;
+                $('#otpSection').style.display = 'block';
+                $('#backBtn').style.display = 'flex';
+                $('#mobileInput').disabled = true;
+                $('#passwordField').style.display = 'none';
+                resetOtpInputs();
+                startOtpTimer();
+                startResendCooldown();
+                hideAlert();
+                showAlert('کد تأیید ارسال شد. (کد تست: <strong>12345</strong>)', 'info');
+                toast('کد تأیید ارسال شد', 'success');
+            }, 700);
+
+        } catch (e) {
+            console.error('❌ handleSendOtp:', e);
+            btn.classList.remove('li-btn--loading'); btn.disabled = false;
+            toast('خطا در ارسال کد', 'error');
+        }
+    }
+
+    async function handleVerifyOtp() {
+        const entered = getOtpValue();
+        markError('otpError', false);
+        if (entered.length !== OTP_CONFIG.length) { markError('otpError', true); toast('کد ۵ رقمی را کامل وارد کنید', 'error'); return; }
+        if (entered !== state.otpCode) { markError('otpError', true); toast('کد وارد شده صحیح نیست', 'error'); resetOtpInputs(); return; }
+
+        const btn = $('#primaryBtn');
+        btn.classList.add('li-btn--loading'); btn.disabled = true;
+
+        try {
+            clearInterval(state.otpTimer); clearInterval(state.resendTimer);
+
+            const user = await findUser(state.mobile);
+            if (!user) { showAlert('کاربر پیدا نشد.', 'error'); btn.classList.remove('li-btn--loading'); btn.disabled = false; resetForm(); return; }
+
+            // 🆕 گرفتن UUID واقعی
+            let realUserId = user.id;
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+            
+            if (!uuidRegex.test(realUserId) && window.WAM_SB && window.WAM_SB.client) {
+                try {
+                    const mobile = user.phone_number || user.mobile;
+                    let { data: dbUser } = await window.WAM_SB.client.from('users').select('id').eq('phone_number', mobile).maybeSingle();
+                    if (!dbUser) {
+                        const { data: dbAdmin } = await window.WAM_SB.client.from('admins').select('id').eq('phone_number', mobile).maybeSingle();
+                        dbUser = dbAdmin;
+                    }
+                    if (dbUser && dbUser.id) {
+                        realUserId = dbUser.id;
+                        console.log('✅ UUID واقعی از دیتابیس گرفته شد:', realUserId);
+                    }
+                } catch (e) { console.warn('⚠️ خطا در گرفتن UUID:', e); }
+            }
+
+            const currentUser = {
+                id: realUserId,
+                mobile: user.phone_number || user.mobile,
+                name: user.full_name || user.name || 'کاربر',
+                role: user.role,
+                status: user.status || 'active',
+                source: user._source,
+                lastLoginAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('wamPayCurrentUser', JSON.stringify(currentUser));
+            localStorage.setItem('wamPayToken', 'tok_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10));
+
+            const userJson = JSON.stringify(currentUser);
+            if (window.AuthBridge && typeof AuthBridge.setCurrentUser === 'function') {
+                AuthBridge.setCurrentUser(userJson);
+                console.log('✅ [Login] کاربر در AuthBridge ثبت شد.');
+            } else if (window.Storage && typeof Storage.set === 'function') {
+                Storage.set('wamPayCurrentUser', userJson);
+            }
+
+            const target = getRoleRedirect(user.role);
+            console.log('✅ [Login] ورود موفق:', user.role, '→', target);
+            toast('ورود موفق! در حال انتقال...', 'success');
+            setTimeout(() => { window.location.href = target; }, 500);
+
+        } catch (e) {
+            console.error('❌ handleVerifyOtp:', e);
+            btn.classList.remove('li-btn--loading'); btn.disabled = false;
+            toast('خطا در ورود', 'error');
+        }
+    }
+
+    async function handleAdminLogin() {
+        const mobile = $('#mobileInput').value.trim();
+        const password = $('#passwordInput').value;
+        markError('mobileError', false); markInputError('mobileInput', false);
+        markError('passwordError', false); markInputError('passwordInput', false);
+
+        if (!isValidMobile(mobile)) { markError('mobileError', true); markInputError('mobileInput', true); toast('شماره موبایل معتبر نیست', 'error'); return; }
+        if (!password) { markError('passwordError', true); markInputError('passwordInput', true); toast('رمز عبور را وارد کنید', 'error'); return; }
+
+        const btn = $('#primaryBtn');
+        btn.classList.add('li-btn--loading'); btn.disabled = true;
+
+        try {
+            let admin = null;
+            if (state.useSupabase && hasSupabase()) {
+                console.log('🔍 جستجوی ادمین در Supabase...');
+                const sbAdmin = await findUserSupabase(mobile);
+                if (sbAdmin && sbAdmin._source === 'admins') { admin = sbAdmin; console.log('✅ ادمین در Supabase پیدا شد:', sbAdmin.full_name); }
+            }
+
+            if (!admin) {
+                console.log('🔍 جستجوی ادمین در LocalStorage...');
+                const localAdmin = findUserLocal(mobile);
+                if (localAdmin && localAdmin.role && ['super_admin', 'admin', 'moderator', 'deputy_admin', 'verification_admin', 'consultation_admin', 'broker_admin', 'legal_admin', 'accounting_admin'].includes(localAdmin.role)) {
+                    const hashed = simpleHash(password);
+                    if (localAdmin.password === hashed || localAdmin.password === password) admin = localAdmin;
+                    else { btn.classList.remove('li-btn--loading'); btn.disabled = false; showAlert('رمز عبور اشتباه است.', 'error'); markInputError('passwordInput', true); toast('رمز عبور اشتباه است', 'error'); return; }
+                }
+            }
+
+            if (!admin) { btn.classList.remove('li-btn--loading'); btn.disabled = false; showAlert('ادمینی با این شماره یافت نشد.', 'error'); toast('اطلاعات ورود صحیح نیست', 'error'); return; }
+
+            if (admin._source === 'admins' && password !== 'Wampay@2026') { btn.classList.remove('li-btn--loading'); btn.disabled = false; showAlert('رمز عبور اشتباه است.', 'error'); markInputError('passwordInput', true); toast('رمز عبور اشتباه است', 'error'); return; }
+
+            const currentUser = {
+                id: admin.id || admin.user_id,
+                mobile: admin.phone_number || admin.mobile,
+                name: admin.full_name || admin.name,
+                role: admin.role,
+                status: admin.is_active !== false ? 'active' : 'inactive',
+                source: admin._source,
+                lastLoginAt: new Date().toISOString()
+            };
+
+            localStorage.setItem('wamPayCurrentUser', JSON.stringify(currentUser));
+            localStorage.setItem('wamPayToken', 'tok_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10));
+
+            const userJson = JSON.stringify(currentUser);
+            if (window.AuthBridge && typeof AuthBridge.setCurrentUser === 'function') {
+                AuthBridge.setCurrentUser(userJson);
+                console.log('✅ [Login] ادمین در AuthBridge ثبت شد.');
+            } else if (window.Storage && typeof Storage.set === 'function') {
+                Storage.set('wamPayCurrentUser', userJson);
+            }
+
+            const target = getRoleRedirect(admin.role);
+            console.log('✅ [Login] ورود ادمین:', admin.role, '→', target);
+            toast('ورود موفق! در حال انتقال...', 'success');
+            setTimeout(() => { window.location.href = target; }, 500);
+
+        } catch (e) {
+            console.error('❌ handleAdminLogin:', e);
+            btn.classList.remove('li-btn--loading'); btn.disabled = false;
+            toast('خطا در ورود', 'error');
+        }
+    }
+
+    function simpleHash(s) { let h = 0; for (let i = 0; i < s.length; i++) { h = ((h << 5) - h + s.charCodeAt(i)) | 0; } return 'hash_' + Math.abs(h).toString(36); }
+
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('wamPayTheme', 'light'); btn.textContent = '🌙'; }
+            else { document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('wamPayTheme', 'dark'); btn.textContent = '☀️'; }
+        });
+    }
+
+    function attachEvents() {
+        $$('.li-role-btn').forEach(btn => { btn.addEventListener('click', () => setRole(btn.dataset.role)); });
+        $('#primaryBtn').addEventListener('click', handlePrimary);
+        $('#backBtn').addEventListener('click', () => { resetForm(); hideAlert(); });
+        $('#resendBtn').addEventListener('click', () => { state.otpCode = generateOtp(); resetOtpInputs(); startOtpTimer(); startResendCooldown(); showAlert('کد جدید ارسال شد. (کد تست: <strong>12345</strong>)', 'info'); toast('کد جدید ارسال شد', 'success'); });
+        $('#pwdToggle').addEventListener('click', () => { const inp = $('#passwordInput'); const isPwd = inp.type === 'password'; inp.type = isPwd ? 'text' : 'password'; $('#pwdToggle').textContent = isPwd ? '🙈' : '👁️'; });
+        $('#mobileInput').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 11); });
+        ['mobileInput', 'passwordInput'].forEach(id => { document.getElementById(id).addEventListener('keydown', (e) => { if (e.key === 'Enter') handlePrimary(); }); });
+    }
+
+    function init() {
+        let current = null;
+        try {
+            const raw = localStorage.getItem('wamPayCurrentUser');
+            if (raw && raw !== 'null' && raw !== 'undefined') {
+                current = JSON.parse(raw);
+                if (typeof current !== 'object' || current === null) current = null;
+            }
+        } catch (e) { current = null; }
+
+        if (current && current.role && current.status === 'active') {
+            const target = getRoleRedirect(current.role);
+            console.log('ℹ️ [Login] کاربر لاگین است → انتقال به', target);
+            window.location.href = target;
+            return;
+        }
+
+        initTheme(); setupOtpInputs(); attachEvents(); setRole('applicant');
+
+        console.log('%c🚀 WAM PAY — Login v15.2 (UUID Fix Final)', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+        console.log('%c🆕 v15.2: ستون phone_number در INSERT و SELECT', 'color:#1e8e4a;font-weight:bold;');
+        console.log('%c🧪 Mock OTP: 12345', 'color:#d4a62a;font-weight:bold;');
+        console.log('%c🔍 Supabase:', hasSupabase() ? '✅ Connected' : '❌ Not loaded', hasSupabase() ? 'color:#1e8e4a' : 'color:#c0392b');
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+
+})();
+</script>
+</body>
+</html>

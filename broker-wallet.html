@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="کیف پول کارگزار — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>کیف پول | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/broker-panel.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ─── استایل اختصاصی کیف پول ─── */
+
+    .wam-broker__wallet-hero {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 55%, #1a6b42 100%);
+      color: #fff;
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-lg);
+      margin-bottom: var(--wam-space-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wam-broker__wallet-hero::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      left: -40px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.3), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-broker__wallet-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.18), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-broker__wallet-hero-label {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-bottom: 6px;
+    }
+
+    .wam-broker__wallet-hero-value {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 4px;
+    }
+
+    .wam-broker__wallet-hero-sub {
+      font-size: 0.78rem;
+      opacity: 0.88;
+      margin-bottom: var(--wam-space-lg);
+    }
+
+    /* دکمه‌های اقدام */
+    .wam-broker__wallet-actions {
+      display: flex;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-broker__wallet-btn {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 12px 8px;
+      border-radius: var(--wam-radius);
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all var(--wam-t);
+    }
+
+    .wam-broker__wallet-btn:hover {
+      background: rgba(255, 255, 255, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .wam-broker__wallet-btn--gold {
+      background: var(--wam-gold);
+      color: #3a2a00;
+      border-color: var(--wam-gold);
+    }
+    .wam-broker__wallet-btn--gold:hover {
+      background: var(--wam-gold-light);
+    }
+
+    .wam-broker__wallet-btn-icon {
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    /* خلاصه کارت‌ها */
+    .wam-broker__summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: var(--wam-space-lg);
+    }
+
+    .wam-broker__summary-card {
+      padding: 12px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      box-shadow: var(--wam-shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .wam-broker__summary-label {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wam-broker__summary-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.2;
+    }
+
+    .wam-broker__summary-value--warning { color: var(--wam-warning-text); }
+    .wam-broker__summary-value--success { color: var(--wam-success-text); }
+    .wam-broker__summary-value--gold    { color: #7a5a00; }
+
+    .wam-broker__summary-sub {
+      font-size: 0.68rem;
+      color: var(--wam-text-muted);
+    }
+
+    /* تب‌ها */
+    .wam-broker__tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      margin-bottom: var(--wam-space-md);
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .wam-broker__tabs::-webkit-scrollbar { display: none; }
+
+    .wam-broker__tab {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .wam-broker__tab.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-broker__tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .wam-broker__tab.is-active .wam-broker__tab-count {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    /* ردیف تراکنش */
+    .wam-broker__tx {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      margin-bottom: 8px;
+      transition: all var(--wam-t);
+    }
+
+    .wam-broker__tx:hover {
+      box-shadow: var(--wam-shadow);
+      transform: translateY(-1px);
+    }
+
+    .wam-broker__tx-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--wam-radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex: 0 0 auto;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+    }
+
+    .wam-broker__tx-icon--in {
+      background: var(--wam-success-soft);
+      color: var(--wam-success);
+    }
+    .wam-broker__tx-icon--out {
+      background: var(--wam-danger-soft);
+      color: var(--wam-danger);
+    }
+    .wam-broker__tx-icon--pending {
+      background: var(--wam-warning-soft);
+      color: var(--wam-warning-text);
+    }
+    .wam-broker__tx-icon--commission {
+      background: var(--wam-gold-soft);
+      color: #7a5a00;
+    }
+
+    .wam-broker__tx-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-broker__tx-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-broker__tx-meta {
+      display: flex;
+      gap: 8px;
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-broker__tx-amount {
+      font-size: 0.92rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .wam-broker__tx-amount--in {
+      color: var(--wam-success);
+    }
+    .wam-broker__tx-amount--out {
+      color: var(--wam-danger);
+    }
+    .wam-broker__tx-amount--pending {
+      color: var(--wam-warning-text);
+    }
+
+    /* خلاصه تراکنش */
+    .wam-broker__tx-summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius);
+      margin-bottom: var(--wam-space-md);
+      font-size: 0.78rem;
+    }
+
+    .wam-broker__tx-summary-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .wam-broker__tx-summary-label {
+      font-size: 0.68rem;
+      color: var(--wam-text-muted);
+      font-weight: 600;
+    }
+
+    .wam-broker__tx-summary-value {
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    /* Modal درخواست تسویه */
+    .wam-broker__modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 59, 35, 0.5);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: var(--wam-z-modal);
+      padding: 0;
+    }
+    .wam-broker__modal.is-open { display: flex; }
+
+    .wam-broker__modal-box {
+      background: var(--wam-bg-alt);
+      width: 100%;
+      max-width: 560px;
+      border-radius: var(--wam-radius-lg) var(--wam-radius-lg) 0 0;
+      padding: var(--wam-space-lg);
+      padding-bottom: calc(var(--wam-space-lg) + env(safe-area-inset-bottom, 0px));
+      animation: wam-slide-up 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .wam-broker__modal-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border-soft);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-broker__modal-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      flex: 1 1 auto;
+    }
+
+    .wam-broker__modal-close {
+      background: transparent;
+      border: 0;
+      font-size: 1.2rem;
+      color: var(--wam-text-muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .wam-broker__modal-close:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    .wam-broker__modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .wam-broker__modal-actions .wam-btn {
+      flex: 1 1 0;
+    }
+
+    /* حالت خالی */
+    .wam-broker__empty-sm {
+      text-align: center;
+      padding: 30px 16px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-broker__empty-sm-icon {
+      font-size: 2rem;
+      opacity: 0.55;
+      margin-bottom: 8px;
+    }
+
+    .wam-broker__empty-sm-text {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body data-page="broker-wallet">
+
+  <div class="wam-broker" id="brokerRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-broker__topbar">
+      <div class="wam-broker__topbar-info">
+        <a href="broker-dashboard.html" style="color:inherit;text-decoration:none;font-size:0.75rem;opacity:0.85;">
+          ↩ بازگشت
+        </a>
+        <span class="wam-broker__topbar-name">💰 کیف پول</span>
+      </div>
+      <div class="wam-broker__topbar-actions">
+        <button type="button" class="wam-broker__icon-btn" id="refreshBtn" title="بروزرسانی">
+          🔄
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-broker__main">
+
+      <!-- Hero -->
+      <section class="wam-broker__wallet-hero">
+        <div class="wam-broker__wallet-hero-label">موجودی قابل برداشت</div>
+        <div class="wam-broker__wallet-hero-value" id="walletBalance">۰</div>
+        <div class="wam-broker__wallet-hero-sub">میلیون ریال</div>
+
+        <div class="wam-broker__wallet-actions">
+          <button type="button" class="wam-broker__wallet-btn wam-broker__wallet-btn--gold" id="withdrawBtn">
+            <span class="wam-broker__wallet-btn-icon">💸</span>
+            <span>درخواست تسویه</span>
+          </button>
+          <button type="button" class="wam-broker__wallet-btn" id="historyBtn">
+            <span class="wam-broker__wallet-btn-icon">📜</span>
+            <span>تاریخچه</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- خلاصه کارت‌ها -->
+      <section class="wam-broker__summary-grid">
+        <div class="wam-broker__summary-card">
+          <div class="wam-broker__summary-label">💼 کمیسیون کل</div>
+          <div class="wam-broker__summary-value wam-broker__summary-value--gold" id="totalCommission">۰</div>
+          <div class="wam-broker__summary-sub">میلیون ریال</div>
+        </div>
+        <div class="wam-broker__summary-card">
+          <div class="wam-broker__summary-label">⏳ در انتظار تأیید</div>
+          <div class="wam-broker__summary-value wam-broker__summary-value--warning" id="pendingAmount">۰</div>
+          <div class="wam-broker__summary-sub">میلیون ریال</div>
+        </div>
+        <div class="wam-broker__summary-card">
+          <div class="wam-broker__summary-label">✓ تسویه‌شده</div>
+          <div class="wam-broker__summary-value wam-broker__summary-value--success" id="settledAmount">۰</div>
+          <div class="wam-broker__summary-sub">میلیون ریال</div>
+        </div>
+        <div class="wam-broker__summary-card">
+          <div class="wam-broker__summary-label">📁 پرونده‌های موفق</div>
+          <div class="wam-broker__summary-value" id="successCases">۰</div>
+          <div class="wam-broker__summary-sub">از پرونده‌ها</div>
+        </div>
+      </section>
+
+      <!-- تب‌ها -->
+      <div class="wam-broker__tabs" id="tabsBar">
+        <button type="button" class="wam-broker__tab is-active" data-tab="all">
+          همه <span class="wam-broker__tab-count" data-count="all">۰</span>
+        </button>
+        <button type="button" class="wam-broker__tab" data-tab="in">
+          واریز <span class="wam-broker__tab-count" data-count="in">۰</span>
+        </button>
+        <button type="button" class="wam-broker__tab" data-tab="out">
+          برداشت <span class="wam-broker__tab-count" data-count="out">۰</span>
+        </button>
+        <button type="button" class="wam-broker__tab" data-tab="pending">
+          در انتظار <span class="wam-broker__tab-count" data-count="pending">۰</span>
+        </button>
+      </div>
+
+      <!-- خلاصه تراکنش -->
+      <div class="wam-broker__tx-summary" id="txSummary">
+        <div class="wam-broker__tx-summary-item">
+          <span class="wam-broker__tx-summary-label">تعداد تراکنش</span>
+          <span class="wam-broker__tx-summary-value" id="txCount">۰</span>
+        </div>
+        <div class="wam-broker__tx-summary-item">
+          <span class="wam-broker__tx-summary-label">مجموع واریز</span>
+          <span class="wam-broker__tx-summary-value" style="color:var(--wam-success);" id="txInSum">۰</span>
+        </div>
+        <div class="wam-broker__tx-summary-item">
+          <span class="wam-broker__tx-summary-label">مجموع برداشت</span>
+          <span class="wam-broker__tx-summary-value" style="color:var(--wam-danger);" id="txOutSum">۰</span>
+        </div>
+      </div>
+
+      <!-- لیست تراکنش‌ها -->
+      <div id="transactionsList">
+        <!-- توسط JS پر می‌شود -->
+      </div>
+
+      <!-- Empty -->
+      <div class="wam-broker__empty-sm" id="emptyState" style="display:none;">
+        <div class="wam-broker__empty-sm-icon">📭</div>
+        <p class="wam-broker__empty-sm-text">تراکنشی در این دسته وجود ندارد.</p>
+      </div>
+
+      <div style="height: 20px;"></div>
+
+    </main>
+
+    <!-- ═══ FAB ═══ -->
+    <button type="button" class="wam-broker__fab" id="brokerFab" aria-label="تسویه">💸</button>
+
+    <!-- ═══ BOTTOM NAV ═══ -->
+    <nav class="wam-broker__bottomnav" role="navigation">
+      <a href="broker-dashboard.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">🏠</span>
+        <span class="wam-broker__nav-label">خانه</span>
+      </a>
+      <a href="broker-cases.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">📁</span>
+        <span class="wam-broker__nav-label">پرونده‌ها</span>
+      </a>
+      <a href="broker-wizard.html" class="wam-broker__nav-item wam-broker__nav-item--cta">
+        <span class="wam-broker__nav-icon">➕</span>
+        <span class="wam-broker__nav-label">جدید</span>
+      </a>
+      <a href="broker-applicants.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">👥</span>
+        <span class="wam-broker__nav-label">متقاضیان</span>
+      </a>
+      <a href="broker-profile.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">👤</span>
+        <span class="wam-broker__nav-label">پروفایل</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- ═══ MODAL: درخواست تسویه ═══ -->
+  <div class="wam-broker__modal" id="withdrawModal" role="dialog" aria-modal="true">
+    <div class="wam-broker__modal-box">
+
+      <div class="wam-broker__modal-head">
+        <h3 class="wam-broker__modal-title">💸 درخواست تسویه</h3>
+        <button type="button" class="wam-broker__modal-close" id="withdrawModalClose" aria-label="بستن">✕</button>
+      </div>
+
+      <div class="wam-field">
+        <label class="wam-field__label">موجودی قابل برداشت</label>
+        <div style="padding:12px 14px;background:var(--wam-primary-soft);border-radius:var(--wam-radius);font-weight:800;font-size:1rem;color:var(--wam-primary);">
+          <span id="modalBalance">۰</span> میلیون ریال
+        </div>
+      </div>
+
+      <div class="wam-field">
+        <label class="wam-field__label" for="withdrawAmount">مبلغ درخواستی (میلیون ریال) *</label>
+        <input type="number" id="withdrawAmount" class="wam-input" min="1" placeholder="مبلغ را وارد کنید" dir="ltr">
+        <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
+          <button type="button" class="wam-chip" data-quick="25%">۲۵٪</button>
+          <button type="button" class="wam-chip" data-quick="50%">۵۰٪</button>
+          <button type="button" class="wam-chip" data-quick="75%">۷۵٪</button>
+          <button type="button" class="wam-chip" data-quick="100%">همه</button>
+        </div>
+      </div>
+
+      <div class="wam-field">
+        <label class="wam-field__label" for="withdrawIban">شماره شبا مقصد *</label>
+        <input type="text" id="withdrawIban" class="wam-input" placeholder="IR..." dir="ltr" maxlength="26">
+        <p class="wam-field__hint">شماره شبا با IR شروع می‌شود (۲۴ رقم پس از IR).</p>
+      </div>
+
+      <div class="wam-field">
+        <label class="wam-field__label" for="withdrawNote">توضیحات (اختیاری)</label>
+        <textarea id="withdrawNote" class="wam-textarea" placeholder="توضیح اضافه..."></textarea>
+      </div>
+
+      <div style="padding:10px 12px;background:var(--wam-warning-soft);border-radius:var(--wam-radius);font-size:0.78rem;color:var(--wam-warning-text);line-height:1.7;">
+        ⚠️ درخواست تسویه معمولاً ۱-۳ روز کاری پس از تأیید مدیر، پرداخت می‌شود.
+      </div>
+
+      <div class="wam-broker__modal-actions">
+        <button type="button" class="wam-btn" id="withdrawCancelBtn">انصراف</button>
+        <button type="button" class="wam-btn wam-btn--primary" id="withdrawSubmitBtn">
+          💸 ارسال درخواست
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+  <script src="js/bundle-broker.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       BROKER WALLET CONTROLLER
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_CASES = 'wamPayCases';
+      var STORAGE_WALLET = 'wamPayBrokerWallet';
+      var STORAGE_SETTINGS = 'wamPaySettings';
+
+      var state = {
+        wallet: null,
+        transactions: [],
+        filtered: [],
+        tab: 'all',
+        commissionRate: 0.05, // 5% فرضی
+        target: 200           // هدف ماه
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = Date.now() - ts;
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه پیش';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت پیش';
+        return Math.round(abs / 86400000) + ' روز پیش';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کارگزار', username: 'broker', role: 'broker', id: 'broker' };
+      }
+
+      function currentUserId() {
+        var u = currentUser();
+        return u.id || u.username || 'broker';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadSettings() {
+        var s = readJSON(STORAGE_SETTINGS, {});
+        if (s && s.brokerCommission) {
+          state.commissionRate = Number(s.brokerCommission) / 100;
+        }
+      }
+
+      function loadWallet() {
+        var all = readJSON(STORAGE_WALLET, {});
+        var me = currentUserId();
+        state.wallet = (all && all[me]) || {
+          balance: 0,
+          totalCommission: 0,
+          pending: 0,
+          settled: 0,
+          transactions: []
+        };
+        state.transactions = Array.isArray(state.wallet.transactions) ?
+                              state.wallet.transactions : [];
+      }
+
+      function saveWallet() {
+        var all = readJSON(STORAGE_WALLET, {});
+        if (!all || typeof all !== 'object') all = {};
+        var me = currentUserId();
+        state.wallet.transactions = state.transactions;
+        all[me] = state.wallet;
+        writeJSON(STORAGE_WALLET, all);
+      }
+
+      // ═══════════════════════════════════
+      // محاسبات از پرونده‌ها
+      // ═══════════════════════════════════
+
+      function computeFromCases() {
+        var cases = readJSON(STORAGE_CASES, []);
+        if (!Array.isArray(cases)) return { totalCommission: 0, pending: 0, settled: 0, successCases: 0 };
+        var me = currentUserId();
+        var mine = cases.filter(function (c) {
+          return c && (c.brokerId === me);
+        });
+
+        var totalCommission = 0;
+        var pending = 0;
+        var settled = 0;
+        var successCases = 0;
+
+        mine.forEach(function (c) {
+          var amount = Number(c.amount) || 0;
+          var commission = amount * state.commissionRate;
+
+          if (c.status === 'approved' || c.status === 'completed') {
+            successCases++;
+            totalCommission += commission;
+            settled += commission;
+          } else if (c.status !== 'rejected') {
+            // pending یا draft یا in_review
+            pending += commission;
+          }
+        });
+
+        return {
+          totalCommission: totalCommission,
+          pending: pending,
+          settled: settled,
+          successCases: successCases
+        };
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function renderAll() {
+        var s = computeFromCases();
+
+        // موجودی قابل برداشت = settled - برداشت‌های انجام‌شده
+        var withdrawals = state.transactions
+          .filter(function (t) { return t.type === 'out' && t.status !== 'rejected'; })
+          .reduce(function (sum, t) { return sum + (Number(t.amount) || 0); }, 0);
+
+        var balance = Math.max(0, s.settled - withdrawals);
+
+        // Hero
+        if ($('walletBalance')) $('walletBalance').textContent = fmtAmount(balance);
+
+        // Summary cards
+        if ($('totalCommission')) $('totalCommission').textContent = fmtAmount(s.totalCommission);
+        if ($('pendingAmount')) $('pendingAmount').textContent = fmtAmount(s.pending);
+        if ($('settledAmount')) $('settledAmount').textContent = fmtAmount(s.settled);
+        if ($('successCases')) $('successCases').textContent = toFa(s.successCases);
+
+        // Modal balance
+        if ($('modalBalance')) $('modalBalance').textContent = fmtAmount(balance);
+
+        state.wallet.balance = balance;
+        state.wallet.totalCommission = s.totalCommission;
+        state.wallet.pending = s.pending;
+        state.wallet.settled = s.settled;
+
+        applyFilters();
+      }
+
+      function applyFilters() {
+        var tab = state.tab;
+        if (tab === 'all') {
+          state.filtered = state.transactions.slice();
+        } else if (tab === 'in') {
+          state.filtered = state.transactions.filter(function (t) { return t.type === 'in'; });
+        } else if (tab === 'out') {
+          state.filtered = state.transactions.filter(function (t) { return t.type === 'out'; });
+        } else if (tab === 'pending') {
+          state.filtered = state.transactions.filter(function (t) { return t.status === 'pending'; });
+        }
+
+        // مرتب‌سازی جدیدترین
+        state.filtered.sort(function (a, b) {
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+
+        renderTransactions();
+        updateTabCounts();
+        updateTxSummary();
+      }
+
+      function updateTabCounts() {
+        var counts = { all: state.transactions.length, in: 0, out: 0, pending: 0 };
+        state.transactions.forEach(function (t) {
+          if (t.type === 'in') counts.in++;
+          if (t.type === 'out') counts.out++;
+          if (t.status === 'pending') counts.pending++;
+        });
+        Object.keys(counts).forEach(function (k) {
+          var el = document.querySelector('[data-count="' + k + '"]');
+          if (el) el.textContent = toFa(counts[k]);
+        });
+      }
+
+      function updateTxSummary() {
+        if ($('txCount')) $('txCount').textContent = toFa(state.filtered.length);
+
+        var inSum = 0, outSum = 0;
+        state.filtered.forEach(function (t) {
+          var a = Number(t.amount) || 0;
+          if (t.type === 'in') inSum += a;
+          else if (t.type === 'out') outSum += a;
+        });
+
+        if ($('txInSum')) $('txInSum').textContent = fmtAmount(inSum);
+        if ($('txOutSum')) $('txOutSum').textContent = fmtAmount(outSum);
+      }
+
+      function renderTransactions() {
+        var container = $('transactionsList');
+        var empty = $('emptyState');
+        if (!container) return;
+
+        if (state.filtered.length === 0) {
+          container.innerHTML = '';
+          if (empty) empty.style.display = '';
+          return;
+        }
+        if (empty) empty.style.display = 'none';
+
+        var html = '';
+        state.filtered.forEach(function (t) {
+          html += renderTxRow(t);
+        });
+        container.innerHTML = html;
+      }
+
+      function renderTxRow(t) {
+        var iconClass = 'wam-broker__tx-icon--' + (t.type || 'in');
+        var statusLabel = {
+          pending: 'در انتظار',
+          approved: 'تأییدشده',
+          rejected: 'ردشده'
+        }[t.status] || t.status || '';
+
+        var icon = {
+          in: '↓', out: '↑', commission: '💰'
+        }[t.type] || '💵';
+
+        if (t.type === 'commission') iconClass = 'wam-broker__tx-icon--commission';
+
+        var amountClass = 'wam-broker__tx-amount--' + (t.type === 'in' ? 'in' :
+                          t.status === 'pending' ? 'pending' : 'out');
+
+        var sign = (t.type === 'in' || t.type === 'commission') ? '+' : '−';
+
+        var statusBadge = '';
+        if (t.status && t.status !== 'approved') {
+          var bc = t.status === 'pending' ? 'warning' : 'danger';
+          statusBadge = '<span class="wam-badge wam-badge--' + bc + '">' + statusLabel + '</span>';
+        }
+
+        return '' +
+          '<div class="wam-broker__tx" data-id="' + (t.id || '') + '">' +
+            '<div class="wam-broker__tx-icon ' + iconClass + '">' + icon + '</div>' +
+            '<div class="wam-broker__tx-body">' +
+              '<p class="wam-broker__tx-title">' + (t.title || '—') + '</p>' +
+              '<div class="wam-broker__tx-meta">' +
+                '<span>🗓 ' + fmtDate(t.createdAt) + '</span>' +
+                (statusBadge ? '<span>' + statusBadge + '</span>' : '') +
+              '</div>' +
+            '</div>' +
+            '<div class="wam-broker__tx-amount ' + amountClass + '">' +
+              sign + fmtAmount(t.amount) +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // درخواست تسویه
+      // ═══════════════════════════════════
+
+      function openWithdrawModal() {
+        if (!state.wallet || state.wallet.balance <= 0) {
+          alert('موجودی قابل برداشت ندارید.');
+          return;
+        }
+        if ($('withdrawAmount')) $('withdrawAmount').value = '';
+        if ($('withdrawIban')) $('withdrawIban').value = '';
+        if ($('withdrawNote')) $('withdrawNote').value = '';
+        if ($('modalBalance')) $('modalBalance').textContent = fmtAmount(state.wallet.balance);
+
+        var m = $('withdrawModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('withdrawAmount')) $('withdrawAmount').focus(); }, 150);
+      }
+
+      function closeWithdrawModal() {
+        var m = $('withdrawModal');
+        if (m) m.classList.remove('is-open');
+      }
+
+      function submitWithdraw() {
+        var amount = parseInt(($('withdrawAmount') || {}).value, 10) || 0;
+        var iban = (($('withdrawIban') || {}).value || '').trim().toUpperCase();
+        var note = (($('withdrawNote') || {}).value || '').trim();
+
+        if (amount <= 0) {
+          alert('مبلغ معتبر وارد کنید.');
+          return;
+        }
+        if (amount > state.wallet.balance) {
+          alert('مبلغ بیش از موجودی قابل برداشت است.');
+          return;
+        }
+        if (!/^IR\d{24}$/.test(iban)) {
+          alert('شماره شبا معتبر نیست. (IR + ۲۴ رقم)');
+          return;
+        }
+
+        var newTx = {
+          id: 'tx_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6),
+          type: 'out',
+          title: 'درخواست تسویه',
+          amount: amount,
+          iban: iban,
+          note: note,
+          status: 'pending',
+          createdAt: Date.now(),
+          createdBy: currentUserId()
+        };
+
+        state.transactions.push(newTx);
+        saveWallet();
+
+        emitEvent('broker:withdraw-requested', {
+          id: newTx.id,
+          amount: amount,
+          iban: iban
+        });
+
+        closeWithdrawModal();
+        renderAll();
+
+        // پیام موفقیت
+        var ok = document.createElement('div');
+        ok.className = 'wam-toast wam-toast--success';
+        ok.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);z-index:1200;';
+        ok.textContent = '✓ درخواست تسویه ثبت شد';
+        document.body.appendChild(ok);
+        setTimeout(function () { ok.remove(); }, 2500);
+      }
+
+      // ═══════════════════════════════════
+      // Seed
+      // ═══════════════════════════════════
+
+      function seedIfEmpty() {
+        if (state.transactions.length > 0) return;
+
+        var now = Date.now();
+        state.transactions = [
+          {
+            id: 'tx_' + (now - 86400000 * 30),
+            type: 'commission',
+            title: 'کمیسیون پرونده وام مسکن (C-ABC12)',
+            amount: 25,
+            status: 'approved',
+            createdAt: now - 86400000 * 30
+          },
+          {
+            id: 'tx_' + (now - 86400000 * 20),
+            type: 'commission',
+            title: 'کمیسیون پرونده وام خودرو (C-DEF34)',
+            amount: 12,
+            status: 'approved',
+            createdAt: now - 86400000 * 20
+          },
+          {
+            id: 'tx_' + (now - 86400000 * 15),
+            type: 'out',
+            title: 'تسویه به شبا IR1234...5678',
+            amount: 20,
+            status: 'approved',
+            iban: 'IR123456789012345678901234',
+            createdAt: now - 86400000 * 15
+          },
+          {
+            id: 'tx_' + (now - 86400000 * 5),
+            type: 'commission',
+            title: 'کمیسیون پرونده وام شخصی (C-GHI56)',
+            amount: 8,
+            status: 'approved',
+            createdAt: now - 86400000 * 5
+          },
+          {
+            id: 'tx_' + (now - 86400000 * 2),
+            type: 'out',
+            title: 'درخواست تسویه در انتظار',
+            amount: 15,
+            status: 'pending',
+            iban: 'IR123456789012345678901234',
+            createdAt: now - 86400000 * 2
+          }
+        ];
+        saveWallet();
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Tabs
+        $$('.wam-broker__tab').forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            $$('.wam-broker__tab').forEach(function (x) { x.classList.remove('is-active'); });
+            tab.classList.add('is-active');
+            state.tab = tab.getAttribute('data-tab') || 'all';
+            applyFilters();
+          });
+        });
+
+        // دکمه‌های اقدام
+        if ($('withdrawBtn')) $('withdrawBtn').addEventListener('click', openWithdrawModal);
+        if ($('brokerFab')) $('brokerFab').addEventListener('click', openWithdrawModal);
+
+        if ($('historyBtn')) {
+          $('historyBtn').addEventListener('click', function () {
+            var el = $('transactionsList');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+        }
+
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            renderAll();
+            $('refreshBtn').textContent = '✓';
+            setTimeout(function () { $('refreshBtn').textContent = '🔄'; }, 900);
+          });
+        }
+
+        // Modal
+        if ($('withdrawModalClose')) $('withdrawModalClose').addEventListener('click', closeWithdrawModal);
+        if ($('withdrawCancelBtn')) $('withdrawCancelBtn').addEventListener('click', closeWithdrawModal);
+        var m = $('withdrawModal');
+        if (m) {
+          m.addEventListener('click', function (e) {
+            if (e.target === m) closeWithdrawModal();
+          });
+        }
+        if ($('withdrawSubmitBtn')) $('withdrawSubmitBtn').addEventListener('click', submitWithdraw);
+
+        // دکمه‌های سریع مبلغ
+        $$('[data-quick]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var q = btn.getAttribute('data-quick');
+            var bal = state.wallet.balance || 0;
+            var amt = 0;
+            if (q === '25%') amt = Math.floor(bal * 0.25);
+            else if (q === '50%') amt = Math.floor(bal * 0.5);
+            else if (q === '75%') amt = Math.floor(bal * 0.75);
+            else if (q === '100%') amt = bal;
+            if ($('withdrawAmount')) $('withdrawAmount').value = amt;
+          });
+        });
+
+        // IBAN: convert to uppercase + filter
+        if ($('withdrawIban')) {
+          $('withdrawIban').addEventListener('input', function () {
+            var v = $('withdrawIban').value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            if (v.indexOf('IR') !== 0 && v.length > 0) v = 'IR' + v;
+            $('withdrawIban').value = v.slice(0, 26);
+          });
+        }
+
+        // Esc
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeWithdrawModal();
+        });
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        loadSettings();
+        loadWallet();
+        seedIfEmpty();
+        renderAll();
+        bindEvents();
+
+        // بروزرسانی خودکار
+        setInterval(renderAll, 30000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

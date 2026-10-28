@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚖️ ادیتور متن قرارداد — وام پی</title>
+<link rel="stylesheet" href="css/fonts/Vazirmatn-font-face.css">
+<style>
+:root{
+  --primary:#0b3b23;
+  --primary-light:#1e8e4a;
+  --gold:#d4a62a;
+  --gold-light:#f0c453;
+  --danger:#c0392b;
+  --success:#1e8e4a;
+  --warn:#c98a00;
+  --bg:#f5f7f5;
+  --card:#ffffff;
+  --text:#1a2b22;
+  --text-muted:#77847b;
+  --border:#e2e6e0;
+  --shadow:0 2px 8px rgba(11,59,35,.08);
+  --shadow-lg:0 8px 24px rgba(11,59,35,.15);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Vazirmatn',Tahoma,sans-serif;background:var(--bg);color:var(--text);direction:rtl;line-height:1.7;min-height:100vh}
+
+/* هدر */
+.header{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;padding:16px 24px;box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.header__brand{display:flex;align-items:center;gap:12px}
+.header__icon{font-size:28px}
+.header__title h1{font-size:1.1rem;font-weight:800;line-height:1.2}
+.header__title p{font-size:.72rem;opacity:.85;margin-top:2px}
+.header__actions{display:flex;gap:8px}
+
+/* دکمه‌ها */
+.btn{padding:10px 18px;border:none;border-radius:9px;font-family:inherit;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn--primary{background:var(--gold);color:var(--primary)}
+.btn--primary:hover:not(:disabled){background:var(--gold-light);transform:translateY(-1px)}
+.btn--success{background:var(--success);color:#fff}
+.btn--success:hover:not(:disabled){background:#157a3d}
+.btn--danger{background:var(--danger);color:#fff}
+.btn--danger:hover:not(:disabled){background:#a02d20}
+.btn--ghost{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.btn--ghost:hover:not(:disabled){background:rgba(255,255,255,.25)}
+.btn--outline{background:transparent;color:var(--primary);border:1.5px solid var(--border)}
+.btn--outline:hover:not(:disabled){border-color:var(--primary);background:#fff}
+.btn--pdf{background:linear-gradient(135deg,#c0392b,#a02d20);color:#fff;border:none}
+.btn--pdf:hover:not(:disabled){background:linear-gradient(135deg,#a02d20,#8a2519);transform:translateY(-1px);box-shadow:0 4px 12px rgba(192,57,43,.3)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:340px 1fr;min-height:calc(100vh - 72px);gap:0}
+.sidebar{background:var(--card);border-left:1px solid var(--border);padding:20px;overflow-y:auto;max-height:calc(100vh - 72px);position:sticky;top:72px}
+.main{padding:24px;max-width:1400px}
+
+/* سایدبار */
+.sidebar__section{margin-bottom:22px}
+.sidebar__label{font-size:.72rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sidebar__hint{font-size:.72rem;color:var(--text-muted);margin-bottom:10px;line-height:1.6}
+
+.ph-list{display:flex;flex-direction:column;gap:6px}
+.ph-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ph-item:hover{background:rgba(212,166,42,.08);border-color:var(--gold);transform:translateX(-2px)}
+.ph-item:active{transform:scale(.98)}
+.ph-item__left{flex:1;min-width:0}
+.ph-item__label{font-size:.8rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.ph-item__key{font-family:'Courier New',monospace;font-size:.7rem;color:var(--primary);direction:ltr;text-align:right;word-break:break-all}
+.ph-item__copy{font-size:1rem;color:var(--gold);flex-shrink:0}
+
+/* کارت اصلی */
+.card{background:var(--card);border-radius:14px;padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:18px}
+.card__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--border);flex-wrap:wrap;gap:10px}
+.card__title{font-size:1rem;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:8px}
+.card__meta{font-size:.75rem;color:var(--text-muted)}
+.card__meta strong{color:var(--primary)}
+
+/* Textarea */
+.editor-wrap{position:relative}
+.editor{width:100%;min-height:500px;padding:16px;border:1.5px solid var(--border);border-radius:10px;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:.85rem;line-height:2;color:var(--text);background:var(--bg);resize:vertical;direction:rtl}
+.editor:focus{outline:none;border-color:var(--primary);background:#fff;box-shadow:0 0 0 4px rgba(11,59,35,.08)}
+
+/* Toolbar */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px dashed var(--border)}
+.toolbar__left{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar__right{display:flex;gap:8px;flex-wrap:wrap;margin-right:auto}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:24px;background:var(--primary);color:#fff;padding:14px 20px;border-radius:10px;box-shadow:var(--shadow-lg);font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:10px;transform:translateY(100px);opacity:0;transition:all .3s;z-index:9999;max-width:400px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast--success{background:var(--success)}
+.toast--error{background:var(--danger)}
+.toast--warn{background:var(--warn)}
+
+/* Preview Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(11,59,35,.75);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;max-width:900px;width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg)}
+.modal__head{padding:16px 22px;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-between}
+.modal__head h3{font-size:1rem;display:flex;align-items:center;gap:8px}
+.modal__close{background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1.1rem}
+.modal__close:hover{background:rgba(255,255,255,.28)}
+.modal__body{padding:22px;overflow-y:auto;flex:1}
+.modal__body pre{white-space:pre-wrap;word-break:break-word;font-family:'Vazirmatn',Tahoma,sans-serif;font-size:.82rem;line-height:2;background:var(--bg);padding:16px;border-radius:10px;border:1px solid var(--border)}
+.modal__footer{padding:14px 22px;background:var(--bg);border-radius:0 0 14px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+
+/* Info box */
+.info-box{background:rgba(212,166,42,.08);border:1.5px solid rgba(212,166,42,.3);border-radius:10px;padding:12px 14px;font-size:.78rem;line-height:1.9;color:#8a6d1a;margin-bottom:14px}
+.info-box strong{color:var(--primary)}
+
+/* Responsive */
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static;max-height:none;border-left:none;border-bottom:1px solid var(--border)}
+  .ph-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+  .main{padding:16px}
+  .editor{min-height:350px;font-size:.8rem}
+}
+@media (max-width:600px){
+  .header{padding:12px 16px}
+  .header__title h1{font-size:.95rem}
+  .header__title p{display:none}
+  .btn{padding:8px 12px;font-size:.78rem}
+  .btn__text{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  هدر                                        -->
+<!-- ═══════════════════════════════════════════ -->
+<header class="header">
+  <div class="header__brand">
+    <div class="header__icon">⚖️</div>
+    <div class="header__title">
+      <h1>ادیتور متن قرارداد</h1>
+      <p>سامانه هوشمند تسهیلات وام پی</p>
+    </div>
+  </div>
+  <div class="header__actions">
+    <button class="btn btn--ghost" id="btnBack">
+      <span>←</span>
+      <span class="btn__text">بازگشت</span>
+    </button>
+    <button class="btn btn--ghost" id="btnLogout">
+      <span>🚪</span>
+      <span class="btn__text">خروج</span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  Layout                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="layout">
+
+  <!-- ─────── SIDEBAR ─────── -->
+  <aside class="sidebar">
+
+    <!-- وضعیت -->
+    <div class="sidebar__section">
+      <div class="sidebar__label">📊 وضعیت قرارداد</div>
+      <div class="card" style="padding:14px;margin:0">
+        <div class="card__meta">
+          <div style="margin-bottom:6px">
+            <strong>نسخه:</strong>
+            <span id="infoVersion">—</span>
+          </div>
+          <div style="margin-bottom:6px">
+            <strong>آخرین بروزرسانی:</strong>
+            <span id="infoUpdatedAt">—</span>
+          </div>
+          <div>
+            <strong>توسط:</strong>
+            <span id="infoUpdatedBy">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Placeholderها -->
+    <div class="sidebar__section">
+      <div class="sidebar__label">🔖 Placeholderها</div>
+      <div class="sidebar__hint">
+        روی هر کدوم بزن تا توی متن کپی بشه
+      </div>
+      <div class="ph-list" id="phList"></div>
+    </div>
+
+  </aside>
+
+  <!-- ─────── MAIN ─────── -->
+  <main class="main">
+
+    <!-- Info -->
+    <div class="info-box">
+      <strong>💡 راهنما:</strong>
+      متن قرارداد رو ویرایش کن. برای جایگزینی خودکار، از Placeholderها استفاده کن
+      (مثلاً <code style="background:#fff;padding:2px 6px;border-radius:4px;direction:ltr;display:inline-block">{{applicant_name}}</code>).
+      این Placeholderها موقع نمایش به کاربر، با اطلاعات واقعی جایگزین میشن.
+    </div>
+
+    <!-- کارت ادیتور -->
+    <div class="card">
+      <div class="card__head">
+        <div class="card__title">📝 متن قرارداد واگذاری تسهیلات</div>
+        <div class="card__meta">
+          طول متن: <strong id="charCount">۰</strong> کاراکتر
+        </div>
+      </div>
+
+      <div class="editor-wrap">
+        <textarea class="editor" id="editor" placeholder="متن قرارداد رو اینجا بنویسید..."></textarea>
+      </div>
+
+      <div class="toolbar">
+        <div class="toolbar__left">
+          <button class="btn btn--success" id="btnSave">
+            <span>💾</span>
+            <span>ذخیره</span>
+          </button>
+          <button class="btn btn--outline" id="btnPreview">
+            <span>👁️</span>
+            <span>پیش‌نمایش</span>
+          </button>
+          <button class="btn btn--outline" id="btnCopy">
+            <span>📋</span>
+            <span>کپی</span>
+          </button>
+          <button class="btn btn--pdf" id="btnPrint">
+            <span>🖨️</span>
+            <span>چاپ / PDF</span>
+          </button>
+        </div>
+        <div class="toolbar__right">
+          <button class="btn btn--danger" id="btnReset">
+            <span>🔄</span>
+            <span>بازگردانی به پیش‌فرض</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  Preview Modal                              -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="modal-overlay" id="previewModal">
+  <div class="modal">
+    <div class="modal__head">
+      <h3>👁️ پیش‌نمایش قرارداد (با داده‌ی نمونه)</h3>
+      <button class="modal__close" id="modalClose">✕</button>
+    </div>
+    <div class="modal__body">
+      <pre id="previewContent">—</pre>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--outline" id="modalCloseBtn">بستن</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  Toast                                      -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  Scripts                                    -->
+<!-- ═══════════════════════════════════════════ -->
+<script src="js/storage.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-js.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/storage-adapter.js"></script>
+<script src="js/auth-bridge.js"></script>
+<script src="js/permissions.js"></script>
+<script src="js/contract-template.js"></script>
+
+<script>
+/* ============================================================
+   Contract Editor — Admin Legal
+   ============================================================ */
+(function () {
+    'use strict';
+
+    // ═══════════════════════════════════════════════════════════
+    // ۱. چک احراز هویت و نقش
+    // ═══════════════════════════════════════════════════════════
+    const ALLOWED_ROLES = ['legal_admin', 'super_admin'];
+
+    function getCurrentUser() {
+        try {
+            const raw = localStorage.getItem('wamPayCurrentUser');
+            return raw ? JSON.parse(raw) : null;
+        } catch (e) { return null; }
+    }
+
+    function checkAccess(user) {
+        return user && ALLOWED_ROLES.includes(user.role)
+            && (user.status === 'active' || user.is_active === true);
+    }
+
+    function forceLogout(reason) {
+        try {
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+        } catch (e) {}
+        alert(reason || 'دسترسی غیرمجاز');
+        window.location.href = 'login.html';
+    }
+
+    const currentUser = getCurrentUser();
+    if (!checkAccess(currentUser)) {
+        forceLogout('دسترسی شما به این صفحه مجاز نیست.');
+        return;
+    }
+
+    console.log('✅ [ContractEditor] کاربر مجاز:', currentUser.name, '—', currentUser.role);
+
+    // ═══════════════════════════════════════════════════════════
+    // ۲. چک ContractTemplate
+    // ═══════════════════════════════════════════════════════════
+    if (!window.ContractTemplate) {
+        alert('❌ خطا: contract-template.js لود نشده');
+        return;
+    }
+
+    const CT = window.ContractTemplate;
+
+    // ═══════════════════════════════════════════════════════════
+    // ۳. المان‌ها
+    // ═══════════════════════════════════════════════════════════
+    const editor = document.getElementById('editor');
+    const phList = document.getElementById('phList');
+    const charCount = document.getElementById('charCount');
+    const infoVersion = document.getElementById('infoVersion');
+    const infoUpdatedAt = document.getElementById('infoUpdatedAt');
+    const infoUpdatedBy = document.getElementById('infoUpdatedBy');
+    const toastEl = document.getElementById('toast');
+    const previewModal = document.getElementById('previewModal');
+    const previewContent = document.getElementById('previewContent');
+
+    // ═══════════════════════════════════════════════════════════
+    // ۴. Toast
+    // ═══════════════════════════════════════════════════════════
+    let toastTimer = null;
+    function toast(msg, type) {
+        toastEl.className = 'toast show' + (type ? ' toast--' + type : '');
+        const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warn' ? '⚠️' : 'ℹ️';
+        toastEl.textContent = icon + ' ' + msg;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove('show'), 3200);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // ۵. اعداد فارسی
+    // ═══════════════════════════════════════════════════════════
+    function faNum(n) {
+        return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // ۶. رندر اطلاعات وضعیت
+    // ═══════════════════════════════════════════════════════════
+    function renderInfo() {
+        const t = CT.getContractTemplate();
+        infoVersion.textContent = faNum(t.version || 1);
+        if (t.updatedAt) {
+            const d = new Date(t.updatedAt);
+            infoUpdatedAt.textContent = d.toLocaleDateString('fa-IR') + ' ' +
+                d.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+        } else {
+            infoUpdatedAt.textContent = '—';
+        }
+        infoUpdatedBy.textContent = t.updatedBy || '—';
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // ۷. رندر Placeholderها
+    // ═══════════════════════════════════════════════════════════
+    function renderPlaceholders() {
+        const placeholders = CT.getPlaceholders();
+        phList.innerHTML = '';
+
+        placeholders.forEach(ph => {
+            const item = document.createElement('div');
+            item.className = 'ph-item';
+            item.dataset.key = ph.key;
+            item.innerHTML =
+                '<div class="ph-item__left">' +
+                    '<div class="ph-item__label">' + escapeHtml(ph.label) + '</div>' +
+                    '<div class="ph-item__key">{{' + escapeHtml(ph.key) + '}}</div>' +
+                '</div>' +
+                '<div class="ph-item__copy">📋</div>';
+
+            item.addEventListener('click', () => {
+                const tag = '{{' + ph.key + '}}';
+                insertAtCursor(editor, tag);
+                toast('کپی شد: ' + tag, 'success');
+            });
+
+            phList.appendChild(item);
+        });
+    }
+
+    function escapeHtml(str) {
+        return String(str == null ? '' : str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function insertAtCursor(textarea, text) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const before = textarea.value.substring(0, start);
+        const after = textarea.value.substring(end);
+
+        textarea.value = before + text + after;
+        textarea.selectionStart = textarea.selectionEnd = start + text.length;
+        textarea.focus();
+        updateCharCount();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // ۸. شمارش کاراکتر
+    // ═══════════════════════════════════════════════════════════
+    function updateCharCount() {
+        const len = (editor.value || '').length;
+        charCount.textContent = faNum(len);
+    }
+
+    editor.addEventListener('input', updateCharCount);
+
+    // ═══════════════════════════════════════════════════════════
+    // ۹. لود متن فعلی
+    // ═══════════════════════════════════════════════════════════
+    function loadTemplate() {
+        const t = CT.getContractTemplate();
+        editor.value = t.content || '';
+        updateCharCount();
+        renderInfo();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // ۱۰. ذخیره
+    // ═══════════════════════════════════════════════════════════
+    document.getElementById('btnSave').addEventListener('click', () => {
+        const content = (editor.value || '').trim();
+        if (content.length < 50) {
+            toast('متن خیلی کوتاهه (حداقل ۵۰ کاراکتر)', 'warn');
+            return;
+        }
+
+        const result = CT.saveContractTemplate(content, currentUser);
+        if (result.ok) {
+            toast('✅ ذخیره شد — نسخه ' + faNum(result.version), 'success');
+            renderInfo();
+        } else {
+            toast('❌ ' + (result.error || 'خطا در ذخیره'), 'error');
+        }
+    });
+
+    // ═══════════════════════════════════════════════════════════
+    // ۱۱. پیش‌نمایش
+    // ═══════════════════════════════════════════════════════════
+    document.getElementById('btnPreview').addEventListener('click', () => {
+        const content = editor.value || '';
+
+        const preview = content.replace(/\{\{([a-z_]+)\}\}/g, (match, key) => {
+            const ph = CT.getPlaceholders().find(p => p.key === key);
+            return ph ? (ph.example || '—') : match;
+        });
+
+        previewContent.textContent = preview;
+        previewModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    });
+
+    function closePreview() {
+        previewModal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalClose').addEventListener('click', closePreview);
+    document.getElementById('modalCloseBtn').addEventListener('click', closePreview);
+    previewModal.addEventListener('click', (e) => {
+        if (e.target === previewModal) closePreview();
+    });
+
+    // ═══════════════════════════════════════════════════════════
+    // ۱۲. کپی متن
+    // ═══════════════════════════════════════════════════════════
+    document.getElementById('btnCopy').addEventListener('click', async () => {
+        const content = editor.value || '';
+        try {
+            await navigator.clipboard.writeText(content);
+            toast('📋 متن کپی شد', 'success');
+        } catch (e) {
+            editor.select();
+            document.execCommand('copy');
+            toast('📋 متن کپی شد', 'success');
+        }
+    });
+
+    // ═══════════════════════════════════════════════════════════
+    // ۱۳. چاپ / PDF
+    // ═══════════════════════════════════════════════════════════
+    document.getElementById('btnPrint').addEventListener('click', () => {
+        const content = editor.value || '';
+        if (content.trim().length < 50) {
+            toast('متن خیلی کوتاهه — ابتدا ذخیره کنید', 'warn');
+            return;
+        }
+
+        const html = buildPrintHTML(content);
+        
+        const w = window.open('', '_blank');
+        if (!w) {
+            toast('⚠️ popup مسدود شد — لطفاً popup را فعال کنید', 'error');
+            return;
+        }
+        
+        w.document.open();
+        w.document.write(html);
+        w.document.close();
+        
+        let printed = false;
+        const doPrint = () => {
+            if (printed) return;
+            printed = true;
+            try {
+                w.focus();
+                w.print();
+            } catch (e) {
+                console.error('Print error:', e);
+            }
+        };
+        
+        w.onload = () => setTimeout(doPrint, 500);
+        setTimeout(() => { if (!printed) doPrint(); }, 1500);
+
+        toast('🖨️ پنجره چاپ باز شد — Save as PDF را انتخاب کنید', 'success');
+    });
+
+    function buildPrintHTML(content) {
+        const today = new Date().toLocaleDateString('fa-IR');
+        const now = new Date().toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit'});
+        
+        const safeContent = content
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+        return `<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>پیش‌نویس قرارداد واگذاری تسهیلات</title>
+<link href="${window.location.origin}/css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+@page { size: A4; margin: 15mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: #fff;
+    color: #1a2b22;
+    line-height: 2;
+    font-size: 13px;
+    direction: rtl;
+    padding: 20px;
+}
+.header {
+    text-align: center;
+    padding-bottom: 16px;
+    border-bottom: 3px double #0b3b23;
+    margin-bottom: 20px;
+}
+.header h1 { font-size: 20px; font-weight: 900; color: #0b3b23; margin-bottom: 6px; }
+.header .sub { font-size: 12px; color: #77847b; }
+.header .badge {
+    display: inline-block;
+    background: rgba(212,166,42,.15);
+    color: #8a6d1a;
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 8px;
+}
+.content {
+    white-space: pre-wrap;
+    font-size: 12.5px;
+    line-height: 2;
+    text-align: justify;
+    word-break: break-word;
+}
+.footer {
+    margin-top: 30px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e6e0;
+    text-align: center;
+    font-size: 11px;
+    color: #77847b;
+}
+@media print {
+    body { padding: 0; }
+    .no-print { display: none !important; }
+}
+.print-hint {
+    background: #fef4e8;
+    border: 1.5px solid #d4a62a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: #8a6d1a;
+    line-height: 1.9;
+}
+.print-hint strong { color: #0b3b23; }
+</style>
+</head>
+<body>
+<div class="print-hint no-print">
+    💡 <strong>راهنما:</strong> در پنجره‌ی چاپ، گزینه <strong>«Save as PDF»</strong> 
+    (یا «ذخیره به‌عنوان PDF») را انتخاب کنید و روی <strong>ذخیره</strong> کلیک کنید.
+</div>
+
+<div class="header">
+    <h1>پیش‌نویس قرارداد واگذاری تسهیلات</h1>
+    <div class="sub">سامانه هوشمند تسهیلات وام پی</div>
+    <div class="badge">⚠️ این سند پیش‌نویس است و پس از تأیید مدیر کل، رسمی می‌شود</div>
+</div>
+
+<div class="content">${safeContent}</div>
+
+<div class="footer">
+    <div>سامانه هوشمند تسهیلات وام پی — WAM PAY</div>
+    <div>تاریخ چاپ: ${today} — ساعت ${now}</div>
+</div>
+</body>
+</html>`;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // ۱۴. بازگردانی به پیش‌فرض
+    // ═══════════════════════════════════════════════════════════
+    document.getElementById('btnReset').addEventListener('click', () => {
+        if (!confirm('⚠️ متن فعلی پاک میشه و متن پیش‌فرض جایگزین میشه. ادامه؟')) return;
+        const result = CT.resetContractTemplate();
+        if (result.ok) {
+            editor.value = CT.getDefaultTemplate();
+            updateCharCount();
+            renderInfo();
+            toast('🔄 بازگردانی شد', 'success');
+        }
+    });
+
+    // ═══════════════════════════════════════════════════════════
+    // ۱۵. بازگشت و خروج
+    // ═══════════════════════════════════════════════════════════
+    document.getElementById('btnBack').addEventListener('click', () => {
+        window.location.href = 'admin-legal-dashboard.html';
+    });
+
+    document.getElementById('btnLogout').addEventListener('click', () => {
+        if (!confirm('از حساب خارج می‌شوید؟')) return;
+        try {
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+        } catch (e) {}
+        window.location.href = 'login.html';
+    });
+
+    // ═══════════════════════════════════════════════════════════
+    // ۱۶. Init
+    // ═══════════════════════════════════════════════════════════
+    loadTemplate();
+    renderPlaceholders();
+
+    console.log('✅ [ContractEditor] آماده — v1.1 با دکمه چاپ/PDF');
+})();
+</script>
+
+</body>
+</html>

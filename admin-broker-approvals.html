@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تأیید کارگزاران | پنل ادمین وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23;
+    --primary-light: #1a5c3a;
+    --primary-dark: #062416;
+    --gold: #d4a62a;
+    --gold-light: #f0c651;
+    --text: #1a2b22;
+    --text-muted: #6b7d73;
+    --bg: #f4f7f4;
+    --bg-card: #ffffff;
+    --border: #e0e8e3;
+    --error: #c0392b;
+    --success: #1e8e4a;
+    --warning: #e67e22;
+    --info: #2980b9;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+}
+.adm-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; padding: 16px 24px; box-shadow: var(--shadow-md);
+    position: sticky; top: 0; z-index: 100;
+}
+.adm-header__inner {
+    max-width: 1300px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.adm-logo { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-weight: 800; font-size: 18px; }
+.adm-logo__icon { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.adm-header__actions { display: flex; gap: 10px; align-items: center; }
+.adm-btn-icon { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: #fff; cursor: pointer; font-size: 16px; transition: var(--transition); display: flex; align-items: center; justify-content: center; }
+.adm-btn-icon:hover { background: rgba(255,255,255,0.18); }
+.adm-link { color: #fff; text-decoration: none; font-size: 13px; padding: 9px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.25); transition: var(--transition); }
+.adm-link:hover { background: rgba(255,255,255,0.12); }
+
+.adm-main { max-width: 1300px; margin: 0 auto; padding: 28px 20px 80px; }
+.adm-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+.adm-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+.adm-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+.adm-stat { background: var(--bg-card); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); border-right: 4px solid var(--primary); transition: var(--transition); }
+.adm-stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.adm-stat--warning { border-right-color: var(--warning); }
+.adm-stat--success { border-right-color: var(--success); }
+.adm-stat--error { border-right-color: var(--error); }
+.adm-stat--info { border-right-color: var(--info); }
+.adm-stat__icon { font-size: 22px; margin-bottom: 4px; }
+.adm-stat__label { font-size: 12px; color: var(--text-muted); margin-bottom: 2px; }
+.adm-stat__value { font-size: 24px; font-weight: 800; color: var(--text); }
+
+.adm-filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+.adm-search { flex: 1; min-width: 220px; padding: 11px 16px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--bg-card); color: var(--text); font-family: inherit; font-size: 14px; }
+.adm-search:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(11,59,35,0.10); }
+.adm-tabs { display: flex; gap: 4px; background: var(--bg-card); padding: 4px; border-radius: var(--radius-sm); border: 1px solid var(--border); flex-wrap: wrap; }
+.adm-tab { padding: 8px 14px; border-radius: 6px; border: none; background: transparent; color: var(--text-muted); font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 5px; }
+.adm-tab:hover { color: var(--text); }
+.adm-tab--active { background: var(--primary); color: #fff; }
+.adm-tab__count { font-size: 10px; opacity: 0.85; }
+
+.adm-list { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.adm-card { background: var(--bg-card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); border-right: 4px solid var(--warning); transition: var(--transition); animation: fadeIn 0.35s ease; }
+.adm-card--verified { border-right-color: var(--info); }
+.adm-card--active { border-right-color: var(--success); }
+.adm-card--rejected { border-right-color: var(--error); }
+.adm-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.adm-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px dashed var(--border); flex-wrap: wrap; }
+.adm-card__title { font-size: 17px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.adm-card__id { font-size: 12px; color: var(--text-muted); font-family: monospace; direction: ltr; text-align: right; }
+.adm-card__body { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+.adm-card__row { font-size: 13px; }
+.adm-card__row-label { color: var(--text-muted); font-size: 11px; margin-bottom: 2px; display: flex; align-items: center; gap: 4px; }
+.adm-card__row-value { font-weight: 700; color: var(--text); font-size: 13px; word-break: break-word; }
+.adm-card__row-value--mono { font-family: monospace; direction: ltr; text-align: right; }
+.adm-card__progress { display: flex; gap: 8px; margin-bottom: 12px; padding: 10px 14px; background: var(--bg); border-radius: var(--radius-sm); flex-wrap: wrap; }
+.adm-step { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: var(--bg-card); border: 1px solid var(--border); }
+.adm-step--done { background: rgba(30,142,74,0.10); border-color: rgba(30,142,74,0.3); color: var(--success); }
+.adm-step--pending { background: rgba(230,126,34,0.08); border-color: rgba(230,126,34,0.25); color: var(--warning); }
+.adm-step--skip { background: var(--bg); color: var(--text-muted); border-style: dashed; }
+
+.adm-card__actions { display: flex; gap: 8px; padding-top: 14px; border-top: 1px dashed var(--border); flex-wrap: wrap; }
+.adm-card__actions .adm-btn { flex: 1; min-width: 120px; }
+
+.adm-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 800; }
+.adm-badge--pending { background: rgba(230,126,34,0.12); color: var(--warning); }
+.adm-badge--active { background: rgba(30,142,74,0.12); color: var(--success); }
+.adm-badge--rejected { background: rgba(192,57,43,0.12); color: var(--error); }
+.adm-badge--verified { background: rgba(41,128,185,0.12); color: var(--info); }
+.adm-badge--landline { background: rgba(41,128,185,0.12); color: var(--info); }
+.adm-badge--bank { background: rgba(30,142,74,0.12); color: var(--success); }
+
+.adm-btn { padding: 10px 16px; border-radius: var(--radius-sm); border: none; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.adm-btn--primary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #fff; box-shadow: 0 4px 12px rgba(11,59,35,0.25); }
+.adm-btn--primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(11,59,35,0.35); }
+.adm-btn--success { background: var(--success); color: #fff; }
+.adm-btn--success:hover { background: #16703a; }
+.adm-btn--danger { background: var(--error); color: #fff; }
+.adm-btn--danger:hover { background: #a02c20; }
+.adm-btn--info { background: var(--info); color: #fff; }
+.adm-btn--info:hover { background: #1f6091; }
+.adm-btn--gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--primary-dark); }
+.adm-btn--gold:hover { transform: translateY(-1px); }
+.adm-btn--ghost { background: transparent; color: var(--text-muted); border: 1.5px solid var(--border); }
+.adm-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.adm-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+.adm-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 16px; }
+.adm-modal--open { display: flex; animation: fadeIn 0.25s ease; }
+.adm-modal__inner { background: var(--bg-card); border-radius: var(--radius); max-width: 800px; width: 100%; max-height: 92vh; overflow-y: auto; box-shadow: var(--shadow-lg); animation: slideUp 0.3s ease; }
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.adm-modal__header { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--bg-card); z-index: 10; }
+.adm-modal__title { font-size: 17px; font-weight: 800; }
+.adm-modal__close { width: 34px; height: 34px; border-radius: 8px; border: none; background: var(--bg); color: var(--text); cursor: pointer; font-size: 18px; }
+.adm-modal__close:hover { background: var(--border); }
+.adm-modal__body { padding: 22px; }
+.adm-modal__footer { padding: 16px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; position: sticky; bottom: 0; background: var(--bg-card); }
+
+.adm-section { margin-bottom: 20px; }
+.adm-section__title { font-size: 14px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 2px solid rgba(11,59,35,0.10); color: var(--primary); }
+[data-theme="dark"] .adm-section__title { color: var(--gold-light); border-bottom-color: rgba(212,166,42,0.25); }
+.adm-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.adm-detail__row { background: var(--bg); border-radius: var(--radius-sm); padding: 12px 14px; border: 1px solid var(--border); }
+.adm-detail__row--full { grid-column: 1/-1; }
+.adm-detail__label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+.adm-detail__value { font-weight: 700; font-size: 13px; color: var(--text); word-break: break-word; }
+.adm-detail__value--mono { font-family: monospace; letter-spacing: 1px; direction: ltr; text-align: right; font-size: 14px; }
+.adm-detail__value--ltr { direction: ltr; text-align: right; }
+.adm-detail__value--big { font-size: 16px; }
+
+.adm-verify-box { background: linear-gradient(135deg, rgba(41,128,185,0.08), rgba(30,142,74,0.05)); border: 2px solid rgba(41,128,185,0.3); border-radius: var(--radius-sm); padding: 14px; margin-top: 8px; }
+.adm-verify-box--done { background: rgba(30,142,74,0.08); border-color: rgba(30,142,74,0.4); }
+.adm-verify-box__header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.adm-verify-box__label { font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.adm-verify-box__info { font-size: 11px; color: var(--text-muted); }
+
+.adm-docs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.adm-doc { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px; text-align: center; }
+.adm-doc__thumb { width: 100%; height: 140px; background: var(--bg-card); border-radius: 6px; overflow: hidden; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; font-size: 42px; }
+.adm-doc__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.adm-doc__label { font-size: 11px; color: var(--text-muted); }
+.adm-doc__name { font-size: 10px; font-weight: 700; color: var(--text); margin-top: 4px; word-break: break-all; font-family: monospace; }
+
+.adm-textarea { width: 100%; min-height: 80px; padding: 12px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; font-size: 14px; resize: vertical; margin-top: 8px; }
+.adm-textarea:focus { outline: none; border-color: var(--primary); }
+.adm-input { width: 100%; padding: 10px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; font-size: 14px; margin-top: 8px; }
+.adm-input:focus { outline: none; border-color: var(--primary); }
+
+.adm-empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.adm-empty__icon { font-size: 64px; margin-bottom: 16px; opacity: 0.4; }
+.adm-empty__title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.adm-empty__desc { font-size: 14px; }
+
+.adm-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120%); background: var(--primary-dark); color: #fff; padding: 14px 24px; border-radius: var(--radius-sm); box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600; z-index: 10000; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: flex; align-items: center; gap: 10px; max-width: 90%; }
+.adm-toast--show { transform: translateX(-50%) translateY(0); }
+.adm-toast--error { background: var(--error); }
+.adm-toast--success { background: var(--success); }
+
+@media (max-width: 900px) {
+    .adm-stats { grid-template-columns: repeat(2, 1fr); }
+    .adm-card__body { grid-template-columns: 1fr 1fr; }
+    .adm-detail { grid-template-columns: 1fr; }
+    .adm-docs { grid-template-columns: 1fr; }
+    .adm-card__actions .adm-btn { flex: 1 1 45%; }
+}
+@media (max-width: 520px) {
+    .adm-stats { grid-template-columns: 1fr; }
+    .adm-card__body { grid-template-columns: 1fr; }
+    .adm-main { padding: 16px 12px 60px; }
+    .adm-card__actions { flex-direction: column; }
+    .adm-card__actions .adm-btn { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<header class="adm-header">
+    <div class="adm-header__inner">
+        <a href="admin-super-dashboard.html" class="adm-logo">
+            <div class="adm-logo__icon">🤝</div>
+            <span>پنل ادمین کارگزار</span>
+        </a>
+        <div class="adm-header__actions">
+            <button class="adm-btn-icon" id="themeBtn">🌙</button>
+            <a href="admin-super-dashboard.html" class="adm-link">داشبورد</a>
+        </div>
+    </div>
+</header>
+
+<main class="adm-main">
+    <h1 class="adm-title">🤝 تأیید کارگزاران</h1>
+    <p class="adm-subtitle">بررسی درخواست‌های ثبت‌نام + تأیید خط ثابت و اطلاعات بانکی</p>
+
+    <!-- Stats -->
+    <div class="adm-stats">
+        <div class="adm-stat adm-stat--warning">
+            <div class="adm-stat__icon">⏳</div>
+            <div class="adm-stat__label">در انتظار تأیید</div>
+            <div class="adm-stat__value" id="statPending">۰</div>
+        </div>
+        <div class="adm-stat adm-stat--info">
+            <div class="adm-stat__icon">☎️</div>
+            <div class="adm-stat__label">منتظر تأیید خط ثابت</div>
+            <div class="adm-stat__value" id="statLandline">۰</div>
+        </div>
+        <div class="adm-stat adm-stat--info">
+            <div class="adm-stat__icon">🏦</div>
+            <div class="adm-stat__label">منتظر تأیید بانکی</div>
+            <div class="adm-stat__value" id="statBank">۰</div>
+        </div>
+        <div class="adm-stat adm-stat--success">
+            <div class="adm-stat__icon">✅</div>
+            <div class="adm-stat__label">تأییدشده</div>
+            <div class="adm-stat__value" id="statActive">۰</div>
+        </div>
+        <div class="adm-stat adm-stat--error">
+            <div class="adm-stat__icon">❌</div>
+            <div class="adm-stat__label">رد شده</div>
+            <div class="adm-stat__value" id="statRejected">۰</div>
+        </div>
+        <div class="adm-stat">
+            <div class="adm-stat__icon">📊</div>
+            <div class="adm-stat__label">کل درخواست‌ها</div>
+            <div class="adm-stat__value" id="statTotal">۰</div>
+        </div>
+        <div class="adm-stat adm-stat--warning">
+            <div class="adm-stat__icon">🔵</div>
+            <div class="adm-stat__label">پرونده‌ی سیستمی (۳٪)</div>
+            <div class="adm-stat__value" id="statSiteCases">۰</div>
+        </div>
+        <div class="adm-stat adm-stat--success">
+            <div class="adm-stat__icon">🟢</div>
+            <div class="adm-stat__label">پرونده‌ی معرفی‌شده (۲٪)</div>
+            <div class="adm-stat__value" id="statReferralCases">۰</div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="adm-filters">
+        <input type="text" class="adm-search" id="searchInput" placeholder="🔍 جستجو بر اساس نام، موبایل، شماره پرونده...">
+        <div class="adm-tabs" id="tabBox">
+            <button class="adm-tab adm-tab--active" data-filter="all">
+                📋 همه <span class="adm-tab__count" id="tabCountAll">(۰)</span>
+            </button>
+            <button class="adm-tab" data-filter="pending">
+                ⏳ در انتظار <span class="adm-tab__count" id="tabCountPending">(۰)</span>
+            </button>
+            <button class="adm-tab" data-filter="pending_landline">
+                ☎️ خط ثابت <span class="adm-tab__count" id="tabCountLandline">(۰)</span>
+            </button>
+            <button class="adm-tab" data-filter="pending_bank">
+                🏦 بانکی <span class="adm-tab__count" id="tabCountBank">(۰)</span>
+            </button>
+            <button class="adm-tab" data-filter="active">
+                ✅ تأییدشده <span class="adm-tab__count" id="tabCountActive">(۰)</span>
+            </button>
+            <button class="adm-tab" data-filter="rejected">
+                ❌ رد شده <span class="adm-tab__count" id="tabCountRejected">(۰)</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="adm-list" id="listBox"></div>
+</main>
+
+<!-- Modal -->
+<div class="adm-modal" id="modal">
+    <div class="adm-modal__inner">
+        <div class="adm-modal__header">
+            <div class="adm-modal__title" id="modalTitle">جزئیات درخواست</div>
+            <button class="adm-modal__close" id="modalClose">✕</button>
+        </div>
+        <div class="adm-modal__body" id="modalBody"></div>
+        <div class="adm-modal__footer" id="modalFooter"></div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="adm-toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+
+    const state = {
+        users: [],
+        requests: [],
+        cases: [],
+        filter: 'all',
+        search: '',
+        currentId: null
+    };
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'adm-toast adm-toast--show';
+        if (type === 'error') el.classList.add('adm-toast--error');
+        if (type === 'success') el.classList.add('adm-toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('adm-toast--show'), 3200);
+    }
+
+    // ===== Load Data =====
+    function loadData() {
+        try {
+            state.users = JSON.parse(localStorage.getItem('wamPayUsers') || '[]').filter(u => u.role === 'broker');
+            state.requests = JSON.parse(localStorage.getItem('wamPayBrokerRequests') || '[]');
+            state.cases = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+        } catch (e) {
+            console.error('Load error:', e);
+            state.users = [];
+            state.requests = [];
+            state.cases = [];
+        }
+    }
+
+    function saveData() {
+        try {
+            const allUsers = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+            const otherUsers = allUsers.filter(u => u.role !== 'broker');
+            localStorage.setItem('wamPayUsers', JSON.stringify([...otherUsers, ...state.users]));
+            localStorage.setItem('wamPayBrokerRequests', JSON.stringify(state.requests));
+        } catch (e) {
+            console.error('Save error:', e);
+            toast('خطا در ذخیره‌سازی', 'error');
+        }
+    }
+
+    function getBroker(id) {
+        return state.users.find(u => u.id === id);
+    }
+    function getRequest(id) {
+        return state.requests.find(r => r.requestId === id);
+    }
+
+    // ===== Broker Status =====
+    function getBrokerStatus(b) {
+        if (!b) return { key: 'unknown', label: 'نامشخص', cls: 'adm-badge--pending' };
+        if (b.status === 'suspended') return { key: 'rejected', label: '❌ رد شده', cls: 'adm-badge--rejected' };
+        if (b.status === 'active') return { key: 'active', label: '✅ تأییدشده', cls: 'adm-badge--active' };
+
+        const landlineOk = b.landline?.verified;
+        const bankOk = b.bankInfo?.verified;
+
+        if (!landlineOk && !bankOk) return { key: 'pending', label: '⏳ در انتظار بررسی', cls: 'adm-badge--pending' };
+        if (!landlineOk) return { key: 'pending_landline', label: '☎️ منتظر تأیید خط ثابت', cls: 'adm-badge--landline' };
+        if (!bankOk) return { key: 'pending_bank', label: '🏦 منتظر تأیید بانکی', cls: 'adm-badge--bank' };
+        return { key: 'verified', label: '✅ آماده‌ی تأیید نهایی', cls: 'adm-badge--verified' };
+    }
+
+    // ===== Stats =====
+    function renderStats() {
+        let pending = 0, landline = 0, bank = 0, active = 0, rejected = 0;
+        state.users.forEach(b => {
+            const st = getBrokerStatus(b);
+            if (st.key === 'pending') pending++;
+            else if (st.key === 'pending_landline') landline++;
+            else if (st.key === 'pending_bank') bank++;
+            else if (st.key === 'active') active++;
+            else if (st.key === 'rejected') rejected++;
+        });
+
+        $('#statPending').textContent = faNum(pending);
+        $('#statLandline').textContent = faNum(landline);
+        $('#statBank').textContent = faNum(bank);
+        $('#statActive').textContent = faNum(active);
+        $('#statRejected').textContent = faNum(rejected);
+        $('#statTotal').textContent = faNum(state.users.length);
+
+        const siteCases = state.cases.filter(c => c.source === 'site').length;
+        const referralCases = state.cases.filter(c => c.source === 'broker_referral').length;
+        $('#statSiteCases').textContent = faNum(siteCases);
+        $('#statReferralCases').textContent = faNum(referralCases);
+    }
+
+    // ===== Tab Counts =====
+    function updateTabCounts() {
+        const counts = { all: state.users.length, pending: 0, pending_landline: 0, pending_bank: 0, active: 0, rejected: 0 };
+        state.users.forEach(b => {
+            const st = getBrokerStatus(b);
+            if (counts[st.key] !== undefined) counts[st.key]++;
+        });
+        $('#tabCountAll').textContent = `(${faNum(counts.all)})`;
+        $('#tabCountPending').textContent = `(${faNum(counts.pending)})`;
+        $('#tabCountLandline').textContent = `(${faNum(counts.pending_landline)})`;
+        $('#tabCountBank').textContent = `(${faNum(counts.pending_bank)})`;
+        $('#tabCountActive').textContent = `(${faNum(counts.active)})`;
+        $('#tabCountRejected').textContent = `(${faNum(counts.rejected)})`;
+    }
+
+    // ===== Filter =====
+    function getFiltered() {
+        let list = state.users.slice();
+        if (state.filter !== 'all') {
+            list = list.filter(b => getBrokerStatus(b).key === state.filter);
+        }
+        if (state.search.trim()) {
+            const q = state.search.trim().toLowerCase();
+            list = list.filter(b =>
+                (b.name || '').toLowerCase().includes(q) ||
+                (b.mobile || '').includes(q) ||
+                (b.fileNumber || '').toLowerCase().includes(q) ||
+                (b.licenseNumber || '').toLowerCase().includes(q) ||
+                (b.specialty || '').toLowerCase().includes(q)
+            );
+        }
+        list.sort((a, b) => new Date(b.registeredAt || 0) - new Date(a.registeredAt || 0));
+        return list;
+    }
+
+    function formatDate(iso) {
+        if (!iso) return '—';
+        try {
+            const d = new Date(iso);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            return `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())}`;
+        } catch { return '—'; }
+    }
+
+    // ===== Render List =====
+    function renderList() {
+        const list = getFiltered();
+        const box = $('#listBox');
+
+        if (list.length === 0) {
+            box.innerHTML = `
+                <div class="adm-empty">
+                    <div class="adm-empty__icon">📭</div>
+                    <div class="adm-empty__title">درخواستی یافت نشد</div>
+                    <div class="adm-empty__desc">${state.filter === 'all' ? 'هنوز کارگزاری ثبت‌نام نکرده است.' : 'با فیلتر فعلی چیزی پیدا نشد.'}</div>
+                </div>`;
+            return;
+        }
+
+        box.innerHTML = list.map(b => {
+            const st = getBrokerStatus(b);
+            const cases = state.cases.filter(c => c.brokerId === b.id);
+            const siteCases = cases.filter(c => c.source === 'site').length;
+            const refCases = cases.filter(c => c.source === 'broker_referral').length;
+
+            const cardCls = b.status === 'active' ? 'adm-card--active'
+                : b.status === 'suspended' ? 'adm-card--rejected'
+                : (b.landline?.verified && b.bankInfo?.verified) ? 'adm-card--verified'
+                : '';
+
+            return `
+                <div class="adm-card ${cardCls}">
+                    <div class="adm-card__header">
+                        <div>
+                            <div class="adm-card__title">
+                                👤 ${b.firstName || ''} ${b.lastName || ''}
+                                <span class="adm-badge ${st.cls}">${st.label}</span>
+                            </div>
+                            <div class="adm-card__id">📁 ${b.fileNumber || '—'} • ${formatDate(b.registeredAt)}</div>
+                        </div>
+                    </div>
+
+                    <div class="adm-card__body">
+                        <div class="adm-card__row">
+                            <div class="adm-card__row-label">📱 موبایل</div>
+                            <div class="adm-card__row-value adm-card__row-value--mono">${b.mobile || '—'}</div>
+                        </div>
+                        <div class="adm-card__row">
+                            <div class="adm-card__row-label">☎️ خط ثابت</div>
+                            <div class="adm-card__row-value adm-card__row-value--mono">${b.landline?.full || '—'}</div>
+                        </div>
+                        <div class="adm-card__row">
+                            <div class="adm-card__row-label">🏦 بانک</div>
+                            <div class="adm-card__row-value">${b.bankInfo?.bankName || '—'}</div>
+                        </div>
+                        <div class="adm-card__row">
+                            <div class="adm-card__row-label">🎯 تخصص</div>
+                            <div class="adm-card__row-value">${b.specialty || '—'}</div>
+                        </div>
+                    </div>
+
+                    <div class="adm-card__progress">
+                        <span class="adm-step ${b.landline?.verified ? 'adm-step--done' : 'adm-step--pending'}">
+                            ${b.landline?.verified ? '✅' : '⏳'} خط ثابت
+                        </span>
+                        <span class="adm-step ${b.bankInfo?.verified ? 'adm-step--done' : 'adm-step--pending'}">
+                            ${b.bankInfo?.verified ? '✅' : '⏳'} بانکی
+                        </span>
+                        <span class="adm-step ${b.status === 'active' ? 'adm-step--done' : 'adm-step--pending'}">
+                            ${b.status === 'active' ? '✅' : '⏳'} تأیید نهایی
+                        </span>
+                        <span class="adm-step">
+                            📁 ${faNum(cases.length)} پرونده (🔵${faNum(siteCases)} / 🟢${faNum(refCases)})
+                        </span>
+                    </div>
+
+                    <div class="adm-card__actions">
+                        <button class="adm-btn adm-btn--primary" data-action="view" data-id="${b.id}">👁️ مشاهده جزئیات</button>
+                        ${!b.landline?.verified && b.status !== 'suspended' ?
+                            `<button class="adm-btn adm-btn--info" data-action="verify-landline" data-id="${b.id}">☎️ تأیید خط ثابت</button>` : ''}
+                        ${!b.bankInfo?.verified && b.status !== 'suspended' ?
+                            `<button class="adm-btn adm-btn--info" data-action="verify-bank" data-id="${b.id}">🏦 تأیید بانکی</button>` : ''}
+                        ${b.landline?.verified && b.bankInfo?.verified && b.status === 'pending' ?
+                            `<button class="adm-btn adm-btn--success" data-action="approve" data-id="${b.id}">✅ تأیید نهایی</button>` : ''}
+                        ${b.status === 'pending' ?
+                            `<button class="adm-btn adm-btn--danger" data-action="reject" data-id="${b.id}">❌ رد</button>` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Attach events
+        box.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const action = btn.dataset.action;
+                if (action === 'view') openDetail(id);
+                else if (action === 'verify-landline') openVerifyLandline(id);
+                else if (action === 'verify-bank') openVerifyBank(id);
+                else if (action === 'approve') approveBroker(id);
+                else if (action === 'reject') openReject(id);
+            });
+        });
+    }
+
+    // ===== Open Detail Modal =====
+    function openDetail(id) {
+        const b = getBroker(id);
+        if (!b) return;
+        state.currentId = id;
+        const st = getBrokerStatus(b);
+        const cases = state.cases.filter(c => c.brokerId === b.id);
+        const siteCases = cases.filter(c => c.source === 'site').length;
+        const refCases = cases.filter(c => c.source === 'broker_referral').length;
+
+        $('#modalTitle').innerHTML = `👤 ${b.firstName || ''} ${b.lastName || ''} <span class="adm-badge ${st.cls}" style="margin-right:8px;">${st.label}</span>`;
+
+        // ===== Documents HTML =====
+        const docsHtml = (b.documents?.nationalCard?.dataUrl || b.documents?.selfie?.dataUrl || b.documents?.license?.dataUrl) ? `
+            <div class="adm-docs">
+                <div class="adm-doc">
+                    <div class="adm-doc__thumb">
+                        ${b.documents?.nationalCard?.dataUrl ? `<img src="${b.documents.nationalCard.dataUrl}" alt="کارت ملی">` : '🪪'}
+                    </div>
+                    <div class="adm-doc__label">کارت ملی</div>
+                    <div class="adm-doc__name">${b.documents?.nationalCard?.fileName || 'بارگذاری نشده'}</div>
+                </div>
+                <div class="adm-doc">
+                    <div class="adm-doc__thumb">
+                        ${b.documents?.license?.dataUrl ? `<img src="${b.documents.license.dataUrl}" alt="پروانه">` : '📜'}
+                    </div>
+                    <div class="adm-doc__label">پروانه‌ی کارگزاری</div>
+                    <div class="adm-doc__name">${b.documents?.license?.fileName || 'بارگذاری نشده'}</div>
+                </div>
+                <div class="adm-doc">
+                    <div class="adm-doc__thumb">
+                        ${b.documents?.selfie?.dataUrl ? `<img src="${b.documents.selfie.dataUrl}" alt="سلفی">` : '🤳'}
+                    </div>
+                    <div class="adm-doc__label">سلفی + کارت ملی</div>
+                    <div class="adm-doc__name">${b.documents?.selfie?.fileName || 'بارگذاری نشده'}</div>
+                </div>
+            </div>
+        ` : `
+            <div class="adm-docs">
+                <div class="adm-doc"><div class="adm-doc__thumb">🪪</div><div class="adm-doc__label">کارت ملی</div><div class="adm-doc__name">${b.documents?.nationalCard?.fileName || 'بارگذاری نشده'}</div></div>
+                <div class="adm-doc"><div class="adm-doc__thumb">📜</div><div class="adm-doc__label">پروانه</div><div class="adm-doc__name">${b.documents?.license?.fileName || 'بارگذاری نشده'}</div></div>
+                <div class="adm-doc"><div class="adm-doc__thumb">🤳</div><div class="adm-doc__label">سلفی + کارت ملی</div><div class="adm-doc__name">${b.documents?.selfie?.fileName || 'بارگذاری نشده'}</div></div>
+            </div>
+        `;
+
+        $('#modalBody').innerHTML = `
+            <!-- Personal Info -->
+            <div class="adm-section">
+                <div class="adm-section__title">🪪 اطلاعات هویتی</div>
+                <div class="adm-detail">
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">👤 نام کامل</div>
+                        <div class="adm-detail__value">${b.firstName || ''} ${b.lastName || ''}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🆔 کد ملی</div>
+                        <div class="adm-detail__value adm-detail__value--mono">${b.nationalId || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🎂 تاریخ تولد</div>
+                        <div class="adm-detail__value">${b.birthDate || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">📱 موبایل</div>
+                        <div class="adm-detail__value adm-detail__value--mono">${b.mobile || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">✉️ ایمیل</div>
+                        <div class="adm-detail__value adm-detail__value--ltr">${b.email || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">📁 شماره پرونده</div>
+                        <div class="adm-detail__value adm-detail__value--mono">${b.fileNumber || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row adm-detail__row--full">
+                        <div class="adm-detail__label">🏠 آدرس سکونت</div>
+                        <div class="adm-detail__value">${b.address || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">📮 کد پستی سکونت</div>
+                        <div class="adm-detail__value adm-detail__value--mono">${b.postalCode || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row adm-detail__row--full">
+                        <div class="adm-detail__label">💼 آدرس کار</div>
+                        <div class="adm-detail__value">${b.workAddress || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">📮 کد پستی کار</div>
+                        <div class="adm-detail__value adm-detail__value--mono">${b.workPostalCode || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🔗 آدرس کار = سکونت؟</div>
+                        <div class="adm-detail__value">${b.sameAddressAsResidence ? '✅ بله' : '❌ خیر'}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Broker Info -->
+            <div class="adm-section">
+                <div class="adm-section__title">💼 اطلاعات کارگزاری</div>
+                <div class="adm-detail">
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🎫 شماره پروانه</div>
+                        <div class="adm-detail__value adm-detail__value--mono">${b.licenseNumber || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">📊 سابقه‌ی کار</div>
+                        <div class="adm-detail__value">${b.experience ? faNum(b.experience) + ' سال' : '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">📍 استان / شهر</div>
+                        <div class="adm-detail__value">${b.province || '—'} / ${b.city || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🎯 تخصص</div>
+                        <div class="adm-detail__value">${b.specialty || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row adm-detail__row--full">
+                        <div class="adm-detail__label">📝 معرفی</div>
+                        <div class="adm-detail__value" style="font-weight:500;line-height:1.8;">${b.bio || '—'}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Landline Verification -->
+            <div class="adm-section">
+                <div class="adm-section__title">☎️ خط ثابت (احراز هویت)</div>
+                <div class="adm-detail" style="margin-bottom:10px;">
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">☎️ شماره‌ی خط ثابت</div>
+                        <div class="adm-detail__value adm-detail__value--mono adm-detail__value--big">${b.landline?.full || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">📊 وضعیت</div>
+                        <div class="adm-detail__value">
+                            ${b.landline?.verified
+                                ? '<span class="adm-badge adm-badge--active">✅ تأییدشده</span>'
+                                : '<span class="adm-badge adm-badge--pending">⏳ در انتظار تأیید</span>'}
+                        </div>
+                    </div>
+                    ${b.landline?.verified ? `
+                        <div class="adm-detail__row">
+                            <div class="adm-detail__label">👤 تأییدکننده</div>
+                            <div class="adm-detail__value">${b.landline.verifiedBy || '—'}</div>
+                        </div>
+                        <div class="adm-detail__row">
+                            <div class="adm-detail__label">📅 تاریخ تأیید</div>
+                            <div class="adm-detail__value">${formatDate(b.landline.verifiedAt)}</div>
+                        </div>
+                        ${b.landline.verificationNote ? `
+                        <div class="adm-detail__row adm-detail__row--full">
+                            <div class="adm-detail__label">📝 یادداشت</div>
+                            <div class="adm-detail__value" style="font-weight:500;">${b.landline.verificationNote}</div>
+                        </div>` : ''}
+                    ` : ''}
+                </div>
+                ${!b.landline?.verified && b.status !== 'suspended' ? `
+                    <div class="adm-verify-box">
+                        <div class="adm-verify-box__header">
+                            <div class="adm-verify-box__label">☎️ تأیید خط ثابت پس از تماس تلفنی</div>
+                        </div>
+                        <div class="adm-verify-box__info" style="margin-bottom:8px;">
+                            با کارگزار تماس بگیرید و پس از احراز هویت تلفنی، دکمه‌ی زیر را بزنید.
+                        </div>
+                        <button class="adm-btn adm-btn--info" data-action="verify-landline" data-id="${b.id}">
+                            ☎️ تأیید خط ثابت
+                        </button>
+                    </div>
+                ` : ''}
+            </div>
+
+            <!-- Bank Verification -->
+            <div class="adm-section">
+                <div class="adm-section__title">🏦 اطلاعات بانکی</div>
+                <div class="adm-detail" style="margin-bottom:10px;">
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🏦 نام بانک</div>
+                        <div class="adm-detail__value">${b.bankInfo?.bankName || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🔢 شماره حساب</div>
+                        <div class="adm-detail__value adm-detail__value--mono">${b.bankInfo?.accountNumber || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">💳 شماره کارت</div>
+                        <div class="adm-detail__value adm-detail__value--mono adm-detail__value--big">${b.bankInfo?.cardNumberFormatted || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🔗 شماره شبا</div>
+                        <div class="adm-detail__value adm-detail__value--mono">${b.bankInfo?.shebaFull || '—'}</div>
+                    </div>
+                    <div class="adm-detail__row adm-detail__row--full">
+                        <div class="adm-detail__label">📊 وضعیت</div>
+                        <div class="adm-detail__value">
+                            ${b.bankInfo?.verified
+                                ? '<span class="adm-badge adm-badge--active">✅ تأییدشده</span>'
+                                : '<span class="adm-badge adm-badge--pending">⏳ در انتظار تأیید</span>'}
+                        </div>
+                    </div>
+                </div>
+                ${!b.bankInfo?.verified && b.status !== 'suspended' ? `
+                    <div class="adm-verify-box">
+                        <div class="adm-verify-box__header">
+                            <div class="adm-verify-box__label">🏦 تأیید اطلاعات بانکی</div>
+                        </div>
+                        <div class="adm-verify-box__info" style="margin-bottom:8px;">
+                            پس از بررسی شماره کارت و شبا، دکمه‌ی زیر را بزنید.
+                        </div>
+                        <button class="adm-btn adm-btn--info" data-action="verify-bank" data-id="${b.id}">
+                            🏦 تأیید اطلاعات بانکی
+                        </button>
+                    </div>
+                ` : ''}
+            </div>
+
+            <!-- Documents -->
+            <div class="adm-section">
+                <div class="adm-section__title">📎 مدارک بارگذاری‌شده</div>
+                ${docsHtml}
+            </div>
+
+            <!-- Broker Cases -->
+            <div class="adm-section">
+                <div class="adm-section__title">📁 پرونده‌های کارگزار</div>
+                <div class="adm-detail">
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🔵 پرونده‌ی سیستمی (۳٪)</div>
+                        <div class="adm-detail__value adm-detail__value--big">${faNum(siteCases)}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">🟢 پرونده‌ی معرفی‌شده (۲٪)</div>
+                        <div class="adm-detail__value adm-detail__value--big">${faNum(refCases)}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">📊 کل پرونده‌ها</div>
+                        <div class="adm-detail__value adm-detail__value--big">${faNum(cases.length)}</div>
+                    </div>
+                    <div class="adm-detail__row">
+                        <div class="adm-detail__label">📅 تاریخ ثبت‌نام</div>
+                        <div class="adm-detail__value">${formatDate(b.registeredAt)}</div>
+                    </div>
+                </div>
+            </div>
+
+            ${b.status === 'suspended' && b.rejectReason ? `
+                <div class="adm-section">
+                    <div class="adm-section__title" style="color:var(--error);">❌ دلیل رد</div>
+                    <div class="adm-detail">
+                        <div class="adm-detail__row adm-detail__row--full">
+                            <div class="adm-detail__value" style="color:var(--error);">${b.rejectReason}</div>
+                        </div>
+                    </div>
+                </div>
+            ` : ''}
+        `;
+
+        // Footer buttons
+        let footer = '<button class="adm-btn adm-btn--ghost" id="modalCancelBtn">بستن</button>';
+        if (b.status === 'pending' || b.status === 'suspended') {
+            if (b.landline?.verified && b.bankInfo?.verified) {
+                footer += `<button class="adm-btn adm-btn--success" data-action="approve" data-id="${b.id}">✅ تأیید نهایی</button>`;
+            }
+            if (b.status === 'pending') {
+                footer += `<button class="adm-btn adm-btn--danger" data-action="reject" data-id="${b.id}">❌ رد</button>`;
+            }
+            if (b.status === 'suspended') {
+                footer += `<button class="adm-btn adm-btn--info" data-action="reopen" data-id="${b.id}">🔄 بازگشایی</button>`;
+            }
+        }
+        $('#modalFooter').innerHTML = footer;
+
+        // Events
+        $('#modalCancelBtn').addEventListener('click', closeModal);
+        $('#modalFooter').querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const action = btn.dataset.action;
+                if (action === 'approve') approveBroker(id);
+                else if (action === 'reject') openReject(id);
+                else if (action === 'reopen') reopenBroker(id);
+            });
+        });
+        $('#modalBody').querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const action = btn.dataset.action;
+                if (action === 'verify-landline') openVerifyLandline(id);
+                else if (action === 'verify-bank') openVerifyBank(id);
+            });
+        });
+
+        $('#modal').classList.add('adm-modal--open');
+    }
+
+    function closeModal() {
+        $('#modal').classList.remove('adm-modal--open');
+        state.currentId = null;
+    }
+
+    // ===== Verify Landline =====
+    function openVerifyLandline(id) {
+        const b = getBroker(id);
+        if (!b) return;
+        state.currentId = id;
+
+        $('#modalTitle').textContent = '☎️ تأیید خط ثابت';
+        $('#modalBody').innerHTML = `
+            <div style="text-align:center;padding:10px 0 16px;">
+                <div style="font-size:52px;margin-bottom:8px;">☎️</div>
+                <div style="font-size:15px;font-weight:800;margin-bottom:4px;">${b.firstName || ''} ${b.lastName || ''}</div>
+                <div style="font-size:22px;font-weight:800;font-family:monospace;letter-spacing:3px;direction:ltr;color:var(--primary);margin:12px 0;">
+                    ${b.landline?.full || '—'}
+                </div>
+                <div style="font-size:12px;color:var(--text-muted);">
+                    با این شماره تماس بگیرید و پس از احراز هویت، فرم زیر را تکمیل کنید.
+                </div>
+            </div>
+            <div class="adm-section">
+                <label style="font-size:13px;font-weight:700;">👤 نام تأییدکننده (ادمین) <span style="color:var(--error);">*</span></label>
+                <input type="text" class="adm-input" id="verifierName" placeholder="نام و نام خانوادگی شما">
+                <label style="font-size:13px;font-weight:700;display:block;margin-top:12px;">📝 یادداشت (اختیاری)</label>
+                <textarea class="adm-textarea" id="verifyNote" placeholder="مثال: تماس تلفنی انجام شد، هویت تأیید شد..."></textarea>
+            </div>
+        `;
+        $('#modalFooter').innerHTML = `
+            <button class="adm-btn adm-btn--ghost" id="cancelBtn">انصراف</button>
+            <button class="adm-btn adm-btn--info" id="confirmBtn">☎️ تأیید خط ثابت</button>
+        `;
+
+        $('#cancelBtn').addEventListener('click', closeModal);
+        $('#confirmBtn').addEventListener('click', () => {
+            const name = $('#verifierName').value.trim();
+            const note = $('#verifyNote').value.trim();
+            if (!name) { toast('نام تأییدکننده را وارد کنید', 'error'); return; }
+            confirmVerifyLandline(id, name, note);
+        });
+
+        $('#modal').classList.add('adm-modal--open');
+        setTimeout(() => $('#verifierName')?.focus(), 100);
+    }
+
+    function confirmVerifyLandline(id, verifierName, note) {
+        const b = getBroker(id);
+        if (!b) return;
+
+        b.landline = b.landline || {};
+        b.landline.verified = true;
+        b.landline.verifiedAt = new Date().toISOString();
+        b.landline.verifiedBy = verifierName;
+        b.landline.verificationNote = note || null;
+        b.updatedAt = new Date().toISOString();
+
+        // Update request
+        const req = getRequest(b.fileNumber);
+        if (req) {
+            req.landlineVerified = true;
+            req.landlineVerifiedAt = b.landline.verifiedAt;
+            req.landlineVerifiedBy = verifierName;
+        }
+
+        saveData();
+        renderStats();
+        updateTabCounts();
+        renderList();
+        closeModal();
+        toast('✅ خط ثابت تأیید شد', 'success');
+        console.log('✅ [Admin] خط ثابت تأیید شد:', b.name, '| توسط:', verifierName);
+    }
+
+    // ===== Verify Bank =====
+    function openVerifyBank(id) {
+        const b = getBroker(id);
+        if (!b) return;
+        state.currentId = id;
+
+        $('#modalTitle').textContent = '🏦 تأیید اطلاعات بانکی';
+        $('#modalBody').innerHTML = `
+            <div class="adm-section">
+                <div style="background:var(--bg);border-radius:8px;padding:14px;border:1px solid var(--border);margin-bottom:12px;">
+                    <div style="font-size:11px;color:var(--text-muted);">🏦 نام بانک</div>
+                    <div style="font-weight:800;font-size:15px;margin-bottom:8px;">${b.bankInfo?.bankName || '—'}</div>
+                    <div style="font-size:11px;color:var(--text-muted);">🔢 شماره حساب</div>
+                    <div style="font-family:monospace;font-weight:700;font-size:15px;direction:ltr;text-align:right;margin-bottom:8px;">${b.bankInfo?.accountNumber || '—'}</div>
+                    <div style="font-size:11px;color:var(--text-muted);">💳 شماره کارت</div>
+                    <div style="font-family:monospace;font-weight:700;font-size:18px;direction:ltr;text-align:right;letter-spacing:2px;margin-bottom:8px;color:var(--primary);">${b.bankInfo?.cardNumberFormatted || '—'}</div>
+                    <div style="font-size:11px;color:var(--text-muted);">🔗 شماره شبا</div>
+                    <div style="font-family:monospace;font-weight:700;font-size:14px;direction:ltr;text-align:right;">${b.bankInfo?.shebaFull || '—'}</div>
+                </div>
+                <label style="font-size:13px;font-weight:700;">👤 نام تأییدکننده (ادمین) <span style="color:var(--error);">*</span></label>
+                <input type="text" class="adm-input" id="verifierName" placeholder="نام و نام خانوادگی شما">
+                <label style="font-size:13px;font-weight:700;display:block;margin-top:12px;">📝 یادداشت (اختیاری)</label>
+                <textarea class="adm-textarea" id="verifyNote" placeholder="مثال: کارت به نام کارگزار است، اطلاعات تطبیق داده شد..."></textarea>
+            </div>
+        `;
+        $('#modalFooter').innerHTML = `
+            <button class="adm-btn adm-btn--ghost" id="cancelBtn">انصراف</button>
+            <button class="adm-btn adm-btn--info" id="confirmBtn">🏦 تأیید اطلاعات بانکی</button>
+        `;
+
+        $('#cancelBtn').addEventListener('click', closeModal);
+        $('#confirmBtn').addEventListener('click', () => {
+            const name = $('#verifierName').value.trim();
+            const note = $('#verifyNote').value.trim();
+            if (!name) { toast('نام تأییدکننده را وارد کنید', 'error'); return; }
+            confirmVerifyBank(id, name, note);
+        });
+
+        $('#modal').classList.add('adm-modal--open');
+        setTimeout(() => $('#verifierName')?.focus(), 100);
+    }
+
+    function confirmVerifyBank(id, verifierName, note) {
+        const b = getBroker(id);
+        if (!b) return;
+
+        b.bankInfo = b.bankInfo || {};
+        b.bankInfo.verified = true;
+        b.bankInfo.verifiedAt = new Date().toISOString();
+        b.bankInfo.verifiedBy = verifierName;
+        b.bankInfo.verificationNote = note || null;
+        b.updatedAt = new Date().toISOString();
+
+        const req = getRequest(b.fileNumber);
+        if (req) {
+            req.bankVerified = true;
+            req.bankVerifiedAt = b.bankInfo.verifiedAt;
+            req.bankVerifiedBy = verifierName;
+        }
+
+        saveData();
+        renderStats();
+        updateTabCounts();
+        renderList();
+        closeModal();
+        toast('✅ اطلاعات بانکی تأیید شد', 'success');
+        console.log('✅ [Admin] بانک تأیید شد:', b.name, '| توسط:', verifierName);
+    }
+
+    // ===== Approve Final =====
+    function approveBroker(id) {
+        const b = getBroker(id);
+        if (!b) return;
+
+        if (!b.landline?.verified) { toast('ابتدا خط ثابت را تأیید کنید', 'error'); return; }
+        if (!b.bankInfo?.verified) { toast('ابتدا اطلاعات بانکی را تأیید کنید', 'error'); return; }
+
+        if (!confirm(`✅ تأیید نهایی کارگزار «${b.firstName} ${b.lastName}»؟\n\nپس از تأیید، کارگزار می‌تواند وارد پنل شود.`)) return;
+
+        b.status = 'active';
+        b.approvedAt = new Date().toISOString();
+        b.updatedAt = new Date().toISOString();
+
+        const req = getRequest(b.fileNumber);
+        if (req) {
+            req.status = 'approved';
+            req.approvedAt = b.approvedAt;
+        }
+
+        saveData();
+        renderStats();
+        updateTabCounts();
+        renderList();
+        closeModal();
+        toast(`✅ کارگزار ${b.firstName} تأیید نهایی شد`, 'success');
+        console.log('✅ [Admin] تأیید نهایی:', b.name);
+    }
+
+    // ===== Reject =====
+    function openReject(id) {
+        const b = getBroker(id);
+        if (!b) return;
+        state.currentId = id;
+
+        $('#modalTitle').textContent = '❌ رد درخواست کارگزاری';
+        $('#modalBody').innerHTML = `
+            <p style="margin-bottom:8px;">
+                لطفاً دلیل رد درخواست <strong>${b.firstName} ${b.lastName}</strong> را وارد کنید:
+            </p>
+            <textarea class="adm-textarea" id="rejectReason" placeholder="مثال: مدارک ناقص است، پروانه معتبر نیست، خط ثابت پاسخ داده نشد..."></textarea>
+        `;
+        $('#modalFooter').innerHTML = `
+            <button class="adm-btn adm-btn--ghost" id="cancelBtn">انصراف</button>
+            <button class="adm-btn adm-btn--danger" id="confirmRejectBtn">❌ تأیید رد</button>
+        `;
+
+        $('#cancelBtn').addEventListener('click', closeModal);
+        $('#confirmRejectBtn').addEventListener('click', () => {
+            const reason = $('#rejectReason').value.trim();
+            if (!reason) { toast('دلیل رد را وارد کنید', 'error'); return; }
+            confirmReject(id, reason);
+        });
+
+        $('#modal').classList.add('adm-modal--open');
+        setTimeout(() => $('#rejectReason')?.focus(), 100);
+    }
+
+    function confirmReject(id, reason) {
+        const b = getBroker(id);
+        if (!b) return;
+
+        b.status = 'suspended';
+        b.rejectedAt = new Date().toISOString();
+        b.rejectReason = reason;
+        b.updatedAt = new Date().toISOString();
+
+        const req = getRequest(b.fileNumber);
+        if (req) {
+            req.status = 'rejected';
+            req.rejectedAt = b.rejectedAt;
+            req.rejectReason = reason;
+        }
+
+        saveData();
+        renderStats();
+        updateTabCounts();
+        renderList();
+        closeModal();
+        toast(`درخواست ${b.firstName} رد شد`, 'info');
+        console.log('❌ [Admin] رد شد:', b.name, '| دلیل:', reason);
+    }
+
+    // ===== Reopen =====
+    function reopenBroker(id) {
+        const b = getBroker(id);
+        if (!b) return;
+        if (!confirm(`🔄 بازگشایی درخواست «${b.firstName} ${b.lastName}»؟`)) return;
+
+        b.status = 'pending';
+        b.rejectedAt = null;
+        b.rejectReason = null;
+        b.updatedAt = new Date().toISOString();
+
+        const req = getRequest(b.fileNumber);
+        if (req) {
+            req.status = 'pending';
+            req.rejectedAt = null;
+            req.rejectReason = null;
+        }
+
+        saveData();
+        renderStats();
+        updateTabCounts();
+        renderList();
+        closeModal();
+        toast('درخواست بازگشایی شد', 'success');
+    }
+
+    // ===== Tabs & Search =====
+    function setupFilters() {
+        $$('#tabBox .adm-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                $$('#tabBox .adm-tab').forEach(t => t.classList.remove('adm-tab--active'));
+                tab.classList.add('adm-tab--active');
+                state.filter = tab.dataset.filter;
+                renderList();
+            });
+        });
+        $('#searchInput').addEventListener('input', (e) => {
+            state.search = e.target.value;
+            renderList();
+        });
+    }
+
+    // ===== Theme =====
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light');
+                btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark');
+                btn.textContent = '☀️';
+            }
+        });
+    }
+
+    // ===== Modal Close =====
+    function setupModalClose() {
+        $('#modalClose').addEventListener('click', closeModal);
+        $('#modal').addEventListener('click', (e) => {
+            if (e.target === $('#modal')) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    }
+
+    // ===== Init =====
+    function init() {
+        loadData();
+        renderStats();
+        updateTabCounts();
+        renderList();
+        setupFilters();
+        setupModalClose();
+        initTheme();
+        console.log('%c🤝 WAM PAY — Broker Approvals v2.1', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+        console.log('%c📊 کارگزاران:', 'color:#d4a62a;', state.users.length);
+        console.log('%c🆕 v2.1: admin-dashboard.html → admin-super-dashboard.html', 'color:#1e8e4a;font-weight:bold;');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+</script>
+</body>
+</html>

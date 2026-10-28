@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اقرار سه‌طرفه و آزادسازی | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23; --primary-light: #1a5c3a; --primary-dark: #062416;
+    --gold: #d4a62a; --gold-light: #f0c651;
+    --text: #1a2b22; --text-muted: #6b7d73;
+    --bg: #f4f7f4; --bg-card: #ffffff; --border: #e0e8e3;
+    --error: #c0392b; --success: #1e8e4a; --warning: #e67e22; --info: #2980b9;
+    --declaration: #8e44ad;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px; --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+    background-image:
+        radial-gradient(circle at 10% 10%, rgba(142,68,173,0.05), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(11,59,35,0.07), transparent 40%);
+}
+.dec-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; box-shadow: var(--shadow-md);
+    position: sticky; top: 0; z-index: 100;
+}
+.dec-header__inner {
+    max-width: 1100px; width: 100%; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.dec-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 18px; color: #fff; text-decoration: none;
+}
+.dec-logo__icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 4px 12px rgba(212,166,42,0.4);
+}
+.dec-header__actions { display: flex; gap: 8px; align-items: center; }
+.dec-theme-btn {
+    width: 38px; height: 38px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: #fff;
+    cursor: pointer; font-size: 16px; transition: var(--transition);
+}
+.dec-theme-btn:hover { background: rgba(255,255,255,0.18); }
+.dec-back-link {
+    color: #fff; text-decoration: none; font-size: 13px;
+    padding: 8px 14px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: var(--transition);
+}
+.dec-back-link:hover { background: rgba(255,255,255,0.12); }
+
+.dec-main { max-width: 900px; margin: 0 auto; padding: 24px 20px 100px; }
+
+.dec-hero { text-align: center; margin-bottom: 22px; }
+.dec-hero__badge {
+    display: inline-block; padding: 6px 16px;
+    background: rgba(142,68,173,0.12); color: var(--declaration);
+    border-radius: 999px; font-size: 12px; font-weight: 800; margin-bottom: 10px;
+}
+.dec-hero__title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+.dec-hero__subtitle { color: var(--text-muted); font-size: 14px; max-width: 560px; margin: 0 auto; }
+
+.dec-stages {
+    display: flex; align-items: center; justify-content: center;
+    gap: 4px; margin: 24px 0 28px; flex-wrap: wrap;
+}
+.dec-stage { display: flex; align-items: center; gap: 6px; }
+.dec-stage__num {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--bg-card); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 13px; color: var(--text-muted);
+    transition: var(--transition);
+}
+.dec-stage--active .dec-stage__num {
+    background: var(--declaration); border-color: var(--declaration); color: #fff;
+    box-shadow: 0 0 0 4px rgba(142,68,173,0.15);
+}
+.dec-stage--done .dec-stage__num {
+    background: var(--success); border-color: var(--success); color: #fff;
+}
+.dec-stage__line { width: 32px; height: 2px; background: var(--border); border-radius: 2px; }
+.dec-stage__line--done { background: var(--success); }
+
+.dec-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 24px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+    animation: fadeInUp 0.4s ease;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.dec-card__title {
+    font-size: 17px; font-weight: 800; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+}
+.dec-card__desc {
+    font-size: 13px; color: var(--text-muted);
+    margin-bottom: 18px; padding-bottom: 14px;
+    border-bottom: 1px dashed var(--border);
+}
+
+.declaration-paper {
+    background: linear-gradient(135deg, #faf7ff 0%, #f5f0fa 100%);
+    color: #1a2b22;
+    border-radius: var(--radius-sm);
+    padding: 22px 26px;
+    border: 2px solid rgba(142,68,173,0.25);
+    margin-bottom: 18px;
+    font-size: 13.5px; line-height: 2.1;
+    white-space: pre-wrap;
+    font-family: 'Vazirmatn', monospace;
+    position: relative;
+}
+.declaration-paper::before {
+    content: '⚖️';
+    position: absolute; top: 10px; left: 14px;
+    font-size: 20px; opacity: 0.4;
+}
+
+.dec-info {
+    background: linear-gradient(135deg, rgba(142,68,173,0.06), rgba(11,59,35,0.04));
+    border: 2px solid rgba(142,68,173,0.25);
+    border-radius: var(--radius-sm); padding: 16px;
+    margin-bottom: 16px;
+}
+.dec-info__row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px dashed var(--border);
+    font-size: 14px;
+}
+.dec-info__row:last-child { border-bottom: none; }
+.dec-info__row span:first-child { color: var(--text-muted); }
+.dec-info__row span:last-child { font-weight: 800; }
+.dec-info__highlight {
+    background: linear-gradient(135deg, var(--declaration), #a569bd);
+    color: #fff; border-radius: var(--radius-sm);
+    padding: 14px 16px; margin-top: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.dec-info__highlight-label { font-size: 13px; opacity: 0.95; }
+.dec-info__highlight-value { font-size: 20px; font-weight: 800; color: #fff; }
+
+.signature-wrap {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 12px; border: 2px dashed var(--border);
+    transition: var(--transition);
+    margin-bottom: 16px;
+}
+.signature-wrap--active { border-color: var(--success); }
+.signature-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px; flex-wrap: wrap; gap: 8px;
+}
+.signature-header__label { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.signature-header__status {
+    font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px;
+    background: rgba(230,126,34,0.12); color: var(--warning);
+}
+.signature-header__status--ok { background: rgba(30,142,74,0.12); color: var(--success); }
+
+#signatureCanvas {
+    width: 100%; height: 200px;
+    background: #fff; border-radius: 8px;
+    cursor: crosshair; touch-action: none;
+    border: 2px solid var(--border);
+    display: block;
+}
+.signature-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.signature-actions button {
+    padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg-card); color: var(--text);
+    font-family: inherit; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+}
+.signature-actions button:hover { border-color: var(--primary); color: var(--primary); }
+.signature-actions .clear-btn:hover { border-color: var(--error); color: var(--error); }
+
+.otp-box {
+    background: linear-gradient(135deg, rgba(41,128,185,0.06), rgba(11,59,35,0.04));
+    border: 2px solid rgba(41,128,185,0.3);
+    border-radius: var(--radius-sm); padding: 18px;
+    text-align: center;
+}
+.otp-box__title {
+    font-size: 14px; font-weight: 800; margin-bottom: 6px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.otp-box__desc { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+.otp-box__desc strong { color: var(--text); direction: ltr; display: inline-block; font-family: monospace; }
+.otp-inputs { display: flex; gap: 8px; justify-content: center; direction: ltr; margin: 14px 0; }
+.otp-input {
+    width: 48px; height: 56px; text-align: center;
+    font-size: 22px; font-weight: 800;
+    border-radius: 10px; border: 2px solid var(--border);
+    background: var(--bg); color: var(--text);
+    font-family: inherit; transition: var(--transition);
+}
+.otp-input:focus {
+    outline: none; border-color: var(--info);
+    box-shadow: 0 0 0 4px rgba(41,128,185,0.15);
+    transform: translateY(-2px);
+}
+.otp-status { font-size: 13px; font-weight: 700; margin-top: 10px; display: none; }
+.otp-status--error { color: var(--error); display: block; }
+.otp-status--success { color: var(--success); display: block; }
+.otp-hint { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+.otp-hint code {
+    background: rgba(11,59,35,0.08); padding: 2px 6px; border-radius: 4px;
+    font-family: monospace; font-weight: 700; color: var(--primary);
+}
+
+.party-card {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 16px; border: 2px solid var(--border);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 14px;
+    transition: var(--transition);
+}
+.party-card--done { border-color: var(--success); background: rgba(30,142,74,0.04); }
+.party-card--pending { border-color: var(--warning); background: rgba(230,126,34,0.04); }
+.party-card--active { border-color: var(--declaration); background: rgba(142,68,173,0.06); }
+
+.party-card__icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--bg-card); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+}
+.party-card--done .party-card__icon { background: var(--success); border-color: var(--success); color: #fff; }
+.party-card--active .party-card__icon { background: var(--declaration); border-color: var(--declaration); color: #fff; }
+
+.party-card__content { flex: 1; }
+.party-card__name { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+.party-card__role { font-size: 12px; color: var(--text-muted); }
+.party-card__status {
+    font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px;
+    white-space: nowrap;
+}
+.party-card__status--done { background: rgba(30,142,74,0.15); color: var(--success); }
+.party-card__status--pending { background: rgba(230,126,34,0.15); color: var(--warning); }
+.party-card__status--active { background: rgba(142,68,173,0.15); color: var(--declaration); }
+
+.auto-sign-box {
+    background: linear-gradient(135deg, rgba(39,174,96,0.08), rgba(11,59,35,0.04));
+    border: 2px solid rgba(39,174,96,0.3);
+    border-radius: var(--radius-sm); padding: 16px;
+    margin-bottom: 16px;
+}
+.auto-sign-box__title {
+    font-size: 13px; font-weight: 800; color: var(--success);
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+.auto-sign-box__desc { font-size: 12px; color: var(--text-muted); line-height: 1.8; }
+.auto-sign-preview {
+    background: #fff; border-radius: 8px;
+    padding: 14px; margin-top: 12px;
+    text-align: center; border: 1px solid var(--border);
+}
+.auto-sign-preview svg {
+    max-width: 220px; height: auto;
+}
+
+.release-box {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    color: #fff; border-radius: var(--radius);
+    padding: 24px; margin-bottom: 18px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 32px rgba(11,59,35,0.35);
+    border: 2px solid var(--gold);
+}
+.release-box::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,166,42,0.25), transparent);
+}
+.release-box__content { position: relative; z-index: 1; }
+.release-box__title {
+    font-size: 18px; font-weight: 800; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+}
+.release-box__rows { margin-bottom: 16px; }
+.release-box__row {
+    display: flex; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px dashed rgba(255,255,255,0.15);
+    font-size: 13px;
+}
+.release-box__row:last-child { border-bottom: none; }
+.release-box__row span:first-child { opacity: 0.85; }
+.release-box__row span:last-child { font-weight: 800; }
+.release-box__row--total {
+    background: rgba(212,166,42,0.15);
+    border-radius: 8px; padding: 12px 14px;
+    margin-top: 8px;
+    border: 1px solid rgba(212,166,42,0.4);
+    border-bottom: none;
+}
+.release-box__row--total span:last-child {
+    color: var(--gold-light); font-size: 18px;
+}
+
+.btn {
+    padding: 15px 24px; border-radius: var(--radius-sm); border: none;
+    font-family: inherit; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    text-decoration: none;
+}
+.btn--primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; box-shadow: 0 6px 16px rgba(11,59,35,0.25);
+}
+.btn--primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11,59,35,0.35); }
+.btn--declaration {
+    background: linear-gradient(135deg, var(--declaration), #a569bd);
+    color: #fff; box-shadow: 0 6px 16px rgba(142,68,173,0.35);
+}
+.btn--declaration:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(142,68,173,0.5); }
+.btn--gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--primary-dark); box-shadow: 0 6px 16px rgba(212,166,42,0.35);
+}
+.btn--gold:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(212,166,42,0.5); }
+.btn--success {
+    background: linear-gradient(135deg, var(--success), #2ecc71);
+    color: #fff; box-shadow: 0 6px 16px rgba(30,142,74,0.3);
+}
+.btn--ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border);
+}
+.btn--ghost:hover { background: var(--bg); color: var(--text); }
+.btn--block { width: 100%; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+.btn__spinner {
+    width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.8s linear infinite; display: none;
+}
+.btn--loading .btn__spinner { display: block; }
+.btn--loading .btn__text { opacity: 0.7; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.dec-actions { display: flex; gap: 12px; margin-top: 20px; }
+.dec-actions .btn { flex: 1; }
+
+.alert {
+    padding: 14px 18px; border-radius: var(--radius-sm);
+    font-size: 13px; margin-bottom: 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+    line-height: 1.8;
+}
+.alert--info { background: rgba(41,128,185,0.08); color: var(--info); border-right: 4px solid var(--info); }
+.alert--warning { background: rgba(230,126,34,0.10); color: var(--warning); border-right: 4px solid var(--warning); }
+.alert--success { background: rgba(30,142,74,0.08); color: var(--success); border-right: 4px solid var(--success); }
+.alert--error { background: rgba(192,57,43,0.08); color: var(--error); border-right: 4px solid var(--error); }
+
+.final-success {
+    text-align: center; padding: 30px 20px;
+    background: linear-gradient(135deg, rgba(212,166,42,0.10), rgba(11,59,35,0.05));
+    border: 3px solid var(--gold);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    animation: glow-gold 2.5s ease-in-out infinite;
+}
+@keyframes glow-gold {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212,166,42,0.4); }
+    50% { box-shadow: 0 0 0 16px rgba(212,166,42,0.05); }
+}
+.final-success__icon {
+    font-size: 72px; margin-bottom: 14px;
+    display: block;
+    animation: bounce-icon 1.5s ease-in-out infinite;
+}
+@keyframes bounce-icon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+.final-success__title {
+    font-size: 26px; font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+}
+.final-success__desc {
+    font-size: 14px; color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.receipt-box {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 22px; border: 2px solid var(--success);
+    margin-bottom: 18px;
+}
+.receipt-box__title {
+    font-size: 15px; font-weight: 800; color: var(--success);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    padding-bottom: 10px; border-bottom: 2px dashed rgba(30,142,74,0.25);
+}
+.receipt-box__rows { margin-bottom: 14px; }
+.receipt-box__row {
+    display: flex; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px dashed var(--border);
+    font-size: 14px;
+}
+.receipt-box__row:last-child { border-bottom: none; }
+.receipt-box__row span:first-child { color: var(--text-muted); }
+.receipt-box__row span:last-child { font-weight: 800; }
+.receipt-box__row--total {
+    background: rgba(30,142,74,0.06);
+    border-radius: 8px; padding: 14px 16px;
+    margin-top: 8px; border: 1px solid rgba(30,142,74,0.3);
+    border-bottom: none;
+}
+.receipt-box__row--total span:last-child {
+    color: var(--success); font-size: 20px;
+}
+.receipt-hash {
+    background: var(--bg); border-radius: 8px;
+    padding: 10px 14px; margin-top: 14px;
+    font-size: 10px; font-family: monospace;
+    direction: ltr; text-align: center;
+    color: var(--text-muted); word-break: break-all;
+    border: 1px dashed var(--border);
+}
+
+.loading-screen { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+.loading-spinner {
+    width: 50px; height: 50px; border: 4px solid var(--border);
+    border-top-color: var(--declaration);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 22px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 9999; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px; max-width: 90%;
+}
+.toast--show { transform: translateX(-50%) translateY(0); }
+.toast--error { background: var(--error); }
+.toast--success { background: var(--success); }
+
+@media (max-width: 640px) {
+    .dec-main { padding: 16px 14px 80px; }
+    .dec-hero__title { font-size: 20px; }
+    .dec-actions { flex-direction: column-reverse; }
+    .otp-input { width: 42px; height: 50px; font-size: 18px; }
+    #signatureCanvas { height: 170px; }
+    .declaration-paper { padding: 16px 18px; font-size: 12.5px; }
+    .dec-stage__line { width: 14px; }
+    .party-card { flex-direction: column; text-align: center; }
+    .dec-info__highlight, .release-box__row--total {
+        flex-direction: column; gap: 8px; text-align: center;
+    }
+}
+</style>
+</head>
+<body>
+
+<header class="dec-header">
+    <div class="dec-header__inner">
+        <a href="index.html" class="dec-logo">
+            <div class="dec-logo__icon">⚖️</div>
+            <span>وام پی</span>
+        </a>
+        <div class="dec-header__actions">
+            <button class="dec-theme-btn" id="themeBtn">🌙</button>
+            <a href="javascript:history.back()" class="dec-back-link">→ بازگشت</a>
+        </div>
+    </div>
+</header>
+
+<main class="dec-main" id="mainContainer">
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div>در حال بارگذاری اقرارنامه...</div>
+    </div>
+</main>
+
+<div class="toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<!-- Services -->
+<script src="js/trust-service.js"></script>
+<script src="js/contract-service.js"></script>
+<script src="js/credit-invoice-service.js"></script>
+<script src="js/financial-log-service.js"></script>
+<script src="js/case-state-machine.js"></script>
+<script src="js/case-state-service.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    const OTP_CONFIG = { mock: true, mockCode: '12345' };
+
+    const state = {
+        user: null,
+        role: null,
+        caseData: null,
+        invoice: null,
+        deposit: null,
+        subStage: 1,
+        applicantSignature: null,
+        brokerSignature: null,
+        siteSignature: null,
+        otpVerified: false,
+        otpCode: '',
+        applicantDeclDone: false,
+        brokerDeclDone: false,
+        siteDeclDone: false,
+        released: false
+    };
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'toast toast--show';
+        if (type === 'error') el.classList.add('toast--error');
+        if (type === 'success') el.classList.add('toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('toast--show'), 3200);
+    }
+
+    // ===== Auth =====
+    function checkAuth() {
+        try {
+            const cu = JSON.parse(localStorage.getItem('wamPayCurrentUser') || 'null');
+            if (!cu) {
+                toast('ابتدا وارد شوید', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            state.user = cu;
+            state.role = cu.role;
+            return true;
+        } catch (e) {
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    // ===== Load Data =====
+    function loadData() {
+        const params = new URLSearchParams(window.location.search);
+        let caseId = params.get('caseId') || params.get('case');
+
+        let caseData = null;
+        if (caseId) {
+            caseData = JSON.parse(localStorage.getItem('wamPayApplications') || '[]')
+                .find(c => c.id === caseId);
+        }
+
+        if (!caseData) {
+            const all = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+            caseData = all
+                .filter(c => ['applicant_confirmed', 'awaiting_declaration', 'declaration_signed'].includes(c.status))
+                .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0];
+        }
+
+        if (!caseData) {
+            showError('پرونده‌ای برای اقرار یافت نشد',
+                'هیچ پرونده‌ای در وضعیت «تأیید دریافت متقاضی» یا «در انتظار اقرار» برای شما وجود ندارد.',
+                'index.html');
+            return false;
+        }
+
+        state.caseData = caseData;
+
+        if (window.WamPayCreditInvoice) {
+            state.invoice = WamPayCreditInvoice.getInvoicesByCase(caseData.id)[0] || null;
+        }
+        if (caseData.escrow?.depositId && window.WamPayTrust) {
+            state.deposit = WamPayTrust.getTrustDeposit(caseData.escrow.depositId);
+        }
+        if (!state.deposit && caseData.escrow) {
+            state.deposit = {
+                id: caseData.escrow.depositId,
+                deedNumber: caseData.escrow.deedNumber,
+                amount: caseData.escrow.total,
+                brokerShare: caseData.escrow.brokerShare,
+                siteShare: caseData.escrow.siteShare,
+                status: 'held'
+            };
+        }
+        if (!state.deposit && window.WamPayTrust) {
+            const deposits = WamPayTrust.getTrustDepositsByApp(caseData.id);
+            if (deposits && deposits.length > 0) {
+                state.deposit = deposits[deposits.length - 1];
+            }
+        }
+
+        if (caseData.declarations?.applicant?.signed) state.applicantDeclDone = true;
+        if (caseData.declarations?.broker?.signed) state.brokerDeclDone = true;
+        if (caseData.declarations?.site?.signed) state.siteDeclDone = true;
+
+        if (!state.applicantDeclDone) state.subStage = 1;
+        else if (!state.brokerDeclDone) state.subStage = 2;
+        else if (!state.siteDeclDone) state.subStage = 3;
+        else state.subStage = 4;
+
+        return true;
+    }
+
+    function showError(title, desc, backUrl) {
+        $('#mainContainer').innerHTML = `
+            <div class="dec-hero">
+                <div class="dec-hero__badge">⚠️ توجه</div>
+                <h1 class="dec-hero__title">${title}</h1>
+                <p class="dec-hero__subtitle">${desc}</p>
+            </div>
+            <div class="dec-actions" style="margin-top:24px;">
+                <a href="${backUrl}" class="btn btn--primary btn--block">
+                    <span>🏠 بازگشت</span>
+                </a>
+            </div>
+        `;
+    }
+
+    function renderStages() {
+        const stageNames = ['متقاضی', 'کارگزار', 'سایت', 'آزادسازی'];
+        return `
+            <div class="dec-stages">
+                ${stageNames.map((name, i) => {
+                    const num = i + 1;
+                    const isDone = num < state.subStage;
+                    const isActive = num === state.subStage;
+                    const cls = isDone ? 'dec-stage--done' : (isActive ? 'dec-stage--active' : '');
+                    const lineCls = num < state.subStage ? 'dec-stage__line--done' : '';
+                    return `
+                        <div class="dec-stage ${cls}" data-stage="${num}">
+                            <div class="dec-stage__num">${isDone ? '✓' : faNum(num)}</div>
+                        </div>
+                        ${num < 4 ? `<div class="dec-stage__line ${lineCls}"></div>` : ''}
+                    `;
+                }).join('')}
+            </div>
+        `;
+    }
+
+    function renderCaseInfo() {
+        const c = state.caseData;
+        const dep = state.deposit;
+        const inv = state.invoice;
+        return `
+            <div class="dec-info">
+                <div class="dec-info__row">
+                    <span>📁 شماره پرونده</span>
+                    <span style="font-family:monospace;">${c.caseNumber || '—'}</span>
+                </div>
+                <div class="dec-info__row">
+                    <span>📋 سند امانت</span>
+                    <span style="font-family:monospace;">${dep?.deedNumber || '—'}</span>
+                </div>
+                <div class="dec-info__row">
+                    <span>👤 متقاضی</span>
+                    <span>${c.applicantData?.name || '—'}</span>
+                </div>
+                <div class="dec-info__row">
+                    <span>🤝 کارگزار</span>
+                    <span>${c.brokerName || '—'}</span>
+                </div>
+                <div class="dec-info__row">
+                    <span>💎 امتیاز</span>
+                    <span>${faNum(inv?.creditCount || 0)} × ${inv?.creditName || '—'}</span>
+                </div>
+                <div class="dec-info__highlight">
+                    <span class="dec-info__highlight-label">💰 مبلغ کل امانی</span>
+                    <span class="dec-info__highlight-value">${faPrice(dep?.amount || c.escrow?.total || 0)} تومان</span>
+                </div>
+            </div>
+        `;
+    }
+
+    // ===== Sub-Stage 1: Applicant Declaration =====
+    function renderApplicantDecl() {
+        const c = state.caseData;
+        const inv = state.invoice;
+        const dep = state.deposit;
+        const applicant = c.applicantData || {};
+        const brokerShare = inv?.profit?.brokerShare || c.escrow?.brokerShare || 0;
+
+        return `
+            <div class="dec-hero">
+                <div class="dec-hero__badge">⚖️ مرحله ۱ از ۴</div>
+                <h1 class="dec-hero__title">اقرارنامه متقاضی</h1>
+                <p class="dec-hero__subtitle">
+                    لطفاً متن اقرارنامه را با دقت بخوانید و امضای دیجیتال خود را ثبت کنید.
+                </p>
+            </div>
+
+            ${renderStages()}
+            ${renderCaseInfo()}
+
+            <div class="dec-card">
+                <div class="dec-card__title">📜 متن اقرارنامه</div>
+                <div class="dec-card__desc">
+                    این اقرارنامه در سامانه‌ی وام‌پی به‌صورت رسمی ثبت و بایگانی می‌شود.
+                </div>
+
+                <div class="declaration-paper">
+اقرارنامه‌ی رسمی متقاضی
+سامانه‌ی هوشمند تسهیلات وام‌پی
+
+اینجانب ${applicant.name || '—'} به کد ملی ${applicant.nationalId || '—'}،
+در کمال صحت و سلامت عقل، اقرار می‌نمایم:
+
+۱. امتیاز موضوع قرارداد ${c.caseNumber || '—'} را کامل دریافت کرده‌ام.
+
+۲. هیچ‌گونه ادعا، شکایت یا اعتراضی نسبت به کارگزار
+   ${c.brokerName || '—'} و سامانه‌ی وام‌پی ندارم.
+
+۳. تمامی تعهدات کارگزار را تأیید می‌کنم.
+
+۴. رضایت کامل به آزادسازی وجه امانی به مبلغ
+   ${faPrice(dep?.amount || c.escrow?.total || 0)} تومان به کارگزار می‌دهم.
+
+۵. مسئولیت هرگونه اظهار خلاف واقع، بر عهده‌ی اینجانب است.
+
+────────────────────────────────
+مبلغ امانت:      ${faPrice(dep?.amount || 0)} تومان
+سهم کارگزار:     ${faPrice(brokerShare)} تومان
+تاریخ تنظیم:      ${formatShamsi(new Date())}
+────────────────────────────────
+                </div>
+            </div>
+
+            <div class="dec-card">
+                <div class="dec-card__title">✍️ امضای دیجیتال متقاضی</div>
+                <div class="dec-card__desc">امضای خود را در کادر زیر ثبت کنید</div>
+
+                <div class="signature-wrap" id="sigWrap">
+                    <div class="signature-header">
+                        <div class="signature-header__label">✍️ امضای متقاضی</div>
+                        <div class="signature-header__status" id="sigStatus">امضا نشده</div>
+                    </div>
+                    <canvas id="signatureCanvas"></canvas>
+                    <div class="signature-actions">
+                        <button type="button" class="clear-btn" id="clearSignature">🗑️ پاک کردن</button>
+                    </div>
+                </div>
+
+                <div class="otp-box" style="margin-top:16px;">
+                    <div class="otp-box__title">🔐 تأیید نهایی با OTP</div>
+                    <div class="otp-box__desc">
+                        کد ۵ رقمی به شماره‌ی <strong>${applicant.mobile || state.user.mobile}</strong> ارسال می‌شود
+                    </div>
+                    <div id="otpSection" style="display:none;">
+                        <div class="otp-inputs">
+                            <input type="tel" class="otp-input" maxlength="1" inputmode="numeric" data-idx="0">
+                            <input type="tel" class="otp-input" maxlength="1" inputmode="numeric" data-idx="1">
+                            <input type="tel" class="otp-input" maxlength="1" inputmode="numeric" data-idx="2">
+                            <input type="tel" class="otp-input" maxlength="1" inputmode="numeric" data-idx="3">
+                            <input type="tel" class="otp-input" maxlength="1" inputmode="numeric" data-idx="4">
+                        </div>
+                        <div class="otp-status" id="otpStatus"></div>
+                        <div class="otp-hint" style="margin-top:10px;">کد تست: <code>12345</code></div>
+                    </div>
+                    <button class="btn btn--primary btn--block" id="sendOtpBtn" style="margin-top:8px;">
+                        📲 ارسال کد تأیید
+                    </button>
+                </div>
+            </div>
+
+            <div class="dec-actions">
+                <a href="applicant-dashboard.html" class="btn btn--ghost">
+                    <span>→ بازگشت</span>
+                </a>
+                <button class="btn btn--declaration" id="submitApplicantBtn" disabled>
+                    <span class="btn__spinner"></span>
+                    <span class="btn__text">⚖️ ثبت اقرار متقاضی</span>
+                </button>
+            </div>
+
+            <div class="alert alert--warning" style="margin-top:14px;">
+                <span>⚠️</span>
+                <span>
+                    با امضای این اقرارنامه، شما رضایت کامل به آزادسازی وجه امانی می‌دهید
+                    و از هرگونه ادعا نسبت به کارگزار و سامانه سلب می‌شوید.
+                </span>
+            </div>
+        `;
+    }
+
+    // ===== Sub-Stage 2: Broker Declaration =====
+    function renderBrokerDecl() {
+        const c = state.caseData;
+        const inv = state.invoice;
+        const dep = state.deposit;
+        const brokerShare = inv?.profit?.brokerShare || c.escrow?.brokerShare || 0;
+        const svgSig = generateSignatureSVG(c.brokerName || 'کارگزار');
+
+        return `
+            <div class="dec-hero">
+                <div class="dec-hero__badge">⚖️ مرحله ۲ از ۴</div>
+                <h1 class="dec-hero__title">اقرارنامه کارگزار</h1>
+                <p class="dec-hero__subtitle">
+                    اقرار کارگزار توسط سامانه شبیه‌سازی و امضا می‌شود.
+                </p>
+            </div>
+
+            ${renderStages()}
+            ${renderCaseInfo()}
+
+            <div class="dec-card">
+                <div class="dec-card__title">📜 متن اقرارنامه کارگزار</div>
+                <div class="dec-card__desc">اقرارنامه‌ی رسمی کارگزار در سامانه ثبت می‌شود</div>
+
+                <div class="declaration-paper">
+اقرارنامه‌ی رسمی کارگزار
+سامانه‌ی هوشمند تسهیلات وام‌پی
+
+اینجانب ${c.brokerName || '—'}،
+در کمال صحت و سلامت عقل، اقرار می‌نمایم:
+
+۱. تمامی تعهدات خود را طبق قرارداد خرید امتیاز انجام داده‌ام.
+
+۲. امتیاز موضوع قرارداد را به متقاضی
+   ${c.applicantData?.name || '—'} منتقل کرده‌ام.
+
+۳. اسناد ارائه‌شده صحیح و مطابق واقع است.
+
+۴. رضایت کامل به دریافت مبلغ
+   ${faPrice(brokerShare)} تومان پس از کسر کارمزد سایت را دارم.
+
+۵. مسئولیت هرگونه تخلف، بر عهده‌ی اینجانب است.
+
+────────────────────────────────
+سهم کارگزار:     ${faPrice(brokerShare)} تومان
+تاریخ تنظیم:      ${formatShamsi(new Date())}
+────────────────────────────────
+                </div>
+            </div>
+
+            <div class="dec-card">
+                <div class="dec-card__title">✍️ امضای دیجیتال کارگزار</div>
+                <div class="dec-card__desc">امضای خودکار توسط سامانه ثبت می‌شود</div>
+
+                <div class="auto-sign-box">
+                    <div class="auto-sign-box__title">
+                        <span>🤖</span>
+                        <span>امضای شبیه‌سازی‌شده</span>
+                    </div>
+                    <div class="auto-sign-box__desc">
+                        امضای دیجیتال کارگزار <strong>${c.brokerName || '—'}</strong>
+                        توسط سامانه‌ی وام‌پی به‌صورت خودکار ثبت می‌شود.
+                    </div>
+                    <div class="auto-sign-preview">
+                        ${svgSig}
+                    </div>
+                </div>
+
+                <div class="alert alert--info">
+                    <span>ℹ️</span>
+                    <span>
+                        در سامانه‌ی واقعی، این اقرارنامه با اطلاع و تأیید کارگزار از طریق
+                        پیامک یا ورود به پنل شخصی خودش امضا می‌شود. در نسخه‌ی شبیه‌سازی،
+                        امضا خودکار انجام می‌شود.
+                    </span>
+                </div>
+            </div>
+
+            <div class="dec-actions">
+                <button class="btn btn--ghost" id="backToApplicantBtn">
+                    <span>← مشاهده اقرار متقاضی</span>
+                </button>
+                <button class="btn btn--declaration" id="submitBrokerBtn">
+                    <span class="btn__spinner"></span>
+                    <span class="btn__text">⚖️ ثبت اقرار کارگزار</span>
+                </button>
+            </div>
+        `;
+    }
+
+    // ===== Sub-Stage 3: Site Declaration =====
+    function renderSiteDecl() {
+        const c = state.caseData;
+        const inv = state.invoice;
+        const dep = state.deposit;
+        const siteShare = inv?.profit?.siteShare || c.escrow?.siteShare || 0;
+        const svgSig = generateSignatureSVG('وام‌پی — مدیر کل', true);
+
+        return `
+            <div class="dec-hero">
+                <div class="dec-hero__badge">⚖️ مرحله ۳ از ۴</div>
+                <h1 class="dec-hero__title">اقرارنامه سایت</h1>
+                <p class="dec-hero__subtitle">
+                    اقرار سایت (وام‌پی) با امضای مدیر کل و مهر رسمی
+                </p>
+            </div>
+
+            ${renderStages()}
+            ${renderCaseInfo()}
+
+            <div class="dec-card">
+                <div class="dec-card__title">📜 متن اقرارنامه سایت</div>
+                <div class="dec-card__desc">اقرار رسمی سامانه‌ی وام‌پی</div>
+
+                <div class="declaration-paper">
+اقرارنامه‌ی رسمی سامانه‌ی وام‌پی
+        (سایت)
+
+اینجانب مدیرعامل شرکت وام‌پی،
+در کمال صحت و سلامت عقل، اقرار می‌نمایم:
+
+۱. تمامی تعهدات سامانه نسبت به متقاضی و کارگزار
+   طبق قرارداد انجام شده است.
+
+۲. مبلغ امانی ${faPrice(dep?.amount || 0)} تومان در حساب امانی
+   وام‌پی نگهداری شده است.
+
+۳. از مبلغ امانی:
+   • ${faPrice(siteShare)} تومان سود خالص سایت
+   • ${faPrice(inv?.profit?.brokerShare || c.escrow?.brokerShare || 0)} تومان سهم کارگزار
+
+۴. رضایت کامل به آزادسازی سهم کارگزار را دارم.
+
+۵. مسئولیت هرگونه تخلف از این اقرارنامه، بر عهده‌ی سایت است.
+
+────────────────────────────────
+سود خالص سایت:  ${faPrice(siteShare)} تومان
+تاریخ تنظیم:     ${formatShamsi(new Date())}
+────────────────────────────────
+                </div>
+            </div>
+
+            <div class="dec-card">
+                <div class="dec-card__title">✍️ امضای دیجیتال سایت</div>
+                <div class="dec-card__desc">با مهر رسمی و امضای مدیر کل</div>
+
+                <div class="auto-sign-box">
+                    <div class="auto-sign-box__title">
+                        <span>👑</span>
+                        <span>امضای مدیر کل</span>
+                    </div>
+                    <div class="auto-sign-box__desc">
+                        امضای رسمی سامانه‌ی وام‌پی به‌عنوان طرف سوم اقرارنامه.
+                    </div>
+                    <div class="auto-sign-preview">
+                        ${svgSig}
+                    </div>
+                </div>
+
+                <div class="alert alert--info">
+                    <span>📌</span>
+                    <span>
+                        اقرار سایت به‌عنوان طرف سوم، تأکیدی بر صحت تمام مراحل و
+                        تضمین آزادسازی وجه پس از تکمیل اقرارنامه‌ها است.
+                    </span>
+                </div>
+            </div>
+
+            <div class="dec-actions">
+                <button class="btn btn--ghost" id="backToBrokerBtn">
+                    <span>← مشاهده اقرار کارگزار</span>
+                </button>
+                <button class="btn btn--declaration" id="submitSiteBtn">
+                    <span class="btn__spinner"></span>
+                    <span class="btn__text">⚖️ ثبت اقرار سایت</span>
+                </button>
+            </div>
+        `;
+    }
+
+    // ===== Sub-Stage 4: Release =====
+    function renderRelease() {
+        const c = state.caseData;
+        const inv = state.invoice;
+        const dep = state.deposit;
+        const brokerShare = inv?.profit?.brokerShare || c.escrow?.brokerShare || 0;
+        const siteShare = inv?.profit?.siteShare || c.escrow?.siteShare || 0;
+        const total = dep?.amount || c.escrow?.total || 0;
+
+        return `
+            <div class="dec-hero">
+                <div class="dec-hero__badge">⚖️ مرحله ۴ از ۴</div>
+                <h1 class="dec-hero__title">آزادسازی وجه امانی</h1>
+                <p class="dec-hero__subtitle">
+                    همه‌ی اقرارنامه‌ها امضا شد. آماده‌ی آزادسازی نهایی وجه هستید.
+                </p>
+            </div>
+
+            ${renderStages()}
+
+            <div class="dec-card">
+                <div class="dec-card__title">📋 وضعیت اقرارنامه‌ها</div>
+                <div class="dec-card__desc">هر سه طرف اقرارنامه را امضا کرده‌اند</div>
+
+                <div class="party-card party-card--done">
+                    <div class="party-card__icon">✓</div>
+                    <div class="party-card__content">
+                        <div class="party-card__name">${c.applicantData?.name || '—'}</div>
+                        <div class="party-card__role">👤 متقاضی</div>
+                    </div>
+                    <div class="party-card__status party-card__status--done">✅ امضا شده</div>
+                </div>
+
+                <div class="party-card party-card--done">
+                    <div class="party-card__icon">✓</div>
+                    <div class="party-card__content">
+                        <div class="party-card__name">${c.brokerName || '—'}</div>
+                        <div class="party-card__role">🤝 کارگزار</div>
+                    </div>
+                    <div class="party-card__status party-card__status--done">✅ امضا شده</div>
+                </div>
+
+                <div class="party-card party-card--done">
+                    <div class="party-card__icon">✓</div>
+                    <div class="party-card__content">
+                        <div class="party-card__name">وام‌پی</div>
+                        <div class="party-card__role">🏢 سایت (مدیر کل)</div>
+                    </div>
+                    <div class="party-card__status party-card__status--done">✅ امضا شده</div>
+                </div>
+            </div>
+
+            <div class="release-box">
+                <div class="release-box__content">
+                    <div class="release-box__title">
+                        <span>💰</span>
+                        <span>تفکیک نهایی وجه امانی</span>
+                    </div>
+                    <div class="release-box__rows">
+                        <div class="release-box__row">
+                            <span>📋 شماره سند امانت</span>
+                            <span style="font-family:monospace;">${dep?.deedNumber || '—'}</span>
+                        </div>
+                        <div class="release-box__row">
+                            <span>💰 مبلغ کل امانی</span>
+                            <span>${faPrice(total)} تومان</span>
+                        </div>
+                        <div class="release-box__row">
+                            <span>🏛️ سود خالص سایت</span>
+                            <span>${faPrice(siteShare)} تومان</span>
+                        </div>
+                        <div class="release-box__row release-box__row--total">
+                            <span>🤝 سهم کارگزار (آزادسازی)</span>
+                            <span>${faPrice(brokerShare)} تومان</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn--gold btn--block" id="releaseBtn" style="margin-top:16px;">
+                        <span class="btn__spinner"></span>
+                        <span class="btn__text">💰 تأیید آزادسازی نهایی</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="alert alert--warning">
+                <span>⚠️</span>
+                <span>
+                    با کلیک روی دکمه‌ی بالا، وجه امانی به‌صورت نهایی آزاد می‌شود:
+                    <strong>${faPrice(brokerShare)} تومان</strong> به کیف پول کارگزار واریز می‌شود.
+                    این عملیات <strong>غیرقابل بازگشت</strong> است.
+                </span>
+            </div>
+        `;
+    }
+
+    // ===== Success =====
+    function renderSuccess() {
+        const c = state.caseData;
+        const inv = state.invoice;
+        const dep = state.deposit;
+        const brokerShare = inv?.profit?.brokerShare || c.escrow?.brokerShare || c.paymentRelease?.brokerShare || 0;
+        const siteShare = inv?.profit?.siteShare || c.escrow?.siteShare || c.paymentRelease?.siteShare || 0;
+        const total = dep?.amount || c.escrow?.total || c.paymentRelease?.totalHeld || 0;
+        const txnId = c.paymentRelease?.transactionId || ('txn_rel_' + Date.now());
+        const archiveId = c.archive?.archiveId || ('ARCH-' + new Date().getFullYear() + '-' + String(c.caseNumber || '').slice(-4));
+
+        return `
+            <div class="final-success">
+                <span class="final-success__icon">🎉</span>
+                <h1 class="final-success__title">پرونده با موفقیت تکمیل شد!</h1>
+                <p class="final-success__desc">
+                    تمامی مراحل زنجیره‌ای انجام شد و وجه امانی آزاد گردید.
+                </p>
+            </div>
+
+            <div class="receipt-box">
+                <div class="receipt-box__title">
+                    <span>🧾</span>
+                    <span>رسید آزادسازی وجه</span>
+                </div>
+                <div class="receipt-box__rows">
+                    <div class="receipt-box__row">
+                        <span>📁 شماره پرونده</span>
+                        <span style="font-family:monospace;">${c.caseNumber || '—'}</span>
+                    </div>
+                    <div class="receipt-box__row">
+                        <span>📋 شماره سند امانت</span>
+                        <span style="font-family:monospace;">${dep?.deedNumber || c.paymentRelease?.deedNumber || '—'}</span>
+                    </div>
+                    <div class="receipt-box__row">
+                        <span>👤 متقاضی</span>
+                        <span>${c.applicantData?.name || '—'}</span>
+                    </div>
+                    <div class="receipt-box__row">
+                        <span>🤝 کارگزار</span>
+                        <span>${c.brokerName || '—'}</span>
+                    </div>
+                    <div class="receipt-box__row">
+                        <span>💎 امتیاز</span>
+                        <span>${faNum(inv?.creditCount || 0)} × ${inv?.creditName || '—'}</span>
+                    </div>
+                    <div class="receipt-box__row">
+                        <span>💰 مبلغ کل امانی</span>
+                        <span>${faPrice(total)} تومان</span>
+                    </div>
+                    <div class="receipt-box__row">
+                        <span>🏛️ سود سایت</span>
+                        <span style="color:var(--warning);">${faPrice(siteShare)} تومان</span>
+                    </div>
+                    <div class="receipt-box__row receipt-box__row--total">
+                        <span>✅ واریز به کیف پول کارگزار</span>
+                        <span>${faPrice(brokerShare)} تومان</span>
+                    </div>
+                </div>
+                <div class="receipt-hash">
+                    🔐 شناسه‌ی تراکنش: ${txnId}
+                </div>
+            </div>
+
+            <div class="dec-card">
+                <div class="dec-card__title">📊 خلاصه‌ی نهایی پرونده</div>
+                <div class="dec-info">
+                    <div class="dec-info__row">
+                        <span>📅 تاریخ تکمیل</span>
+                        <span>${formatShamsi(c.completedAt || new Date())}</span>
+                    </div>
+                    <div class="dec-info__row">
+                        <span>📊 وضعیت پرونده</span>
+                        <span style="color:var(--success);">✅ ${c.status || 'completed'}</span>
+                    </div>
+                    <div class="dec-info__row">
+                        <span>📦 بایگانی</span>
+                        <span>${archiveId}</span>
+                    </div>
+                    <div class="dec-info__row">
+                        <span>🔒 قفل پرونده</span>
+                        <span style="color:var(--success);">${c.archive?.locked ? '✅ فعال' : '⏳'}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert--success">
+                <span>🎉</span>
+                <span>
+                    <strong>تبریک!</strong> پرونده‌ی شما با موفقیت تکمیل و بایگانی شد.
+                    تمام اسناد حقوقی در سامانه ذخیره شده‌اند و قابل دانلود هستند.
+                </span>
+            </div>
+
+            <div class="dec-actions">
+                <a href="javascript:history.back()" class="btn btn--ghost">
+                    <span>→ بازگشت</span>
+                </a>
+                <a href="index.html" class="btn btn--gold btn--block" style="text-decoration:none;">
+                    <span>🏠 بازگشت به خانه</span>
+                </a>
+            </div>
+        `;
+    }
+
+    // ===== Signature SVG =====
+    function generateSignatureSVG(name, isOfficial = false) {
+        const text = isOfficial ? 'وام‌پی' : (name || 'امضا');
+        const color = isOfficial ? '#d4a62a' : '#0b3b23';
+        return `
+            <svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+                <defs>
+                    <filter id="shadow">
+                        <feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/>
+                    </filter>
+                </defs>
+                <path d="M 20,60 Q 40,30 60,55 T 100,50 Q 120,25 140,60 T 180,55 Q 200,30 220,60 T 260,50"
+                      stroke="${color}" stroke-width="2.5" fill="none" stroke-linecap="round" filter="url(#shadow)"/>
+                <path d="M 30,75 Q 80,65 130,80 T 230,72"
+                      stroke="${color}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+                <text x="150" y="95" text-anchor="middle" fill="${color}" font-size="11" font-weight="bold" font-family="Vazirmatn">${text}</text>
+                ${isOfficial ? `
+                    <circle cx="265" cy="40" r="18" fill="none" stroke="${color}" stroke-width="1.5" opacity="0.6"/>
+                    <text x="265" y="43" text-anchor="middle" fill="${color}" font-size="9" font-weight="bold">مهر</text>
+                ` : ''}
+            </svg>
+        `;
+    }
+
+    // ===== Signature Canvas =====
+    let canvasCtx, isDrawing = false, lastPoint = null, pointCount = 0;
+
+    function initSignature() {
+        const canvas = $('#signatureCanvas');
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        canvasCtx = canvas.getContext('2d');
+        canvasCtx.strokeStyle = '#0b3b23';
+        canvasCtx.lineWidth = 2.5;
+        canvasCtx.lineCap = 'round';
+        canvasCtx.lineJoin = 'round';
+
+        function getPos(e) {
+            const r = canvas.getBoundingClientRect();
+            const p = e.touches ? e.touches[0] : e;
+            return { x: p.clientX - r.left, y: p.clientY - r.top };
+        }
+        function start(e) {
+            e.preventDefault(); isDrawing = true;
+            lastPoint = getPos(e); pointCount++;
+            canvasCtx.beginPath();
+            canvasCtx.arc(lastPoint.x, lastPoint.y, 1.25, 0, Math.PI * 2);
+            canvasCtx.fillStyle = '#0b3b23';
+            canvasCtx.fill();
+        }
+        function move(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            const p = getPos(e);
+            canvasCtx.beginPath();
+            canvasCtx.moveTo(lastPoint.x, lastPoint.y);
+            canvasCtx.lineTo(p.x, p.y);
+            canvasCtx.stroke();
+            lastPoint = p; pointCount++;
+            if (pointCount > 5 && !state.applicantSignature) {
+                const s = $('#sigStatus');
+                if (s) { s.textContent = '✅ در حال امضا'; s.classList.add('signature-header__status--ok'); }
+            }
+        }
+        function end() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            if (pointCount >= 15) {
+                state.applicantSignature = canvas.toDataURL('image/png');
+                const s = $('#sigStatus');
+                if (s) {
+                    s.textContent = '✅ امضا ثبت شد';
+                    s.classList.add('signature-header__status--ok');
+                }
+                $('#sigWrap')?.classList.add('signature-wrap--active');
+                updateApplicantBtn();
+            } else if (pointCount > 0) {
+                const s = $('#sigStatus');
+                if (s) s.textContent = '⚠️ امضا ناقص';
+                state.applicantSignature = null;
+            }
+        }
+
+        canvas.addEventListener('mousedown', start);
+        canvas.addEventListener('mousemove', move);
+        canvas.addEventListener('mouseup', end);
+        canvas.addEventListener('mouseleave', end);
+        canvas.addEventListener('touchstart', start, { passive: false });
+        canvas.addEventListener('touchmove', move, { passive: false });
+        canvas.addEventListener('touchend', end);
+    }
+
+    function updateApplicantBtn() {
+        const btn = $('#submitApplicantBtn');
+        if (!btn) return;
+        btn.disabled = !(state.applicantSignature && state.otpVerified);
+    }
+
+    // ===== OTP =====
+    function setupOtp() {
+        $$('.otp-input').forEach((input, idx, all) => {
+            input.addEventListener('input', (e) => {
+                const v = e.target.value.replace(/\D/g, '');
+                e.target.value = v.slice(-1);
+                if (v && idx < all.length - 1) all[idx + 1].focus();
+                if (getOtpValue().length === 5) setTimeout(verifyOtp, 200);
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && idx > 0) all[idx - 1].focus();
+            });
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const p = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 5);
+                if (p.length === 5) {
+                    p.split('').forEach((ch, i) => all[i].value = ch);
+                    all[4].focus();
+                    setTimeout(verifyOtp, 200);
+                }
+            });
+        });
+    }
+
+    function getOtpValue() {
+        return Array.from($$('.otp-input')).map(i => i.value).join('');
+    }
+
+    function resetOtpInputs() {
+        $$('.otp-input').forEach(i => i.value = '');
+        $$('.otp-input')[0]?.focus();
+    }
+
+    function sendOtp() {
+        state.otpCode = OTP_CONFIG.mock ? OTP_CONFIG.mockCode :
+            Math.floor(Math.random() * 90000 + 10000).toString();
+        const phone = state.caseData?.applicantData?.mobile || state.user.mobile;
+        console.log(`🧪 [MOCK OTP Declaration] کد برای ${phone} → ${state.otpCode}`);
+        $('#otpSection').style.display = 'block';
+        resetOtpInputs();
+        toast('کد تأیید ارسال شد (تست: 12345)', 'success');
+    }
+
+    function verifyOtp() {
+        const entered = getOtpValue();
+        const status = $('#otpStatus');
+        status.className = 'otp-status';
+
+        if (entered.length !== 5) {
+            status.classList.add('otp-status--error');
+            status.textContent = 'کد ۵ رقمی را کامل وارد کنید';
+            return;
+        }
+        if (entered !== state.otpCode) {
+            status.classList.add('otp-status--error');
+            status.textContent = 'کد وارد شده صحیح نیست';
+            resetOtpInputs();
+            return;
+        }
+        state.otpVerified = true;
+        status.classList.add('otp-status--success');
+        status.textContent = '✅ تأیید شد';
+        $$('.otp-input').forEach(i => { i.disabled = true; i.style.background = 'rgba(30,142,74,0.1)'; });
+        $('#sendOtpBtn').disabled = true;
+        $('#sendOtpBtn').textContent = '✅ تأیید شد';
+        $('#sendOtpBtn').style.background = 'var(--success)';
+        toast('✅ OTP تأیید شد', 'success');
+        updateApplicantBtn();
+    }
+
+    // ===== Submit Applicant =====
+    function submitApplicant() {
+        if (!state.applicantSignature) { toast('ابتدا امضا کنید', 'error'); return; }
+        if (!state.otpVerified) { toast('ابتدا OTP را تأیید کنید', 'error'); return; }
+
+        const btn = $('#submitApplicantBtn');
+        btn.classList.add('btn--loading'); btn.disabled = true;
+
+        setTimeout(() => {
+            const c = state.caseData;
+            const now = new Date().toISOString();
+
+            const apps = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+            const idx = apps.findIndex(a => a.id === c.id);
+            if (idx >= 0) {
+                if (!apps[idx].declarations) apps[idx].declarations = {};
+                apps[idx].declarations.applicant = {
+                    signed: true,
+                    signedAt: now,
+                    signedBy: c.applicantData?.name,
+                    signatureImage: state.applicantSignature,
+                    otpVerified: true,
+                    otpVerifiedAt: now
+                };
+                localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+            }
+
+            if (window.WamPayFinancialLog) {
+                WamPayFinancialLog.logEvent(
+                    'system_event',
+                    { stage: 'applicant_declaration_signed' },
+                    {
+                        caseId: c.id,
+                        caseNumber: c.caseNumber,
+                        title: `✍️ امضای اقرار متقاضی — ${c.caseNumber}`,
+                        actor: { role: 'applicant', name: c.applicantData?.name, id: state.user.id },
+                        important: true
+                    }
+                );
+            }
+
+            state.applicantDeclDone = true;
+            state.subStage = 2;
+            toast('✅ اقرار متقاضی ثبت شد', 'success');
+            render();
+        }, 800);
+    }
+
+    // ===== Submit Broker =====
+    function submitBroker() {
+        const btn = $('#submitBrokerBtn');
+        if (btn) { btn.classList.add('btn--loading'); btn.disabled = true; }
+
+        setTimeout(() => {
+            const c = state.caseData;
+            const now = new Date().toISOString();
+
+            const svgSig = generateSignatureSVG(c.brokerName || 'کارگزار');
+            const dataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgSig)));
+
+            const apps = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+            const idx = apps.findIndex(a => a.id === c.id);
+            if (idx >= 0) {
+                if (!apps[idx].declarations) apps[idx].declarations = {};
+                apps[idx].declarations.broker = {
+                    signed: true,
+                    signedAt: now,
+                    signedBy: c.brokerName,
+                    signatureImage: dataUrl,
+                    autoSigned: true
+                };
+                localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+            }
+
+            if (window.WamPayFinancialLog) {
+                WamPayFinancialLog.logEvent(
+                    'system_event',
+                    { stage: 'broker_declaration_signed' },
+                    {
+                        caseId: c.id,
+                        caseNumber: c.caseNumber,
+                        title: `✍️ امضای اقرار کارگزار — ${c.caseNumber}`,
+                        actor: { role: 'broker', name: c.brokerName, id: c.brokerId },
+                        important: true
+                    }
+                );
+            }
+
+            state.brokerDeclDone = true;
+            state.brokerSignature = dataUrl;
+            state.subStage = 3;
+            toast('✅ اقرار کارگزار ثبت شد', 'success');
+            render();
+        }, 800);
+    }
+
+    // ===== Submit Site =====
+    function submitSite() {
+        const btn = $('#submitSiteBtn');
+        if (btn) { btn.classList.add('btn--loading'); btn.disabled = true; }
+
+        setTimeout(() => {
+            const c = state.caseData;
+            const now = new Date().toISOString();
+
+            const svgSig = generateSignatureSVG('وام‌پی — مدیر کل', true);
+            const dataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgSig)));
+
+            const apps = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+            const idx = apps.findIndex(a => a.id === c.id);
+            if (idx >= 0) {
+                if (!apps[idx].declarations) apps[idx].declarations = {};
+                apps[idx].declarations.site = {
+                    signed: true,
+                    signedAt: now,
+                    signedBy: 'مدیر کل وام‌پی',
+                    signatureImage: dataUrl,
+                    autoSigned: true
+                };
+                localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+            }
+
+            if (window.CaseStateService) {
+                try {
+                    CaseStateService.transition(c.id, 'declaration_signed', {
+                        role: 'super_admin',
+                        actor: 'مدیر کل وام‌پی',
+                        note: 'امضای اقرار سایت انجام شد'
+                    });
+                } catch (e) {
+                    console.warn('CaseStateService transition failed:', e);
+                    if (idx >= 0) {
+                        apps[idx].status = 'declaration_signed';
+                        apps[idx].updatedAt = now;
+                        localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+                    }
+                }
+            } else {
+                if (idx >= 0) {
+                    apps[idx].status = 'declaration_signed';
+                    apps[idx].updatedAt = now;
+                    localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+                }
+            }
+
+            if (window.WamPayFinancialLog) {
+                WamPayFinancialLog.logEvent(
+                    'system_event',
+                    { stage: 'site_declaration_signed' },
+                    {
+                        caseId: c.id,
+                        caseNumber: c.caseNumber,
+                        title: `✍️ امضای اقرار سایت — ${c.caseNumber}`,
+                        actor: { role: 'super_admin', name: 'مدیر کل وام‌پی' },
+                        important: true
+                    }
+                );
+            }
+
+            state.siteDeclDone = true;
+            state.siteSignature = dataUrl;
+            state.subStage = 4;
+            toast('✅ اقرار سایت ثبت شد', 'success');
+            render();
+        }, 800);
+    }
+
+    // ===== Release =====
+    function handleRelease() {
+        const btn = $('#releaseBtn');
+        if (!confirm('💰 تأیید آزادسازی نهایی؟\n\nمبلغ سهم کارگزار به کیف پول او واریز می‌شود.\nاین عملیات غیرقابل بازگشت است.')) return;
+
+        btn.classList.add('btn--loading'); btn.disabled = true;
+
+        setTimeout(() => {
+            const c = state.caseData;
+            const inv = state.invoice;
+            const dep = state.deposit;
+            const now = new Date().toISOString();
+            const brokerShare = inv?.profit?.brokerShare || c.escrow?.brokerShare || 0;
+            const siteShare = inv?.profit?.siteShare || c.escrow?.siteShare || 0;
+            const total = dep?.amount || c.escrow?.total || 0;
+            const txnId = 'txn_rel_' + Date.now();
+
+            try {
+                if (window.WamPayTrust && (dep?.id || c.escrow?.depositId)) {
+                    try {
+                        WamPayTrust.releaseToBroker(
+                            dep.id || c.escrow.depositId,
+                            { id: c.brokerId, name: c.brokerName },
+                            'مدیر کل وام‌پی'
+                        );
+                    } catch (e) { console.warn('Trust release warning:', e); }
+                }
+
+                const wallets = JSON.parse(localStorage.getItem('wamPayBrokerWallets') || '[]');
+                let wallet = wallets.find(w => w.brokerId === c.brokerId);
+                if (!wallet) {
+                    wallet = { brokerId: c.brokerId, balance: 0, blocked: 0, totalEarned: 0, createdAt: now };
+                    wallets.push(wallet);
+                }
+                wallet.balance += brokerShare;
+                wallet.totalEarned += brokerShare;
+                wallet.updatedAt = now;
+                localStorage.setItem('wamPayBrokerWallets', JSON.stringify(wallets));
+
+                const txns = JSON.parse(localStorage.getItem('wamPayBrokerTransactions') || '[]');
+                txns.unshift({
+                    id: 'txn_' + Date.now(),
+                    brokerId: c.brokerId,
+                    type: 'commission',
+                    amount: brokerShare,
+                    caseId: c.id,
+                    caseNumber: c.caseNumber,
+                    caseSource: c.source,
+                    title: `سهم کارگزاری پرونده ${c.caseNumber}`,
+                    status: 'completed',
+                    createdAt: now
+                });
+                localStorage.setItem('wamPayBrokerTransactions', JSON.stringify(txns));
+
+                const apps = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+                const idx = apps.findIndex(a => a.id === c.id);
+                if (idx >= 0) {
+                    apps[idx].paymentRelease = {
+                        released: true,
+                        releasedAt: now,
+                        releasedBy: 'مدیر کل وام‌پی',
+                        transactionId: txnId,
+                        totalHeld: total,
+                        amount: total,
+                        siteShare: siteShare,
+                        brokerShare: brokerShare
+                    };
+                    apps[idx].archive = {
+                        archiveId: `ARCH-${new Date().getFullYear()}-${String(c.caseNumber || '').slice(-4)}`,
+                        archivedAt: now,
+                        locked: true
+                    };
+                    apps[idx].completedAt = now;
+                    apps[idx].updatedAt = now;
+                    apps[idx].status = 'completed';
+                    localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+                }
+
+                if (window.CaseStateService) {
+                    try {
+                        CaseStateService.clearAllQueues(c);
+                        console.log('✅ صف‌ها پاک شدند');
+                    } catch (e) {
+                        console.warn('clearAllQueues failed:', e);
+                    }
+                }
+                // fallback پاک‌سازی صف
+                const queues = [
+                    'wamPayBrokerAdminQueue', 'wamPayAccountingQueue',
+                    'wamPaySuperAdminFinancialQueue', 'wamPayLegalQueue',
+                    'wamPayBrokerSignQueue', 'wamPaySiteSignQueue',
+                    'wamPayApplicantSignQueue', 'wamPayPaymentQueue',
+                    'wamPayBrokerTransferQueue', 'wamPaySuperAdminTransferQueue',
+                    'wamPayApplicantConfirmQueue', 'wamPayDeclarationQueue'
+                ];
+                queues.forEach(qKey => {
+                    const q = JSON.parse(localStorage.getItem(qKey) || '[]');
+                    const filtered = q.filter(x => x.caseNumber !== c.caseNumber);
+                    localStorage.setItem(qKey, JSON.stringify(filtered));
+                });
+
+                if (window.WamPayFinancialLog) {
+                    WamPayFinancialLog.logPayment(
+                        c.id, c.caseNumber, total,
+                        { siteShare: siteShare, brokerShare: brokerShare },
+                        'released'
+                    );
+                    WamPayFinancialLog.logWalletCredit(
+                        c.brokerId, c.brokerName, brokerShare,
+                        `سهم کارگزاری پرونده ${c.caseNumber}`
+                    );
+                }
+
+                state.released = true;
+                state.caseData = JSON.parse(localStorage.getItem('wamPayApplications') || '[]').find(a => a.id === c.id) || c;
+                render();
+                toast('🎉 وجه با موفقیت آزاد شد', 'success');
+                console.log('💰 آزادسازی:', txnId, '| کارگزار:', brokerShare, '| سایت:', siteShare);
+
+            } catch (err) {
+                console.error('❌ خطا:', err);
+                toast('خطا در آزادسازی: ' + err.message, 'error');
+                btn.classList.remove('btn--loading');
+                btn.disabled = false;
+            }
+        }, 1200);
+    }
+
+    // ===== Render =====
+    function render() {
+        const container = $('#mainContainer');
+
+        if (state.released) {
+            container.innerHTML = renderSuccess();
+            return;
+        }
+
+        if (state.subStage === 1) {
+            container.innerHTML = renderApplicantDecl();
+            attachApplicantEvents();
+        } else if (state.subStage === 2) {
+            container.innerHTML = renderBrokerDecl();
+            attachBrokerEvents();
+        } else if (state.subStage === 3) {
+            container.innerHTML = renderSiteDecl();
+            attachSiteEvents();
+        } else if (state.subStage === 4) {
+            container.innerHTML = renderRelease();
+            attachReleaseEvents();
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== Events =====
+    function attachApplicantEvents() {
+        initSignature();
+        setupOtp();
+        $('#sendOtpBtn')?.addEventListener('click', sendOtp);
+        $('#clearSignature')?.addEventListener('click', () => {
+            const c = $('#signatureCanvas');
+            if (!c || !canvasCtx) return;
+            canvasCtx.clearRect(0, 0, c.width, c.height);
+            state.applicantSignature = null;
+            pointCount = 0;
+            const s = $('#sigStatus');
+            if (s) { s.textContent = 'امضا نشده'; s.classList.remove('signature-header__status--ok'); }
+            $('#sigWrap')?.classList.remove('signature-wrap--active');
+            updateApplicantBtn();
+        });
+        $('#submitApplicantBtn')?.addEventListener('click', submitApplicant);
+    }
+
+    function attachBrokerEvents() {
+        $('#submitBrokerBtn')?.addEventListener('click', submitBroker);
+        $('#backToApplicantBtn')?.addEventListener('click', () => {
+            state.subStage = 1;
+            render();
+        });
+    }
+
+    function attachSiteEvents() {
+        $('#submitSiteBtn')?.addEventListener('click', submitSite);
+        $('#backToBrokerBtn')?.addEventListener('click', () => {
+            state.subStage = 2;
+            render();
+        });
+    }
+
+    function attachReleaseEvents() {
+        $('#releaseBtn')?.addEventListener('click', handleRelease);
+    }
+
+    // ===== Helpers =====
+    function formatShamsi(date) {
+        if (!date) return '—';
+        try {
+            const d = new Date(date);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            return `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())} — ${fa(d.getHours())}:${fa(d.getMinutes())}`;
+        } catch { return '—'; }
+    }
+
+    // ===== Theme =====
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        if (!btn) return;
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light');
+                btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark');
+                btn.textContent = '☀️';
+            }
+        });
+    }
+
+    // ===== Init =====
+    function init() {
+        if (!checkAuth()) return;
+        if (!loadData()) return;
+        render();
+        initTheme();
+
+        console.log('%c⚖️ WAM PAY — Three-Way Declaration v1.1', 'color:#8e44ad;font-weight:bold;font-size:14px;');
+        console.log('%c👤 کاربر:', 'color:#0b3b23;', state.user.name);
+        console.log('%c📁 پرونده:', 'color:#0b3b23;', state.caseData?.caseNumber);
+        console.log('%c📊 زیرمرحله:', 'color:#8e44ad;', state.subStage, '/ 4');
+        console.log('%c🧪 Mock OTP: 12345', 'color:#d4a62a;font-weight:bold;');
+        console.log(
+            '%c🆕 CaseStateService: ' + (window.CaseStateService ? '✅ فعال' : '⚠️ غیرفعال (fallback)'),
+            window.CaseStateService ? 'color:#1e8e4a;font-weight:bold;' : 'color:#e67e22;font-weight:bold;'
+        );
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

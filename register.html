@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="ثبت‌نام در وام پی — مسیر هوشمند تأمین مالی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ثبت‌نام | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--wam-bg);
+    }
+
+    .wam-reg {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      min-height: 100vh;
+    }
+
+    .wam-reg__brand {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 60%, #1a6b42 100%);
+      color: #fff;
+      padding: 48px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wam-reg__brand::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      left: -120px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.22), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-reg__brand::after {
+      content: '';
+      position: absolute;
+      bottom: -140px;
+      right: -140px;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.14), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-reg__logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #f4d477;
+      z-index: 1;
+    }
+
+    .wam-reg__logo-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(212, 166, 42, 0.55);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #d4a62a;
+    }
+
+    .wam-reg__brand-body {
+      z-index: 1;
+      max-width: 420px;
+    }
+
+    .wam-reg__brand-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      line-height: 1.4;
+      margin: 0 0 14px;
+      color: #fff;
+    }
+
+    .wam-reg__brand-title span {
+      color: #f4d477;
+    }
+
+    .wam-reg__brand-text {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: rgba(255, 255, 255, 0.82);
+      margin: 0 0 26px;
+    }
+
+    .wam-reg__steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .wam-reg__step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .wam-reg__step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(212, 166, 42, 0.2);
+      border: 1.5px solid rgba(212, 166, 42, 0.5);
+      color: #f4d477;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .wam-reg__step-body {
+      flex: 1 1 auto;
+      padding-top: 3px;
+    }
+
+    .wam-reg__step-title {
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 2px;
+    }
+
+    .wam-reg__step-text {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+    }
+
+    .wam-reg__brand-footer {
+      z-index: 1;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .wam-reg__panel {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 32px;
+      background: var(--wam-bg-alt);
+      overflow-y: auto;
+    }
+
+    .wam-reg__form-wrap {
+      width: 100%;
+      max-width: 480px;
+      padding-top: 8px;
+      animation: wam-reg-in 0.45s ease both;
+    }
+
+    .wam-reg__mobile-logo {
+      display: none;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .wam-reg__mobile-logo-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #0b3b23, #105b35);
+      color: #d4a62a;
+      font-size: 1.85rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      box-shadow: 0 8px 24px rgba(11, 59, 35, 0.22);
+    }
+
+    .wam-reg__mobile-logo-text {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+    }
+
+    .wam-reg__title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 6px;
+    }
+
+    .wam-reg__subtitle {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0 0 22px;
+      line-height: 1.7;
+    }
+
+    .wam-reg__roles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .wam-reg__role {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 10px;
+      background: var(--wam-bg-muted);
+      border: 2px solid transparent;
+      border-radius: var(--wam-radius);
+      cursor: pointer;
+      transition: all var(--wam-t);
+      text-align: center;
+      font-family: inherit;
+      color: var(--wam-text);
+    }
+
+    .wam-reg__role:hover {
+      background: var(--wam-primary-soft);
+      border-color: var(--wam-primary-soft);
+    }
+
+    .wam-reg__role.is-selected {
+      background: var(--wam-primary-soft);
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.1);
+    }
+
+    .wam-reg__role-icon {
+      font-size: 1.5rem;
+    }
+
+    .wam-reg__role-name {
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .wam-reg__role-hint {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+      line-height: 1.5;
+    }
+
+    .wam-reg__role.is-selected .wam-reg__role-hint {
+      color: var(--wam-primary);
+    }
+
+    .wam-reg__form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .wam-reg__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .wam-reg__field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    .wam-reg__field--full {
+      grid-column: 1 / -1;
+    }
+
+    .wam-reg__label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wam-reg__label-req {
+      color: var(--wam-danger);
+      font-size: 0.9rem;
+    }
+
+    .wam-reg__label-opt {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+      font-weight: 500;
+    }
+
+    .wam-reg__input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .wam-reg__input-icon {
+      position: absolute;
+      right: 14px;
+      font-size: 1rem;
+      color: var(--wam-text-muted);
+      pointer-events: none;
+      transition: color var(--wam-t);
+    }
+
+    .wam-reg__input {
+      width: 100%;
+      padding: 11px 42px 11px 42px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+      min-height: 44px;
+    }
+
+    .wam-reg__input:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-reg__input-wrap:focus-within .wam-reg__input-icon {
+      color: var(--wam-primary-light);
+    }
+
+    .wam-reg__input.is-error {
+      border-color: var(--wam-danger);
+      box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+    }
+
+    .wam-reg__input.is-ok {
+      border-color: var(--wam-success);
+    }
+
+    .wam-reg__input-toggle {
+      position: absolute;
+      left: 10px;
+      background: transparent;
+      border: 0;
+      font-size: 1rem;
+      color: var(--wam-text-muted);
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 6px;
+      transition: background var(--wam-t), color var(--wam-t);
+    }
+
+    .wam-reg__input-toggle:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    .wam-reg__strength {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .wam-reg__strength-bar {
+      flex: 1 1 auto;
+      height: 4px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius-pill);
+      overflow: hidden;
+    }
+
+    .wam-reg__strength-fill {
+      height: 100%;
+      width: 0;
+      border-radius: var(--wam-radius-pill);
+      transition: width var(--wam-t), background var(--wam-t);
+      background: var(--wam-muted);
+    }
+
+    .wam-reg__strength-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--wam-text-muted);
+      white-space: nowrap;
+      min-width: 44px;
+      text-align: left;
+    }
+
+    .wam-reg__field-hint {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      line-height: 1.6;
+    }
+
+    .wam-reg__field-hint.is-error {
+      color: var(--wam-danger);
+      font-weight: 600;
+    }
+
+    .wam-reg__field-hint.is-ok {
+      color: var(--wam-success-text);
+    }
+
+    .wam-reg__terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius);
+      font-size: 0.82rem;
+      color: var(--wam-text);
+      line-height: 1.7;
+      cursor: pointer;
+    }
+
+    .wam-reg__terms input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--wam-primary-light);
+      cursor: pointer;
+      margin: 2px 0 0;
+      flex: 0 0 auto;
+    }
+
+    .wam-reg__terms a {
+      color: var(--wam-primary-light);
+      font-weight: 700;
+    }
+
+    .wam-reg__terms a:hover {
+      color: var(--wam-gold);
+    }
+
+    .wam-reg__error {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--wam-danger-soft);
+      color: var(--wam-danger-text);
+      border-radius: var(--wam-radius);
+      font-size: 0.82rem;
+      font-weight: 600;
+      animation: wam-reg-shake 0.35s ease;
+    }
+
+    .wam-reg__error.is-visible {
+      display: flex;
+    }
+
+    .wam-reg__submit {
+      width: 100%;
+      padding: 13px 18px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      font-family: inherit;
+      color: #fff;
+      background: var(--wam-primary-light);
+      border: 0;
+      border-radius: var(--wam-radius);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background var(--wam-t), transform var(--wam-t-fast),
+                  box-shadow var(--wam-t);
+      box-shadow: 0 4px 14px rgba(16, 91, 53, 0.22);
+      margin-top: 4px;
+    }
+
+    .wam-reg__submit:hover:not(:disabled) {
+      background: var(--wam-primary);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(16, 91, 53, 0.3);
+    }
+
+    .wam-reg__submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .wam-reg__submit-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: wam-reg-spin 0.7s linear infinite;
+    }
+
+    .wam-reg__divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0 12px;
+      font-size: 0.75rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-reg__divider::before,
+    .wam-reg__divider::after {
+      content: '';
+      flex: 1 1 auto;
+      height: 1px;
+      background: var(--wam-border-soft);
+    }
+
+    .wam-reg__login {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-reg__login a {
+      color: var(--wam-primary-light);
+      font-weight: 800;
+      margin-right: 4px;
+    }
+
+    .wam-reg__login a:hover {
+      color: var(--wam-gold);
+    }
+
+    .wam-reg__success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      animation: wam-reg-in 0.4s ease both;
+    }
+
+    .wam-reg__success.is-visible {
+      display: flex;
+    }
+
+    .wam-reg__success-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--wam-success-soft);
+      color: var(--wam-success);
+      font-size: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(46, 158, 91, 0.22);
+    }
+
+    .wam-reg__success-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 8px;
+    }
+
+    .wam-reg__success-text {
+      font-size: 0.88rem;
+      color: var(--wam-text-muted);
+      line-height: 1.8;
+      margin: 0 0 22px;
+    }
+
+    @keyframes wam-reg-in {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes wam-reg-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes wam-reg-shake {
+      0%, 100% { transform: translateX(0); }
+      25%      { transform: translateX(-4px); }
+      75%      { transform: translateX(4px); }
+    }
+
+    @media (max-width: 900px) {
+      .wam-reg { grid-template-columns: 1fr; }
+      .wam-reg__brand { display: none; }
+      .wam-reg__panel { padding: 28px 20px; min-height: 100vh; }
+      .wam-reg__mobile-logo { display: block; }
+      .wam-reg__title, .wam-reg__subtitle { text-align: center; }
+    }
+
+    @media (max-width: 640px) {
+      .wam-reg__panel {
+        padding: 22px 16px;
+        padding-top: calc(32px + env(safe-area-inset-top, 0px));
+      }
+      .wam-reg__title { font-size: 1.3rem; }
+      .wam-reg__grid { grid-template-columns: 1fr; }
+      .wam-reg__roles { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .wam-reg__role { padding: 12px 8px; }
+      .wam-reg__role-name { font-size: 0.8rem; }
+      .wam-reg__role-hint { font-size: 0.66rem; }
+      .wam-reg__input { font-size: 16px; }
+    }
+  </style>
+</head>
+
+<body data-page="register" data-app-no-auto="1">
+
+  <main class="wam-reg" role="main" aria-label="ثبت‌نام در وام پی">
+
+    <aside class="wam-reg__brand" aria-hidden="true">
+      <div class="wam-reg__logo">
+        <span class="wam-reg__logo-icon">و</span>
+        <span>وام پی</span>
+      </div>
+
+      <div class="wam-reg__brand-body">
+        <h1 class="wam-reg__brand-title">
+          به <span>وام پی</span><br>
+          خوش آمدید
+        </h1>
+        <p class="wam-reg__brand-text">
+          در کمتر از ۲ دقیقه حساب کاربری خود را بسازید و از خدمات
+          هوشمند تأمین مالی بهره‌مند شوید.
+        </p>
+
+        <ul class="wam-reg__steps">
+          <li class="wam-reg__step">
+            <span class="wam-reg__step-num">۱</span>
+            <div class="wam-reg__step-body">
+              <p class="wam-reg__step-title">نقش خود را انتخاب کنید</p>
+              <p class="wam-reg__step-text">متقاضی، کارگزار یا اعتبارسنج</p>
+            </div>
+          </li>
+          <li class="wam-reg__step">
+            <span class="wam-reg__step-num">۲</span>
+            <div class="wam-reg__step-body">
+              <p class="wam-reg__step-title">اطلاعات پایه را وارد کنید</p>
+              <p class="wam-reg__step-text">نام و شماره موبایل</p>
+            </div>
+          </li>
+          <li class="wam-reg__step">
+            <span class="wam-reg__step-num">۳</span>
+            <div class="wam-reg__step-body">
+              <p class="wam-reg__step-title">رمز عبور امن بسازید</p>
+              <p class="wam-reg__step-text">حداقل ۸ کاراکتر با ترکیب حرف و عدد</p>
+            </div>
+          </li>
+          <li class="wam-reg__step">
+            <span class="wam-reg__step-num">✓</span>
+            <div class="wam-reg__step-body">
+              <p class="wam-reg__step-title">شروع کنید</p>
+              <p class="wam-reg__step-text">بلافاصله وارد پنل کاربری خود شوید</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="wam-reg__brand-footer">
+        © ۱۴۰۵ وام پی — تمامی حقوق محفوظ است.
+      </div>
+    </aside>
+
+    <section class="wam-reg__panel">
+
+      <div class="wam-reg__form-wrap" id="regFormWrap">
+
+        <div class="wam-reg__mobile-logo">
+          <div class="wam-reg__mobile-logo-icon">و</div>
+          <div class="wam-reg__mobile-logo-text">وام پی</div>
+        </div>
+
+        <h2 class="wam-reg__title">ساخت حساب کاربری</h2>
+        <p class="wam-reg__subtitle">
+          برای شروع، نقش خود را انتخاب و اطلاعات پایه را وارد کنید.
+        </p>
+
+        <div class="wam-reg__error" id="regError" role="alert">
+          <span>⚠️</span>
+          <span id="regErrorText">لطفاً خطاهای فرم را برطرف کنید.</span>
+        </div>
+
+        <!-- نقش‌ها -->
+        <div class="wam-reg__roles" role="radiogroup" aria-label="انتخاب نقش">
+          <button type="button" class="wam-reg__role is-selected"
+                  data-role="applicant" role="radio" aria-checked="true">
+            <span class="wam-reg__role-icon">👤</span>
+            <span class="wam-reg__role-name">متقاضی</span>
+            <span class="wam-reg__role-hint">درخواست وام</span>
+          </button>
+          <button type="button" class="wam-reg__role"
+                  data-role="broker" role="radio" aria-checked="false">
+            <span class="wam-reg__role-icon">💼</span>
+            <span class="wam-reg__role-name">کارگزار</span>
+            <span class="wam-reg__role-hint">جذب و مدیریت پرونده</span>
+          </button>
+          <button type="button" class="wam-reg__role"
+                  data-role="verifier" role="radio" aria-checked="false">
+            <span class="wam-reg__role-icon">🔍</span>
+            <span class="wam-reg__role-name">اعتبارسنج</span>
+            <span class="wam-reg__role-hint">بررسی و تأیید</span>
+          </button>
+          <button type="button" class="wam-reg__role"
+                  data-role="admin" role="radio" aria-checked="false">
+            <span class="wam-reg__role-icon">⚙️</span>
+            <span class="wam-reg__role-name">مدیر</span>
+            <span class="wam-reg__role-hint">مدیریت سیستم</span>
+          </button>
+        </div>
+
+        <!-- فرم -->
+        <form class="wam-reg__form" id="regForm" novalidate autocomplete="on">
+
+          <div class="wam-reg__grid">
+
+            <!-- نام کامل -->
+            <div class="wam-reg__field wam-reg__field--full">
+              <label class="wam-reg__label" for="regName">
+                نام و نام خانوادگی
+                <span class="wam-reg__label-req">*</span>
+              </label>
+              <div class="wam-reg__input-wrap">
+                <input type="text" id="regName" name="name"
+                       class="wam-reg__input"
+                       placeholder="مثال: علی رضایی"
+                       autocomplete="name" required
+                       minlength="3">
+                <span class="wam-reg__input-icon">👤</span>
+              </div>
+              <p class="wam-reg__field-hint" id="regNameHint">
+                حداقل ۳ کاراکتر (نام و نام خانوادگی)
+              </p>
+            </div>
+
+            <!-- موبایل (شناسه یکتا) -->
+            <div class="wam-reg__field wam-reg__field--full">
+              <label class="wam-reg__label" for="regPhone">
+                شماره موبایل
+                <span class="wam-reg__label-req">*</span>
+              </label>
+              <div class="wam-reg__input-wrap">
+                <input type="tel" id="regPhone" name="phone"
+                       class="wam-reg__input"
+                       placeholder="09xxxxxxxxx"
+                       autocomplete="tel"
+                       inputmode="numeric"
+                       maxlength="11" required>
+                <span class="wam-reg__input-icon">📱</span>
+              </div>
+              <p class="wam-reg__field-hint" id="regPhoneHint">
+                با موبایل وارد می‌شوید — یکتا و غیرقابل تغییر
+              </p>
+            </div>
+
+            <!-- ایمیل (اختیاری) -->
+            <div class="wam-reg__field wam-reg__field--full">
+              <label class="wam-reg__label" for="regEmail">
+                ایمیل
+                <span class="wam-reg__label-opt">(اختیاری)</span>
+              </label>
+              <div class="wam-reg__input-wrap">
+                <input type="email" id="regEmail" name="email"
+                       class="wam-reg__input"
+                       placeholder="you@example.com"
+                       autocomplete="email"
+                       dir="ltr"
+                       spellcheck="false">
+                <span class="wam-reg__input-icon">✉️</span>
+              </div>
+              <p class="wam-reg__field-hint" id="regEmailHint">
+                برای اطلاع‌رسانی و بازیابی رمز
+              </p>
+            </div>
+
+            <!-- رمز -->
+            <div class="wam-reg__field wam-reg__field--full">
+              <label class="wam-reg__label" for="regPass">
+                رمز عبور
+                <span class="wam-reg__label-req">*</span>
+              </label>
+              <div class="wam-reg__input-wrap">
+                <input type="password" id="regPass" name="password"
+                       class="wam-reg__input"
+                       placeholder="حداقل ۸ کاراکتر"
+                       autocomplete="new-password"
+                       required
+                       minlength="8">
+                <span class="wam-reg__input-icon">🔑</span>
+                <button type="button" class="wam-reg__input-toggle"
+                        id="regPassToggle" aria-label="نمایش/مخفی رمز"
+                        tabindex="-1">👁</button>
+              </div>
+              <div class="wam-reg__strength" id="regStrength" aria-hidden="true">
+                <div class="wam-reg__strength-bar">
+                  <div class="wam-reg__strength-fill" id="regStrengthFill"></div>
+                </div>
+                <span class="wam-reg__strength-label" id="regStrengthLabel">—</span>
+              </div>
+              <p class="wam-reg__field-hint" id="regPassHint">
+                حرف بزرگ و کوچک + عدد = رمز قوی
+              </p>
+            </div>
+
+            <!-- تکرار رمز -->
+            <div class="wam-reg__field wam-reg__field--full">
+              <label class="wam-reg__label" for="regPass2">
+                تکرار رمز عبور
+                <span class="wam-reg__label-req">*</span>
+              </label>
+              <div class="wam-reg__input-wrap">
+                <input type="password" id="regPass2" name="password2"
+                       class="wam-reg__input"
+                       placeholder="رمز را دوباره وارد کنید"
+                       autocomplete="new-password"
+                       required>
+                <span class="wam-reg__input-icon">🔒</span>
+                <button type="button" class="wam-reg__input-toggle"
+                        id="regPass2Toggle" aria-label="نمایش/مخفی رمز"
+                        tabindex="-1">👁</button>
+              </div>
+              <p class="wam-reg__field-hint" id="regPass2Hint">
+                باید با رمز بالا یکسان باشد
+              </p>
+            </div>
+
+          </div>
+
+          <label class="wam-reg__terms" for="regTerms">
+            <input type="checkbox" id="regTerms" name="terms" required>
+            <span>
+              <a href="#" onclick="return false;">قوانین و مقررات</a> و
+              <a href="#" onclick="return false;">سیاست حفظ حریم خصوصی</a>
+              وام پی را مطالعه کرده و می‌پذیرم.
+            </span>
+          </label>
+
+          <button type="submit" class="wam-reg__submit" id="regSubmit">
+            <span id="regSubmitText">ایجاد حساب کاربری</span>
+          </button>
+
+        </form>
+
+        <div class="wam-reg__divider">حساب کاربری دارید؟</div>
+        <p class="wam-reg__login">
+          <a href="login.html">وارد شوید</a>
+          و به کار خود ادامه دهید.
+        </p>
+
+      </div>
+
+      <div class="wam-reg__success" id="regSuccess">
+        <div class="wam-reg__success-icon">✓</div>
+        <h2 class="wam-reg__success-title">حساب شما ساخته شد!</h2>
+        <p class="wam-reg__success-text">
+          حساب کاربری شما با موفقیت ایجاد شد.<br>
+          در حال انتقال به صفحه ورود...
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+  <script src="js/bundle-login.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       REGISTER PAGE CONTROLLER
+       - بدون نام کاربری (phone = unique ID)
+       - ایمیل اختیاری
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+
+      var form        = $('regForm');
+      var formWrap    = $('regFormWrap');
+      var successBox  = $('regSuccess');
+      var errBox      = $('regError');
+      var errText     = $('regErrorText');
+      var submitBtn   = $('regSubmit');
+      var submitTxt   = $('regSubmitText');
+
+      var nameIn      = $('regName');
+      var phoneIn     = $('regPhone');
+      var emailIn     = $('regEmail');
+      var passIn      = $('regPass');
+      var pass2In     = $('regPass2');
+      var termsIn     = $('regTerms');
+
+      var roleButtons = document.querySelectorAll('.wam-reg__role');
+      var selectedRole = 'applicant';
+
+      // ── نقش ──
+      roleButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          roleButtons.forEach(function (b) {
+            b.classList.remove('is-selected');
+            b.setAttribute('aria-checked', 'false');
+          });
+          btn.classList.add('is-selected');
+          btn.setAttribute('aria-checked', 'true');
+          selectedRole = btn.getAttribute('data-role') || 'applicant';
+        });
+      });
+
+      // ── نمایش/مخفی رمز ──
+      function bindToggle(btnId, inputEl) {
+        var btn = $(btnId);
+        if (!btn || !inputEl) return;
+        btn.addEventListener('click', function () {
+          var t = inputEl.type === 'password' ? 'text' : 'password';
+          inputEl.type = t;
+          btn.textContent = t === 'password' ? '👁' : '🙈';
+          inputEl.focus();
+        });
+      }
+      bindToggle('regPassToggle', passIn);
+      bindToggle('regPass2Toggle', pass2In);
+
+      // ── خطا ──
+      function showError(msg) {
+        errText.textContent = msg || 'لطفاً خطاهای فرم را برطرف کنید.';
+        errBox.classList.remove('is-visible');
+        void errBox.offsetWidth;
+        errBox.classList.add('is-visible');
+        try { errBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (_) {}
+      }
+
+      function hideError() {
+        errBox.classList.remove('is-visible');
+      }
+
+      // ── Loading ──
+      function setLoading(on) {
+        if (!submitBtn) return;
+        if (on) {
+          submitBtn.disabled = true;
+          submitTxt.innerHTML =
+            '<span class="wam-reg__submit-spinner"></span>' +
+            '<span>در حال ایجاد...</span>';
+        } else {
+          submitBtn.disabled = false;
+          submitTxt.textContent = 'ایجاد حساب کاربری';
+        }
+      }
+
+      // ── Validators ──
+      function validName(v) {
+        return v && v.trim().length >= 3 && v.trim().split(/\s+/).length >= 2;
+      }
+      function validPhone(v) {
+        return /^09\d{9}$/.test(String(v || '').trim());
+      }
+      function validEmail(v) {
+        if (!v) return true; // اختیاری
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim());
+      }
+      function strengthOf(pass) {
+        pass = String(pass || '');
+        if (!pass) return { score: 0, label: '—', color: 'var(--wam-muted)' };
+        var s = 0;
+        if (pass.length >= 8) s++;
+        if (pass.length >= 12) s++;
+        if (/[a-z]/.test(pass)) s++;
+        if (/[A-Z]/.test(pass)) s++;
+        if (/\d/.test(pass)) s++;
+        if (/[^A-Za-z0-9]/.test(pass)) s++;
+
+        if (s <= 2) return { score: 25, label: 'ضعیف', color: '#c0392b' };
+        if (s <= 4) return { score: 55, label: 'متوسط', color: '#d4a62a' };
+        if (s === 5) return { score: 80, label: 'خوب', color: '#2e9e5b' };
+        return { score: 100, label: 'قوی', color: '#105b35' };
+      }
+
+      function setFieldState(input, hint, ok, msg) {
+        input.classList.remove('is-error', 'is-ok');
+        if (hint) hint.classList.remove('is-error', 'is-ok');
+        if (ok === true) {
+          input.classList.add('is-ok');
+          if (hint) { hint.classList.add('is-ok'); if (msg) hint.textContent = msg; }
+        } else if (ok === false) {
+          input.classList.add('is-error');
+          if (hint) { hint.classList.add('is-error'); if (msg) hint.textContent = msg; }
+        }
+      }
+
+      // ── قدرت رمز زنده ──
+      var strengthFill = $('regStrengthFill');
+      var strengthLbl  = $('regStrengthLabel');
+      var passHint     = $('regPassHint');
+
+      passIn.addEventListener('input', function () {
+        var st = strengthOf(passIn.value);
+        if (strengthFill) {
+          strengthFill.style.width = st.score + '%';
+          strengthFill.style.background = st.color;
+        }
+        if (strengthLbl) {
+          strengthLbl.textContent = st.label;
+          strengthLbl.style.color = st.color;
+        }
+        if (passIn.value) {
+          if (st.score < 55) {
+            passIn.classList.add('is-error');
+            passIn.classList.remove('is-ok');
+            if (passHint) {
+              passHint.classList.add('is-error');
+              passHint.textContent = 'رمز ضعیف — ترکیب حرف بزرگ، کوچک و عدد';
+            }
+          } else {
+            passIn.classList.remove('is-error');
+            passIn.classList.add('is-ok');
+            if (passHint) {
+              passHint.classList.remove('is-error');
+              passHint.textContent = 'رمز قابل قبول';
+            }
+          }
+        } else {
+          passIn.classList.remove('is-error', 'is-ok');
+          if (passHint) {
+            passHint.classList.remove('is-error');
+            passHint.textContent = 'حرف بزرگ و کوچک + عدد = رمز قوی';
+          }
+        }
+        if (pass2In.value) {
+          var same = passIn.value === pass2In.value;
+          var h2 = $('regPass2Hint');
+          setFieldState(pass2In, h2, same,
+            same ? '✓ یکسان است' : 'با رمز بالا یکسان نیست');
+        }
+      });
+
+      // ── اعتبارسنجی زنده ──
+      nameIn.addEventListener('blur', function () {
+        if (!nameIn.value) return;
+        var ok = validName(nameIn.value);
+        setFieldState(nameIn, $('regNameHint'), ok,
+          ok ? '✓ معتبر' : 'نام و نام خانوادگی را کامل وارد کنید');
+      });
+
+      phoneIn.addEventListener('input', function () {
+        phoneIn.value = phoneIn.value.replace(/\D/g, '').slice(0, 11);
+      });
+      phoneIn.addEventListener('blur', function () {
+        if (!phoneIn.value) return;
+        var ok = validPhone(phoneIn.value);
+        var hint = $('regPhoneHint');
+        if (!ok) {
+          setFieldState(phoneIn, hint, false, 'شماره با ۰۹ شروع و ۱۱ رقم باشد');
+          return;
+        }
+        if (isPhoneTaken(phoneIn.value)) {
+          setFieldState(phoneIn, hint, false, 'این شماره قبلاً ثبت شده');
+          return;
+        }
+        setFieldState(phoneIn, hint, true, '✓ قابل استفاده');
+      });
+
+      emailIn.addEventListener('blur', function () {
+        if (!emailIn.value) {
+          var h = $('regEmailHint');
+          setFieldState(emailIn, h, null, '');
+          if (h) { h.classList.remove('is-error', 'is-ok'); h.textContent = 'برای اطلاع‌رسانی و بازیابی رمز'; }
+          return;
+        }
+        var ok = validEmail(emailIn.value);
+        setFieldState(emailIn, $('regEmailHint'), ok,
+          ok ? '✓ معتبر' : 'ایمیل معتبر وارد کنید');
+      });
+
+      pass2In.addEventListener('input', function () {
+        if (!pass2In.value) return;
+        var same = passIn.value === pass2In.value;
+        setFieldState(pass2In, $('regPass2Hint'), same,
+          same ? '✓ یکسان است' : 'با رمز بالا یکسان نیست');
+      });
+
+      // پاک کردن خطا در تایپ
+      [nameIn, phoneIn, emailIn, passIn, pass2In].forEach(function (el) {
+        el.addEventListener('input', function () {
+          if (errBox.classList.contains('is-visible')) hideError();
+        });
+      });
+
+      // ── لیست کاربران ──
+      function readUsers() {
+        try {
+          var raw = localStorage.getItem('wamPayUsers');
+          var arr = raw ? JSON.parse(raw) : [];
+          return Array.isArray(arr) ? arr : [];
+        } catch (_) { return []; }
+      }
+
+      function isPhoneTaken(phone) {
+        var users = readUsers();
+        phone = String(phone).trim();
+        for (var i = 0; i < users.length; i++) {
+          if (users[i] && String(users[i].phone || '') === phone) return true;
+        }
+        // کاربران دمو رزرو
+        var demos = ['09120000001', '09120000002', '09120000003', '09120000004'];
+        return demos.indexOf(phone) >= 0;
+      }
+
+      function isEmailTaken(email) {
+        if (!email) return false;
+        var users = readUsers();
+        email = String(email).toLowerCase();
+        for (var i = 0; i < users.length; i++) {
+          if (users[i] && String(users[i].email || '').toLowerCase() === email) return true;
+        }
+        return false;
+      }
+
+      // ── ثبت کاربر ──
+      function persistUser(user) {
+        try {
+          var users = readUsers();
+          users.push(user);
+          localStorage.setItem('wamPayUsers', JSON.stringify(users));
+          return true;
+        } catch (e) {
+          console.warn('[register] persist error:', e);
+          return false;
+        }
+      }
+
+      // ── ارسال فرم ──
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        hideError();
+
+        var name  = (nameIn.value || '').trim();
+        var phone = (phoneIn.value || '').trim();
+        var email = (emailIn.value || '').trim();
+        var pass  = passIn.value || '';
+        var pass2 = pass2In.value || '';
+
+        if (!validName(name)) {
+          setFieldState(nameIn, $('regNameHint'), false,
+            'نام و نام خانوادگی را کامل وارد کنید');
+          showError('نام و نام خانوادگی معتبر نیست.');
+          nameIn.focus();
+          return;
+        }
+
+        if (!validPhone(phone)) {
+          setFieldState(phoneIn, $('regPhoneHint'), false,
+            'شماره موبایل معتبر نیست');
+          showError('شماره موبایل باید با ۰۹ شروع و ۱۱ رقم باشد.');
+          phoneIn.focus();
+          return;
+        }
+
+        if (isPhoneTaken(phone)) {
+          setFieldState(phoneIn, $('regPhoneHint'), false,
+            'این شماره قبلاً ثبت شده');
+          showError('این شماره موبایل قبلاً در سیستم ثبت شده است.');
+          phoneIn.focus();
+          return;
+        }
+
+        if (email && !validEmail(email)) {
+          setFieldState(emailIn, $('regEmailHint'), false,
+            'ایمیل معتبر وارد کنید');
+          showError('ایمیل وارد‌شده معتبر نیست.');
+          emailIn.focus();
+          return;
+        }
+
+        if (email && isEmailTaken(email)) {
+          setFieldState(emailIn, $('regEmailHint'), false,
+            'این ایمیل قبلاً ثبت شده');
+          showError('این ایمیل قبلاً در سیستم ثبت شده است.');
+          emailIn.focus();
+          return;
+        }
+
+        var st = strengthOf(pass);
+        if (st.score < 55) {
+          setFieldState(passIn, passHint, false, 'رمز انتخابی بسیار ضعیف است');
+          showError('رمز عبور باید حداقل ۸ کاراکتر با ترکیب حرف و عدد باشد.');
+          passIn.focus();
+          return;
+        }
+
+        if (pass !== pass2) {
+          setFieldState(pass2In, $('regPass2Hint'), false,
+            'با رمز بالا یکسان نیست');
+          showError('تکرار رمز عبور مطابقت ندارد.');
+          pass2In.focus();
+          return;
+        }
+
+        if (!termsIn.checked) {
+          showError('برای ادامه، پذیرش قوانین الزامی است.');
+          termsIn.focus();
+          return;
+        }
+
+        setLoading(true);
+
+        setTimeout(function () {
+          // ساخت user بدون username
+          var newUser = {
+            id: 'u_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6),
+            name: name,
+            phone: phone,
+            email: email || '',
+            role: selectedRole,
+            password: pass,
+            createdAt: Date.now(),
+            status: 'active'
+          };
+
+          var ok = persistUser(newUser);
+
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            try {
+              window.EventBus.emit('auth:registered', {
+                user: { id: newUser.id, name: newUser.name, phone: newUser.phone, role: newUser.role }
+              });
+            } catch (_) {}
+          }
+
+          setLoading(false);
+
+          if (!ok) {
+            showError('خطا در ذخیره اطلاعات. دوباره تلاش کنید.');
+            return;
+          }
+
+          if (formWrap) formWrap.style.display = 'none';
+          if (successBox) {
+            successBox.classList.add('is-visible');
+            setTimeout(function () {
+              window.location.replace('login.html?registered=1&phone=' + encodeURIComponent(phone));
+            }, 1600);
+          } else {
+            window.location.replace('login.html?registered=1');
+          }
+        }, 700);
+      });
+
+      window.addEventListener('load', function () {
+        if (nameIn && !nameIn.value) {
+          setTimeout(function () { nameIn.focus(); }, 200);
+        }
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

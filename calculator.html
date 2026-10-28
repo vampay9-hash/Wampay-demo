@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="ماشین‌حساب وام — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ماشین‌حساب وام | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       LOAN CALCULATOR (Shared)
+       ═══════════════════════════════════════ */
+
+    .wam-calc {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 32px;
+    }
+
+    .wam-calc__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-calc__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-calc__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+    .wam-calc__topbar-back:hover { color: var(--wam-primary-light); }
+
+    .wam-calc__topbar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-calc__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-calc__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-calc__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    .wam-calc__main {
+      padding: var(--wam-space-lg);
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Hero result */
+    .wam-calc__hero {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 55%, #1a6b42 100%);
+      color: #fff;
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-lg);
+      margin-bottom: var(--wam-space-lg);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .wam-calc__hero::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.25), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-calc__hero::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.18), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-calc__hero-label {
+      font-size: 0.78rem;
+      opacity: 0.85;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-calc__hero-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #f4d477;
+      line-height: 1.1;
+      margin-bottom: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-calc__hero-unit {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-calc__hero-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-calc__hero-cell {
+      text-align: center;
+    }
+
+    .wam-calc__hero-cell-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .wam-calc__hero-cell-label {
+      font-size: 0.68rem;
+      opacity: 0.82;
+      margin-top: 2px;
+    }
+
+    /* Form section */
+    .wam-calc__section {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-md);
+      margin-bottom: var(--wam-space-md);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-calc__section-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed var(--wam-border-soft);
+    }
+
+    /* Fields */
+    .wam-calc__field {
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-calc__field:last-child {
+      margin-bottom: 0;
+    }
+
+    .wam-calc__label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin-bottom: 6px;
+    }
+
+    .wam-calc__label-value {
+      font-weight: 800;
+      color: var(--wam-primary);
+      font-size: 0.88rem;
+    }
+
+    .wam-calc__input,
+    .wam-calc__select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.87rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-calc__input:focus,
+    .wam-calc__select:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    input[type="range"].wam-calc__range {
+      width: 100%;
+      accent-color: var(--wam-primary-light);
+      margin: 6px 0 10px;
+    }
+
+    /* Type grid */
+    .wam-calc__type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-calc__type-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 6px;
+      background: var(--wam-bg-alt);
+      border: 2px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      color: var(--wam-text);
+      text-align: center;
+    }
+
+    .wam-calc__type-btn:hover {
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-calc__type-btn.is-active {
+      background: var(--wam-primary-soft);
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-calc__type-emoji {
+      font-size: 1.3rem;
+    }
+
+    .wam-calc__type-name {
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    /* Quick chips */
+    .wam-calc__quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-calc__chip {
+      padding: 6px 12px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-muted);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-calc__chip:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary);
+    }
+
+    .wam-calc__chip.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    /* Action buttons */
+    .wam-calc__actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-calc__actions .wam-btn {
+      flex: 1 1 0;
+    }
+
+    /* Amortization table */
+    .wam-calc__table-wrap {
+      overflow-x: auto;
+      border-radius: var(--wam-radius);
+      border: 1px solid var(--wam-border-soft);
+      margin-top: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .wam-calc__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      min-width: 420px;
+    }
+
+    .wam-calc__table thead th {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-weight: 700;
+      text-align: right;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--wam-border);
+      white-space: nowrap;
+      font-size: 0.72rem;
+    }
+
+    .wam-calc__table tbody td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--wam-border-soft);
+      text-align: right;
+      font-family: 'Menlo', monospace;
+      direction: ltr;
+      color: var(--wam-text);
+      white-space: nowrap;
+    }
+
+    .wam-calc__table tbody td:first-child {
+      font-weight: 700;
+      color: var(--wam-primary);
+    }
+
+    .wam-calc__table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .wam-calc__table tbody tr:nth-child(even) {
+      background: var(--wam-bg-muted);
+    }
+
+    /* Chart */
+    .wam-calc__chart {
+      height: 180px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      padding: 16px 4px 8px;
+      position: relative;
+      margin-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border);
+    }
+
+    .wam-calc__bar {
+      flex: 1 1 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-width: 0;
+    }
+
+    .wam-calc__bar-principal {
+      background: linear-gradient(180deg, var(--wam-primary-light), var(--wam-primary));
+      border-radius: 4px 4px 0 0;
+    }
+
+    .wam-calc__bar-interest {
+      background: linear-gradient(180deg, var(--wam-gold-light), var(--wam-gold));
+      border-radius: 0;
+    }
+
+    .wam-calc__bar-label {
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--wam-text-muted);
+      margin-top: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wam-calc__chart-legend {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      font-size: 0.75rem;
+      color: var(--wam-text-muted);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-calc__legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .wam-calc__legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    .wam-calc__legend-dot--principal { background: var(--wam-primary-light); }
+    .wam-calc__legend-dot--interest  { background: var(--wam-gold); }
+
+    /* Comparison box */
+    .wam-calc__comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .wam-calc__comp-card {
+      padding: 10px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius);
+      text-align: center;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all var(--wam-t);
+    }
+
+    .wam-calc__comp-card:hover {
+      border-color: var(--wam-primary-light);
+      background: var(--wam-bg-alt);
+    }
+
+    .wam-calc__comp-term {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin-bottom: 3px;
+    }
+
+    .wam-calc__comp-value {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--wam-text);
+    }
+
+    .wam-calc__comp-label {
+      font-size: 0.65rem;
+      color: var(--wam-text-muted);
+      margin-top: 2px;
+    }
+
+    /* Info callout */
+    .wam-calc__callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--wam-info-soft);
+      color: var(--wam-info-text);
+      border-radius: var(--wam-radius);
+      font-size: 0.78rem;
+      line-height: 1.7;
+      margin-top: var(--wam-space-md);
+    }
+
+    .wam-calc__callout-icon {
+      font-size: 1rem;
+      flex: 0 0 auto;
+    }
+
+    /* Toast */
+    .wam-calc__toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .wam-calc__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .wam-calc__main { padding: var(--wam-space-md); }
+      .wam-calc__hero-value { font-size: 1.85rem; }
+      .wam-calc__type-grid { grid-template-columns: repeat(3, 1fr); }
+      .wam-calc__comparison { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+
+<body data-page="calculator">
+
+  <div class="wam-calc" id="calcRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-calc__topbar">
+      <div class="wam-calc__topbar-info">
+        <a href="#" class="wam-calc__topbar-back" id="backLink">↩ بازگشت</a>
+        <h1 class="wam-calc__topbar-title">🧮 ماشین‌حساب وام</h1>
+      </div>
+      <div class="wam-calc__topbar-actions">
+        <button type="button" class="wam-calc__icon-btn" id="resetBtn" title="ریست">↺</button>
+        <button type="button" class="wam-calc__icon-btn" id="shareBtn" title="اشتراک‌گذاری">📤</button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-calc__main">
+
+      <!-- ═══ HERO RESULT ═══ -->
+      <section class="wam-calc__hero">
+        <div class="wam-calc__hero-label">قسط ماهانه</div>
+        <div class="wam-calc__hero-value" id="heroMonthly">۰</div>
+        <div class="wam-calc__hero-unit">میلیون ریال</div>
+
+        <div class="wam-calc__hero-row">
+          <div class="wam-calc__hero-cell">
+            <div class="wam-calc__hero-cell-value" id="heroTotal">۰</div>
+            <div class="wam-calc__hero-cell-label">کل بازپرداخت</div>
+          </div>
+          <div class="wam-calc__hero-cell">
+            <div class="wam-calc__hero-cell-value" id="heroInterest">۰</div>
+            <div class="wam-calc__hero-cell-label">کل سود</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ نوع وام ═══ -->
+      <section class="wam-calc__section">
+        <h2 class="wam-calc__section-title">🏷 نوع وام</h2>
+
+        <div class="wam-calc__type-grid" id="typeGrid">
+          <button type="button" class="wam-calc__type-btn is-active" data-type="home">
+            <span class="wam-calc__type-emoji">🏠</span>
+            <span class="wam-calc__type-name">مسکن</span>
+          </button>
+          <button type="button" class="wam-calc__type-btn" data-type="car">
+            <span class="wam-calc__type-emoji">🚗</span>
+            <span class="wam-calc__type-name">خودرو</span>
+          </button>
+          <button type="button" class="wam-calc__type-btn" data-type="personal">
+            <span class="wam-calc__type-emoji">👤</span>
+            <span class="wam-calc__type-name">شخصی</span>
+          </button>
+          <button type="button" class="wam-calc__type-btn" data-type="business">
+            <span class="wam-calc__type-emoji">💼</span>
+            <span class="wam-calc__type-name">کسب‌وکار</span>
+          </button>
+          <button type="button" class="wam-calc__type-btn" data-type="equipment">
+            <span class="wam-calc__type-emoji">🏭</span>
+            <span class="wam-calc__type-name">تجهیزات</span>
+          </button>
+          <button type="button" class="wam-calc__type-btn" data-type="education">
+            <span class="wam-calc__type-emoji">🎓</span>
+            <span class="wam-calc__type-name">تحصیلی</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ═══ مبلغ وام ═══ -->
+      <section class="wam-calc__section">
+        <h2 class="wam-calc__section-title">💰 مبلغ وام</h2>
+
+        <div class="wam-calc__field">
+          <label class="wam-calc__label">
+            <span>مبلغ (میلیون ریال)</span>
+            <span class="wam-calc__label-value" id="amountLabel">۵۰۰</span>
+          </label>
+          <input type="range" id="amountRange" class="wam-calc__range"
+                 min="50" max="5000" step="50" value="500">
+          <input type="number" id="amountInput" class="wam-calc__input"
+                 min="50" max="5000" value="500" dir="ltr">
+        </div>
+
+        <div class="wam-calc__quick-chips" data-for="amount">
+          <button type="button" class="wam-calc__chip" data-value="100">۱۰۰</button>
+          <button type="button" class="wam-calc__chip" data-value="200">۲۰۰</button>
+          <button type="button" class="wam-calc__chip" data-value="500">۵۰۰</button>
+          <button type="button" class="wam-calc__chip" data-value="1000">۱۰۰۰</button>
+          <button type="button" class="wam-calc__chip" data-value="2000">۲۰۰۰</button>
+          <button type="button" class="wam-calc__chip" data-value="5000">۵۰۰۰</button>
+        </div>
+      </section>
+
+      <!-- ═══ مدت و نرخ ═══ -->
+      <section class="wam-calc__section">
+        <h2 class="wam-calc__section-title">📅 مدت و نرخ</h2>
+
+        <div class="wam-calc__field">
+          <label class="wam-calc__label">
+            <span>مدت بازپرداخت (ماه)</span>
+            <span class="wam-calc__label-value" id="termLabel">۳۶</span>
+          </label>
+          <input type="range" id="termRange" class="wam-calc__range"
+                 min="6" max="120" step="6" value="36">
+          <select id="termSelect" class="wam-calc__select">
+            <option value="12">۱۲ ماه</option>
+            <option value="24">۲۴ ماه</option>
+            <option value="36" selected>۳۶ ماه</option>
+            <option value="48">۴۸ ماه</option>
+            <option value="60">۶۰ ماه</option>
+            <option value="84">۸۴ ماه</option>
+            <option value="120">۱۲۰ ماه</option>
+          </select>
+        </div>
+
+        <div class="wam-calc__field">
+          <label class="wam-calc__label">
+            <span>نرخ سود سالانه (٪)</span>
+            <span class="wam-calc__label-value" id="rateLabel">۱۸٪</span>
+          </label>
+          <input type="range" id="rateRange" class="wam-calc__range"
+                 min="0" max="40" step="0.5" value="18">
+          <input type="number" id="rateInput" class="wam-calc__input"
+                 min="0" max="40" step="0.5" value="18" dir="ltr">
+        </div>
+      </section>
+
+      <!-- ═══ اکشن‌ها ═══ -->
+      <div class="wam-calc__actions">
+        <button type="button" class="wam-btn wam-btn--ghost" id="resetCalcBtn">
+          ↺ پیش‌فرض
+        </button>
+        <button type="button" class="wam-btn wam-btn--primary" id="openWizardBtn">
+          ➕ ثبت درخواست وام
+        </button>
+      </div>
+
+      <!-- ═══ نمودار ═══ -->
+      <section class="wam-calc__section">
+        <h2 class="wam-calc__section-title">📊 مقایسه با مدت‌های مختلف</h2>
+
+        <div class="wam-calc__chart-legend">
+          <span class="wam-calc__legend-item">
+            <span class="wam-calc__legend-dot wam-calc__legend-dot--principal"></span>
+            <span>اصل</span>
+          </span>
+          <span class="wam-calc__legend-item">
+            <span class="wam-calc__legend-dot wam-calc__legend-dot--interest"></span>
+            <span>سود</span>
+          </span>
+        </div>
+
+        <div class="wam-calc__chart" id="chart">
+          <!-- توسط JS پر می‌شود -->
+        </div>
+
+        <div class="wam-calc__comparison" id="comparison">
+          <!-- توسط JS پر می‌شود -->
+        </div>
+      </section>
+
+      <!-- ═══ جدول اقساط ═══ -->
+      <section class="wam-calc__section">
+        <h2 class="wam-calc__section-title">📋 جدول اقساط (نمایش ۱۲ ماه اول)</h2>
+
+        <div class="wam-calc__table-wrap">
+          <table class="wam-calc__table" id="amortTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>قسط</th>
+                <th>سود</th>
+                <th>اصل</th>
+                <th>مانده</th>
+              </tr>
+            </thead>
+            <tbody id="amortBody">
+              <!-- توسط JS پر می‌شود -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="wam-calc__callout">
+          <span class="wam-calc__callout-icon">💡</span>
+          <span>
+            محاسبه بر اساس روش اقساط مساوی (Annuity) انجام شده است.
+            مقادیر تقریبی هستند و ممکن است در قرارداد نهایی متفاوت باشند.
+          </span>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="wam-calc__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       LOAN CALCULATOR CONTROLLER (Shared)
+       - محاسبه‌گر قسط با فرمول استاندارد
+       - نمودار مقایسه + جدول اقساط
+       - پیش‌فرض نرخ بر اساس نوع وام
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_LAST = 'wamPayCalcLast';
+
+      var state = {
+        type: 'home',
+        amount: 500,
+        term: 36,
+        rate: 18
+      };
+
+      // پیش‌فرض نرخ per نوع وام
+      var DEFAULT_RATES = {
+        home: 18,
+        car: 16,
+        personal: 20,
+        business: 19,
+        equipment: 20,
+        education: 15
+      };
+
+      var TYPE_LABEL = {
+        home: '🏠 مسکن',
+        car: '🚗 خودرو',
+        personal: '👤 شخصی',
+        business: '💼 کسب‌وکار',
+        equipment: '🏭 تجهیزات',
+        education: '🎓 تحصیلی'
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function fmtNumber(n, digits) {
+        digits = digits || 0;
+        if (n == null || isNaN(n)) return '۰';
+        try {
+          return Number(n).toLocaleString('fa-IR', {
+            minimumFractionDigits: digits,
+            maximumFractionDigits: digits
+          });
+        } catch (_) { return String(n); }
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // محاسبه
+      // ═══════════════════════════════════
+
+      function calcInstallment(principal, rateYear, months) {
+        if (!principal || !months) return { monthly: 0, total: 0, interest: 0, schedule: [] };
+        var r = (rateYear / 100) / 12;
+        var p = principal;
+        var n = months;
+        var monthly;
+
+        if (r === 0) {
+          monthly = p / n;
+        } else {
+          var pow = Math.pow(1 + r, n);
+          monthly = (p * r * pow) / (pow - 1);
+        }
+
+        var total = monthly * n;
+        var interest = total - p;
+
+        // ساخت جدول اقساط
+        var schedule = [];
+        var balance = p;
+        for (var i = 1; i <= n; i++) {
+          var interestPart = balance * r;
+          var principalPart = monthly - interestPart;
+          balance = Math.max(0, balance - principalPart);
+          schedule.push({
+            n: i,
+            payment: monthly,
+            interest: interestPart,
+            principal: principalPart,
+            balance: balance
+          });
+        }
+
+        return {
+          monthly: monthly,
+          total: total,
+          interest: interest,
+          schedule: schedule
+        };
+      }
+
+      // ═══════════════════════════════════
+      // رندر Hero
+      // ═══════════════════════════════════
+
+      function renderHero() {
+        var c = calcInstallment(state.amount, state.rate, state.term);
+        if ($('heroMonthly')) $('heroMonthly').textContent = fmtAmount(c.monthly);
+        if ($('heroTotal')) $('heroTotal').textContent = fmtAmount(c.total);
+        if ($('heroInterest')) $('heroInterest').textContent = fmtAmount(c.interest);
+      }
+
+      // ═══════════════════════════════════
+      // رندر Labels
+      // ═══════════════════════════════════
+
+      function renderLabels() {
+        if ($('amountLabel')) $('amountLabel').textContent = fmtAmount(state.amount);
+        if ($('termLabel')) $('termLabel').textContent = toFa(state.term);
+        if ($('rateLabel')) $('rateLabel').textContent = toFa(state.rate) + '٪';
+      }
+
+      // ═══════════════════════════════════
+      // رندر نمودار
+      // ═══════════════════════════════════
+
+      function renderChart() {
+        var chart = $('chart');
+        var comparison = $('comparison');
+        if (!chart) return;
+
+        // مقایسه 4 مدت مختلف
+        var terms = [12, 24, 36, 60];
+        var results = [];
+
+        terms.forEach(function (t) {
+          var c = calcInstallment(state.amount, state.rate, t);
+          results.push({
+            term: t,
+            monthly: c.monthly,
+            total: c.total,
+            interest: c.interest,
+            principal: state.amount
+          });
+        });
+
+        // محاسبه حداکثر برای scale
+        var maxTotal = 0;
+        results.forEach(function (r) {
+          if (r.total > maxTotal) maxTotal = r.total;
+        });
+
+        var html = '';
+        results.forEach(function (r) {
+          var principalPct = maxTotal > 0 ? (r.principal / maxTotal) * 100 : 0;
+          var interestPct = maxTotal > 0 ? (r.interest / maxTotal) * 100 : 0;
+
+          html += '' +
+            '<div class="wam-calc__bar" data-term="' + r.term + '">' +
+              '<div style="height:' + interestPct + '%;min-height:4px;" class="wam-calc__bar-interest"></div>' +
+              '<div style="height:' + principalPct + '%;min-height:4px;" class="wam-calc__bar-principal"></div>' +
+              '<div class="wam-calc__bar-label">' + toFa(r.term) + ' ماه</div>' +
+            '</div>';
+        });
+        chart.innerHTML = html;
+
+        // Bind click روی bar
+        chart.querySelectorAll('.wam-calc__bar').forEach(function (bar) {
+          bar.addEventListener('click', function () {
+            var term = parseInt(bar.getAttribute('data-term'), 10);
+            if (term) {
+              state.term = term;
+              applyForm();
+              renderAll();
+              saveLast();
+              showToast('✓ مدت به ' + toFa(term) + ' ماه تغییر یافت');
+            }
+          });
+        });
+
+        // کارت‌های مقایسه
+        var compHtml = '';
+        results.forEach(function (r) {
+          compHtml += '' +
+            '<div class="wam-calc__comp-card" data-term="' + r.term + '">' +
+              '<div class="wam-calc__comp-term">' + toFa(r.term) + ' ماه</div>' +
+              '<div class="wam-calc__comp-value">' + fmtAmount(r.monthly) + '</div>' +
+              '<div class="wam-calc__comp-label">قسط ماهانه</div>' +
+            '</div>';
+        });
+        if (comparison) {
+          comparison.innerHTML = compHtml;
+          comparison.querySelectorAll('.wam-calc__comp-card').forEach(function (card) {
+            card.addEventListener('click', function () {
+              var term = parseInt(card.getAttribute('data-term'), 10);
+              if (term) {
+                state.term = term;
+                applyForm();
+                renderAll();
+                saveLast();
+              }
+            });
+          });
+        }
+      }
+
+      // ═══════════════════════════════════
+      // رندر جدول اقساط
+      // ═══════════════════════════════════
+
+      function renderAmortTable() {
+        var body = $('amortBody');
+        if (!body) return;
+
+        var c = calcInstallment(state.amount, state.rate, state.term);
+        var schedule = c.schedule.slice(0, 12);
+
+        var html = '';
+        schedule.forEach(function (row) {
+          html += '' +
+            '<tr>' +
+              '<td>' + toFa(row.n) + '</td>' +
+              '<td>' + fmtNumber(row.payment, 2) + '</td>' +
+              '<td>' + fmtNumber(row.interest, 2) + '</td>' +
+              '<td>' + fmtNumber(row.principal, 2) + '</td>' +
+              '<td>' + fmtNumber(row.balance, 2) + '</td>' +
+            '</tr>';
+        });
+        body.innerHTML = html;
+      }
+
+      // ═══════════════════════════════════
+      // رندر کلی
+      // ═══════════════════════════════════
+
+      function renderAll() {
+        renderHero();
+        renderLabels();
+        renderChart();
+        renderAmortTable();
+      }
+
+      // ═══════════════════════════════════
+      // اعمال state به فرم
+      // ═══════════════════════════════════
+
+      function applyForm() {
+        if ($('amountInput')) $('amountInput').value = state.amount;
+        if ($('amountRange')) $('amountRange').value = state.amount;
+        if ($('termSelect')) $('termSelect').value = state.term;
+        if ($('termRange')) $('termRange').value = state.term;
+        if ($('rateInput')) $('rateInput').value = state.rate;
+        if ($('rateRange')) $('rateRange').value = state.rate;
+
+        // type
+        $$('.wam-calc__type-btn').forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.getAttribute('data-type') === state.type);
+        });
+      }
+
+      // ═══════════════════════════════════
+      // ذخیره آخرین محاسبه
+      // ═══════════════════════════════════
+
+      function saveLast() {
+        writeJSON(STORAGE_LAST, {
+          type: state.type,
+          amount: state.amount,
+          term: state.term,
+          rate: state.rate,
+          savedAt: Date.now()
+        });
+      }
+
+      function restoreLast() {
+        var last = readJSON(STORAGE_LAST, null);
+        if (!last) return;
+        if (last.type) state.type = last.type;
+        if (last.amount) state.amount = last.amount;
+        if (last.term) state.term = last.term;
+        if (last.rate != null) state.rate = last.rate;
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Type buttons
+        $$('.wam-calc__type-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            state.type = btn.getAttribute('data-type') || 'home';
+            // اعمال نرخ پیش‌فرض
+            if (DEFAULT_RATES[state.type] != null) {
+              state.rate = DEFAULT_RATES[state.type];
+            }
+            applyForm();
+            renderAll();
+            saveLast();
+            showToast('✓ نوع: ' + TYPE_LABEL[state.type]);
+          });
+        });
+
+        // Amount range/number
+        if ($('amountRange')) {
+          $('amountRange').addEventListener('input', function () {
+            state.amount = parseInt($('amountRange').value, 10) || 500;
+            if ($('amountInput')) $('amountInput').value = state.amount;
+            renderAll();
+            saveLast();
+          });
+        }
+        if ($('amountInput')) {
+          $('amountInput').addEventListener('input', function () {
+            var v = parseInt($('amountInput').value, 10) || 0;
+            if (v < 50) v = 50;
+            if (v > 5000) v = 5000;
+            state.amount = v;
+            if ($('amountRange')) $('amountRange').value = v;
+            renderAll();
+            saveLast();
+          });
+        }
+
+        // Term range/select
+        if ($('termRange')) {
+          $('termRange').addEventListener('input', function () {
+            state.term = parseInt($('termRange').value, 10) || 36;
+            if ($('termSelect')) $('termSelect').value = state.term;
+            renderAll();
+            saveLast();
+          });
+        }
+        if ($('termSelect')) {
+          $('termSelect').addEventListener('change', function () {
+            state.term = parseInt($('termSelect').value, 10) || 36;
+            if ($('termRange')) $('termRange').value = state.term;
+            renderAll();
+            saveLast();
+          });
+        }
+
+        // Rate range/input
+        if ($('rateRange')) {
+          $('rateRange').addEventListener('input', function () {
+            state.rate = parseFloat($('rateRange').value) || 0;
+            if ($('rateInput')) $('rateInput').value = state.rate;
+            renderAll();
+            saveLast();
+          });
+        }
+        if ($('rateInput')) {
+          $('rateInput').addEventListener('input', function () {
+            var v = parseFloat($('rateInput').value) || 0;
+            if (v < 0) v = 0;
+            if (v > 40) v = 40;
+            state.rate = v;
+            if ($('rateRange')) $('rateRange').value = v;
+            renderAll();
+            saveLast();
+          });
+        }
+
+        // Quick chips
+        $$('.wam-calc__quick-chips[data-for="amount"] .wam-calc__chip').forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            var v = parseInt(chip.getAttribute('data-value'), 10);
+            if (v) {
+              state.amount = v;
+              applyForm();
+              renderAll();
+              saveLast();
+            }
+          });
+        });
+
+        // Reset
+        function doReset() {
+          state.type = 'home';
+          state.amount = 500;
+          state.term = 36;
+          state.rate = DEFAULT_RATES.home;
+          applyForm();
+          renderAll();
+          saveLast();
+          showToast('↺ بازگشت به پیش‌فرض');
+        }
+
+        if ($('resetBtn')) $('resetBtn').addEventListener('click', doReset);
+        if ($('resetCalcBtn')) $('resetCalcBtn').addEventListener('click', doReset);
+
+        // Open wizard
+        if ($('openWizardBtn')) {
+          $('openWizardBtn').addEventListener('click', function () {
+            try {
+              localStorage.setItem('wamPayWizardPrefill', JSON.stringify({
+                type: state.type,
+                amount: state.amount,
+                term: state.term,
+                rate: state.rate,
+                from: 'calculator'
+              }));
+            } catch (_) {}
+            window.location.href = 'case-details-wizard.html';
+          });
+        }
+
+        // Share
+        if ($('shareBtn')) {
+          $('shareBtn').addEventListener('click', function () {
+            var c = calcInstallment(state.amount, state.rate, state.term);
+            var text = 'ماشین‌حساب وام پی\n' +
+                       'نوع: ' + (TYPE_LABEL[state.type] || state.type) + '\n' +
+                       'مبلغ: ' + fmtAmount(state.amount) + ' م.ر\n' +
+                       'مدت: ' + toFa(state.term) + ' ماه\n' +
+                       'نرخ: ' + toFa(state.rate) + '٪\n' +
+                       'قسط ماهانه: ' + fmtAmount(c.monthly) + ' م.ر\n' +
+                       'کل سود: ' + fmtAmount(c.interest) + ' م.ر';
+            if (navigator.share) {
+              navigator.share({ title: 'ماشین‌حساب وام پی', text: text }).catch(function () {});
+            } else if (navigator.clipboard) {
+              navigator.clipboard.writeText(text).then(function () {
+                showToast('✓ نتیجه کپی شد');
+              }).catch(function () {
+                showToast('کپی ممکن نشد');
+              });
+            } else {
+              showToast(text.substring(0, 80) + '...');
+            }
+          });
+        }
+
+        // Back
+        if ($('backLink')) {
+          $('backLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.history.length > 1) window.history.back();
+            else window.location.href = 'dashboard.html';
+          });
+        }
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        restoreLast();
+        applyForm();
+        renderAll();
+        bindEvents();
+        emitEvent('calculator:opened', {});
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

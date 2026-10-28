@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="تعرفه‌ها و کمیسیون — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>تعرفه‌ها | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       PRICING / COMMISSIONS (Shared)
+       ═══════════════════════════════════════ */
+
+    .wam-price {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 32px;
+    }
+
+    .wam-price__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-price__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-price__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+    .wam-price__topbar-back:hover { color: var(--wam-primary-light); }
+
+    .wam-price__topbar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-price__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-price__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-price__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    .wam-price__main {
+      padding: var(--wam-space-lg);
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Hero */
+    .wam-price__hero {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 55%, #1a6b42 100%);
+      color: #fff;
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-xl) var(--wam-space-lg);
+      margin-bottom: var(--wam-space-lg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wam-price__hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.28), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-price__hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.18), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-price__hero-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-price__hero-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0 0 8px;
+      color: #f4d477;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-price__hero-text {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      line-height: 1.8;
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Toggle دوره */
+    .wam-price__toggle {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: var(--wam-radius-pill);
+      padding: 4px;
+      margin-top: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-price__toggle-btn {
+      padding: 7px 18px;
+      border-radius: var(--wam-radius-pill);
+      border: 0;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all var(--wam-t);
+    }
+
+    .wam-price__toggle-btn.is-active {
+      background: var(--wam-gold);
+      color: #3a2a00;
+    }
+
+    /* Section */
+    .wam-price__section {
+      margin-bottom: var(--wam-space-xl);
+    }
+
+    .wam-price__section-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      text-align: center;
+      margin: 0 0 6px;
+    }
+
+    .wam-price__section-sub {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      text-align: center;
+      margin: 0 0 var(--wam-space-lg);
+      line-height: 1.7;
+    }
+
+    /* Pricing Cards */
+    .wam-price__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--wam-space-md);
+      align-items: stretch;
+    }
+
+    .wam-price__card {
+      background: var(--wam-bg-alt);
+      border: 2px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-lg);
+      box-shadow: var(--wam-shadow-sm);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--wam-t);
+    }
+
+    .wam-price__card:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-3px);
+    }
+
+    .wam-price__card--featured {
+      border-color: var(--wam-gold);
+      box-shadow: 0 8px 30px rgba(212, 166, 42, 0.25);
+    }
+
+    .wam-price__card-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      padding: 4px 12px;
+      background: var(--wam-gold);
+      color: #3a2a00;
+      font-size: 0.68rem;
+      font-weight: 800;
+      border-radius: var(--wam-radius-pill);
+      box-shadow: 0 4px 12px rgba(212, 166, 42, 0.35);
+    }
+
+    .wam-price__card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--wam-radius-md);
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-size: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .wam-price__card--featured .wam-price__card-icon {
+      background: var(--wam-gold-soft);
+      color: #7a5a00;
+    }
+
+    .wam-price__card-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 4px;
+    }
+
+    .wam-price__card-desc {
+      font-size: 0.82rem;
+      color: var(--wam-text-muted);
+      margin: 0 0 14px;
+      line-height: 1.7;
+      min-height: 40px;
+    }
+
+    .wam-price__card-price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding-bottom: 14px;
+      border-bottom: 1px dashed var(--wam-border-soft);
+      margin-bottom: 14px;
+    }
+
+    .wam-price__card-price-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1;
+    }
+
+    .wam-price__card-price-unit {
+      font-size: 0.82rem;
+      color: var(--wam-text-muted);
+      font-weight: 600;
+    }
+
+    .wam-price__card-price-note {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      margin-top: 4px;
+    }
+
+    /* Features list */
+    .wam-price__features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex: 1 1 auto;
+      list-style: none;
+      padding: 0;
+    }
+
+    .wam-price__feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.83rem;
+      color: var(--wam-text);
+      line-height: 1.7;
+    }
+
+    .wam-price__feature-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--wam-success-soft);
+      color: var(--wam-success);
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+
+    .wam-price__feature--disabled {
+      opacity: 0.5;
+    }
+
+    .wam-price__feature--disabled .wam-price__feature-icon {
+      background: var(--wam-muted-soft);
+      color: var(--wam-text-muted);
+    }
+
+    .wam-price__card-btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-primary-light);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 800;
+      font-family: inherit;
+      border: 0;
+      cursor: pointer;
+      transition: all var(--wam-t);
+    }
+
+    .wam-price__card-btn:hover {
+      background: var(--wam-primary);
+      transform: translateY(-1px);
+    }
+
+    .wam-price__card--featured .wam-price__card-btn {
+      background: var(--wam-gold);
+      color: #3a2a00;
+    }
+    .wam-price__card--featured .wam-price__card-btn:hover {
+      background: var(--wam-gold-light);
+    }
+
+    .wam-price__card-btn--ghost {
+      background: transparent;
+      color: var(--wam-primary);
+      border: 1.5px solid var(--wam-primary-light);
+    }
+    .wam-price__card-btn--ghost:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      transform: none;
+    }
+
+    /* Commission table */
+    .wam-price__table-wrap {
+      overflow-x: auto;
+      border-radius: var(--wam-radius-md);
+      border: 1px solid var(--wam-border-soft);
+      background: var(--wam-bg-alt);
+      -webkit-overflow-scrolling: touch;
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-price__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      min-width: 480px;
+    }
+
+    .wam-price__table thead th {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-weight: 800;
+      text-align: right;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--wam-border);
+      white-space: nowrap;
+      font-size: 0.78rem;
+    }
+
+    .wam-price__table tbody td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--wam-border-soft);
+      text-align: right;
+      color: var(--wam-text);
+    }
+
+    .wam-price__table tbody tr:last-child td { border-bottom: 0; }
+
+    .wam-price__table tbody tr:hover {
+      background: var(--wam-bg-muted);
+    }
+
+    .wam-price__table-amount {
+      font-weight: 800;
+      color: var(--wam-primary);
+    }
+
+    .wam-price__table-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--wam-success-soft);
+      color: var(--wam-success-text);
+    }
+
+    .wam-price__table-badge--warning {
+      background: var(--wam-warning-soft);
+      color: var(--wam-warning-text);
+    }
+
+    .wam-price__table-badge--info {
+      background: var(--wam-info-soft);
+      color: var(--wam-info-text);
+    }
+
+    .wam-price__table-badge--gold {
+      background: var(--wam-gold-soft);
+      color: #7a5a00;
+    }
+
+    /* Fee calculator */
+    .wam-price__calc {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-lg);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-price__calc-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wam-price__calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .wam-price__field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .wam-price__field--full {
+      grid-column: 1 / -1;
+    }
+
+    .wam-price__label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--wam-text);
+    }
+
+    .wam-price__input,
+    .wam-price__select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.87rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-price__input:focus,
+    .wam-price__select:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-price__calc-result {
+      background: linear-gradient(135deg, var(--wam-primary-soft), var(--wam-gold-soft));
+      border-radius: var(--wam-radius);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .wam-price__calc-result-label {
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .wam-price__calc-result-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.1;
+    }
+
+    .wam-price__calc-result-unit {
+      font-size: 0.8rem;
+      color: var(--wam-text-muted);
+      margin-top: 2px;
+    }
+
+    .wam-price__calc-breakdown {
+      display: flex;
+      justify-content: space-around;
+      padding-top: 12px;
+      margin-top: 12px;
+      border-top: 1px dashed rgba(11, 59, 35, 0.15);
+      font-size: 0.75rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-price__calc-breakdown-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      align-items: center;
+    }
+
+    .wam-price__calc-breakdown-value {
+      font-weight: 800;
+      color: var(--wam-text);
+      font-size: 0.85rem;
+    }
+
+    /* FAQ */
+    .wam-price__faq {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .wam-price__faq-item {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      overflow: hidden;
+      transition: all var(--wam-t);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-price__faq-item.is-open {
+      box-shadow: var(--wam-shadow-md);
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-price__faq-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      background: transparent;
+      border: 0;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      text-align: right;
+      cursor: pointer;
+    }
+
+    .wam-price__faq-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex: 0 0 auto;
+      transition: all var(--wam-t);
+    }
+
+    .wam-price__faq-item.is-open .wam-price__faq-icon {
+      background: var(--wam-primary-light);
+      color: #fff;
+      transform: rotate(180deg);
+    }
+
+    .wam-price__faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .wam-price__faq-item.is-open .wam-price__faq-content {
+      max-height: 400px;
+    }
+
+    .wam-price__faq-text {
+      padding: 0 16px 16px;
+      font-size: 0.83rem;
+      color: var(--wam-text-muted);
+      line-height: 1.9;
+      margin: 0;
+    }
+
+    /* CTA final */
+    .wam-price__cta {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 100%);
+      color: #fff;
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-xl) var(--wam-space-lg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wam-price__cta::after {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.22), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-price__cta-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin: 0 0 8px;
+      color: #f4d477;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-price__cta-text {
+      font-size: 0.87rem;
+      opacity: 0.9;
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 0 auto 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-price__cta-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-price__cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 24px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-gold);
+      color: #3a2a00;
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-price__cta-btn:hover {
+      background: var(--wam-gold-light);
+      transform: translateY(-1px);
+    }
+
+    .wam-price__cta-btn--ghost {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+    }
+    .wam-price__cta-btn--ghost:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Toast */
+    .wam-price__toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .wam-price__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .wam-price__main { padding: var(--wam-space-md); }
+      .wam-price__hero { padding: var(--wam-space-lg); }
+      .wam-price__hero-title { font-size: 1.3rem; }
+      .wam-price__grid { grid-template-columns: 1fr; }
+      .wam-price__calc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body data-page="pricing">
+
+  <div class="wam-price" id="priceRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-price__topbar">
+      <div class="wam-price__topbar-info">
+        <a href="#" class="wam-price__topbar-back" id="backLink">↩ بازگشت</a>
+        <h1 class="wam-price__topbar-title">💵 تعرفه‌ها و کمیسیون</h1>
+      </div>
+      <div class="wam-price__topbar-actions">
+        <button type="button" class="wam-price__icon-btn" id="printBtn" title="چاپ">🖨</button>
+        <button type="button" class="wam-price__icon-btn" id="shareBtn" title="اشتراک‌گذاری">📤</button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-price__main">
+
+      <!-- ═══ HERO ═══ -->
+      <section class="wam-price__hero">
+        <div class="wam-price__hero-icon">💵</div>
+        <h2 class="wam-price__hero-title">تعرفه‌های شفاف، بدون هزینه پنهان</h2>
+        <p class="wam-price__hero-text">
+          پلن مناسب کسب‌وکار خود را انتخاب کنید. همه هزینه‌ها شفاف و از پیش مشخص هستند.
+        </p>
+
+        <div class="wam-price__toggle" id="billingToggle">
+          <button type="button" class="wam-price__toggle-btn is-active" data-period="monthly">
+            ماهانه
+          </button>
+          <button type="button" class="wam-price__toggle-btn" data-period="yearly">
+            سالانه <span style="font-size:0.7rem;">(۲۰٪ تخفیف)</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ═══ PLANS ═══ -->
+      <section class="wam-price__section">
+        <h2 class="wam-price__section-title">📦 پلن‌های اشتراک</h2>
+        <p class="wam-price__section-sub">
+          برای همه کارگزاران، اعتبارسنجان و مدیران مناسب است.
+        </p>
+
+        <div class="wam-price__grid">
+          <div class="wam-price__card">
+            <div class="wam-price__card-icon">🌱</div>
+            <h3 class="wam-price__card-name">شروع (Starter)</h3>
+            <p class="wam-price__card-desc">
+              مناسب کارگزاران تازه‌کار که می‌خواهند با وام پی شروع کنند.
+            </p>
+            <div class="wam-price__card-price">
+              <span class="wam-price__card-price-value" data-monthly="0" data-yearly="0">۰</span>
+              <span class="wam-price__card-price-unit">ریال / ماه</span>
+            </div>
+            <div class="wam-price__card-price-note">بدون هزینه راه‌اندازی</div>
+
+            <ul class="wam-price__features">
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>تا ۱۰ پرونده فعال</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>کمیسیون ۵٪ از هر پرونده</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>پشتیبانی ایمیلی</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>گزارش‌های پایه</span>
+              </li>
+              <li class="wam-price__feature wam-price__feature--disabled">
+                <span class="wam-price__feature-icon">✕</span>
+                <span>API دسترسی</span>
+              </li>
+              <li class="wam-price__feature wam-price__feature--disabled">
+                <span class="wam-price__feature-icon">✕</span>
+                <span>پشتیبانی اختصاصی</span>
+              </li>
+            </ul>
+
+            <button type="button" class="wam-price__card-btn wam-price__card-btn--ghost" data-plan="starter">
+              شروع رایگان
+            </button>
+          </div>
+
+          <div class="wam-price__card wam-price__card--featured">
+            <span class="wam-price__card-badge">⭐ محبوب‌ترین</span>
+            <div class="wam-price__card-icon">🚀</div>
+            <h3 class="wam-price__card-name">حرفه‌ای (Pro)</h3>
+            <p class="wam-price__card-desc">
+              برای کارگزاران فعال با حجم بالای پرونده و نیاز به ابزارهای پیشرفته.
+            </p>
+            <div class="wam-price__card-price">
+              <span class="wam-price__card-price-value" data-monthly="2900000" data-yearly="27840000">۲,۹۰۰,۰۰۰</span>
+              <span class="wam-price__card-price-unit">ریال / ماه</span>
+            </div>
+            <div class="wam-price__card-price-note">با پرداخت سالانه ۲۰٪ تخفیف</div>
+
+            <ul class="wam-price__features">
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>پرونده‌های نامحدود</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>کمیسیون ۷٪ از هر پرونده</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>پشتیبانی تلفنی + ایمیل</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>گزارش‌های پیشرفته</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>API دسترسی</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>پشتیبانی اختصاصی</span>
+              </li>
+            </ul>
+
+            <button type="button" class="wam-price__card-btn" data-plan="pro">
+              انتخاب پلن حرفه‌ای
+            </button>
+          </div>
+
+          <div class="wam-price__card">
+            <div class="wam-price__card-icon">🏢</div>
+            <h3 class="wam-price__card-name">سازمانی (Enterprise)</h3>
+            <p class="wam-price__card-desc">
+              برای سازمان‌ها، بانک‌ها و شرکت‌های بزرگ با نیازهای اختصاصی.
+            </p>
+            <div class="wam-price__card-price">
+              <span class="wam-price__card-price-value" data-monthly="0" data-yearly="0">تماس</span>
+              <span class="wam-price__card-price-unit">—</span>
+            </div>
+            <div class="wam-price__card-price-note">قیمت‌گذاری اختصاصی</div>
+
+            <ul class="wam-price__features">
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>همه امکانات Pro</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>کمیسیون مذاکره‌ای</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>پشتیبانی ۲۴/۷</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>SLA اختصاصی</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>آموزش تیم</span>
+              </li>
+              <li class="wam-price__feature">
+                <span class="wam-price__feature-icon">✓</span>
+                <span>نصب on-premise</span>
+              </li>
+            </ul>
+
+            <button type="button" class="wam-price__card-btn wam-price__card-btn--ghost" data-plan="enterprise">
+              تماس با فروش
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ COMMISSION TABLE ═══ -->
+      <section class="wam-price__section">
+        <h2 class="wam-price__section-title">📊 جدول کمیسیون به تفکیک نوع وام</h2>
+        <p class="wam-price__section-sub">
+          درصد کمیسیون کارگزار از هر پرونده بر اساس نوع وام.
+        </p>
+
+        <div class="wam-price__table-wrap">
+          <table class="wam-price__table">
+            <thead>
+              <tr>
+                <th>نوع وام</th>
+                <th>کمیسیون کارگزار</th>
+                <th>کارمزد پلتفرم</th>
+                <th>مجموع</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🏠 وام مسکن</td>
+                <td class="wam-price__table-amount">۱.۵٪</td>
+                <td class="wam-price__table-amount">۰.۵٪</td>
+                <td><span class="wam-price__table-badge">۲٪</span></td>
+              </tr>
+              <tr>
+                <td>🚗 وام خودرو</td>
+                <td class="wam-price__table-amount">۱.۲٪</td>
+                <td class="wam-price__table-amount">۰.۳٪</td>
+                <td><span class="wam-price__table-badge">۱.۵٪</span></td>
+              </tr>
+              <tr>
+                <td>👤 وام شخصی</td>
+                <td class="wam-price__table-amount">۲.۵٪</td>
+                <td class="wam-price__table-amount">۰.۵٪</td>
+                <td><span class="wam-price__table-badge wam-price__table-badge--warning">۳٪</span></td>
+              </tr>
+              <tr>
+                <td>💼 وام کسب‌وکار</td>
+                <td class="wam-price__table-amount">۲٪</td>
+                <td class="wam-price__table-amount">۰.۵٪</td>
+                <td><span class="wam-price__table-badge wam-price__table-badge--info">۲.۵٪</span></td>
+              </tr>
+              <tr>
+                <td>🏭 وام تجهیزات</td>
+                <td class="wam-price__table-amount">۱٪</td>
+                <td class="wam-price__table-amount">۰.۵٪</td>
+                <td><span class="wam-price__table-badge wam-price__table-badge--gold">۱.۵٪</span></td>
+              </tr>
+              <tr>
+                <td>🎓 وام تحصیلی</td>
+                <td class="wam-price__table-amount">۰.۵٪</td>
+                <td class="wam-price__table-amount">۰.۲٪</td>
+                <td><span class="wam-price__table-badge">۰.۷٪</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ═══ FEE CALCULATOR ═══ -->
+      <section class="wam-price__section">
+        <h2 class="wam-price__section-title">🧮 محاسبه‌گر هزینه</h2>
+        <p class="wam-price__section-sub">
+          هزینه نهایی خود را قبل از تصمیم‌گیری محاسبه کنید.
+        </p>
+
+        <div class="wam-price__calc">
+          <h3 class="wam-price__calc-title">💰 تخمین هزینه معامله</h3>
+
+          <div class="wam-price__calc-grid">
+            <div class="wam-price__field wam-price__field--full">
+              <label class="wam-price__label" for="feeType">نوع وام</label>
+              <select id="feeType" class="wam-price__select">
+                <option value="home">🏠 وام مسکن (۲٪)</option>
+                <option value="car">🚗 وام خودرو (۱.۵٪)</option>
+                <option value="personal">👤 وام شخصی (۳٪)</option>
+                <option value="business">💼 وام کسب‌وکار (۲.۵٪)</option>
+                <option value="equipment">🏭 وام تجهیزات (۱.۵٪)</option>
+                <option value="education">🎓 وام تحصیلی (۰.۷٪)</option>
+              </select>
+            </div>
+
+            <div class="wam-price__field wam-price__field--full">
+              <label class="wam-price__label" for="feeAmount">مبلغ وام (میلیون ریال)</label>
+              <input type="number" id="feeAmount" class="wam-price__input"
+                     min="1" value="500" dir="ltr">
+            </div>
+
+            <div class="wam-price__field wam-price__field--full">
+              <label class="wam-price__label" for="feePlan">پلن اشتراک</label>
+              <select id="feePlan" class="wam-price__select">
+                <option value="starter">🌱 شروع (کمیسیون پایه)</option>
+                <option value="pro">🚀 حرفه‌ای (+۲٪ افزایش کمیسیون)</option>
+                <option value="enterprise">🏢 سازمانی (کمیسیون اختصاصی)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="wam-price__calc-result">
+            <div class="wam-price__calc-result-label">مجموع هزینه</div>
+            <div class="wam-price__calc-result-value" id="feeTotal">۰</div>
+            <div class="wam-price__calc-result-unit">میلیون ریال</div>
+
+            <div class="wam-price__calc-breakdown">
+              <div class="wam-price__calc-breakdown-item">
+                <span>کمیسیون کارگزار</span>
+                <span class="wam-price__calc-breakdown-value" id="feeBroker">۰</span>
+              </div>
+              <div class="wam-price__calc-breakdown-item">
+                <span>کارمزد پلتفرم</span>
+                <span class="wam-price__calc-breakdown-value" id="feePlatform">۰</span>
+              </div>
+              <div class="wam-price__calc-breakdown-item">
+                <span>خالص متقاضی</span>
+                <span class="wam-price__calc-breakdown-value" id="feeNet">۰</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ FAQ ═══ -->
+      <section class="wam-price__section">
+        <h2 class="wam-price__section-title">❓ سؤالات متداول</h2>
+        <p class="wam-price__section-sub">
+          پاسخ سؤالات پرتکرار درباره تعرفه‌ها و کمیسیون‌ها.
+        </p>
+
+        <div class="wam-price__faq" id="faqList">
+          <div class="wam-price__faq-item">
+            <button type="button" class="wam-price__faq-btn">
+              <span>کمیسیون چگونه محاسبه می‌شود؟</span>
+              <span class="wam-price__faq-icon">▾</span>
+            </button>
+            <div class="wam-price__faq-content">
+              <p class="wam-price__faq-text">
+                کمیسیون بر اساس مبلغ نهایی وام و نوع آن محاسبه می‌شود. پس از تأیید نهایی پرونده، کمیسیون به صورت خودکار به کیف پول کارگزار واریز می‌گردد.
+              </p>
+            </div>
+          </div>
+
+          <div class="wam-price__faq-item">
+            <button type="button" class="wam-price__faq-btn">
+              <span>آیا هزینه‌ای برای متقاضی وجود دارد؟</span>
+              <span class="wam-price__faq-icon">▾</span>
+            </button>
+            <div class="wam-price__faq-content">
+              <p class="wam-price__faq-text">
+                خیر، استفاده از پلتفرم برای متقاضیان وام کاملاً رایگان است. تمام هزینه‌ها از طرف کارگزار و از محل کمیسیون پرونده پرداخت می‌شود.
+              </p>
+            </div>
+          </div>
+
+          <div class="wam-price__faq-item">
+            <button type="button" class="wam-price__faq-btn">
+              <span>امکان تغییر پلن در میانه دوره وجود دارد؟</span>
+              <span class="wam-price__faq-icon">▾</span>
+            </button>
+            <div class="wam-price__faq-content">
+              <p class="wam-price__faq-text">
+                بله، می‌توانید در هر زمان پلن خود را ارتقا دهید. مبلغ باقیمانده دوره قبلی به صورت اعتبار در دوره جدید محاسبه می‌شود.
+              </p>
+            </div>
+          </div>
+
+          <div class="wam-price__faq-item">
+            <button type="button" class="wam-price__faq-btn">
+              <span>آیا امکان بازگشت وجه وجود دارد؟</span>
+              <span class="wam-price__faq-icon">▾</span>
+            </button>
+            <div class="wam-price__faq-content">
+              <p class="wam-price__faq-text">
+                تا ۷ روز پس از خرید، در صورت عدم استفاده از خدمات، امکان بازگشت کامل وجه وجود دارد. پس از این مدت، بازگشت وجه فقط برای پلن‌های سازمانی امکان‌پذیر است.
+              </p>
+            </div>
+          </div>
+
+          <div class="wam-price__faq-item">
+            <button type="button" class="wam-price__faq-btn">
+              <span>چگونه می‌توانم فاکتور رسمی دریافت کنم؟</span>
+              <span class="wam-price__faq-icon">▾</span>
+            </button>
+            <div class="wam-price__faq-content">
+              <p class="wam-price__faq-text">
+                فاکتور رسمی به صورت خودکار پس از هر پرداخت در پنل کاربری شما قابل دانلود است. برای فاکتورهای خاص، با پشتیبانی تماس بگیرید.
+              </p>
+            </div>
+          </div>
+
+          <div class="wam-price__faq-item">
+            <button type="button" class="wam-price__faq-btn">
+              <span>تخفیف حجمی برای کارگزاران با پرونده بالا وجود دارد؟</span>
+              <span class="wam-price__faq-icon">▾</span>
+            </button>
+            <div class="wam-price__faq-content">
+              <p class="wam-price__faq-text">
+                بله، برای کارگزارانی که ماهانه بیش از ۵۰ پرونده ثبت می‌کنند، تخفیف‌های ویژه در نظر گرفته شده است. با تیم فروش تماس بگیرید.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ CTA ═══ -->
+      <section class="wam-price__cta">
+        <h2 class="wam-price__cta-title">آماده شروع هستید؟</h2>
+        <p class="wam-price__cta-text">
+          امروز به هزاران کارگزار و متقاضی وام پی بپیوندید و کسب‌وکار خود را متحول کنید.
+        </p>
+        <div class="wam-price__cta-actions">
+          <a href="register.html" class="wam-price__cta-btn">
+            🚀 شروع رایگان
+          </a>
+          <a href="consultations.html" class="wam-price__cta-btn wam-price__cta-btn--ghost">
+            💬 تماس با فروش
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="wam-price__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       PRICING CONTROLLER (Shared)
+       - سوییچ ماهانه/سالانه
+       - محاسبه‌گر هزینه
+       - FAQ accordion
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var state = {
+        period: 'monthly'
+      };
+
+      // درصد کل کمیسیون per نوع وام (broker + platform)
+      var COMMISSION_RATES = {
+        home:      0.020, // ۲٪
+        car:       0.015, // ۱.۵٪
+        personal:  0.030, // ۳٪
+        business:  0.025, // ۲.۵٪
+        equipment: 0.015, // ۱.۵٪
+        education: 0.007  // ۰.۷٪
+      };
+
+      // نسبت کمیسیون کارگزار به کل (بقیه کارمزد پلتفرم)
+      var BROKER_SHARE = {
+        home:      0.75, // ۱.۵ از ۲
+        car:       0.80, // ۱.۲ از ۱.۵
+        personal:  0.833, // ۲.۵ از ۳
+        business:  0.80, // ۲ از ۲.۵
+        equipment: 0.667, // ۱ از ۱.۵
+        education: 0.714  // ۰.۵ از ۰.۷
+      };
+
+      // افزایش کمیسیون برای پلن pro
+      var PLAN_MULTIPLIER = {
+        starter: 1.0,
+        pro: 1.0,        // در Pro خود کمیسیون بیشتر است
+        enterprise: 1.0  // مذاکره‌ای
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function toFaPrice(n) {
+        if (n == null) return '۰';
+        try {
+          return Number(n).toLocaleString('fa-IR');
+        } catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function fmtAmountFine(n) {
+        if (n == null || isNaN(n)) return '۰';
+        try {
+          return Number(n).toLocaleString('fa-IR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          });
+        } catch (_) { return String(n); }
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // Toggle دوره
+      // ═══════════════════════════════════
+
+      function applyPeriod(period) {
+        state.period = period;
+
+        $$('.wam-price__toggle-btn').forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.getAttribute('data-period') === period);
+        });
+
+        $$('.wam-price__card-price-value').forEach(function (el) {
+          var monthly = el.getAttribute('data-monthly');
+          var yearly = el.getAttribute('data-yearly');
+
+          if (monthly === null) return;
+
+          var m = Number(monthly) || 0;
+          var y = Number(yearly) || 0;
+
+          if (m === 0 && y === 0) {
+            // رایگان یا تماس
+            return;
+          }
+
+          if (period === 'yearly') {
+            // قیمت سالانه = 12 * monthly * 0.8 → نمایش ماهانه معادل
+            var monthlyEquiv = Math.round(m * 0.8);
+            el.textContent = toFaPrice(monthlyEquiv);
+          } else {
+            el.textContent = toFaPrice(m);
+          }
+        });
+
+        // بروزرسانی note
+        $$('.wam-price__card-price-note').forEach(function (note) {
+          if (period === 'yearly') {
+            if (note.textContent.indexOf('۲۰٪') < 0 &&
+                note.textContent.indexOf('رایگان') < 0 &&
+                note.textContent.indexOf('اختصاصی') < 0) {
+              note.textContent = 'با پرداخت سالانه ۲۰٪ تخفیف';
+            }
+          } else {
+            if (note.textContent.indexOf('تخفیف') >= 0) {
+              note.textContent = 'بدون تعهد بلندمدت';
+            }
+          }
+        });
+
+        emitEvent('pricing:period-changed', { period: period });
+      }
+
+      // ═══════════════════════════════════
+      // محاسبه‌گر هزینه
+      // ═══════════════════════════════════
+
+      function updateFeeCalc() {
+        var type = ($('feeType') || {}).value || 'home';
+        var amount = parseFloat(($('feeAmount') || {}).value) || 0;
+        var plan = ($('feePlan') || {}).value || 'starter';
+
+        var rate = COMMISSION_RATES[type] || 0.02;
+        var brokerShare = BROKER_SHARE[type] || 0.75;
+
+        // در Pro کمیسیون پلتفرم افزایش می‌یابد
+        // در Enterprise مذاکره‌ای — اینجا فقط پایه
+        var multiplier = 1.0;
+        if (plan === 'pro') multiplier = 1.02; // ۲٪ افزایش
+        // Enterprise → فرض می‌کنیم همان پایه
+
+        var totalCommission = amount * rate * multiplier;
+        var brokerFee = totalCommission * brokerShare;
+        var platformFee = totalCommission - brokerFee;
+        var netToApplicant = amount - totalCommission;
+
+        if ($('feeTotal')) $('feeTotal').textContent = fmtAmountFine(totalCommission);
+        if ($('feeBroker')) $('feeBroker').textContent = fmtAmountFine(brokerFee);
+        if ($('feePlatform')) $('feePlatform').textContent = fmtAmountFine(platformFee);
+        if ($('feeNet')) $('feeNet').textContent = fmtAmountFine(netToApplicant);
+      }
+
+      // ═══════════════════════════════════
+      // FAQ
+      // ═══════════════════════════════════
+
+      function bindFaq() {
+        $$('.wam-price__faq-item').forEach(function (item) {
+          var btn = item.querySelector('.wam-price__faq-btn');
+          if (!btn) return;
+
+          btn.addEventListener('click', function () {
+            var isOpen = item.classList.contains('is-open');
+
+            // بستن بقیه
+            $$('.wam-price__faq-item').forEach(function (x) {
+              x.classList.remove('is-open');
+            });
+
+            if (!isOpen) item.classList.add('is-open');
+          });
+        });
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Toggle دوره
+        $$('.wam-price__toggle-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var period = btn.getAttribute('data-period') || 'monthly';
+            applyPeriod(period);
+          });
+        });
+
+        // Plan cards
+        $$('.wam-price__card-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var plan = btn.getAttribute('data-plan');
+            if (plan === 'enterprise') {
+              showToast('💬 در حال انتقال به صفحه تماس...');
+              setTimeout(function () {
+                window.location.href = 'consultations.html?subject=enterprise';
+              }, 800);
+            } else if (plan === 'starter' || plan === 'pro') {
+              try {
+                localStorage.setItem('wamPaySelectedPlan', JSON.stringify({
+                  plan: plan,
+                  period: state.period,
+                  selectedAt: Date.now()
+                }));
+              } catch (_) {}
+              emitEvent('pricing:plan-selected', { plan: plan, period: state.period });
+              showToast('✓ پلن ' + plan + ' انتخاب شد');
+              setTimeout(function () {
+                window.location.href = 'register.html?plan=' + encodeURIComponent(plan);
+              }, 800);
+            }
+          });
+        });
+
+        // Fee calculator
+        if ($('feeType')) $('feeType').addEventListener('change', updateFeeCalc);
+        if ($('feeAmount')) $('feeAmount').addEventListener('input', updateFeeCalc);
+        if ($('feePlan')) $('feePlan').addEventListener('change', updateFeeCalc);
+
+        // Print
+        if ($('printBtn')) {
+          $('printBtn').addEventListener('click', function () {
+            window.print();
+          });
+        }
+
+        // Share
+        if ($('shareBtn')) {
+          $('shareBtn').addEventListener('click', function () {
+            var text = 'تعرفه‌های وام پی\n' +
+                       '🚀 Pro: ۲,۹۰۰,۰۰۰ ریال/ماه\n' +
+                       '🌱 Starter: رایگان\n' +
+                       '🏢 Enterprise: تماس با فروش\n\n' +
+                       'کمیسیون‌ها: از ۰.۷٪ تا ۳٪ بر اساس نوع وام';
+            if (navigator.share) {
+              navigator.share({
+                title: 'تعرفه‌های وام پی',
+                text: text,
+                url: window.location.href
+              }).catch(function () {});
+            } else if (navigator.clipboard) {
+              navigator.clipboard.writeText(text + '\n\n' + window.location.href).then(function () {
+                showToast('✓ محتوا کپی شد');
+              }).catch(function () {
+                showToast('کپی ممکن نشد');
+              });
+            } else {
+              showToast('اشتراک‌گذاری پشتیبانی نمی‌شود');
+            }
+          });
+        }
+
+        // Back
+        if ($('backLink')) {
+          $('backLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.history.length > 1) window.history.back();
+            else window.location.href = 'dashboard.html';
+          });
+        }
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        bindEvents();
+        bindFaq();
+        updateFeeCalc();
+        applyPeriod('monthly');
+        emitEvent('pricing:opened', {});
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

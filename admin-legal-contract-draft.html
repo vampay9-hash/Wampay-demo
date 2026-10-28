@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تنظیم قراردادها | حقوقی وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23; --primary-light: #1a5c3a; --primary-dark: #062416;
+    --gold: #d4a62a; --gold-light: #f0c651;
+    --text: #1a2b22; --text-muted: #6b7d73;
+    --bg: #f4f7f4; --bg-card: #ffffff; --border: #e0e8e3;
+    --error: #c0392b; --success: #1e8e4a; --warning: #e67e22; --info: #2980b9;
+    --legal: #1f3a5f; --legal-light: #2c5282;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px; --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.7; transition: background 0.3s, color 0.3s;
+}
+
+/* Header حقوقی */
+.legal-header {
+    background: linear-gradient(135deg, #0d1b2e 0%, #1f3a5f 50%, #2c5282 100%);
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; box-shadow: 0 8px 24px rgba(15,23,42,0.35);
+    position: sticky; top: 0; z-index: 100; height: 68px;
+    border-bottom: 3px solid #4a90e2;
+}
+.legal-header__right { display: flex; align-items: center; gap: 14px; }
+.legal-header__menu-btn {
+    display: none; width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(74,144,226,0.3);
+    background: rgba(255,255,255,0.08); color: #a9c8ff;
+    cursor: pointer; font-size: 20px; transition: var(--transition);
+}
+.legal-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 17px; color: #fff; text-decoration: none;
+}
+.legal-logo__icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, #4a90e2, #6ba3f0);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 0 20px rgba(74,144,226,0.6);
+}
+.legal-header__left { display: flex; align-items: center; gap: 10px; }
+.legal-header__btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(74,144,226,0.3);
+    background: rgba(255,255,255,0.08); color: #a9c8ff;
+    cursor: pointer; font-size: 18px;
+    position: relative; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+}
+.legal-header__btn:hover { background: rgba(74,144,226,0.2); }
+.legal-header__badge {
+    position: absolute; top: -4px; left: -4px;
+    background: var(--error); color: #fff;
+    font-size: 10px; font-weight: 800;
+    min-width: 18px; height: 18px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 4px; border: 2px solid #0d1b2e;
+}
+.legal-user {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 12px 6px 6px; border-radius: 10px;
+    background: rgba(74,144,226,0.15);
+    border: 1px solid rgba(74,144,226,0.3);
+    cursor: pointer; transition: var(--transition);
+    position: relative;
+}
+.legal-user:hover { background: rgba(74,144,226,0.25); }
+.legal-user__avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, #4a90e2, #6ba3f0);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: #fff; font-weight: 800;
+}
+.legal-user__name { font-size: 13px; font-weight: 700; color: #fff; }
+.legal-user__role { font-size: 11px; opacity: 0.85; color: #a9c8ff; }
+.legal-user__dropdown {
+    position: absolute; top: calc(100% + 8px); left: 0;
+    background: var(--bg-card); color: var(--text);
+    border-radius: var(--radius-sm); padding: 6px;
+    box-shadow: var(--shadow-lg); min-width: 200px;
+    border: 1px solid var(--border);
+    display: none; z-index: 200;
+}
+.legal-user__dropdown--open { display: block; }
+.legal-user__dropdown a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 12px; border-radius: 6px;
+    color: var(--text); text-decoration: none;
+    font-size: 13px; font-weight: 600; transition: var(--transition);
+}
+.legal-user__dropdown a:hover { background: var(--bg); color: var(--legal); }
+.legal-user__dropdown hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
+/* Layout */
+.legal-layout {
+    display: grid; grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 68px);
+}
+.legal-sidebar {
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    padding: 20px 12px;
+    position: sticky; top: 68px;
+    height: calc(100vh - 68px); overflow-y: auto;
+}
+.legal-sidebar__section {
+    font-size: 11px; font-weight: 800; color: var(--text-muted);
+    padding: 12px 12px 6px; text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.legal-nav { display: flex; flex-direction: column; gap: 4px; }
+.legal-nav__item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px; border-radius: var(--radius-sm);
+    color: var(--text); text-decoration: none;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: var(--transition);
+    border: none; background: transparent;
+    width: 100%; text-align: right; font-family: inherit;
+}
+.legal-nav__item:hover { background: var(--bg); color: var(--legal); }
+.legal-nav__item--active {
+    background: linear-gradient(135deg, var(--legal), var(--legal-light));
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(31,58,95,0.35);
+}
+.legal-nav__item__icon { font-size: 18px; width: 22px; text-align: center; }
+.legal-nav__item__badge {
+    margin-right: auto;
+    background: var(--error); color: #fff;
+    font-size: 10px; font-weight: 800;
+    padding: 2px 7px; border-radius: 10px;
+}
+
+/* Main */
+.legal-main { padding: 24px 28px 100px; max-width: 1400px; width: 100%; }
+.legal-section { display: none; animation: fadeIn 0.3s ease; }
+.legal-section--active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.legal-page-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+.legal-page-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; }
+
+/* Banner */
+.legal-banner {
+    background: linear-gradient(135deg, #0d1b2e 0%, #1f3a5f 60%, #2c5282 100%);
+    color: #fff; border-radius: var(--radius);
+    padding: 22px 26px; margin-bottom: 22px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 32px rgba(15,23,42,0.35);
+    border: 2px solid rgba(74,144,226,0.4);
+}
+.legal-banner::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,144,226,0.3), transparent);
+}
+.legal-banner__content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.legal-banner__title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.legal-banner__subtitle { font-size: 13px; opacity: 0.9; }
+.legal-banner__icon {
+    font-size: 56px;
+    filter: drop-shadow(0 0 20px rgba(74,144,226,0.8));
+    animation: scale-pulse 3s ease-in-out infinite;
+}
+@keyframes scale-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+/* Stats */
+.legal-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+.legal-stat {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 18px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--legal);
+    transition: var(--transition);
+}
+.legal-stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.legal-stat--warning { border-right-color: var(--warning); }
+.legal-stat--success { border-right-color: var(--success); }
+.legal-stat--error { border-right-color: var(--error); }
+.legal-stat--info { border-right-color: var(--info); }
+.legal-stat--legal { border-right-color: var(--legal-light); }
+.legal-stat__icon { font-size: 22px; margin-bottom: 4px; }
+.legal-stat__label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.legal-stat__value { font-size: 24px; font-weight: 800; line-height: 1.2; }
+
+/* Card */
+.legal-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    margin-bottom: 18px; overflow: hidden;
+}
+.legal-card__header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+}
+.legal-card__title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.legal-card__body { padding: 18px 20px; }
+
+/* Filters */
+.legal-filters {
+    display: flex; gap: 10px; margin-bottom: 16px;
+    flex-wrap: wrap; align-items: center;
+}
+.legal-search {
+    flex: 1; min-width: 220px; padding: 11px 16px;
+    border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+    background: var(--bg-card); color: var(--text);
+    font-family: inherit; font-size: 14px;
+}
+.legal-search:focus { outline: none; border-color: var(--legal); box-shadow: 0 0 0 4px rgba(31,58,95,0.10); }
+.legal-tabs {
+    display: flex; gap: 4px; background: var(--bg-card);
+    padding: 4px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); flex-wrap: wrap;
+}
+.legal-tab {
+    padding: 8px 14px; border-radius: 6px; border: none;
+    background: transparent; color: var(--text-muted);
+    font-family: inherit; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: flex; align-items: center; gap: 5px;
+}
+.legal-tab:hover { color: var(--text); }
+.legal-tab--active { background: var(--legal); color: #fff; }
+.legal-tab__count { font-size: 10px; opacity: 0.85; }
+
+/* Queue Card */
+.lq-list { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.lq-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 18px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--legal-light);
+    transition: var(--transition); animation: fadeIn 0.35s ease;
+}
+.lq-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.lq-card--drafted { border-right-color: var(--success); }
+.lq-card--rejected { border-right-color: var(--error); }
+.lq-card--pending { border-right-color: var(--legal-light); }
+
+.lq-card__header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 14px; margin-bottom: 14px;
+    padding-bottom: 14px; border-bottom: 1px dashed var(--border);
+    flex-wrap: wrap;
+}
+.lq-card__title { font-size: 16px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+.lq-card__id { font-size: 12px; color: var(--text-muted); font-family: monospace; direction: ltr; text-align: right; }
+
+.lq-financial {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 12px; margin-bottom: 14px;
+    border: 1px solid var(--border);
+}
+.lq-financial__item { text-align: center; }
+.lq-financial__label { font-size: 11px; color: var(--text-muted); margin-bottom: 3px; }
+.lq-financial__value { font-size: 15px; font-weight: 800; }
+.lq-financial__value--purchase { color: var(--success); }
+.lq-financial__value--sale { color: var(--info); }
+.lq-financial__value--profit { color: var(--warning); }
+.lq-financial__value--unit { color: var(--text-muted); font-size: 12px; font-weight: 600; }
+
+.lq-card__body { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.lq-card__row { font-size: 13px; }
+.lq-card__row-label { color: var(--text-muted); font-size: 11px; margin-bottom: 2px; }
+.lq-card__row-value { font-weight: 700; font-size: 13px; }
+
+.lq-card__actions {
+    display: flex; gap: 8px;
+    padding-top: 14px; border-top: 1px dashed var(--border);
+    flex-wrap: wrap;
+}
+.lq-card__actions .legal-btn { flex: 1; min-width: 140px; }
+
+/* Badges */
+.legal-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 800;
+}
+.legal-badge--pending { background: rgba(230,126,34,0.12); color: var(--warning); }
+.legal-badge--drafted { background: rgba(30,142,74,0.12); color: var(--success); }
+.legal-badge--rejected { background: rgba(192,57,43,0.12); color: var(--error); }
+.legal-badge--info { background: rgba(41,128,185,0.12); color: var(--info); }
+.legal-badge--legal { background: rgba(31,58,95,0.12); color: var(--legal); }
+
+/* Buttons */
+.legal-btn {
+    padding: 10px 16px; border-radius: var(--radius-sm);
+    border: none; font-family: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    text-decoration: none;
+}
+.legal-btn--primary {
+    background: linear-gradient(135deg, var(--legal), var(--legal-light));
+    color: #fff; box-shadow: 0 4px 12px rgba(31,58,95,0.25);
+}
+.legal-btn--primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(31,58,95,0.35); }
+.legal-btn--success { background: var(--success); color: #fff; }
+.legal-btn--success:hover { background: #16703a; }
+.legal-btn--danger { background: var(--error); color: #fff; }
+.legal-btn--danger:hover { background: #a02c20; }
+.legal-btn--info { background: var(--info); color: #fff; }
+.legal-btn--ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border);
+}
+.legal-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.legal-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+.legal-btn--block { width: 100%; }
+
+/* Empty */
+.legal-empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.legal-empty__icon { font-size: 60px; margin-bottom: 14px; opacity: 0.4; }
+.legal-empty__title { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.legal-empty__desc { font-size: 13px; }
+
+/* Modal */
+.legal-modal {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 9999; padding: 16px;
+}
+.legal-modal--open { display: flex; animation: fadeIn 0.25s ease; }
+.legal-modal__inner {
+    background: var(--bg-card); border-radius: var(--radius);
+    max-width: 900px; width: 100%; max-height: 92vh;
+    overflow-y: auto; box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s ease;
+    border: 2px solid rgba(31,58,95,0.3);
+}
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.legal-modal__header {
+    padding: 18px 22px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0;
+    background: linear-gradient(135deg, #0d1b2e, #1f3a5f);
+    color: #fff;
+    z-index: 10;
+}
+.legal-modal__title { font-size: 17px; font-weight: 800; }
+.legal-modal__close {
+    width: 34px; height: 34px; border-radius: 8px;
+    border: none; background: rgba(255,255,255,0.15); color: #fff;
+    cursor: pointer; font-size: 18px;
+}
+.legal-modal__close:hover { background: rgba(255,255,255,0.3); }
+.legal-modal__body { padding: 22px; }
+.legal-modal__footer {
+    padding: 16px 22px; border-top: 1px solid var(--border);
+    display: flex; gap: 10px; justify-content: flex-end;
+    flex-wrap: wrap; position: sticky; bottom: 0;
+    background: var(--bg-card);
+}
+
+/* Contract Draft */
+.contract-tabs {
+    display: flex; gap: 6px; margin-bottom: 16px;
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 6px; border: 1px solid var(--border);
+}
+.contract-tab {
+    flex: 1; padding: 10px 16px; border-radius: 6px;
+    border: none; background: transparent;
+    color: var(--text-muted); font-family: inherit;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+    transition: var(--transition);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.contract-tab--active {
+    background: linear-gradient(135deg, var(--legal), var(--legal-light));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(31,58,95,0.25);
+}
+.contract-content {
+    background: #fff; color: #1a2b22;
+    border-radius: var(--radius-sm);
+    padding: 24px 28px;
+    font-family: 'Vazirmatn', monospace;
+    font-size: 13px; line-height: 2;
+    max-height: 450px; overflow-y: auto;
+    border: 2px solid var(--border);
+    white-space: pre-wrap;
+    direction: rtl; text-align: right;
+}
+[data-theme="dark"] .contract-content {
+    background: #f8f8f8; color: #1a2b22;
+}
+
+/* Legal Sections */
+.legal-sec { margin-bottom: 20px; }
+.legal-sec__title {
+    font-size: 14px; font-weight: 800; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(31,58,95,0.10);
+    color: var(--legal);
+}
+[data-theme="dark"] .legal-sec__title { color: #a9c8ff; border-bottom-color: rgba(74,144,226,0.25); }
+.legal-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.legal-detail__row {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 12px 14px; border: 1px solid var(--border);
+}
+.legal-detail__row--full { grid-column: 1/-1; }
+.legal-detail__label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+.legal-detail__value { font-weight: 700; font-size: 13px; }
+.legal-detail__value--mono { font-family: monospace; direction: ltr; text-align: right; }
+
+/* Info Box */
+.legal-info-box {
+    background: linear-gradient(135deg, rgba(31,58,95,0.08), rgba(11,59,35,0.05));
+    border: 2px solid rgba(31,58,95,0.35);
+    border-radius: var(--radius-sm); padding: 14px 16px; margin: 10px 0;
+}
+.legal-info-box--success { border-color: rgba(30,142,74,0.4); background: linear-gradient(135deg, rgba(30,142,74,0.08), rgba(11,59,35,0.05)); }
+.legal-info-box--warning { border-color: rgba(230,126,34,0.4); background: linear-gradient(135deg, rgba(230,126,34,0.08), rgba(11,59,35,0.05)); }
+.legal-info-box--error { border-color: rgba(192,57,43,0.4); }
+.legal-info-box__title {
+    font-size: 13px; font-weight: 800; color: var(--legal);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+}
+[data-theme="dark"] .legal-info-box__title { color: #a9c8ff; }
+.legal-info-box__desc { font-size: 12px; color: var(--text-muted); line-height: 1.8; }
+
+/* Clause List */
+.clause-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.clause-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px; border-radius: var(--radius-sm);
+    background: var(--bg); border: 1.5px solid var(--border);
+    font-size: 13px; transition: var(--transition);
+}
+.clause-item:hover { border-color: var(--legal-light); }
+.clause-item input[type="checkbox"] {
+    width: 18px; height: 18px; accent-color: var(--legal);
+    cursor: pointer; flex-shrink: 0; margin-top: 3px;
+}
+.clause-item__text { flex: 1; line-height: 1.7; }
+.clause-item__text strong { color: var(--legal); }
+[data-theme="dark"] .clause-item__text strong { color: #a9c8ff; }
+
+/* Textarea */
+.legal-textarea, .legal-input {
+    width: 100%; padding: 11px 14px;
+    border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+    background: var(--bg); color: var(--text);
+    font-family: inherit; font-size: 14px;
+    margin-top: 8px;
+}
+.legal-textarea { min-height: 90px; resize: vertical; }
+.legal-textarea:focus, .legal-input:focus { outline: none; border-color: var(--legal); }
+
+/* Toast */
+.legal-toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 22px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 10000; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px; max-width: 90%;
+}
+.legal-toast--show { transform: translateX(-50%) translateY(0); }
+.legal-toast--error { background: var(--error); }
+.legal-toast--success { background: var(--success); }
+
+/* Bottom Nav */
+.legal-bottom-nav {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--bg-card); border-top: 2px solid var(--legal-light);
+    padding: 6px; z-index: 90; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+.legal-bottom-nav__inner { display: flex; justify-content: space-around; }
+.legal-bottom-nav__item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 3px; padding: 6px 10px; border-radius: 8px;
+    color: var(--text-muted); font-size: 10px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    background: transparent; border: none; font-family: inherit; flex: 1;
+}
+.legal-bottom-nav__item--active { color: var(--legal); background: rgba(31,58,95,0.08); }
+.legal-bottom-nav__icon { font-size: 20px; }
+
+/* Overlay */
+.legal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 150; display: none;
+}
+.legal-overlay--show { display: block; }
+
+@media (max-width: 1024px) {
+    .legal-stats { grid-template-columns: repeat(2, 1fr); }
+    .legal-layout { grid-template-columns: 1fr; }
+    .legal-sidebar {
+        position: fixed; top: 68px; right: 0;
+        width: 260px; transform: translateX(100%);
+        transition: transform 0.3s ease; z-index: 200;
+        box-shadow: var(--shadow-lg);
+    }
+    .legal-sidebar--open { transform: translateX(0); }
+    .legal-header__menu-btn { display: flex; align-items: center; justify-content: center; }
+    .lq-card__body { grid-template-columns: 1fr 1fr; }
+    .legal-detail { grid-template-columns: 1fr; }
+    .lq-financial { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+    .legal-header { padding: 12px 16px; height: 60px; }
+    .legal-logo { font-size: 15px; }
+    .legal-logo__icon { width: 36px; height: 36px; font-size: 18px; }
+    .legal-user__name, .legal-user__role { display: none; }
+    .legal-main { padding: 16px 14px 100px; }
+    .legal-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .legal-stat { padding: 14px; }
+    .legal-stat__value { font-size: 20px; }
+    .legal-page-title { font-size: 20px; }
+    .lq-card__body { grid-template-columns: 1fr; }
+    .lq-card__actions { flex-direction: column; }
+    .lq-financial { grid-template-columns: 1fr; }
+    .legal-bottom-nav { display: block; }
+    .legal-header__menu-btn { display: flex; }
+    .legal-sidebar { top: 60px; height: calc(100vh - 60px); }
+    .legal-banner__icon { font-size: 40px; }
+    .contract-content { padding: 16px; font-size: 12px; }
+    .contract-tab { font-size: 11px; padding: 8px; }
+}
+</style>
+</head>
+<body>
+
+<header class="legal-header">
+    <div class="legal-header__right">
+        <button class="legal-header__menu-btn" id="menuBtn">☰</button>
+        <a href="admin-legal-dashboard.html" class="legal-logo">
+            <div class="legal-logo__icon">⚖️</div>
+            <span>پنل حقوقی وام پی</span>
+        </a>
+    </div>
+    <div class="legal-header__left">
+        <button class="legal-header__btn" id="themeBtn" title="تغییر تم">🌙</button>
+        <button class="legal-header__btn" id="refreshBtn" title="به‌روزرسانی">🔄</button>
+        <div class="legal-user" id="userMenu">
+            <div class="legal-user__avatar" id="userAvatar">⚖️</div>
+            <div>
+                <div class="legal-user__name" id="userName">ادمین حقوقی</div>
+                <div class="legal-user__role">⚖️ حقوقی</div>
+            </div>
+            <div class="legal-user__dropdown" id="userDropdown">
+                <a href="#" data-nav="overview">📈 نمای کلی</a>
+                <a href="#" data-nav="queue">📄 صف تنظیم قرارداد</a>
+                <a href="#" data-nav="contracts">📚 آرشیو قراردادها</a>
+                <hr>
+                <a href="#" id="logoutBtn">🚪 خروج</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="legal-overlay" id="overlay"></div>
+
+<div class="legal-layout">
+
+    <aside class="legal-sidebar" id="sidebar">
+        <div class="legal-sidebar__section">مدیریت حقوقی</div>
+        <nav class="legal-nav">
+            <button class="legal-nav__item legal-nav__item--active" data-nav="overview">
+                <span class="legal-nav__item__icon">📈</span>
+                <span>نمای کلی</span>
+            </button>
+            <button class="legal-nav__item" data-nav="queue">
+                <span class="legal-nav__item__icon">📄</span>
+                <span>صف تنظیم قرارداد</span>
+                <span class="legal-nav__item__badge" id="queueBadge" style="display:none;">۰</span>
+            </button>
+        </nav>
+        <div class="legal-sidebar__section">آرشیو</div>
+        <nav class="legal-nav">
+            <button class="legal-nav__item" data-nav="contracts">
+                <span class="legal-nav__item__icon">📚</span>
+                <span>قراردادهای تنظیم‌شده</span>
+            </button>
+        </nav>
+    </aside>
+
+    <main class="legal-main">
+
+        <!-- ============ OVERVIEW ============ -->
+        <section class="legal-section legal-section--active" id="section-overview">
+            <div class="legal-banner">
+                <div class="legal-banner__content">
+                    <div>
+                        <div class="legal-banner__title">⚖️ خوش آمدید، ادمین حقوقی</div>
+                        <div class="legal-banner__subtitle">
+                            تنظیم و آماده‌سازی پیش‌نویس قراردادها — مهر حقوقی سایت
+                        </div>
+                    </div>
+                    <div class="legal-banner__icon">⚖️</div>
+                </div>
+            </div>
+
+            <h1 class="legal-page-title">📈 نمای کلی حقوقی</h1>
+            <p class="legal-page-subtitle">آمار زنده‌ی قراردادها و وضعیت صف تنظیم</p>
+
+            <div class="legal-stats">
+                <div class="legal-stat legal-stat--warning" data-nav="queue">
+                    <div class="legal-stat__icon">⏳</div>
+                    <div class="legal-stat__label">در انتظار تنظیم</div>
+                    <div class="legal-stat__value" id="statPending">۰</div>
+                </div>
+                <div class="legal-stat legal-stat--success">
+                    <div class="legal-stat__icon">✅</div>
+                    <div class="legal-stat__label">تنظیم‌شده امروز</div>
+                    <div class="legal-stat__value" id="statDraftedToday">۰</div>
+                </div>
+                <div class="legal-stat legal-stat--error">
+                    <div class="legal-stat__icon">❌</div>
+                    <div class="legal-stat__label">ردشده</div>
+                    <div class="legal-stat__value" id="statRejected">۰</div>
+                </div>
+                <div class="legal-stat legal-stat--legal">
+                    <div class="legal-stat__icon">📚</div>
+                    <div class="legal-stat__label">کل قراردادها</div>
+                    <div class="legal-stat__value" id="statTotal">۰</div>
+                </div>
+            </div>
+
+            <div class="legal-card">
+                <div class="legal-card__header">
+                    <div class="legal-card__title">⏳ آخرین فاکتورهای در انتظار تنظیم قرارداد</div>
+                    <button class="legal-btn legal-btn--primary" data-nav="queue">مشاهده‌ی همه ←</button>
+                </div>
+                <div class="legal-card__body" id="recentPending"></div>
+            </div>
+        </section>
+
+        <!-- ============ QUEUE ============ -->
+        <section class="legal-section" id="section-queue">
+            <h1 class="legal-page-title">📄 صف تنظیم قرارداد</h1>
+            <p class="legal-page-subtitle">فاکتورهای تأییدشده‌ی مدیر کل — تنظیم پیش‌نویس دو قرارداد</p>
+
+            <div class="legal-filters">
+                <input type="text" class="legal-search" id="searchInput" placeholder="🔍 جستجو بر اساس شماره فاکتور، کارگزار، نام امتیاز...">
+                <div class="legal-tabs" id="queueTabs">
+                    <button class="legal-tab legal-tab--active" data-filter="pending">
+                        ⏳ در انتظار <span class="legal-tab__count" id="tabPending">(۰)</span>
+                    </button>
+                    <button class="legal-tab" data-filter="drafted">
+                        ✅ تنظیم‌شده <span class="legal-tab__count" id="tabDrafted">(۰)</span>
+                    </button>
+                    <button class="legal-tab" data-filter="rejected">
+                        ❌ ردشده <span class="legal-tab__count" id="tabRejected">(۰)</span>
+                    </button>
+                    <button class="legal-tab" data-filter="all">
+                        📋 همه <span class="legal-tab__count" id="tabAll">(۰)</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="lq-list" id="queueList"></div>
+        </section>
+
+        <!-- ============ CONTRACTS ARCHIVE ============ -->
+        <section class="legal-section" id="section-contracts">
+            <h1 class="legal-page-title">📚 قراردادهای تنظیم‌شده</h1>
+            <p class="legal-page-subtitle">آرشیو قراردادهای تولیدشده توسط شما</p>
+
+            <div class="legal-card">
+                <div class="legal-card__header">
+                    <div class="legal-card__title">📄 لیست قراردادها</div>
+                </div>
+                <div class="legal-card__body" id="contractsArchive"></div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<nav class="legal-bottom-nav">
+    <div class="legal-bottom-nav__inner">
+        <button class="legal-bottom-nav__item legal-bottom-nav__item--active" data-nav="overview">
+            <span class="legal-bottom-nav__icon">📈</span>
+            <span>نمای کلی</span>
+        </button>
+        <button class="legal-bottom-nav__item" data-nav="queue">
+            <span class="legal-bottom-nav__icon">📄</span>
+            <span>صف</span>
+        </button>
+        <button class="legal-bottom-nav__item" data-nav="contracts">
+            <span class="legal-bottom-nav__icon">📚</span>
+            <span>آرشیو</span>
+        </button>
+    </div>
+</nav>
+
+<div class="legal-modal" id="modal">
+    <div class="legal-modal__inner">
+        <div class="legal-modal__header">
+            <div class="legal-modal__title" id="modalTitle">جزئیات</div>
+            <button class="legal-modal__close" id="modalClose">✕</button>
+        </div>
+        <div class="legal-modal__body" id="modalBody"></div>
+        <div class="legal-modal__footer" id="modalFooter"></div>
+    </div>
+</div>
+
+<div class="legal-toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<!-- Services -->
+<script src="js/credit-invoice-service.js"></script>
+<script src="js/contract-service.js"></script>
+<script src="js/financial-log-service.js"></script>
+<script src="js/case-state-machine.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+
+    const state = {
+        admin: null,
+        queue: [],
+        invoices: [],
+        cases: [],
+        contracts: [],
+        filter: 'pending',
+        search: '',
+        currentItem: null,
+        currentContractType: 'purchase'
+    };
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'legal-toast legal-toast--show';
+        if (type === 'error') el.classList.add('legal-toast--error');
+        if (type === 'success') el.classList.add('legal-toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('legal-toast--show'), 3200);
+    }
+
+    // ===== Auth Guard (فقط legal_admin + super_admin) =====
+    function checkAuth() {
+        try {
+            const cu = JSON.parse(localStorage.getItem('wamPayCurrentUser') || 'null');
+            if (!cu) {
+                toast('ابتدا وارد شوید', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            const allowedRoles = ['legal_admin', 'super_admin', 'deputy_admin'];
+            if (!allowedRoles.includes(cu.role)) {
+                toast('دسترسی فقط برای ادمین حقوقی', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            state.admin = cu;
+            return true;
+        } catch (e) {
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    // ===== Load Data =====
+    function loadData() {
+        try {
+            state.queue = JSON.parse(localStorage.getItem('wamPayLegalQueue') || '[]');
+            state.cases = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+            state.invoices = window.WamPayCreditInvoice
+                ? WamPayCreditInvoice.getAllInvoices()
+                : JSON.parse(localStorage.getItem('wamPayCreditInvoices') || '[]');
+            state.contracts = window.WamPayContracts
+                ? WamPayContracts.getAllContracts()
+                : JSON.parse(localStorage.getItem('wamPayContracts') || '[]');
+        } catch (e) {
+            console.error('Load error:', e);
+            state.queue = [];
+            state.cases = [];
+            state.invoices = [];
+            state.contracts = [];
+        }
+    }
+
+    function saveQueue() {
+        localStorage.setItem('wamPayLegalQueue', JSON.stringify(state.queue));
+    }
+
+    // ===== Status =====
+    function getStatusInfo(item) {
+        if (item.status === 'rejected') return { key: 'rejected', label: 'ردشده', cls: 'legal-badge--rejected', icon: '❌' };
+        if (item.status === 'drafted' || item.status === 'ready') return { key: 'drafted', label: 'تنظیم‌شده', cls: 'legal-badge--drafted', icon: '✅' };
+        return { key: 'pending', label: 'در انتظار تنظیم', cls: 'legal-badge--pending', icon: '⏳' };
+    }
+
+    // ===== Stats =====
+    function renderStats() {
+        const pending = state.queue.filter(q => q.status === 'pending_draft' || q.status === 'pending').length;
+        const today = new Date().toDateString();
+        const draftedToday = state.queue.filter(q =>
+            (q.status === 'drafted' || q.status === 'ready') &&
+            q.draftedAt && new Date(q.draftedAt).toDateString() === today
+        ).length;
+        const rejected = state.queue.filter(q => q.status === 'rejected').length;
+        const total = state.queue.length;
+
+        $('#statPending').textContent = faNum(pending);
+        $('#statDraftedToday').textContent = faNum(draftedToday);
+        $('#statRejected').textContent = faNum(rejected);
+        $('#statTotal').textContent = faNum(total);
+
+        if (pending > 0) {
+            $('#queueBadge').style.display = 'inline-block';
+            $('#queueBadge').textContent = faNum(pending);
+        } else {
+            $('#queueBadge').style.display = 'none';
+        }
+    }
+
+    // ===== Recent Pending =====
+    function renderRecentPending() {
+        const list = state.queue
+            .filter(q => q.status === 'pending_draft' || q.status === 'pending')
+            .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt))
+            .slice(0, 5);
+
+        const box = $('#recentPending');
+        if (list.length === 0) {
+            box.innerHTML = `
+                <div class="legal-empty" style="padding:30px;">
+                    <div class="legal-empty__icon">⚖️</div>
+                    <div class="legal-empty__title">همه‌چیز مرتبه!</div>
+                    <div class="legal-empty__desc">هیچ فاکتوری در انتظار تنظیم قرارداد نیست.</div>
+                </div>`;
+            return;
+        }
+
+        box.innerHTML = list.map(q => `
+            <div class="lq-card" style="margin-bottom:10px;">
+                <div class="lq-card__header" style="margin-bottom:10px;padding-bottom:10px;">
+                    <div>
+                        <div class="lq-card__title" style="font-size:14px;">💎 ${q.invoiceNumber}</div>
+                        <div class="lq-card__id">👤 ${q.brokerName || '—'} • 📁 ${q.caseNumber || '—'}</div>
+                    </div>
+                </div>
+                <div class="lq-financial" style="padding:8px;margin-bottom:10px;">
+                    <div class="lq-financial__item">
+                        <div class="lq-financial__label">خرید</div>
+                        <div class="lq-financial__value lq-financial__value--purchase">${faPrice(q.purchaseTotal)}</div>
+                    </div>
+                    <div class="lq-financial__item">
+                        <div class="lq-financial__label">فروش</div>
+                        <div class="lq-financial__value lq-financial__value--sale">${faPrice(q.saleTotal)}</div>
+                    </div>
+                    <div class="lq-financial__item">
+                        <div class="lq-financial__label">سود سایت</div>
+                        <div class="lq-financial__value lq-financial__value--profit">${faPrice(q.siteShare)}</div>
+                    </div>
+                    <div class="lq-financial__item">
+                        <div class="lq-financial__label">امتیاز</div>
+                        <div class="lq-financial__value lq-financial__value--unit">${q.creditName || '—'}</div>
+                    </div>
+                </div>
+                <div class="lq-card__actions" style="padding-top:10px;">
+                    <button class="legal-btn legal-btn--primary" data-view="${q.invoiceId}">⚖️ تنظیم قراردادها</button>
+                </div>
+            </div>
+        `).join('');
+
+        box.querySelectorAll('[data-view]').forEach(btn => {
+            btn.addEventListener('click', () => openDraftPanel(btn.dataset.view));
+        });
+    }
+
+    // ===== Queue =====
+    function getFilteredQueue() {
+        let list = state.queue.slice();
+        if (state.filter === 'pending') list = list.filter(q => q.status === 'pending_draft' || q.status === 'pending');
+        else if (state.filter === 'drafted') list = list.filter(q => q.status === 'drafted' || q.status === 'ready');
+        else if (state.filter === 'rejected') list = list.filter(q => q.status === 'rejected');
+
+        if (state.search.trim()) {
+            const s = state.search.trim().toLowerCase();
+            list = list.filter(q =>
+                (q.invoiceNumber || '').toLowerCase().includes(s) ||
+                (q.brokerName || '').toLowerCase().includes(s) ||
+                (q.caseNumber || '').toLowerCase().includes(s) ||
+                (q.creditName || '').toLowerCase().includes(s)
+            );
+        }
+        list.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+        return list;
+    }
+
+    function renderQueue() {
+        $('#tabPending').textContent = `(${faNum(state.queue.filter(q => q.status === 'pending_draft' || q.status === 'pending').length)})`;
+        $('#tabDrafted').textContent = `(${faNum(state.queue.filter(q => q.status === 'drafted' || q.status === 'ready').length)})`;
+        $('#tabRejected').textContent = `(${faNum(state.queue.filter(q => q.status === 'rejected').length)})`;
+        $('#tabAll').textContent = `(${faNum(state.queue.length)})`;
+
+        const list = getFilteredQueue();
+        const box = $('#queueList');
+
+        if (list.length === 0) {
+            box.innerHTML = `
+                <div class="legal-empty">
+                    <div class="legal-empty__icon">📄</div>
+                    <div class="legal-empty__title">صف خالی است</div>
+                    <div class="legal-empty__desc">با فیلتر فعلی هیچ فاکتوری وجود ندارد.</div>
+                </div>`;
+            return;
+        }
+
+        box.innerHTML = list.map(q => {
+            const info = getStatusInfo(q);
+            const cardCls = info.key === 'drafted' ? 'lq-card--drafted'
+                : info.key === 'rejected' ? 'lq-card--rejected'
+                : 'lq-card--pending';
+
+            const contracts = state.contracts.filter(c => c.caseId === q.caseId);
+
+            return `
+                <div class="lq-card ${cardCls}">
+                    <div class="lq-card__header">
+                        <div>
+                            <div class="lq-card__title">
+                                💎 ${q.invoiceNumber}
+                                <span class="legal-badge ${info.cls}">${info.icon} ${info.label}</span>
+                            </div>
+                            <div class="lq-card__id">👤 ${q.brokerName || '—'} • 📁 ${q.caseNumber || '—'}</div>
+                        </div>
+                        ${contracts.length > 0 ? `<span class="legal-badge legal-badge--legal">📄 ${faNum(contracts.length)} قرارداد</span>` : ''}
+                    </div>
+
+                    <div class="lq-financial">
+                        <div class="lq-financial__item">
+                            <div class="lq-financial__label">🛒 جمع خرید</div>
+                            <div class="lq-financial__value lq-financial__value--purchase">${faPrice(q.purchaseTotal)}</div>
+                        </div>
+                        <div class="lq-financial__item">
+                            <div class="lq-financial__label">💰 جمع فروش</div>
+                            <div class="lq-financial__value lq-financial__value--sale">${faPrice(q.saleTotal)}</div>
+                        </div>
+                        <div class="lq-financial__item">
+                            <div class="lq-financial__label">✨ سود سایت</div>
+                            <div class="lq-financial__value lq-financial__value--profit">${faPrice(q.siteShare)}</div>
+                        </div>
+                        <div class="lq-financial__item">
+                            <div class="lq-financial__label">📊 درصد</div>
+                            <div class="lq-financial__value lq-financial__value--unit">${faNum(Math.round((q.siteShare / q.saleTotal) * 100 || 0))}٪</div>
+                        </div>
+                    </div>
+
+                    <div class="lq-card__body">
+                        <div class="lq-card__row">
+                            <div class="lq-card__row-label">💎 نام امتیاز</div>
+                            <div class="lq-card__row-value">${q.creditName || '—'}</div>
+                        </div>
+                        <div class="lq-card__row">
+                            <div class="lq-card__row-label">🔢 تعداد</div>
+                            <div class="lq-card__row-value">${faNum(q.creditCount)} امتیاز</div>
+                        </div>
+                        <div class="lq-card__row">
+                            <div class="lq-card__row-label">👑 تأیید مدیر کل</div>
+                            <div class="lq-card__row-value">${q.superApprovedBy || '—'}</div>
+                        </div>
+                    </div>
+
+                    <div class="lq-card__actions">
+                        ${q.status === 'pending_draft' || q.status === 'pending' ? `
+                            <button class="legal-btn legal-btn--primary" data-action="draft" data-id="${q.invoiceId}">
+                                ⚖️ تنظیم پیش‌نویس قراردادها
+                            </button>
+                            <button class="legal-btn legal-btn--danger" data-action="reject" data-id="${q.invoiceId}">
+                                ❌ رد
+                            </button>
+                        ` : ''}
+                        ${q.status === 'drafted' || q.status === 'ready' ? `
+                            <button class="legal-btn legal-btn--info" data-action="view-contracts" data-id="${q.invoiceId}">
+                                👁️ مشاهده‌ی قراردادها
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        box.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const action = btn.dataset.action;
+                if (action === 'draft') openDraftPanel(id);
+                else if (action === 'reject') openReject(id);
+                else if (action === 'view-contracts') openViewContracts(id);
+            });
+        });
+    }
+
+    // ===== Draft Panel (قلب پنل) =====
+    function openDraftPanel(invoiceId) {
+        const q = state.queue.find(item => item.invoiceId === invoiceId);
+        const inv = state.invoices.find(i => i.id === invoiceId);
+        const caseData = state.cases.find(c => c.id === q?.caseId);
+        if (!q || !inv) { toast('فاکتور یافت نشد', 'error'); return; }
+        state.currentItem = { q, inv, caseData, contractType: 'purchase' };
+
+        $('#modalTitle').innerHTML = `⚖️ تنظیم پیش‌نویس قراردادها — ${q.invoiceNumber}`;
+
+        // استخراج اطلاعات
+        const broker = state.cases.find(c => c.id === q.caseId)?.createdBy || {};
+        const brokerFull = JSON.parse(localStorage.getItem('wamPayUsers') || '[]').find(u => u.id === inv.brokerId);
+        const applicant = caseData?.applicantData || {};
+
+        const purchaseTotal = q.purchaseTotal;
+        const saleTotal = q.saleTotal;
+        const siteShare = q.siteShare;
+
+        // متن پیش‌نویس خرید
+        const purchaseText = generatePurchaseText(inv, brokerFull || {}, applicant);
+        // متن پیش‌نویس فروش
+        const saleText = generateSaleText(inv, brokerFull || {}, applicant);
+
+        $('#modalBody').innerHTML = `
+            <div class="legal-info-box legal-info-box--warning" style="margin-bottom:16px;">
+                <div class="legal-info-box__title">⚖️ مرحله‌ی تنظیم قرارداد</div>
+                <div class="legal-info-box__desc">
+                    شما در حال تنظیم پیش‌نویس <strong>دو قرارداد</strong> برای پرونده‌ی
+                    <strong>${q.caseNumber}</strong> هستید:
+                    <br>📄 قرارداد خرید (سایت ↔ کارگزار)
+                    <br>📄 قرارداد فروش (سایت ↔ متقاضی)
+                </div>
+            </div>
+
+            <!-- خلاصه اطلاعات -->
+            <div class="legal-sec">
+                <div class="legal-sec__title">📋 خلاصه‌ی اطلاعات</div>
+                <div class="legal-detail">
+                    <div class="legal-detail__row">
+                        <div class="legal-detail__label">👤 کارگزار</div>
+                        <div class="legal-detail__value">${brokerFull?.name || q.brokerName || '—'}</div>
+                    </div>
+                    <div class="legal-detail__row">
+                        <div class="legal-detail__label">👥 متقاضی</div>
+                        <div class="legal-detail__value">${applicant.name || '—'}</div>
+                    </div>
+                    <div class="legal-detail__row">
+                        <div class="legal-detail__label">💎 نام امتیاز</div>
+                        <div class="legal-detail__value">${q.creditName || '—'}</div>
+                    </div>
+                    <div class="legal-detail__row">
+                        <div class="legal-detail__label">🔢 تعداد امتیاز</div>
+                        <div class="legal-detail__value">${faNum(q.creditCount)} امتیاز</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تب‌های قرارداد -->
+            <div class="contract-tabs">
+                <button class="contract-tab contract-tab--active" data-contract="purchase">
+                    📄 قرارداد خرید (سایت ↔ کارگزار)
+                </button>
+                <button class="contract-tab" data-contract="sale">
+                    📄 قرارداد فروش (سایت ↔ متقاضی)
+                </button>
+            </div>
+
+            <!-- محتوای قرارداد -->
+            <div class="contract-content" id="contractContent">
+${purchaseText}
+            </div>
+
+            <!-- چک‌لیست بندهای مهم -->
+            <div class="legal-sec" style="margin-top:16px;">
+                <div class="legal-sec__title">✅ چک‌لیست بندهای مهم</div>
+                <div class="clause-list">
+                    <label class="clause-item">
+                        <input type="checkbox" id="clauseCredit">
+                        <span class="clause-item__text">
+                            <strong>بند ۵ — سلب حق اعتراض:</strong> کارگزار از هرگونه ادعا نسبت به سود سایت مبرا شده است.
+                        </span>
+                    </label>
+                    <label class="clause-item">
+                        <input type="checkbox" id="clauseKnowledge">
+                        <span class="clause-item__text">
+                            <strong>بند ۴ — علم به فروش مجدد:</strong> کارگزار آگاه به فروش سایت به قیمت بالاتر است.
+                        </span>
+                    </label>
+                    <label class="clause-item">
+                        <input type="checkbox" id="clausePayment">
+                        <span class="clause-item__text">
+                            <strong>بند ۳ — پرداخت امانی:</strong> پرداخت پس از انجام تعهدات، یکجا به کارگزار.
+                        </span>
+                    </label>
+                    <label class="clause-item">
+                        <input type="checkbox" id="clauseLegal">
+                        <span class="clause-item__text">
+                            <strong>تأیید حقوقی نهایی:</strong> متن قرارداد از نظر حقوقی بررسی و تأیید می‌شود.
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <label style="font-size:13px;font-weight:700;display:block;margin-top:14px;">📝 یادداشت حقوقی (اختیاری)</label>
+            <textarea class="legal-textarea" id="legalNote" placeholder="مثال: متن قرارداد مورد تأیید است..."></textarea>
+        `;
+
+        $('#modalFooter').innerHTML = `
+            <button class="legal-btn legal-btn--ghost" id="cancelBtn">انصراف</button>
+            <button class="legal-btn legal-btn--success" id="confirmBtn">⚖️ تولید و ارسال پیش‌نویس</button>
+        `;
+
+        // تب‌ها
+        $$('.contract-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                $$('.contract-tab').forEach(t => t.classList.remove('contract-tab--active'));
+                tab.classList.add('contract-tab--active');
+                const type = tab.dataset.contract;
+                state.currentItem.contractType = type;
+                $('#contractContent').textContent = type === 'purchase' ? purchaseText : saleText;
+            });
+        });
+
+        $('#cancelBtn').addEventListener('click', closeModal);
+        $('#confirmBtn').addEventListener('click', () => {
+            const checks = ['clauseCredit', 'clauseKnowledge', 'clausePayment', 'clauseLegal'];
+            for (const c of checks) {
+                if (!document.getElementById(c).checked) {
+                    toast('لطفاً همه‌ی بندهای مهم را تأیید کنید', 'error');
+                    return;
+                }
+            }
+            const note = $('#legalNote').value.trim();
+            confirmDraft(invoiceId, note);
+        });
+
+        $('#modal').classList.add('legal-modal--open');
+    }
+
+    // ===== Generate Purchase Contract Text =====
+    function generatePurchaseText(inv, broker, applicant) {
+        const creditName = inv.creditName || '—';
+        const count = faNum(inv.creditCount);
+        const purchaseUnit = faPrice(inv.purchase.pricePerUnit);
+        const saleUnit = faPrice(inv.sale.pricePerUnit);
+        const purchaseTotal = faPrice(inv.purchase.total);
+        const saleTotal = faPrice(inv.sale.total);
+        const siteShare = faPrice(inv.profit.siteShare);
+        const diff = faPrice(inv.profit.siteSharePerUnit);
+        const months = faNum(inv.repaymentMonths);
+        const loanAmount = faPrice(inv.loanAmount);
+
+        const today = (() => {
+            const d = new Date();
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            return `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())}`;
+        })();
+
+        return `═══════════════════════════════════════════════════════════
+              قرارداد خرید امتیاز
+        سامانه‌ی هوشمند تسهیلات وام‌پی
+═══════════════════════════════════════════════════════════
+
+تاریخ تنظیم: ${today}
+
+───────────────────────────────────────────────────────────
+بخش اول — طرفین قرارداد
+───────────────────────────────────────────────────────────
+
+۱-۱. فروشنده (کارگزار):
+     نام و نام خانوادگی: ${broker.firstName || ''} ${broker.lastName || ''}
+     کد ملی: ${broker.nationalId || '—'}
+     شماره پرونده‌ی کارگزاری: ${broker.fileNumber || '—'}
+     شماره تماس: ${broker.mobile || '—'}
+     خط ثابت: ${broker.landline?.full || '—'}
+     آدرس: ${broker.address || '—'}
+
+۱-۲. خریدار (سایت):
+     شرکت وام‌پی (سهامی خاص)
+     نماینده: مدیرعامل
+     آدرس: تهران
+
+───────────────────────────────────────────────────────────
+بخش دوم — موضوع قرارداد
+───────────────────────────────────────────────────────────
+
+۲-۱. موضوع این قرارداد، خرید امتیاز از نوع «${creditName}» توسط
+     سایت از فروشنده (کارگزار) می‌باشد.
+
+۲-۲. مشخصات امتیاز:
+     • نام امتیاز: ${creditName}
+     • تعداد امتیاز: ${count} امتیاز
+     • مبلغ وام مرتبط: ${loanAmount} تومان
+     • مدت بازپرداخت: ${months} ماه
+
+───────────────────────────────────────────────────────────
+بخش سوم — قیمت و مبلغ قرارداد
+───────────────────────────────────────────────────────────
+
+۳-۱. قیمت هر واحد امتیاز (خرید):
+     ${purchaseUnit} تومان
+
+۳-۲. جمع کل مبلغ خرید:
+     ${count} × ${purchaseUnit} = ${purchaseTotal} تومان
+
+۳-۳. نحوه‌ی پرداخت:
+     سایت متعهد می‌شود پس از دریافت وجه از متقاضی و پس از
+     انجام کامل تعهدات قراردادی توسط فروشنده، مبلغ مذکور در
+     بند ۳-۲ را به کیف پول فروشنده واریز نماید.
+
+───────────────────────────────────────────────────────────
+بخش چهارم — علم به فروش مجدد ⭐
+───────────────────────────────────────────────────────────
+
+۴-۱. فروشنده آگاه است که سایت این امتیاز را به قیمت هر واحد
+     ${saleUnit} تومان به متقاضی می‌فروشد.
+
+۴-۲. جمع کل مبلغ فروش سایت به متقاضی:
+     ${count} × ${saleUnit} = ${saleTotal} تومان
+
+۴-۳. فروشنده از پیش، با اطلاع کامل از این موضوع، موافقت خود
+     را نسبت به خرید و فروش مجدد اعلام می‌نماید.
+
+───────────────────────────────────────────────────────────
+بخش پنجم — سلب حق اعتراض ⭐⭐⭐
+───────────────────────────────────────────────────────────
+
+۵-۱. مابه‌التفاوت قیمت فروش و خرید:
+     ${saleUnit} − ${purchaseUnit} = ${diff} تومان به ازای هر واحد
+
+۵-۲. سود خالص سایت از این معامله:
+     ${siteShare} تومان
+
+۵-۳. فروشنده اقرار می‌نماید که این مبلغ، سود خالص و قانونی
+     سایت محسوب می‌شود و هیچ‌گونه ادعا، اعتراض، مطالبه، یا
+     شکایتی نسبت به این سود ندارد.
+
+۵-۴. فروشنده از هرگونه دعوی حقوقی، کیفری، انتظامی و اداری
+     در این خصوص، نسبت به سایت و کارکنان آن، سلب و ساقط است.
+
+۵-۵. در صورت طرح هرگونه ادعا خلاف این بند، فروشنده متعهد
+     به جبران تمامی خسارات می‌باشد.
+
+───────────────────────────────────────────────────────────
+بخش ششم — تعهدات فروشنده
+───────────────────────────────────────────────────────────
+
+۶-۱. انتقال امتیاز در زمان مقرر.
+۶-۲. رعایت تعهدات قراردادی با متقاضی.
+۶-۳. رعایت قوانین سامانه‌ی وام‌پی.
+۶-۴. عدم انصراف پس از امضا.
+
+───────────────────────────────────────────────────────────
+بخش هفتم — ضمانت اجرا
+───────────────────────────────────────────────────────────
+
+۷-۱. تخلف از هر تعهد، موجب مسئولیت جبران خسارات است.
+۷-۲. انصراف پس از امضا، موجب پرداخت جریمه می‌شود.
+
+───────────────────────────────────────────────────────────
+بخش هشتم — امضاها
+───────────────────────────────────────────────────────────
+
+فروشنده (کارگزار):    ...................
+                       تاریخ: ...........
+
+خریدار (سایت):         ...................
+                       مهر و امضا
+
+───────────────────────────────────────────────────────────
+این قرارداد در تاریخ ${today} تنظیم و پس از امضای طرفین،
+لازم‌الاجرا می‌باشد.
+───────────────────────────────────────────────────────────`;
+    }
+
+    // ===== Generate Sale Contract Text =====
+    function generateSaleText(inv, broker, applicant) {
+        const creditName = inv.creditName || '—';
+        const count = faNum(inv.creditCount);
+        const saleUnit = faPrice(inv.sale.pricePerUnit);
+        const saleTotal = faPrice(inv.sale.total);
+        const purchaseTotal = faPrice(inv.purchase.total);
+        const siteShare = faPrice(inv.profit.siteShare);
+        const months = faNum(inv.repaymentMonths);
+        const loanAmount = faPrice(inv.loanAmount);
+
+        const today = (() => {
+            const d = new Date();
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            return `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())}`;
+        })();
+
+        return `═══════════════════════════════════════════════════════════
+              قرارداد فروش امتیاز
+        سامانه‌ی هوشمند تسهیلات وام‌پی
+═══════════════════════════════════════════════════════════
+
+تاریخ تنظیم: ${today}
+
+───────────────────────────────────────────────────────────
+بخش اول — طرفین قرارداد
+───────────────────────────────────────────────────────────
+
+۱-۱. فروشنده (سایت):
+     شرکت وام‌پی (سهامی خاص)
+     نماینده: مدیرعامل
+     آدرس: تهران
+
+۱-۲. خریدار (متقاضی):
+     نام و نام خانوادگی: ${applicant.name || '—'}
+     کد ملی: ${applicant.nationalId || '—'}
+     شماره تماس: ${applicant.mobile || '—'}
+     آدرس: ${applicant.address || '—'}
+
+───────────────────────────────────────────────────────────
+بخش دوم — موضوع قرارداد
+───────────────────────────────────────────────────────────
+
+۲-۱. موضوع این قرارداد، خرید امتیاز از نوع «${creditName}» توسط
+     متقاضی از سایت می‌باشد.
+
+۲-۲. مشخصات امتیاز:
+     • نام امتیاز: ${creditName}
+     • تعداد امتیاز: ${count} امتیاز
+     • مبلغ وام مرتبط: ${loanAmount} تومان
+     • مدت بازپرداخت: ${months} ماه
+
+───────────────────────────────────────────────────────────
+بخش سوم — قیمت و مبلغ قرارداد
+───────────────────────────────────────────────────────────
+
+۳-۱. قیمت هر واحد امتیاز (فروش):
+     ${saleUnit} تومان
+
+۳-۲. جمع کل مبلغ فروش:
+     ${count} × ${saleUnit} = ${saleTotal} تومان
+
+۳-۳. متقاضی متعهد به پرداخت مبلغ مذکور به حساب امانی سایت است.
+
+───────────────────────────────────────────────────────────
+بخش چهارم — پرداخت امانی و تفکیک
+───────────────────────────────────────────────────────────
+
+۴-۱. مبلغ خرید در حساب امانی وام‌پی نگهداری می‌شود.
+
+۴-۲. پس از انجام تعهدات توسط کارگزار معرف، مبلغ امانی
+     به شرح زیر توزیع می‌شود:
+
+     • سود سایت: ${siteShare} تومان
+     • سهم کارگزار: ${purchaseTotal} تومان
+
+───────────────────────────────────────────────────────────
+بخش پنجم — تعهدات متقاضی
+───────────────────────────────────────────────────────────
+
+۵-۱. پرداخت به‌موقع مبلغ امانی.
+۵-۲. پذیرش عدم انصراف یک‌طرفه پس از انتقال امتیاز.
+۵-۳. رعایت قوانین وام‌پی.
+
+───────────────────────────────────────────────────────────
+بخش ششم — حق عودت
+───────────────────────────────────────────────────────────
+
+۶-۱. در صورت انصراف متقاضی پیش از انتقال امتیاز، مبلغ امانی
+     به‌طور کامل بازگردانده می‌شود.
+
+۶-۲. کارمزد حسابداری (متغیر) بابت هزینه‌های اداری از مبلغ
+     بازگشتی کسر می‌گردد.
+
+───────────────────────────────────────────────────────────
+بخش هفتم — امضاها
+───────────────────────────────────────────────────────────
+
+خریدار (متقاضی):       ...................
+                       تاریخ: ...........
+
+فروشنده (سایت):        ...................
+                       مهر و امضا
+
+───────────────────────────────────────────────────────────
+این قرارداد در تاریخ ${today} تنظیم و پس از امضای طرفین،
+لازم‌الاجرا می‌باشد.
+───────────────────────────────────────────────────────────`;
+    }
+
+    // ===== Confirm Draft =====
+    function confirmDraft(invoiceId, note) {
+        const q = state.queue.find(item => item.invoiceId === invoiceId);
+        const inv = state.invoices.find(i => i.id === invoiceId);
+        const caseData = state.cases.find(c => c.id === q?.caseId);
+
+        if (!q || !inv) { toast('اطلاعات ناقص', 'error'); return; }
+        if (!window.WamPayContracts) { toast('سرویس قرارداد در دسترس نیست', 'error'); return; }
+
+        const broker = JSON.parse(localStorage.getItem('wamPayUsers') || '[]').find(u => u.id === inv.brokerId);
+        const applicant = caseData?.applicantData || {};
+
+        // ۱. تولید قرارداد خرید
+        const purchaseResult = WamPayContracts.createContract('purchase', {
+            invoice: inv,
+            broker: broker || { firstName: 'کارگزار', lastName: '' },
+            applicant,
+            loan: { amount: inv.loanAmount, months: inv.repaymentMonths }
+        }, {
+            caseId: q.caseId,
+            caseNumber: q.caseNumber,
+            invoiceId: inv.id,
+            invoiceNumber: inv.invoiceNumber,
+            brokerId: inv.brokerId,
+            applicantId: caseData?.applicantData?.nationalId
+        });
+
+        if (!purchaseResult.ok) { toast('خطا در تولید قرارداد خرید', 'error'); return; }
+
+        // ۲. تولید قرارداد فروش
+        const saleResult = WamPayContracts.createContract('sale', {
+            invoice: inv,
+            broker: broker || { firstName: 'کارگزار', lastName: '' },
+            applicant,
+            loan: { amount: inv.loanAmount, months: inv.repaymentMonths }
+        }, {
+            caseId: q.caseId,
+            caseNumber: q.caseNumber,
+            invoiceId: inv.id,
+            invoiceNumber: inv.invoiceNumber,
+            brokerId: inv.brokerId,
+            applicantId: caseData?.applicantData?.nationalId
+        });
+
+        if (!saleResult.ok) { toast('خطا در تولید قرارداد فروش', 'error'); return; }
+
+        // ۳. آپدیت صف حقوقی
+        q.status = 'drafted';
+        q.draftedAt = new Date().toISOString();
+        q.draftedBy = state.admin.name;
+        q.legalNote = note;
+        q.purchaseContractId = purchaseResult.contract.id;
+        q.purchaseContractNumber = purchaseResult.contract.contractNumber;
+        q.saleContractId = saleResult.contract.id;
+        q.saleContractNumber = saleResult.contract.contractNumber;
+        saveQueue();
+
+        // ۴. افزودن به صف ادمین کارگزار (برای درج در پنل کارگزار)
+        const brokerAdminQueue = JSON.parse(localStorage.getItem('wamPayBrokerAdminQueue') || '[]');
+        brokerAdminQueue.push({
+            caseId: q.caseId,
+            caseNumber: q.caseNumber,
+            brokerId: q.brokerId,
+            brokerName: q.brokerName,
+            invoiceId: inv.id,
+            invoiceNumber: inv.invoiceNumber,
+            purchaseContractId: purchaseResult.contract.id,
+            purchaseContractNumber: purchaseResult.contract.contractNumber,
+            saleContractId: saleResult.contract.id,
+            saleContractNumber: saleResult.contract.contractNumber,
+            type: 'contract_placement',
+            status: 'pending',
+            submittedAt: new Date().toISOString()
+        });
+        localStorage.setItem('wamPayBrokerAdminQueue', JSON.stringify(brokerAdminQueue));
+
+        // ۵. به‌روزرسانی پرونده
+        const apps = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+        const appIdx = apps.findIndex(a => a.id === q.caseId);
+        if (appIdx >= 0) {
+            apps[appIdx].status = 'awaiting_broker_sign';
+            apps[appIdx].contracts = {
+                purchase: {
+                    id: purchaseResult.contract.id,
+                    number: purchaseResult.contract.contractNumber,
+                    status: 'draft'
+                },
+                sale: {
+                    id: saleResult.contract.id,
+                    number: saleResult.contract.contractNumber,
+                    status: 'draft'
+                }
+            };
+            apps[appIdx].updatedAt = new Date().toISOString();
+            localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+        }
+
+        // ۶. لاگ
+        if (window.WamPayFinancialLog) {
+            WamPayFinancialLog.logEvent(
+                'contract_created',
+                { stage: 'legal_drafted', invoiceNumber: inv.invoiceNumber },
+                {
+                    caseId: q.caseId,
+                    caseNumber: q.caseNumber,
+                    invoiceId: inv.id,
+                    invoiceNumber: inv.invoiceNumber,
+                    contractId: purchaseResult.contract.id,
+                    title: `⚖️ تنظیم پیش‌نویس قراردادها — ${inv.invoiceNumber}`,
+                    description: `دو قرارداد: ${purchaseResult.contract.contractNumber} و ${saleResult.contract.contractNumber}`,
+                    actor: { role: 'legal_admin', name: state.admin.name, id: state.admin.id },
+                    important: true
+                }
+            );
+        }
+
+        loadData();
+        renderStats();
+        renderQueue();
+        renderRecentPending();
+        closeModal();
+        toast('⚖️ پیش‌نویس قراردادها با موفقیت تنظیم شد', 'success');
+        console.log('⚖️ [Legal] قرارداد خرید:', purchaseResult.contract.contractNumber);
+        console.log('⚖️ [Legal] قرارداد فروش:', saleResult.contract.contractNumber);
+    }
+
+    // ===== View Contracts =====
+    function openViewContracts(invoiceId) {
+        const q = state.queue.find(item => item.invoiceId === invoiceId);
+        if (!q) return;
+        state.currentItem = { q };
+
+        const purchaseCtr = state.contracts.find(c => c.id === q.purchaseContractId);
+        const saleCtr = state.contracts.find(c => c.id === q.saleContractId);
+
+        $('#modalTitle').textContent = '👁️ مشاهده‌ی قراردادها';
+
+        $('#modalBody').innerHTML = `
+            <div class="legal-info-box legal-info-box--success" style="margin-bottom:16px;">
+                <div class="legal-info-box__title">✅ قراردادهای تنظیم‌شده</div>
+                <div class="legal-info-box__desc">
+                    این دو قرارداد تنظیم و برای امضا آماده شده‌اند.
+                </div>
+            </div>
+
+            <div class="legal-sec">
+                <div class="legal-sec__title">📄 قرارداد خرید (سایت ↔ کارگزار)</div>
+                <div class="legal-detail">
+                    <div class="legal-detail__row">
+                        <div class="legal-detail__label">شماره قرارداد</div>
+                        <div class="legal-detail__value legal-detail__value--mono">${purchaseCtr?.contractNumber || '—'}</div>
+                    </div>
+                    <div class="legal-detail__row">
+                        <div class="legal-detail__label">وضعیت</div>
+                        <div class="legal-detail__value">${purchaseCtr?.status || '—'}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legal-sec">
+                <div class="legal-sec__title">📄 قرارداد فروش (سایت ↔ متقاضی)</div>
+                <div class="legal-detail">
+                    <div class="legal-detail__row">
+                        <div class="legal-detail__label">شماره قرارداد</div>
+                        <div class="legal-detail__value legal-detail__value--mono">${saleCtr?.contractNumber || '—'}</div>
+                    </div>
+                    <div class="legal-detail__row">
+                        <div class="legal-detail__label">وضعیت</div>
+                        <div class="legal-detail__value">${saleCtr?.status || '—'}</div>
+                    </div>
+                </div>
+            </div>
+
+            ${purchaseCtr ? `
+                <div class="legal-sec">
+                    <div class="legal-sec__title">📄 متن قرارداد خرید</div>
+                    <div class="contract-content" style="max-height:300px; font-size:11px;">
+${purchaseCtr.content || '—'}
+                    </div>
+                </div>
+            ` : ''}
+        `;
+
+        $('#modalFooter').innerHTML = '<button class="legal-btn legal-btn--ghost" id="cancelBtn">بستن</button>';
+        $('#cancelBtn').addEventListener('click', closeModal);
+        $('#modal').classList.add('legal-modal--open');
+    }
+
+    // ===== Reject =====
+    function openReject(invoiceId) {
+        const q = state.queue.find(item => item.invoiceId === invoiceId);
+        if (!q) return;
+
+        $('#modalTitle').textContent = '❌ رد درخواست';
+        $('#modalBody').innerHTML = `
+            <div class="legal-info-box legal-info-box--error" style="margin-bottom:14px;">
+                <div class="legal-info-box__title">⚠️ توجه</div>
+                <div class="legal-info-box__desc">
+                    رد این فاکتور باعث توقف پرونده می‌شود.
+                </div>
+            </div>
+
+            <label style="font-size:13px;font-weight:700;">📝 دلیل رد <span style="color:var(--error);">*</span></label>
+            <textarea class="legal-textarea" id="rejectReason" placeholder="مثال: اطلاعات ناقص است، مسئله حقوقی وجود دارد..."></textarea>
+        `;
+        $('#modalFooter').innerHTML = `
+            <button class="legal-btn legal-btn--ghost" id="cancelBtn">انصراف</button>
+            <button class="legal-btn legal-btn--danger" id="confirmBtn">❌ تأیید رد</button>
+        `;
+
+        $('#cancelBtn').addEventListener('click', closeModal);
+        $('#confirmBtn').addEventListener('click', () => {
+            const reason = $('#rejectReason').value.trim();
+            if (!reason) { toast('دلیل رد را وارد کنید', 'error'); return; }
+            const q2 = state.queue.find(item => item.invoiceId === invoiceId);
+            q2.status = 'rejected';
+            q2.rejectedAt = new Date().toISOString();
+            q2.rejectedBy = state.admin.name;
+            q2.rejectReason = reason;
+            saveQueue();
+            renderStats();
+            renderQueue();
+            renderRecentPending();
+            closeModal();
+            toast('درخواست رد شد', 'info');
+        });
+
+        $('#modal').classList.add('legal-modal--open');
+    }
+
+    // ===== Navigation =====
+    function goToSection(name) {
+        $$('.legal-section').forEach(s => s.classList.remove('legal-section--active'));
+        $('#section-' + name)?.classList.add('legal-section--active');
+        $$('.legal-nav__item').forEach(i => i.classList.toggle('legal-nav__item--active', i.dataset.nav === name));
+        $$('.legal-bottom-nav__item').forEach(i => i.classList.toggle('legal-bottom-nav__item--active', i.dataset.nav === name));
+        $('#sidebar').classList.remove('legal-sidebar--open');
+        $('#overlay').classList.remove('legal-overlay--show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (name === 'contracts') renderContractsArchive();
+    }
+
+    function closeModal() {
+        $('#modal').classList.remove('legal-modal--open');
+        state.currentItem = null;
+    }
+
+    // ===== Contracts Archive =====
+    function renderContractsArchive() {
+        const list = state.contracts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 20);
+        const box = $('#contractsArchive');
+
+        if (list.length === 0) {
+            box.innerHTML = '<div class="legal-empty" style="padding:30px;"><div class="legal-empty__desc">هنوز قراردادی تولید نشده است.</div></div>';
+            return;
+        }
+
+        box.innerHTML = list.map(c => {
+            const typeLabel = c.type === 'purchase' ? '📄 خرید' : '📄 فروش';
+            return `
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <span style="font-size:22px;">${c.type === 'purchase' ? '📄' : '📋'}</span>
+                        <div>
+                            <div style="font-weight:800;font-family:monospace;">${c.contractNumber}</div>
+                            <div style="font-size:11px;color:var(--text-muted);">${typeLabel} • ${c.caseNumber || '—'}</div>
+                        </div>
+                    </div>
+                    <span class="legal-badge legal-badge--info">${c.status || '—'}</span>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Theme =====
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light'); btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark'); btn.textContent = '☀️';
+            }
+        });
+    }
+
+    // ===== Events =====
+    function attachEvents() {
+        $$('[data-nav]').forEach(el => el.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (el.dataset.nav) goToSection(el.dataset.nav);
+        }));
+
+        $('#menuBtn').addEventListener('click', () => {
+            $('#sidebar').classList.toggle('legal-sidebar--open');
+            $('#overlay').classList.toggle('legal-overlay--show');
+        });
+        $('#overlay').addEventListener('click', () => {
+            $('#sidebar').classList.remove('legal-sidebar--open');
+            $('#overlay').classList.remove('legal-overlay--show');
+        });
+
+        $('#refreshBtn').addEventListener('click', () => {
+            loadData();
+            renderStats();
+            renderQueue();
+            renderRecentPending();
+            toast('به‌روزرسانی شد', 'success');
+        });
+
+        $('#userMenu').addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
+            e.stopPropagation();
+            $('#userDropdown').classList.toggle('legal-user__dropdown--open');
+        });
+        document.addEventListener('click', () => $('#userDropdown').classList.remove('legal-user__dropdown--open'));
+        $('#userDropdown').addEventListener('click', (e) => e.stopPropagation());
+
+        const logout = () => {
+            if (!confirm('خروج از حساب؟')) return;
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+            window.location.href = 'login.html';
+        };
+        $('#logoutBtn').addEventListener('click', logout);
+
+        $$('#queueTabs .legal-tab').forEach(tab => tab.addEventListener('click', () => {
+            $$('#queueTabs .legal-tab').forEach(t => t.classList.remove('legal-tab--active'));
+            tab.classList.add('legal-tab--active');
+            state.filter = tab.dataset.filter;
+            renderQueue();
+        }));
+
+        $('#searchInput').addEventListener('input', (e) => {
+            state.search = e.target.value;
+            renderQueue();
+        });
+
+        $('#modalClose').addEventListener('click', closeModal);
+        $('#modal').addEventListener('click', (e) => { if (e.target === $('#modal')) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    }
+
+    // ===== Init =====
+    function init() {
+        if (!checkAuth()) return;
+
+        loadData();
+        $('#userAvatar').textContent = '⚖️';
+        $('#userName').textContent = state.admin.name || 'ادمین حقوقی';
+
+        renderStats();
+        renderRecentPending();
+        renderQueue();
+
+        initTheme();
+        attachEvents();
+        goToSection('overview');
+
+        console.log('%c⚖️ WAM PAY — Legal Contract Draft v1.0', 'color:#1f3a5f;font-weight:bold;font-size:14px;');
+        console.log('%c👤 ادمین حقوقی:', 'color:#4a90e2;font-weight:bold;', state.admin.name);
+        console.log('%c📄 صف تنظیم:', 'color:#4a90e2;font-weight:bold;', state.queue.length);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>
+  

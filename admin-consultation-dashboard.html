@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>داشبورد مشاوره — وام پی</title>
+<!-- ✅ لوکال شده: Vazirmatn CDN حذف شد -->
+<link rel="stylesheet" href="css/fonts/Vazirmatn-font-face.css">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  :root {
+    --cns-primary: #e67e22;
+    --cns-dark:    #b85f11;
+    --cns-darker:  #7e4108;
+    --cns-light:   #fef4e8;
+    --cns-soft:    #fcdcb3;
+    --cns-accent:  #f39c12;
+    --cns-success: #1e8e4a;
+    --cns-danger:  #c0392b;
+    --cns-info:    #2980b9;
+    --cns-gold:    #d4a62a;
+    --cns-text:    #2a1e0f;
+    --cns-muted:   #8a7863;
+    --cns-border:  #f0e0cc;
+    --cns-bg:      #fdf8f2;
+    --cns-card:    #ffffff;
+    --cns-shadow:  0 2px 8px rgba(230,126,34,.08);
+    --cns-shadow-lg: 0 8px 24px rgba(230,126,34,.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: var(--cns-bg);
+    color: var(--cns-text);
+    direction: rtl;
+    min-height: 100vh;
+    line-height: 1.7;
+  }
+
+  /* ========== Header ========== */
+  .cns-header {
+    background: linear-gradient(135deg, var(--cns-dark) 0%, var(--cns-primary) 100%);
+    color: #fff;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--cns-shadow-lg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .cns-header__brand { display: flex; align-items: center; gap: 14px; }
+  .cns-header__logo {
+    width: 46px; height: 46px;
+    background: rgba(255,255,255,.15);
+    border: 2px solid rgba(255,255,255,.35);
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 22px;
+  }
+  .cns-header__title h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: -.2px; }
+  .cns-header__title p { font-size: .78rem; opacity: .85; margin-top: 2px; }
+  .cns-header__user { display: flex; align-items: center; gap: 12px; }
+  .cns-header__avatar {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,.2);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 15px;
+  }
+  .cns-header__meta { text-align: right; font-size: .82rem; }
+  .cns-header__meta strong { display: block; font-size: .9rem; }
+  .cns-header__meta span { opacity: .8; font-size: .75rem; }
+  .cns-btn-ghost {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.3);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: .82rem;
+    transition: all .2s;
+  }
+  .cns-btn-ghost:hover { background: rgba(255,255,255,.22); }
+
+  /* ========== Layout ========== */
+  .cns-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: calc(100vh - 82px);
+  }
+
+  /* ========== Sidebar ========== */
+  .cns-sidebar {
+    background: #fff;
+    border-left: 1px solid var(--cns-border);
+    padding: 20px 0;
+    position: sticky;
+    top: 82px;
+    height: calc(100vh - 82px);
+    overflow-y: auto;
+  }
+  .cns-sidebar__section { padding: 0 16px; margin-bottom: 20px; }
+  .cns-sidebar__label {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cns-muted);
+    font-weight: 700;
+    padding: 0 8px 8px;
+  }
+  .cns-nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: var(--cns-text);
+    text-decoration: none;
+    font-size: .88rem;
+    font-weight: 500;
+    transition: all .18s;
+    margin-bottom: 2px;
+    position: relative;
+  }
+  .cns-nav a:hover { background: var(--cns-light); color: var(--cns-primary); }
+  .cns-nav a.active {
+    background: var(--cns-primary);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(230,126,34,.3);
+  }
+  .cns-nav a.active::before {
+    content: '';
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px; height: 22px;
+    background: var(--cns-dark);
+    border-radius: 4px;
+  }
+  .cns-nav__icon { font-size: 1.05rem; width: 22px; text-align: center; }
+  .cns-nav__badge {
+    margin-right: auto;
+    background: var(--cns-danger);
+    color: #fff;
+    font-size: .68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    min-width: 20px;
+    text-align: center;
+  }
+  .cns-nav a.active .cns-nav__badge { background: #fff; color: var(--cns-primary); }
+
+  /* ========== Main ========== */
+  .cns-main { padding: 24px 32px 60px; max-width: 1600px; }
+
+  .cns-page-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .cns-page-title h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--cns-darker);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cns-page-title h2::before {
+    content: '';
+    width: 6px; height: 26px;
+    background: var(--cns-primary);
+    border-radius: 4px;
+  }
+  .cns-page-title p {
+    font-size: .84rem;
+    color: var(--cns-muted);
+    margin-top: 4px;
+    padding-right: 16px;
+  }
+
+  /* ========== Stat Cards ========== */
+  .cns-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .cns-stat {
+    background: var(--cns-card);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--cns-shadow);
+    border: 1px solid var(--cns-border);
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .cns-stat:hover { transform: translateY(-2px); box-shadow: var(--cns-shadow-lg); }
+  .cns-stat::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 4px; height: 100%;
+    background: var(--cns-primary);
+  }
+  .cns-stat[data-variant="info"]::after   { background: var(--cns-info); }
+  .cns-stat[data-variant="ok"]::after     { background: var(--cns-success); }
+  .cns-stat[data-variant="danger"]::after { background: var(--cns-danger); }
+  .cns-stat__label {
+    font-size: .78rem;
+    color: var(--cns-muted);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cns-stat__value {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--cns-darker);
+    margin-top: 8px;
+    letter-spacing: -.5px;
+  }
+  .cns-stat__hint { font-size: .72rem; color: var(--cns-muted); margin-top: 4px; }
+
+  /* ========== Toolbar ========== */
+  .cns-toolbar {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 18px;
+    border: 1px solid var(--cns-border);
+    box-shadow: var(--cns-shadow);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .cns-search { flex: 1; min-width: 200px; position: relative; }
+  .cns-search input {
+    width: 100%;
+    padding: 10px 40px 10px 14px;
+    border: 1.5px solid var(--cns-border);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: .88rem;
+    background: var(--cns-bg);
+    transition: all .2s;
+  }
+  .cns-search input:focus {
+    outline: none;
+    border-color: var(--cns-primary);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(230,126,34,.12);
+  }
+  .cns-search::before {
+    content: '🔍';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: .9rem;
+    opacity: .5;
+    pointer-events: none;
+  }
+  .cns-filter {
+    padding: 10px 14px;
+    border: 1.5px solid var(--cns-border);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: .85rem;
+    background: var(--cns-bg);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .cns-filter:focus { outline: none; border-color: var(--cns-primary); }
+
+  /* ========== Table ========== */
+  .cns-table-wrap {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid var(--cns-border);
+    box-shadow: var(--cns-shadow);
+    overflow: hidden;
+  }
+  .cns-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+  .cns-table thead {
+    background: linear-gradient(135deg, var(--cns-light), #fffaf3);
+    border-bottom: 2px solid var(--cns-soft);
+  }
+  .cns-table th {
+    padding: 14px 16px;
+    text-align: right;
+    font-weight: 700;
+    color: var(--cns-darker);
+    font-size: .8rem;
+    white-space: nowrap;
+  }
+  .cns-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--cns-border);
+    vertical-align: middle;
+  }
+  .cns-table tbody tr { transition: background .15s; }
+  .cns-table tbody tr:hover { background: var(--cns-light); }
+  .cns-table tbody tr:last-child td { border-bottom: none; }
+
+  .cns-case-num {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: var(--cns-primary);
+    direction: ltr;
+    text-align: right;
+    font-size: .82rem;
+  }
+  .cns-name { font-weight: 600; color: var(--cns-text); }
+  .cns-name small { display: block; color: var(--cns-muted); font-weight: 400; font-size: .72rem; }
+  .cns-amount {
+    font-weight: 700;
+    color: var(--cns-darker);
+    direction: rtl;
+  }
+  .cns-amount small { color: var(--cns-muted); font-weight: 400; font-size: .7rem; }
+
+  /* ========== Pills ========== */
+  .cns-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: .72rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .cns-pill--pending    { background: #fff4e5; color: #b06a00; }
+  .cns-pill--progress   { background: var(--cns-soft); color: var(--cns-dark); }
+  .cns-pill--done       { background: #e3f6ec; color: var(--cns-success); }
+  .cns-pill--rejected   { background: #fce8e6; color: var(--cns-danger); }
+  .cns-pill--referral   { background: #e6f0fb; color: var(--cns-info); }
+  .cns-pill--call       { background: #fce8e6; color: var(--cns-danger); }
+  .cns-pill--high       { background: #fce8e6; color: var(--cns-danger); }
+  .cns-pill--normal     { background: #f2efe9; color: var(--cns-muted); }
+  .cns-pill--vip        { background: linear-gradient(135deg,#fff2cc,#fce8b2); color: #8a6a08; }
+
+  /* ========== Buttons ========== */
+  .cns-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .18s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .cns-btn:disabled { opacity: .5; cursor: not-allowed; }
+  .cns-btn--primary { background: var(--cns-primary); color: #fff; }
+  .cns-btn--primary:hover:not(:disabled) { background: var(--cns-dark); box-shadow: 0 4px 12px rgba(230,126,34,.3); }
+  .cns-btn--success { background: var(--cns-success); color: #fff; }
+  .cns-btn--success:hover:not(:disabled) { background: #157a3d; }
+  .cns-btn--danger  { background: var(--cns-danger); color: #fff; }
+  .cns-btn--danger:hover:not(:disabled) { background: #a02d20; }
+  .cns-btn--info    { background: var(--cns-info); color: #fff; }
+  .cns-btn--info:hover:not(:disabled) { background: #1c5d87; }
+  .cns-btn--ghost   { background: var(--cns-bg); color: var(--cns-text); border: 1.5px solid var(--cns-border); }
+  .cns-btn--ghost:hover:not(:disabled) { background: var(--cns-soft); border-color: var(--cns-primary); color: var(--cns-primary); }
+  .cns-btn--sm { padding: 6px 12px; font-size: .76rem; }
+
+  /* ========== Empty state ========== */
+  .cns-empty { text-align: center; padding: 60px 20px; color: var(--cns-muted); }
+  .cns-empty__icon { font-size: 3.5rem; margin-bottom: 12px; opacity: .5; }
+  .cns-empty h3 { font-size: 1rem; margin-bottom: 6px; color: var(--cns-text); }
+  .cns-empty p  { font-size: .84rem; }
+
+  /* ========== Modal ========== */
+  .cns-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(126,65,8,.55);
+    backdrop-filter: blur(3px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: cnsFadeIn .2s;
+  }
+  .cns-modal-overlay.show { display: flex; }
+  @keyframes cnsFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .cns-modal {
+    background: #fff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 880px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(126,65,8,.35);
+    animation: cnsSlideUp .25s;
+  }
+  @keyframes cnsSlideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .cns-modal__header {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, var(--cns-dark), var(--cns-primary));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 18px 18px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .cns-modal__header h3 { font-size: 1.05rem; display: flex; align-items: center; gap: 10px; }
+  .cns-modal__close {
+    background: rgba(255,255,255,.15);
+    border: none;
+    color: #fff;
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background .2s;
+  }
+  .cns-modal__close:hover { background: rgba(255,255,255,.28); }
+  .cns-modal__body { padding: 24px; }
+
+  .cns-section {
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px dashed var(--cns-border);
+  }
+  .cns-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .cns-section__title {
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--cns-primary);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+
+  .cns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .cns-field {
+    background: var(--cns-bg);
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--cns-border);
+  }
+  .cns-field__label {
+    font-size: .72rem;
+    color: var(--cns-muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .cns-field__value {
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--cns-text);
+    direction: rtl;
+  }
+  .cns-field__value.ltr { direction: ltr; text-align: right; }
+
+  .cns-checklist { display: flex; flex-direction: column; gap: 10px; }
+  .cns-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--cns-bg);
+    border-radius: 10px;
+    border: 1.5px solid var(--cns-border);
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .cns-check:hover { border-color: var(--cns-primary); }
+  .cns-check input { margin-top: 3px; accent-color: var(--cns-primary); width: 16px; height: 16px; cursor: pointer; }
+  .cns-check__text { flex: 1; }
+  .cns-check__text strong { display: block; font-size: .85rem; font-weight: 600; }
+  .cns-check__text small { color: var(--cns-muted); font-size: .74rem; }
+
+  .cns-note {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--cns-border);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: .85rem;
+    resize: vertical;
+    min-height: 90px;
+    transition: all .2s;
+  }
+  .cns-note:focus { outline: none; border-color: var(--cns-primary); box-shadow: 0 0 0 3px rgba(230,126,34,.12); }
+
+  .cns-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 4px;
+  }
+  .cns-tl-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--cns-bg);
+    border-radius: 10px;
+    border-right: 3px solid var(--cns-primary);
+    font-size: .8rem;
+  }
+  .cns-tl-item__icon { font-size: 1rem; }
+  .cns-tl-item__body { flex: 1; }
+  .cns-tl-item__body strong { display: block; font-size: .82rem; margin-bottom: 2px; }
+  .cns-tl-item__body small { color: var(--cns-muted); font-size: .7rem; }
+
+  .cns-rating {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 8px 0;
+  }
+  .cns-rating__star {
+    font-size: 1.6rem;
+    cursor: pointer;
+    filter: grayscale(1) opacity(.4);
+    transition: all .15s;
+  }
+  .cns-rating__star:hover,
+  .cns-rating__star.active {
+    filter: none;
+    transform: scale(1.1);
+  }
+
+  .cns-modal__footer {
+    padding: 16px 24px;
+    background: var(--cns-bg);
+    border-radius: 0 0 18px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--cns-border);
+  }
+  .cns-modal__footer-right { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .cns-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: var(--cns-darker);
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    font-size: .85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .3s;
+    z-index: 2000;
+    max-width: 400px;
+  }
+  .cns-toast.show { transform: translateY(0); opacity: 1; }
+  .cns-toast--success { background: var(--cns-success); }
+  .cns-toast--error   { background: var(--cns-danger); }
+  .cns-toast--warn    { background: var(--cns-primary); }
+
+  @media (max-width: 900px) {
+    .cns-layout { grid-template-columns: 1fr; }
+    .cns-sidebar {
+      position: static;
+      height: auto;
+      border-left: none;
+      border-bottom: 1px solid var(--cns-border);
+      padding: 12px 0;
+    }
+    .cns-nav { display: flex; overflow-x: auto; gap: 6px; padding: 0 12px; }
+    .cns-nav a { flex-shrink: 0; margin-bottom: 0; }
+    .cns-nav a.active::before { display: none; }
+    .cns-sidebar__section { margin-bottom: 0; padding: 0; }
+    .cns-sidebar__label { display: none; }
+    .cns-main { padding: 18px 16px 60px; }
+    .cns-header { padding: 14px 16px; }
+    .cns-header__meta { display: none; }
+    .cns-table { font-size: .78rem; }
+    .cns-table th, .cns-table td { padding: 10px 10px; }
+  }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--cns-bg); }
+  ::-webkit-scrollbar-thumb { background: var(--cns-soft); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--cns-primary); }
+
+  .cns-check-cell { width: 36px; text-align: center; }
+  .cns-check-cell input { accent-color: var(--cns-primary); width: 16px; height: 16px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<header class="cns-header">
+  <div class="cns-header__brand">
+    <div class="cns-header__logo">💬</div>
+    <div class="cns-header__title">
+      <h1>داشبورد مشاوره</h1>
+      <p>وام پی — پیش‌مشاوره و آماده‌سازی پرونده‌های متقاضیان</p>
+    </div>
+  </div>
+  <div class="cns-header__user">
+    <div class="cns-header__meta">
+      <strong id="hdrName">—</strong>
+      <span id="hdrRole">مشاور</span>
+    </div>
+    <div class="cns-header__avatar" id="hdrAvatar">؟</div>
+    <button class="cns-btn-ghost" id="btnTheme" title="تغییر تم">🌓</button>
+    <button class="cns-btn-ghost" id="btnLogout">خروج</button>
+  </div>
+</header>
+
+<div class="cns-layout">
+  <aside class="cns-sidebar">
+    <div class="cns-sidebar__section">
+      <div class="cns-sidebar__label">منوی اصلی</div>
+      <nav class="cns-nav">
+        <a href="#" class="active" data-view="queue">
+          <span class="cns-nav__icon">📥</span>
+          <span>صف مشاوره</span>
+          <span class="cns-nav__badge" id="navPendingCount">0</span>
+        </a>
+        <a href="#" data-view="in_progress">
+          <span class="cns-nav__icon">⏳</span>
+          <span>در حال مشاوره</span>
+        </a>
+        <a href="#" data-view="referred">
+          <span class="cns-nav__icon">➡️</span>
+          <span>ارجاع‌شده</span>
+        </a>
+        <a href="#" data-view="cancelled">
+          <span class="cns-nav__icon">🚫</span>
+          <span>انصراف / لغو</span>
+        </a>
+      </nav>
+    </div>
+    <div class="cns-sidebar__section">
+      <div class="cns-sidebar__label">دسترسی سریع</div>
+      <nav class="cns-nav">
+        <a href="admin-verification-dashboard.html">
+          <span class="cns-nav__icon">🔍</span>
+          <span>داشبورد اعتبارسنجی</span>
+        </a>
+        <a href="admin-super-dashboard.html">
+          <span class="cns-nav__icon">👑</span>
+          <span>داشبورد مدیر کل</span>
+        </a>
+        <a href="change-password.html">
+          <span class="cns-nav__icon">🔑</span>
+          <span>تغییر رمز عبور</span>
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <main class="cns-main">
+    <div class="cns-page-title">
+      <div>
+        <h2>صف مشاوره</h2>
+        <p>پیش‌مشاوره‌ی متقاضیان، بررسی نیازها و آماده‌سازی برای اعتبارسنجی</p>
+      </div>
+      <div>
+        <button class="cns-btn cns-btn--ghost" id="btnRefresh">🔄 به‌روزرسانی</button>
+      </div>
+    </div>
+
+    <div class="cns-stats">
+      <div class="cns-stat">
+        <div class="cns-stat__label">📥 در انتظار مشاوره</div>
+        <div class="cns-stat__value" id="stPending">0</div>
+        <div class="cns-stat__hint">صف فعال</div>
+      </div>
+      <div class="cns-stat" data-variant="info">
+        <div class="cns-stat__label">📞 تماس امروز</div>
+        <div class="cns-stat__value" id="stCallsToday">0</div>
+        <div class="cns-stat__hint">از نیمه‌شب گذشته</div>
+      </div>
+      <div class="cns-stat" data-variant="ok">
+        <div class="cns-stat__label">➡️ ارجاع به اعتبارسنجی</div>
+        <div class="cns-stat__value" id="stReferred">0</div>
+        <div class="cns-stat__hint">آماده‌ی بررسی</div>
+      </div>
+      <div class="cns-stat" data-variant="danger">
+        <div class="cns-stat__label">🚫 انصراف / لغو</div>
+        <div class="cns-stat__value" id="stCancelled">0</div>
+        <div class="cns-stat__hint">متقاضی منصرف شد</div>
+      </div>
+    </div>
+
+    <div class="cns-toolbar">
+      <div class="cns-search">
+        <input type="text" id="searchInput" placeholder="جستجو بر اساس شماره پرونده، نام متقاضی، موبایل...">
+      </div>
+      <select class="cns-filter" id="filterStatus">
+        <option value="">همه وضعیت‌ها</option>
+        <option value="pending">در انتظار مشاوره</option>
+        <option value="in_progress">در حال مشاوره</option>
+        <option value="referred">ارجاع‌شده</option>
+        <option value="cancelled">انصراف / لغو</option>
+      </select>
+      <select class="cns-filter" id="filterPriority">
+        <option value="">همه اولویت‌ها</option>
+        <option value="vip">⭐ VIP</option>
+        <option value="high">🔥 فوری</option>
+        <option value="normal">عادی</option>
+      </select>
+    </div>
+
+    <div class="cns-table-wrap">
+      <table class="cns-table">
+        <thead>
+          <tr>
+            <th class="cns-check-cell"><input type="checkbox" id="checkAll"></th>
+            <th>شماره پرونده</th>
+            <th>متقاضی</th>
+            <th>مبلغ وام</th>
+            <th>منبع</th>
+            <th>اولویت</th>
+            <th>وضعیت</th>
+            <th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+      <div id="emptyState" class="cns-empty" style="display:none;">
+        <div class="cns-empty__icon">📭</div>
+        <h3>موردی یافت نشد</h3>
+        <p>هیچ پرونده‌ای با فیلترهای انتخابی وجود ندارد.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="cns-modal-overlay" id="modalOverlay">
+  <div class="cns-modal">
+    <div class="cns-modal__header">
+      <h3>💬 مشاوره‌ی پرونده <span id="modalCaseNum" style="font-family:monospace;font-size:.85rem;opacity:.85;"></span></h3>
+      <button class="cns-modal__close" id="modalClose">✕</button>
+    </div>
+    <div class="cns-modal__body" id="modalBody"></div>
+    <div class="cns-modal__footer">
+      <div>
+        <span id="modalReviewer" style="font-size:.78rem;color:var(--cns-muted);"></span>
+      </div>
+      <div class="cns-modal__footer-right">
+        <button class="cns-btn cns-btn--ghost" id="btnSaveNote">💾 ذخیره یادداشت</button>
+        <button class="cns-btn cns-btn--danger" id="btnCancel">🚫 انصراف متقاضی</button>
+        <button class="cns-btn cns-btn--info" id="btnScheduleCall">📞 پیگیری تماس</button>
+        <button class="cns-btn cns-btn--success" id="btnRefer">➡️ ارجاع به اعتبارسنجی</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cns-toast" id="toast"></div>
+
+<!-- ✅ لوکال شده: Supabase CDN حذف شد -->
+<script src="js/supabase-js.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/storage-adapter.js"></script>
+<script src="js/auth-bridge.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/permissions.js"></script>
+<script src="js/ui-feedback.js"></script>
+<script src="js/case-state-machine.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  const LS = {
+    QUEUE: 'wamPayConsultationQueue',
+    CASES: 'wamPayApplications',
+    ADMINS: 'wamPayAdmins',
+    CURRENT: 'wamPayCurrentUser',
+    TOKEN: 'wamPayToken',
+    FINLOG: 'wamPayFinancialLog',
+  };
+
+  const ALLOWED_ROLES = ['consultation_admin', 'super_admin', 'deputy_admin'];
+  const ROLE_LABEL = {
+    consultation_admin: 'مشاور',
+    super_admin: 'مدیر کل',
+    deputy_admin: 'معاون',
+  };
+
+  // وضعیت‌هایی که در پنل مشاوره نمایش داده می‌شوند
+  const VISIBLE_DB_STATUSES = ['draft', 'awaiting_consultation', 'consultation_approved'];
+
+  // نگاشت وضعیت دیتابیس به وضعیت داخلی پنل
+  const DB_TO_UI_STATUS = {
+    draft: 'pending',
+    awaiting_consultation: 'pending',
+    consultation_approved: 'referred',
+  };
+
+  const read = (k, fb) => {
+    try {
+      if (window.Storage && typeof Storage.get === 'function') {
+        const v = Storage.get(k, null);
+        if (v !== null && v !== undefined) return v;
+      }
+      const raw = localStorage.getItem(k);
+      return raw ? JSON.parse(raw) : fb;
+    } catch (e) {
+      console.warn('[cns] read err', k, e);
+      return fb;
+    }
+  };
+
+  const write = (k, v) => {
+    try {
+      if (window.Storage && typeof Storage.set === 'function') {
+        Storage.set(k, v);
+        return true;
+      }
+      localStorage.setItem(k, JSON.stringify(v));
+      return true;
+    } catch (e) {
+      console.warn('[cns] write err', k, e);
+      return false;
+    }
+  };
+
+  function getCurrentUser() {
+    try {
+      const raw = localStorage.getItem(LS.CURRENT);
+      if (raw) {
+        let u = JSON.parse(raw);
+        if (u && typeof u === 'object') return u;
+      }
+    } catch (e) {
+      console.warn('[cns] getCurrentUser error', e);
+    }
+    return null;
+  }
+
+  function checkAccess(u) {
+    return u && ALLOWED_ROLES.includes(u.role) && u.status === 'active';
+  }
+
+  function forceLogout(reason) {
+    try {
+      localStorage.removeItem(LS.CURRENT);
+      localStorage.removeItem(LS.TOKEN);
+      if (window.AuthBridge && typeof AuthBridge.logout === 'function') {
+        AuthBridge.logout();
+      }
+    } catch (e) {}
+    toast(reason || 'دسترسی غیرمجاز', 'error');
+    setTimeout(() => { location.href = 'login.html'; }, 900);
+  }
+
+  const state = {
+    user: null,
+    queue: [],
+    cases: [],
+    filter: { view: 'queue', status: '', priority: '', q: '' },
+    selected: new Set(),
+  };
+
+  const faNum = (n) => (n == null || isNaN(n)) ? '—' : Number(n).toLocaleString('fa-IR');
+  const faMoney = (n) => faNum(n) + ' تومان';
+  const faMillions = (n) => n == null ? '—' : faNum(Math.round(n / 1_000_000)) + ' میلیون';
+  const faDate = (iso) => {
+    if (!iso) return '—';
+    try {
+      return new Intl.DateTimeFormat('fa-IR', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit'
+      }).format(new Date(iso));
+    } catch (e) { return iso; }
+  };
+  const escapeHtml = (s) => String(s == null ? '' : s)
+    .replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+  async function loadData() {
+    if (!window.WAM_SB || !window.WAM_SB.client) {
+      console.warn('⚠️ [cns] Supabase client نیست!');
+      toast('ارتباط با دیتابیس برقرار نیست!', 'error');
+      return;
+    }
+
+    try {
+      // ✅ همه رکوردها، بدون فیلتر وضعیت
+      const { data, error } = await window.WAM_SB.client
+        .from('applications')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('❌ [cns] خطای دیتابیس:', error);
+        toast('خطا در خواندن از دیتابیس', 'error');
+        return;
+      }
+
+      if (!data || !Array.isArray(data)) {
+        console.warn('[cns] داده‌ای برنگشت');
+        state.queue = [];
+        return;
+      }
+
+      // فیلتر در فرانت‌اند
+      const visible = data.filter(c => VISIBLE_DB_STATUSES.includes(c.status));
+
+      state.queue = visible.map(c => {
+        const pi = c.personal_info || {};
+        const fi = c.financial_info || {};
+        const uiStatus = DB_TO_UI_STATUS[c.status] || 'pending';
+        return {
+          id: 'cq_' + c.id,
+          caseId: c.id, // ⬅️ ID واقعی دیتابیس برای آپدیت
+          caseNumber: c.application_number || '—',
+          applicantName: (pi.firstName || pi.name)
+            ? ((pi.firstName || '') + ' ' + (pi.lastName || '')).trim()
+            : '—',
+          applicantMobile: pi.mobile || '—',
+          applicantNationalId: pi.nationalId || '—',
+          loanAmount: c.loan_amount || 0,
+          creditName: fi.bankLoanType || '—',
+          source: 'direct',
+          brokerName: '—',
+          priority: 'normal',
+          status: uiStatus,
+          submittedAt: c.created_at || new Date().toISOString(),
+          data: c,
+        };
+      });
+
+      var statusCounts = {};
+      for (var i = 0; i < visible.length; i++) {
+        var st = visible[i].status;
+        statusCounts[st] = (statusCounts[st] || 0) + 1;
+      }
+      console.log(
+        '✅ [cns] کل رکوردها: ' + data.length +
+        ' | قابل نمایش: ' + visible.length +
+        ' | وضعیت‌ها: ' + JSON.stringify(statusCounts)
+      );
+    } catch (e) {
+      console.error('❌ [cns] خطا در خواندن دیتابیس:', e);
+      toast('خطا در خواندن از دیتابیس', 'error');
+    }
+  }
+
+  // ✅ باگ‌فیکس: اطمینان از آرایه بودن log
+  function logAction(item, action, note) {
+    let log = read(LS.FINLOG, []);
+    if (!Array.isArray(log)) log = [];
+    log.push({
+      id: 'log_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+      type: 'consultation_' + action,
+      caseId: item.caseId,
+      caseNumber: item.caseNumber,
+      actor: state.user?.name || '—',
+      actorRole: state.user?.role || '—',
+      note: note || '',
+      at: new Date().toISOString(),
+    });
+    write(LS.FINLOG, log);
+  }
+
+  function computeStats() {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const q = state.queue;
+    const callsToday = q.reduce((acc, it) => {
+      const calls = Array.isArray(it.calls) ? it.calls : [];
+      return acc + calls.filter(c => c.at && new Date(c.at) >= today).length;
+    }, 0);
+    return {
+      pending: q.filter(x => x.status === 'pending').length,
+      callsToday,
+      referred: q.filter(x => x.status === 'referred').length,
+      cancelled: q.filter(x => x.status === 'cancelled').length,
+    };
+  }
+
+  function renderStats() {
+    const s = computeStats();
+    document.getElementById('stPending').textContent = faNum(s.pending);
+    document.getElementById('stCallsToday').textContent = faNum(s.callsToday);
+    document.getElementById('stReferred').textContent = faNum(s.referred);
+    document.getElementById('stCancelled').textContent = faNum(s.cancelled);
+    document.getElementById('navPendingCount').textContent = faNum(s.pending);
+  }
+
+  function filteredItems() {
+    const f = state.filter;
+    return state.queue.filter(it => {
+      if (f.view === 'queue'       && it.status !== 'pending') return false;
+      if (f.view === 'in_progress' && it.status !== 'in_progress') return false;
+      if (f.view === 'referred'    && it.status !== 'referred') return false;
+      if (f.view === 'cancelled'   && it.status !== 'cancelled') return false;
+
+      if (f.status && it.status !== f.status) return false;
+      if (f.priority && it.priority !== f.priority) return false;
+
+      if (f.q) {
+        const s = f.q.toLowerCase();
+        const hay = [it.caseNumber, it.applicantName, it.applicantMobile, it.applicantNationalId, it.brokerName]
+          .filter(Boolean).join(' ').toLowerCase();
+        if (!hay.includes(s)) return false;
+      }
+      return true;
+    });
+  }
+
+  function statusPill(st) {
+    const map = {
+      pending:     { cls: 'cns-pill--pending',  label: '⏳ در انتظار' },
+      in_progress: { cls: 'cns-pill--progress', label: '💬 در مشاوره' },
+      referred:    { cls: 'cns-pill--referral', label: '➡️ ارجاع‌شده' },
+      cancelled:   { cls: 'cns-pill--rejected', label: '🚫 انصراف' },
+    };
+    const m = map[st] || { cls: '', label: st || '—' };
+    return `<span class="cns-pill ${m.cls}">${m.label}</span>`;
+  }
+
+  function priorityPill(p) {
+    if (p === 'vip')  return `<span class="cns-pill cns-pill--vip">⭐ VIP</span>`;
+    if (p === 'high') return `<span class="cns-pill cns-pill--high">🔥 فوری</span>`;
+    return `<span class="cns-pill cns-pill--normal">عادی</span>`;
+  }
+
+  function render() {
+    const items = filteredItems();
+    const tbody = document.getElementById('tableBody');
+    const empty = document.getElementById('emptyState');
+    const table = document.querySelector('.cns-table');
+
+    if (items.length === 0) {
+      tbody.innerHTML = '';
+      empty.style.display = 'block';
+      table.style.display = 'none';
+      return;
+    }
+    empty.style.display = 'none';
+    table.style.display = '';
+
+    tbody.innerHTML = items.map(it => {
+      return `
+        <tr data-id="${escapeHtml(it.id)}">
+          <td class="cns-check-cell">
+            <input type="checkbox" class="rowCheck" data-id="${escapeHtml(it.id)}">
+          </td>
+          <td><span class="cns-case-num">${escapeHtml(it.caseNumber || '—')}</span></td>
+          <td>
+            <div class="cns-name">
+              ${escapeHtml(it.applicantName || '—')}
+              <small>${escapeHtml(it.applicantMobile || '—')}</small>
+            </div>
+          </td>
+          <td>
+            <div class="cns-amount">
+              ${faMillions(it.loanAmount)}
+              <small>${faMoney(it.loanAmount)}</small>
+            </div>
+          </td>
+          <td style="font-size:.78rem;">
+            ${it.source === 'broker_referral' ? '🤝 کارگزار' : '🌐 مستقیم'}
+            ${it.brokerName && it.brokerName !== '—' ? `<small style="display:block;color:var(--cns-muted);">${escapeHtml(it.brokerName)}</small>` : ''}
+          </td>
+          <td>${priorityPill(it.priority)}</td>
+          <td>${statusPill(it.status)}</td>
+          <td>
+            <button class="cns-btn cns-btn--primary cns-btn--sm" data-action="open" data-id="${escapeHtml(it.id)}">
+              💬 مشاوره
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    state.selected.forEach(id => {
+      const cb = tbody.querySelector(`.rowCheck[data-id="${id}"]`);
+      if (cb) cb.checked = true;
+    });
+  }
+
+  function openModal(id) {
+    const it = state.queue.find(x => x.id === id);
+    if (!it) return;
+    if (it.status === 'pending') {
+      it.status = 'in_progress';
+      it.consultedAt = it.consultedAt || new Date().toISOString();
+      it.consultedBy = it.consultedBy || (state.user?.name || '—');
+      renderStats();
+      render();
+    }
+    renderModal(it);
+    document.getElementById('modalOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function renderModal(it) {
+    document.getElementById('modalCaseNum').textContent = it.caseNumber || '';
+    document.getElementById('modalReviewer').textContent =
+      it.consultedBy ? ('مشاور: ' + it.consultedBy + ' — ' + faDate(it.consultedAt)) : 'هنوز مشاوره نشده';
+
+    const calls = Array.isArray(it.calls) ? it.calls : [];
+    const timelineHtml = calls.length === 0
+      ? '<div style="font-size:.78rem;color:var(--cns-muted);text-align:center;padding:14px;">هنوز تماسی ثبت نشده</div>'
+      : calls.slice().reverse().map(c => `
+          <div class="cns-tl-item">
+            <div class="cns-tl-item__icon">${c.type === 'no_answer' ? '📵' : '📞'}</div>
+            <div class="cns-tl-item__body">
+              <strong>${c.type === 'no_answer' ? 'عدم پاسخ' : (c.type === 'scheduled' ? 'پیگیری زمان‌بندی‌شده' : 'تماس موفق')}</strong>
+              <small>${faDate(c.at)}${c.note ? ' — ' + escapeHtml(c.note) : ''}</small>
+            </div>
+          </div>
+        `).join('');
+
+    const checklistItems = [
+      { k: 'needsIdentified',  t: 'شناسایی نیاز متقاضی',   d: 'نیاز و هدف متقاضی از دریافت وام مشخص شد' },
+      { k: 'budgetChecked',    t: 'بررسی توان بازپرداخت',   d: 'توان مالی و بازپرداخت با متقاضی بررسی شد' },
+      { k: 'docsExplained',    t: 'توضیح مدارک لازم',       d: 'لیست مدارک مورد نیاز به متقاضی توضیح داده شد' },
+      { k: 'termsExplained',   t: 'توضیح مدل امتیاز',       d: 'مدل خرید و فروش امتیاز و هزینه‌ها شفاف‌سازی شد' },
+      { k: 'consentGiven',     t: 'رضایت ادامه‌ی فرآیند',   d: 'متقاضی برای ادامه‌ی فرآیند اعلام رضایت کرد' },
+    ];
+
+    const body = `
+      <div class="cns-section">
+        <div class="cns-section__title">👤 اطلاعات متقاضی</div>
+        <div class="cns-grid">
+          <div class="cns-field">
+            <div class="cns-field__label">نام و نام خانوادگی</div>
+            <div class="cns-field__value">${escapeHtml(it.applicantName || '—')}</div>
+          </div>
+          <div class="cns-field">
+            <div class="cns-field__label">موبایل</div>
+            <div class="cns-field__value ltr">${escapeHtml(it.applicantMobile || '—')}</div>
+          </div>
+          <div class="cns-field">
+            <div class="cns-field__label">کد ملی</div>
+            <div class="cns-field__value ltr">${escapeHtml(it.applicantNationalId || '—')}</div>
+          </div>
+          <div class="cns-field">
+            <div class="cns-field__label">مبلغ وام</div>
+            <div class="cns-field__value">${faMoney(it.loanAmount)}</div>
+          </div>
+          <div class="cns-field">
+            <div class="cns-field__label">نوع اعتبار</div>
+            <div class="cns-field__value">${escapeHtml(it.creditName || '—')}</div>
+          </div>
+          <div class="cns-field">
+            <div class="cns-field__label">منبع</div>
+            <div class="cns-field__value">
+              ${it.source === 'broker_referral' ? '🤝 کارگزار' : '🌐 مستقیم'}
+              ${it.brokerName && it.brokerName !== '—' ? ' — ' + escapeHtml(it.brokerName) : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cns-section">
+        <div class="cns-section__title">📞 سابقه‌ی تماس‌ها (${faNum(calls.length)})</div>
+        <div class="cns-timeline" id="callsTimeline">${timelineHtml}</div>
+      </div>
+
+      <div class="cns-section">
+        <div class="cns-section__title">✅ چک‌لیست مشاوره</div>
+        <div class="cns-checklist" id="checklistWrap">
+          ${checklistItems.map(c => `
+            <label class="cns-check">
+              <input type="checkbox" class="cns-checkitem" data-k="${c.k}"
+                ${it.checklist && it.checklist[c.k] ? 'checked' : ''}>
+              <div class="cns-check__text">
+                <strong>${c.t}</strong>
+                <small>${c.d}</small>
+              </div>
+            </label>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="cns-section">
+        <div class="cns-section__title">⭐ رضایت متقاضی از مشاوره</div>
+        <div class="cns-rating" id="ratingWrap">
+          ${[1,2,3,4,5].map(n => `
+            <span class="cns-rating__star ${it.rating >= n ? 'active' : ''}" data-rating="${n}">⭐</span>
+          `).join('')}
+        </div>
+        <div style="text-align:center;font-size:.72rem;color:var(--cns-muted);">۱ = ضعیف تا ۵ = عالی</div>
+      </div>
+
+      <div class="cns-section">
+        <div class="cns-section__title">📝 یادداشت مشاور</div>
+        <textarea class="cns-note" id="consultNote" placeholder="نکات، توصیه‌ها و یادداشت‌های مربوط به مشاوره‌ی این متقاضی..."></textarea>
+      </div>
+    `;
+
+    document.getElementById('modalBody').innerHTML = body;
+
+    setTimeout(() => {
+      const n = document.getElementById('consultNote');
+      if (n) n.value = it.note || '';
+      const stars = document.querySelectorAll('.cns-rating__star');
+      stars.forEach(s => {
+        s.addEventListener('click', () => {
+          const v = parseInt(s.dataset.rating, 10);
+          stars.forEach(x => x.classList.toggle('active', parseInt(x.dataset.rating,10) <= v));
+          document.getElementById('ratingWrap').dataset.rating = v;
+        });
+      });
+      document.getElementById('ratingWrap').dataset.rating = it.rating || 0;
+    }, 0);
+
+    document.getElementById('modalOverlay').dataset.currentId = it.id;
+
+    const isFinal = it.status === 'referred' || it.status === 'cancelled';
+    document.getElementById('btnRefer').disabled = isFinal;
+    document.getElementById('btnCancel').disabled = isFinal;
+    document.getElementById('btnScheduleCall').disabled = isFinal;
+  }
+
+  function getChecklistFromDom() {
+    const out = {};
+    document.querySelectorAll('.cns-checkitem').forEach(i => { out[i.dataset.k] = i.checked; });
+    return out;
+  }
+  function allChecked() {
+    const items = document.querySelectorAll('.cns-checkitem');
+    if (items.length === 0) return false;
+    return Array.from(items).every(i => i.checked);
+  }
+
+  function currentItemId() {
+    return document.getElementById('modalOverlay').dataset.currentId;
+  }
+
+  function doSaveNote() {
+    const id = currentItemId();
+    if (!id) return;
+    const it = state.queue.find(x => x.id === id);
+    if (!it) return;
+    const note = (document.getElementById('consultNote')?.value || '').trim();
+    const checklist = getChecklistFromDom();
+    const rating = parseInt(document.getElementById('ratingWrap')?.dataset.rating || '0', 10);
+    it.note = note; it.checklist = checklist; it.rating = rating;
+    toast('یادداشت و چک‌لیست ذخیره شد.', 'success');
+    logAction(it, 'note_saved', note.slice(0, 80));
+  }
+
+  function doScheduleCall() {
+    const id = currentItemId();
+    if (!id) return;
+    const it = state.queue.find(x => x.id === id);
+    if (!it) return;
+    const note = (document.getElementById('consultNote')?.value || '').trim();
+    const calls = Array.isArray(it.calls) ? it.calls.slice() : [];
+    calls.push({
+      type: 'scheduled',
+      at: new Date().toISOString(),
+      by: state.user?.name || '—',
+      note: note || 'پیگیری زمان‌بندی‌شده',
+    });
+    it.calls = calls;
+    logAction(it, 'call_scheduled', note.slice(0, 80));
+    toast('پیگیری تماس ثبت شد.', 'success');
+    renderModal(it);
+    renderStats();
+    render();
+  }
+
+  async function doRefer() {
+    const id = currentItemId();
+    if (!id) return;
+
+    if (!allChecked()) {
+      toast('برای ارجاع، ابتدا همه‌ی موارد چک‌لیست را تیک بزنید.', 'warn');
+      return;
+    }
+    const note = (document.getElementById('consultNote')?.value || '').trim();
+    if (note.length < 5) {
+      toast('لطفاً خلاصه‌ی مشاوره را در کادر یادداشت بنویسید (حداقل ۵ کاراکتر).', 'warn');
+      return;
+    }
+    if (!confirm('پرونده به اعتبارسنجی ارجاع شود؟')) return;
+
+    const it = state.queue.find(x => x.id === id);
+    if (!it) {
+      toast('پرونده در صف پیدا نشد.', 'error');
+      return;
+    }
+
+    if (!window.WAM_SB || !window.WAM_SB.client) {
+      console.warn('⚠️ [Consultation] Supabase client موجود نیست.');
+      toast('ارتباط با دیتابیس برقرار نیست!', 'error');
+      return;
+    }
+
+    const now = new Date().toISOString();
+    const checklist = getChecklistFromDom();
+    const rating = parseInt(document.getElementById('ratingWrap')?.dataset.rating || '0', 10);
+
+    const btn = document.getElementById('btnRefer');
+    const oldLabel = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '⏳ در حال ارجاع...';
+
+    try {
+      // ⬅️ کلید مهم: آپدیت با id واقعی دیتابیس
+      const { data, error } = await window.WAM_SB.client
+        .from('applications')
+        .update({
+          status: 'consultation_approved',
+          financial_info: {
+            ...(it.data?.financial_info || {}),
+            consultationResult: {
+              status: 'called',
+              rating: rating,
+              note: note,
+              consultantName: state.user?.name || 'مشاور',
+              consultantId: state.user?.id || null,
+              approvedAt: now,
+            },
+          },
+          updated_at: now,
+        })
+        .eq('id', it.caseId)
+        .select('id, status, application_number');
+
+      if (error) {
+        console.error('❌ [Consultation] خطا در آپدیت DB:', error);
+        toast('خطا در ذخیره در دیتابیس: ' + (error.message || ''), 'error');
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        console.error('❌ [Consultation] هیچ ردیفی آپدیت نشد (RLS یا id نامعتبر):', it.caseId);
+        toast('پرونده در دیتابیس آپدیت نشد. دسترسی (RLS) یا شناسه را بررسی کنید.', 'error');
+        return;
+      }
+
+      console.log('✅ [Consultation] وضعیت در DB آپدیت شد:', data[0]);
+
+      it.status = 'referred';
+      it.consultedAt = now;
+      it.consultedBy = state.user?.name || 'مشاور';
+      it.consultedById = state.user?.id || null;
+      it.note = note;
+      it.checklist = checklist;
+      it.rating = rating;
+      it.referralNote = note;
+
+      logAction(it, 'referred', note.slice(0, 100));
+
+      state.queue = state.queue.filter(x => x.id !== id);
+      state.selected.delete(id);
+
+      closeModal();
+      renderStats();
+      render();
+
+      toast('پرونده به اعتبارسنجی ارجاع شد. ✅', 'success');
+
+      await loadData();
+      renderStats();
+      render();
+    } catch (e) {
+      console.error('❌ [Consultation] خطای غیرمنتظره:', e);
+      toast('خطای غیرمنتظره در ارجاع: ' + (e.message || ''), 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = oldLabel;
+    }
+  }
+
+  function doCancel() {
+    const id = currentItemId();
+    if (!id) return;
+    const note = (document.getElementById('consultNote')?.value || '').trim();
+    if (note.length < 5) {
+      toast('برای ثبت انصراف، دلیل را در کادر یادداشت بنویسید (حداقل ۵ کاراکتر).', 'warn');
+      return;
+    }
+    if (!confirm('متقاضی منصرف شده است؟ این پرونده از صف خارج می‌شود.')) return;
+
+    const now = new Date().toISOString();
+    const it = state.queue.find(x => x.id === id);
+    it.status = 'cancelled';
+    it.consultedAt = now;
+    it.consultedBy = state.user?.name || 'مشاور';
+    it.note = note;
+
+    logAction(it, 'cancelled', note.slice(0, 100));
+
+    toast('انصراف متقاضی ثبت شد.', 'error');
+    closeModal();
+    renderStats();
+    render();
+  }
+
+  let toastTimer = null;
+  function toast(msg, kind) {
+    const el = document.getElementById('toast');
+    if (!el) return;
+    el.className = 'cns-toast show' + (kind ? ' cns-toast--' + kind : '');
+    const icon = kind === 'success' ? '✅' : kind === 'error' ? '❌' : kind === 'warn' ? '⚠️' : 'ℹ️';
+    el.innerHTML = `<span>${icon}</span><span>${escapeHtml(msg)}</span>`;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+  }
+
+  function renderHeader() {
+    const u = state.user;
+    if (!u) return;
+    document.getElementById('hdrName').textContent = u.name || '—';
+    document.getElementById('hdrRole').textContent = ROLE_LABEL[u.role] || u.role || '—';
+    const initials = (u.name || '?').trim().split(/\s+/).slice(0,2).map(w => w[0]).join('');
+    document.getElementById('hdrAvatar').textContent = initials || '؟';
+  }
+
+  function bindEvents() {
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'modalOverlay') closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    document.getElementById('btnRefer').addEventListener('click', doRefer);
+    document.getElementById('btnCancel').addEventListener('click', doCancel);
+    document.getElementById('btnScheduleCall').addEventListener('click', doScheduleCall);
+    document.getElementById('btnSaveNote').addEventListener('click', doSaveNote);
+
+    document.getElementById('btnRefresh').addEventListener('click', async () => {
+      await loadData();
+      renderStats();
+      render();
+      toast('داده‌ها به‌روزرسانی شد.', 'success');
+    });
+
+    document.getElementById('btnLogout').addEventListener('click', () => {
+      if (!confirm('از حساب خارج می‌شوید؟')) return;
+      forceLogout('خارج شدید');
+    });
+
+    document.getElementById('btnTheme').addEventListener('click', () => {
+      if (window.Theme && typeof Theme.toggle === 'function') Theme.toggle();
+    });
+
+    const si = document.getElementById('searchInput');
+    let t = null;
+    si.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => { state.filter.q = si.value.trim(); render(); }, 180);
+    });
+    document.getElementById('filterStatus').addEventListener('change', e => {
+      state.filter.status = e.target.value; render();
+    });
+    document.getElementById('filterPriority').addEventListener('change', e => {
+      state.filter.priority = e.target.value; render();
+    });
+
+    document.querySelectorAll('.cns-nav a[data-view]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.cns-nav a[data-view]').forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+        state.filter.view = a.dataset.view;
+        document.getElementById('filterStatus').value = '';
+        document.getElementById('filterPriority').value = '';
+        state.filter.status = '';
+        state.filter.priority = '';
+        render();
+      });
+    });
+
+    document.getElementById('tableBody').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action="open"]');
+      if (btn) { openModal(btn.dataset.id); return; }
+    });
+
+    document.getElementById('tableBody').addEventListener('change', (e) => {
+      if (e.target.classList.contains('rowCheck')) {
+        const id = e.target.dataset.id;
+        if (e.target.checked) state.selected.add(id);
+        else state.selected.delete(id);
+      }
+    });
+    document.getElementById('checkAll').addEventListener('change', (e) => {
+      const checked = e.target.checked;
+      document.querySelectorAll('.rowCheck').forEach(cb => {
+        cb.checked = checked;
+        if (checked) state.selected.add(cb.dataset.id);
+        else state.selected.delete(cb.dataset.id);
+      });
+    });
+  }
+
+  async function init() {
+    const user = getCurrentUser();
+    if (!checkAccess(user)) {
+      forceLogout('دسترسی شما به این پنل مجاز نیست.');
+      return;
+    }
+    state.user = user;
+    renderHeader();
+
+    await loadData();
+    renderStats();
+    render();
+    bindEvents();
+
+    console.log('%c[cns] Consultation Dashboard ready', 'color:#e67e22;font-weight:bold', {
+      user: user.name, role: user.role, queueSize: state.queue.length
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

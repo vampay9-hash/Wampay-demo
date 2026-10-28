@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="پرداخت‌ها — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>پرداخت‌ها | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       SHARED PAYMENTS
+       ═══════════════════════════════════════ */
+
+    .wam-pay {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 100px;
+    }
+
+    .wam-pay__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-pay__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-pay__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+    .wam-pay__topbar-back:hover { color: var(--wam-primary-light); }
+
+    .wam-pay__topbar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-pay__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-pay__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-pay__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+    .wam-pay__icon-btn--primary {
+      background: var(--wam-primary-light);
+      color: #fff;
+    }
+    .wam-pay__icon-btn--primary:hover {
+      background: var(--wam-primary);
+    }
+
+    .wam-pay__main {
+      padding: var(--wam-space-lg);
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Stats */
+    .wam-pay__stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-pay__stat {
+      padding: 14px 12px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      box-shadow: var(--wam-shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      color: var(--wam-text);
+      text-align: right;
+    }
+
+    .wam-pay__stat:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-pay__stat-label {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wam-pay__stat-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.1;
+    }
+    .wam-pay__stat-value--warning { color: var(--wam-warning-text); }
+    .wam-pay__stat-value--success { color: var(--wam-success-text); }
+    .wam-pay__stat-value--danger  { color: var(--wam-danger-text); }
+    .wam-pay__stat-value--info    { color: var(--wam-info-text); }
+    .wam-pay__stat-value--gold    { color: #7a5a00; }
+
+    .wam-pay__stat-sub {
+      font-size: 0.68rem;
+      color: var(--wam-text-muted);
+    }
+
+    /* Search */
+    .wam-pay__search {
+      position: relative;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-pay__search input {
+      width: 100%;
+      padding: 11px 42px 11px 42px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-pay__search input:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-pay__search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      color: var(--wam-text-muted);
+      pointer-events: none;
+    }
+
+    .wam-pay__search-clear {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--wam-text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: none;
+    }
+    .wam-pay__search-clear.is-visible { display: inline-flex; }
+
+    /* Filters */
+    .wam-pay__filters {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      margin-bottom: var(--wam-space-md);
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .wam-pay__filters::-webkit-scrollbar { display: none; }
+
+    .wam-pay__chip {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .wam-pay__chip:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary-light);
+    }
+
+    .wam-pay__chip.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-pay__chip-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 999px;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+
+    .wam-pay__chip.is-active .wam-pay__chip-count {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    /* Sort row */
+    .wam-pay__sort-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-pay__sort-select {
+      padding: 5px 10px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      font-size: 0.75rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      cursor: pointer;
+    }
+
+    /* Grid */
+    .wam-pay__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--wam-space-md);
+    }
+
+    /* Card */
+    .wam-pay__card {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-right: 4px solid var(--wam-warning);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-md);
+      box-shadow: var(--wam-shadow-sm);
+      cursor: pointer;
+      transition: all var(--wam-t);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wam-pay__card:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .wam-pay__card--pending   { border-right-color: var(--wam-warning); }
+    .wam-pay__card--paid      { border-right-color: var(--wam-success); }
+    .wam-pay__card--overdue   { border-right-color: var(--wam-danger); }
+    .wam-pay__card--scheduled { border-right-color: var(--wam-info); }
+    .wam-pay__card--cancelled { border-right-color: var(--wam-muted); }
+    .wam-pay__card--refunded  { border-right-color: var(--wam-primary-light); }
+
+    .wam-pay__card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .wam-pay__card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-size: 1.15rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .wam-pay__card-icon--online     { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-pay__card-icon--cash       { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-pay__card-icon--transfer   { background: var(--wam-gold-soft); color: #7a5a00; }
+    .wam-pay__card-icon--cheque     { background: var(--wam-primary-soft); color: var(--wam-primary); }
+    .wam-pay__card-icon--installment { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+
+    .wam-pay__card-title-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-pay__card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-pay__card-id {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+      font-family: 'Menlo', monospace;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .wam-pay__card-amount {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .wam-pay__card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 0.75rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-pay__card-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .wam-pay__card-meta-item--overdue {
+      color: var(--wam-danger);
+      font-weight: 700;
+    }
+
+    /* Method badge */
+    .wam-pay__method-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      white-space: nowrap;
+    }
+
+    .wam-pay__method-badge--online    { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-pay__method-badge--cash      { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-pay__method-badge--transfer  { background: var(--wam-gold-soft); color: #7a5a00; }
+    .wam-pay__method-badge--cheque    { background: var(--wam-primary-soft); color: var(--wam-primary); }
+
+    /* Card footer */
+    .wam-pay__card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--wam-border-soft);
+      margin-top: auto;
+    }
+
+    .wam-pay__card-date {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-pay__card-date-value {
+      font-weight: 700;
+      color: var(--wam-text);
+      font-size: 0.8rem;
+    }
+    .wam-pay__card-date-value--overdue {
+      color: var(--wam-danger);
+    }
+
+    .wam-pay__status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.68rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .wam-pay__status-badge--pending   { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-pay__status-badge--paid      { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-pay__status-badge--overdue   { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+    .wam-pay__status-badge--scheduled { background: var(--wam-info-soft); color: var(--wam-info-text); }
+    .wam-pay__status-badge--cancelled { background: var(--wam-muted-soft); color: var(--wam-text-muted); }
+    .wam-pay__status-badge--refunded  { background: var(--wam-primary-soft); color: var(--wam-primary); }
+
+    /* Empty */
+    .wam-pay__empty {
+      text-align: center;
+      padding: 56px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+
+    .wam-pay__empty-icon {
+      font-size: 2.6rem;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+
+    .wam-pay__empty-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 6px;
+    }
+
+    .wam-pay__empty-text {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0 0 var(--wam-space-md);
+      line-height: 1.7;
+    }
+
+    /* Pagination */
+    .wam-pay__pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: var(--wam-space-lg);
+      flex-wrap: wrap;
+    }
+
+    .wam-pay__page-btn {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 8px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      color: var(--wam-text);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wam-pay__page-btn:hover:not(:disabled) {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary);
+    }
+
+    .wam-pay__page-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .wam-pay__page-info {
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+      margin: 0 var(--wam-space-sm);
+    }
+
+    /* Modal */
+    .wam-pay__modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 59, 35, 0.5);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: var(--wam-z-modal);
+      padding: 0;
+    }
+    .wam-pay__modal.is-open { display: flex; }
+
+    .wam-pay__modal-box {
+      background: var(--wam-bg-alt);
+      width: 100%;
+      max-width: 560px;
+      border-radius: var(--wam-radius-lg) var(--wam-radius-lg) 0 0;
+      padding: var(--wam-space-lg);
+      padding-bottom: calc(var(--wam-space-lg) + env(safe-area-inset-bottom, 0px));
+      animation: wam-slide-up 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .wam-pay__modal-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border-soft);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-pay__modal-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      flex: 1 1 auto;
+    }
+
+    .wam-pay__modal-close {
+      background: transparent;
+      border: 0;
+      font-size: 1.2rem;
+      color: var(--wam-text-muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .wam-pay__modal-close:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    .wam-pay__modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .wam-pay__modal-actions .wam-btn {
+      flex: 1 1 0;
+    }
+
+    /* Detail sections */
+    .wam-pay__detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 0.85rem;
+      border-bottom: 1px dashed var(--wam-border-soft);
+    }
+    .wam-pay__detail-row:last-child { border-bottom: 0; }
+
+    .wam-pay__detail-label {
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+
+    .wam-pay__detail-value {
+      color: var(--wam-text);
+      font-weight: 700;
+      text-align: left;
+      word-break: break-word;
+      flex: 1 1 auto;
+    }
+
+    .wam-pay__section-box {
+      margin-bottom: var(--wam-space-md);
+      padding: var(--wam-space-md);
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius);
+    }
+
+    .wam-pay__section-box-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Form fields */
+    .wam-pay__field {
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-pay__label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin-bottom: 6px;
+    }
+
+    .wam-pay__input,
+    .wam-pay__select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.87rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-pay__input:focus,
+    .wam-pay__select:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    /* Quick chips */
+    .wam-pay__quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .wam-pay__quick-chip {
+      padding: 5px 12px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-muted);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-pay__quick-chip:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary);
+    }
+
+    /* Toast */
+    .wam-pay__toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .wam-pay__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* FAB */
+    .wam-pay__fab {
+      position: fixed;
+      bottom: 24px;
+      left: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--wam-gold);
+      color: #3a2a00;
+      font-size: 1.6rem;
+      font-weight: 800;
+      border: 0;
+      box-shadow: 0 6px 18px rgba(212, 166, 42, 0.45);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--wam-t), box-shadow var(--wam-t);
+      z-index: calc(var(--wam-z-sticky) - 1);
+      font-family: inherit;
+    }
+    .wam-pay__fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 24px rgba(212, 166, 42, 0.55);
+    }
+
+    @media (max-width: 640px) {
+      .wam-pay__main { padding: var(--wam-space-md); }
+      .wam-pay__grid { grid-template-columns: 1fr; }
+      .wam-pay__stats { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+      .wam-pay__stat { padding: 12px 10px; }
+      .wam-pay__stat-value { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+
+<body data-page="payments">
+
+  <div class="wam-pay" id="payRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-pay__topbar">
+      <div class="wam-pay__topbar-info">
+        <a href="#" class="wam-pay__topbar-back" id="backLink">↩ بازگشت</a>
+        <h1 class="wam-pay__topbar-title">💳 پرداخت‌ها</h1>
+      </div>
+      <div class="wam-pay__topbar-actions">
+        <button type="button" class="wam-pay__icon-btn" id="exportBtn" title="خروجی CSV">⬇</button>
+        <button type="button" class="wam-pay__icon-btn wam-pay__icon-btn--primary" id="newBtn" title="پرداخت جدید">➕</button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-pay__main">
+
+      <!-- Stats -->
+      <section class="wam-pay__stats">
+        <div class="wam-pay__stat">
+          <div class="wam-pay__stat-label">📊 کل</div>
+          <div class="wam-pay__stat-value" id="statTotal">۰</div>
+          <div class="wam-pay__stat-sub" id="statTotalAmount">۰ میلیون ریال</div>
+        </div>
+
+        <div class="wam-pay__stat">
+          <div class="wam-pay__stat-label">✓ پرداخت‌شده</div>
+          <div class="wam-pay__stat-value wam-pay__stat-value--success" id="statPaid">۰</div>
+          <div class="wam-pay__stat-sub" id="statPaidAmount">۰ میلیون ریال</div>
+        </div>
+
+        <div class="wam-pay__stat">
+          <div class="wam-pay__stat-label">⏳ در انتظار</div>
+          <div class="wam-pay__stat-value wam-pay__stat-value--warning" id="statPending">۰</div>
+          <div class="wam-pay__stat-sub" id="statPendingAmount">۰ میلیون ریال</div>
+        </div>
+
+        <div class="wam-pay__stat">
+          <div class="wam-pay__stat-label">🚨 عقب‌افتاده</div>
+          <div class="wam-pay__stat-value wam-pay__stat-value--danger" id="statOverdue">۰</div>
+          <div class="wam-pay__stat-sub" id="statOverdueAmount">۰ میلیون ریال</div>
+        </div>
+
+        <div class="wam-pay__stat">
+          <div class="wam-pay__stat-label">📅 زمان‌بندی‌شده</div>
+          <div class="wam-pay__stat-value wam-pay__stat-value--info" id="statScheduled">۰</div>
+          <div class="wam-pay__stat-sub" id="statScheduledAmount">۰ میلیون ریال</div>
+        </div>
+      </section>
+
+      <!-- Search -->
+      <div class="wam-pay__search">
+        <input type="text" id="searchInput" placeholder="جستجوی شناسه، پرونده، عنوان...">
+        <span class="wam-pay__search-icon">🔍</span>
+        <button type="button" class="wam-pay__search-clear" id="searchClear" aria-label="پاک">✕</button>
+      </div>
+
+      <!-- Filter chips -->
+      <div class="wam-pay__filters" id="filterChips">
+        <button type="button" class="wam-pay__chip is-active" data-status="all">
+          همه <span class="wam-pay__chip-count" data-count="all">۰</span>
+        </button>
+        <button type="button" class="wam-pay__chip" data-status="paid">
+          ✓ پرداخت‌شده <span class="wam-pay__chip-count" data-count="paid">۰</span>
+        </button>
+        <button type="button" class="wam-pay__chip" data-status="pending">
+          ⏳ در انتظار <span class="wam-pay__chip-count" data-count="pending">۰</span>
+        </button>
+        <button type="button" class="wam-pay__chip" data-status="overdue">
+          🚨 عقب‌افتاده <span class="wam-pay__chip-count" data-count="overdue">۰</span>
+        </button>
+        <button type="button" class="wam-pay__chip" data-status="scheduled">
+          📅 زمان‌بندی‌شده <span class="wam-pay__chip-count" data-count="scheduled">۰</span>
+        </button>
+        <button type="button" class="wam-pay__chip" data-status="cancelled">
+          ✕ لغو‌شده <span class="wam-pay__chip-count" data-count="cancelled">۰</span>
+        </button>
+        <button type="button" class="wam-pay__chip" data-status="refunded">
+          ↩ بازگشت‌داده‌شده <span class="wam-pay__chip-count" data-count="refunded">۰</span>
+        </button>
+      </div>
+
+      <!-- Sort row -->
+      <div class="wam-pay__sort-row">
+        <span id="resultsCount">۰ پرداخت</span>
+        <select class="wam-pay__sort-select" id="sortSelect">
+          <option value="newest">جدیدترین</option>
+          <option value="oldest">قدیمی‌ترین</option>
+          <option value="amount_high">مبلغ: زیاد به کم</option>
+          <option value="amount_low">مبلغ: کم به زیاد</option>
+          <option value="due">نزدیک‌ترین سررسید</option>
+        </select>
+      </div>
+
+      <!-- Grid -->
+      <div class="wam-pay__grid" id="payGrid">
+        <!-- توسط JS پر می‌شود -->
+      </div>
+
+      <!-- Empty -->
+      <div class="wam-pay__empty" id="emptyState" style="display:none;">
+        <div class="wam-pay__empty-icon">📭</div>
+        <h3 class="wam-pay__empty-title" id="emptyTitle">پرداختی یافت نشد</h3>
+        <p class="wam-pay__empty-text" id="emptyText">
+          با فیلترهای فعلی پرداختی وجود ندارد.
+        </p>
+      </div>
+
+      <!-- Pagination -->
+      <div class="wam-pay__pagination" id="pagination" style="display:none;">
+        <button type="button" class="wam-pay__page-btn" id="prevPage" disabled>‹</button>
+        <span class="wam-pay__page-info" id="pageInfo">1 از 1</span>
+        <button type="button" class="wam-pay__page-btn" id="nextPage" disabled>›</button>
+      </div>
+
+    </main>
+
+    <!-- ═══ FAB ═══ -->
+    <button type="button" class="wam-pay__fab" id="fabBtn" aria-label="پرداخت جدید">➕</button>
+
+    <!-- ═══ MODAL: جزئیات پرداخت ═══ -->
+    <div class="wam-pay__modal" id="detailModal" role="dialog" aria-modal="true">
+      <div class="wam-pay__modal-box">
+
+        <div class="wam-pay__modal-head">
+          <h3 class="wam-pay__modal-title" id="detailModalTitle">💳 جزئیات پرداخت</h3>
+          <button type="button" class="wam-pay__modal-close" id="detailModalClose" aria-label="بستن">✕</button>
+        </div>
+
+        <div id="detailBody">
+          <!-- توسط JS پر می‌شود -->
+        </div>
+
+        <div class="wam-pay__modal-actions" id="detailActions">
+          <button type="button" class="wam-btn" id="detailCloseBtn">بستن</button>
+          <button type="button" class="wam-btn wam-btn--primary" id="detailActionBtn" style="display:none;">
+            ✓
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ MODAL: پرداخت جدید ═══ -->
+    <div class="wam-pay__modal" id="newModal" role="dialog" aria-modal="true">
+      <div class="wam-pay__modal-box">
+
+        <div class="wam-pay__modal-head">
+          <h3 class="wam-pay__modal-title">➕ ثبت پرداخت جدید</h3>
+          <button type="button" class="wam-pay__modal-close" id="newModalClose" aria-label="بستن">✕</button>
+        </div>
+
+        <div class="wam-pay__field">
+          <label class="wam-pay__label" for="newCaseId">شناسه پرونده *</label>
+          <input type="text" id="newCaseId" class="wam-pay__input"
+                 placeholder="مثال: C-ABC12" dir="ltr">
+        </div>
+
+        <div class="wam-pay__field">
+          <label class="wam-pay__label" for="newTitle">عنوان (اختیاری)</label>
+          <input type="text" id="newTitle" class="wam-pay__input"
+                 placeholder="مثال: قسط پنجم وام مسکن">
+        </div>
+
+        <div class="wam-pay__field">
+          <label class="wam-pay__label" for="newAmount">مبلغ (میلیون ریال) *</label>
+          <input type="number" id="newAmount" class="wam-pay__input"
+                 min="0.1" step="0.1" placeholder="مثال: 12.5" dir="ltr">
+          <div class="wam-pay__quick-chips">
+            <button type="button" class="wam-pay__quick-chip" data-quick="5">۵</button>
+            <button type="button" class="wam-pay__quick-chip" data-quick="10">۱۰</button>
+            <button type="button" class="wam-pay__quick-chip" data-quick="20">۲۰</button>
+            <button type="button" class="wam-pay__quick-chip" data-quick="50">۵۰</button>
+            <button type="button" class="wam-pay__quick-chip" data-quick="100">۱۰۰</button>
+          </div>
+        </div>
+
+        <div class="wam-pay__field">
+          <label class="wam-pay__label" for="newMethod">روش پرداخت *</label>
+          <select id="newMethod" class="wam-pay__select">
+            <option value="online">💳 پرداخت آنلاین</option>
+            <option value="cash">💵 نقدی</option>
+            <option value="transfer">🏦 انتقال بانکی</option>
+            <option value="cheque">📝 چک</option>
+            <option value="installment">🔄 قسط</option>
+          </select>
+        </div>
+
+        <div class="wam-pay__field">
+          <label class="wam-pay__label" for="newStatus">وضعیت</label>
+          <select id="newStatus" class="wam-pay__select">
+            <option value="pending">⏳ در انتظار</option>
+            <option value="paid">✓ پرداخت‌شده</option>
+            <option value="scheduled">📅 زمان‌بندی‌شده</option>
+          </select>
+        </div>
+
+        <div class="wam-pay__field">
+          <label class="wam-pay__label" for="newDueAt">سررسید (روز از امروز)</label>
+          <input type="number" id="newDueAt" class="wam-pay__input"
+                 min="0" max="3650" placeholder="مثال: 30" dir="ltr">
+        </div>
+
+        <div class="wam-pay__field">
+          <label class="wam-pay__label" for="newRef">شماره پیگیری (اختیاری)</label>
+          <input type="text" id="newRef" class="wam-pay__input"
+                 placeholder="شماره رسید یا پیگیری" dir="ltr">
+        </div>
+
+        <div class="wam-pay__modal-actions">
+          <button type="button" class="wam-btn" id="newCancelBtn">انصراف</button>
+          <button type="button" class="wam-btn wam-btn--primary" id="newSubmitBtn">
+            💳 ثبت پرداخت
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="wam-pay__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       PAYMENTS CONTROLLER (Shared)
+       - لیست پرداخت‌ها (اقساط، پرداخت‌های آنلاین، چک و ...)
+       - ثبت پرداخت جدید + تغییر وضعیت
+       - ذخیره در wamPayPayments
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_PAYMENTS = 'wamPayPayments';
+      var STORAGE_CASES = 'wamPayCases';
+      var PAGE_SIZE = 12;
+
+      var state = {
+        user: null,
+        all: [],
+        filtered: [],
+        status: 'all',
+        query: '',
+        sort: 'newest',
+        page: 1,
+        currentId: null
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function fmtAmountFine(n) {
+        if (n == null || isNaN(n)) return '۰';
+        try {
+          return Number(n).toLocaleString('fa-IR', {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1
+          });
+        } catch (_) { return String(n); }
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function fmtTime(ts) {
+        if (!ts) return '';
+        try {
+          return new Date(ts).toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+        } catch (_) { return ''; }
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = ts - Date.now();
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت';
+        return Math.round(abs / 86400000) + ' روز';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کاربر', username: 'user', role: 'applicant', id: 'user' };
+      }
+
+      function currentUserId() {
+        var u = state.user;
+        return (u && (u.id || u.username)) || 'user';
+      }
+
+      function roleOf() {
+        var u = state.user;
+        return (u && (u.role || u.userRole)) || 'applicant';
+      }
+
+      function canSeeAll() {
+        var r = roleOf();
+        return r === 'super_admin' || r === 'admin' || r === 'verifier' || r === 'broker';
+      }
+
+      function canManage() {
+        var r = roleOf();
+        return r === 'super_admin' || r === 'admin' || r === 'broker';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function uid() {
+        return 'PY-' + Date.now().toString(36).toUpperCase().slice(-5) +
+               Math.random().toString(36).slice(2, 4).toUpperCase();
+      }
+
+      function statusLabel(s) {
+        var map = {
+          pending: 'در انتظار', paid: 'پرداخت‌شده', overdue: 'عقب‌افتاده',
+          scheduled: 'زمان‌بندی‌شده', cancelled: 'لغو‌شده', refunded: 'بازگشت‌داده‌شده'
+        };
+        return map[s] || s || '—';
+      }
+
+      function methodLabel(m) {
+        var map = {
+          online: '💳 آنلاین', cash: '💵 نقدی', transfer: '🏦 انتقال',
+          cheque: '📝 چک', installment: '🔄 قسط'
+        };
+        return map[m] || m || '—';
+      }
+
+      function isOverdue(p) {
+        if (!p) return false;
+        if (p.status === 'paid' || p.status === 'cancelled' || p.status === 'refunded') return false;
+        return p.dueAt && p.dueAt < Date.now();
+      }
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadPayments() {
+        var all = readJSON(STORAGE_PAYMENTS, []);
+        if (!Array.isArray(all)) return [];
+
+        if (canSeeAll()) return all;
+
+        var me = currentUserId();
+        var myName = (state.user && state.user.name) || '';
+        return all.filter(function (p) {
+          if (!p) return false;
+          return p.userId === me ||
+                 (p.userName && myName && p.userName === myName) ||
+                 p.createdBy === me;
+        });
+      }
+
+      function seedIfEmpty() {
+        var all = readJSON(STORAGE_PAYMENTS, []);
+        if (Array.isArray(all) && all.length > 0) return;
+
+        var now = Date.now();
+        var me = currentUserId();
+        var meName = (state.user && state.user.name) || 'کاربر';
+
+        var samples = [
+          {
+            id: 'PY-' + now.toString(36).toUpperCase().slice(-5) + 'A',
+            caseId: 'C-ABC12',
+            title: 'قسط اول وام مسکن',
+            userId: me,
+            userName: meName,
+            createdBy: me,
+            amount: 12.5,
+            method: 'online',
+            status: 'paid',
+            dueAt: now - 86400000 * 30,
+            paidAt: now - 86400000 * 30,
+            ref: 'ONLINE-12345',
+            installmentNum: 1,
+            totalInstallments: 60,
+            createdAt: now - 86400000 * 30
+          },
+          {
+            id: 'PY-' + now.toString(36).toUpperCase().slice(-5) + 'B',
+            caseId: 'C-ABC12',
+            title: 'قسط دوم وام مسکن',
+            userId: me,
+            userName: meName,
+            createdBy: me,
+            amount: 12.5,
+            method: 'online',
+            status: 'paid',
+            dueAt: now - 86400000,
+            paidAt: now - 86400000,
+            ref: 'ONLINE-67890',
+            installmentNum: 2,
+            totalInstallments: 60,
+            createdAt: now - 86400000
+          },
+          {
+            id: 'PY-' + now.toString(36).toUpperCase().slice(-5) + 'C',
+            caseId: 'C-ABC12',
+            title: 'قسط سوم وام مسکن',
+            userId: me,
+            userName: meName,
+            createdBy: me,
+            amount: 12.5,
+            method: 'online',
+            status: 'pending',
+            dueAt: now + 86400000 * 15,
+            installmentNum: 3,
+            totalInstallments: 60,
+            createdAt: now - 86400000 * 5
+          },
+          {
+            id: 'PY-' + now.toString(36).toUpperCase().slice(-5) + 'D',
+            caseId: 'C-DEF34',
+            title: 'قسط اول وام خودرو',
+            userId: me,
+            userName: meName,
+            createdBy: me,
+            amount: 6.2,
+            method: 'transfer',
+            status: 'overdue',
+            dueAt: now - 86400000 * 5,
+            installmentNum: 1,
+            totalInstallments: 36,
+            createdAt: now - 86400000 * 35
+          },
+          {
+            id: 'PY-' + now.toString(36).toUpperCase().slice(-5) + 'E',
+            caseId: 'C-GHI56',
+            title: 'قسط اول وام شخصی',
+            userId: me,
+            userName: meName,
+            createdBy: me,
+            amount: 3.8,
+            method: 'online',
+            status: 'scheduled',
+            dueAt: now + 86400000 * 20,
+            installmentNum: 1,
+            totalInstallments: 24,
+            createdAt: now - 86400000 * 3
+          }
+        ];
+
+        if (!Array.isArray(all)) all = [];
+        all = all.concat(samples);
+        writeJSON(STORAGE_PAYMENTS, all);
+      }
+
+      // ═══════════════════════════════════
+      // آمار
+      // ═══════════════════════════════════
+
+      function getEffectiveStatus(p) {
+        if (isOverdue(p)) return 'overdue';
+        return p.status || 'pending';
+      }
+
+      function updateStats() {
+        var stats = {
+          total: { count: 0, amount: 0 },
+          paid: { count: 0, amount: 0 },
+          pending: { count: 0, amount: 0 },
+          overdue: { count: 0, amount: 0 },
+          scheduled: { count: 0, amount: 0 },
+          cancelled: { count: 0, amount: 0 },
+          refunded: { count: 0, amount: 0 }
+        };
+
+        state.all.forEach(function (p) {
+          var amt = Number(p.amount) || 0;
+          stats.total.count++;
+          stats.total.amount += amt;
+
+          var st = getEffectiveStatus(p);
+          if (stats[st]) {
+            stats[st].count++;
+            stats[st].amount += amt;
+          }
+        });
+
+        if ($('statTotal')) $('statTotal').textContent = toFa(stats.total.count);
+        if ($('statTotalAmount')) $('statTotalAmount').textContent = fmtAmount(stats.total.amount) + ' میلیون ریال';
+
+        if ($('statPaid')) $('statPaid').textContent = toFa(stats.paid.count);
+        if ($('statPaidAmount')) $('statPaidAmount').textContent = fmtAmount(stats.paid.amount) + ' میلیون ریال';
+
+        if ($('statPending')) $('statPending').textContent = toFa(stats.pending.count);
+        if ($('statPendingAmount')) $('statPendingAmount').textContent = fmtAmount(stats.pending.amount) + ' میلیون ریال';
+
+        if ($('statOverdue')) $('statOverdue').textContent = toFa(stats.overdue.count);
+        if ($('statOverdueAmount')) $('statOverdueAmount').textContent = fmtAmount(stats.overdue.amount) + ' میلیون ریال';
+
+        if ($('statScheduled')) $('statScheduled').textContent = toFa(stats.scheduled.count);
+        if ($('statScheduledAmount')) $('statScheduledAmount').textContent = fmtAmount(stats.scheduled.amount) + ' میلیون ریال';
+
+        Object.keys(stats).forEach(function (k) {
+          var el = document.querySelector('[data-count="' + k + '"]');
+          if (el) el.textContent = toFa(stats[k].count);
+        });
+      }
+
+      // ═══════════════════════════════════
+      // فیلتر و مرتب
+      // ═══════════════════════════════════
+
+      function applyFilters() {
+        var q = state.query.toLowerCase();
+        var st = state.status;
+
+        state.filtered = state.all.filter(function (p) {
+          if (st !== 'all') {
+            var eff = getEffectiveStatus(p);
+            if (st === 'overdue' && eff !== 'overdue') return false;
+            if (st === 'paid' && eff !== 'paid') return false;
+            if (st === 'pending' && eff !== 'pending') return false;
+            if (st === 'scheduled' && eff !== 'scheduled') return false;
+            if (st === 'cancelled' && eff !== 'cancelled') return false;
+            if (st === 'refunded' && eff !== 'refunded') return false;
+          }
+
+          if (q) {
+            var hay = [
+              p.id, p.caseId, p.title, p.ref, p.userName
+            ].join(' ').toLowerCase();
+            if (hay.indexOf(q) < 0) return false;
+          }
+          return true;
+        });
+
+        var s = state.sort;
+        state.filtered.sort(function (a, b) {
+          if (s === 'oldest') return (a.createdAt || 0) - (b.createdAt || 0);
+          if (s === 'amount_high') return (Number(b.amount) || 0) - (Number(a.amount) || 0);
+          if (s === 'amount_low') return (Number(a.amount) || 0) - (Number(b.amount) || 0);
+          if (s === 'due') {
+            var ad = a.dueAt || Infinity;
+            var bd = b.dueAt || Infinity;
+            return ad - bd;
+          }
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+
+        state.page = 1;
+        render();
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function render() {
+        var grid = $('payGrid');
+        var empty = $('emptyState');
+        var pagination = $('pagination');
+        var countEl = $('resultsCount');
+
+        if (countEl) countEl.textContent = toFa(state.filtered.length) + ' پرداخت';
+
+        if (state.filtered.length === 0) {
+          if (grid) grid.innerHTML = '';
+          if (empty) {
+            empty.style.display = '';
+            var et = $('emptyTitle');
+            var ex = $('emptyText');
+            if (state.query || state.status !== 'all') {
+              if (et) et.textContent = 'نتیجه‌ای یافت نشد';
+              if (ex) ex.textContent = 'با فیلترهای فعلی پرداختی وجود ندارد.';
+            } else {
+              if (et) et.textContent = 'هنوز پرداختی ثبت نشده';
+              if (ex) ex.textContent = 'اولین پرداخت خود را اضافه کنید.';
+            }
+          }
+          if (pagination) pagination.style.display = 'none';
+          return;
+        }
+
+        if (empty) empty.style.display = 'none';
+
+        var totalPages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+        if (state.page > totalPages) state.page = totalPages;
+        var start = (state.page - 1) * PAGE_SIZE;
+        var slice = state.filtered.slice(start, start + PAGE_SIZE);
+
+        var html = '';
+        slice.forEach(function (p) {
+          html += renderCard(p);
+        });
+        if (grid) grid.innerHTML = html;
+
+        grid.querySelectorAll('.wam-pay__card').forEach(function (card) {
+          card.addEventListener('click', function () {
+            var id = card.getAttribute('data-id');
+            if (id) openDetail(id);
+          });
+        });
+
+        if (pagination) pagination.style.display = '';
+        if ($('pageInfo')) $('pageInfo').textContent = toFa(state.page) + ' از ' + toFa(totalPages);
+        if ($('prevPage')) $('prevPage').disabled = state.page <= 1;
+        if ($('nextPage')) $('nextPage').disabled = state.page >= totalPages;
+      }
+
+      function renderCard(p) {
+        var st = getEffectiveStatus(p);
+        var overdue = st === 'overdue';
+
+        var iconMap = {
+          online: '💳', cash: '💵', transfer: '🏦', cheque: '📝', installment: '🔄'
+        };
+        var icon = iconMap[p.method] || '💳';
+        var iconClass = 'wam-pay__card-icon--' + (p.method || 'online');
+
+        var dueLine = '';
+        if (p.dueAt) {
+          var dueCls = 'wam-pay__card-date-value' + (overdue ? ' wam-pay__card-date-value--overdue' : '');
+          dueLine = '<div class="wam-pay__card-date">' +
+                      '<span>' + (overdue ? '⚠️ سررسید گذشته' : '⏰ سررسید') + '</span>' +
+                      '<span class="' + dueCls + '">' + esc(fmtDate(p.dueAt)) + '</span>' +
+                    '</div>';
+        }
+
+        var installLine = '';
+        if (p.installmentNum && p.totalInstallments) {
+          installLine = '<span class="wam-pay__card-meta-item">🔢 قسط ' +
+                        toFa(p.installmentNum) + ' از ' + toFa(p.totalInstallments) + '</span>';
+        }
+
+        return '' +
+          '<div class="wam-pay__card wam-pay__card--' + esc(st) + '" data-id="' + esc(p.id) + '">' +
+            '<div class="wam-pay__card-head">' +
+              '<div class="wam-pay__card-icon ' + iconClass + '">' + icon + '</div>' +
+              '<div class="wam-pay__card-title-wrap">' +
+                '<p class="wam-pay__card-title">' + esc(p.title || 'پرداخت') + '</p>' +
+                '<div class="wam-pay__card-id">' + esc(p.id) + '</div>' +
+              '</div>' +
+              '<div class="wam-pay__card-amount">' + fmtAmountFine(p.amount) + '</div>' +
+            '</div>' +
+
+            '<div class="wam-pay__card-meta">' +
+              (p.caseId ? '<span class="wam-pay__card-meta-item">📁 ' + esc(p.caseId) + '</span>' : '') +
+              installLine +
+              (p.ref ? '<span class="wam-pay__card-meta-item">🔖 ' + esc(p.ref) + '</span>' : '') +
+            '</div>' +
+
+            '<div class="wam-pay__card-footer">' +
+              (dueLine || '<div class="wam-pay__card-date"><span>تاریخ ثبت</span><span class="wam-pay__card-date-value">' + esc(fmtDate(p.createdAt)) + '</span></div>') +
+              '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">' +
+                '<span class="wam-pay__method-badge wam-pay__method-badge--' + esc(p.method || 'online') + '">' +
+                  methodLabel(p.method) +
+                '</span>' +
+                '<span class="wam-pay__status-badge wam-pay__status-badge--' + esc(st) + '">' +
+                  statusLabel(st) +
+                '</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // Modal جزئیات
+      // ═══════════════════════════════════
+
+      function openDetail(id) {
+        var p = state.all.find(function (x) { return x.id === id; });
+        if (!p) return;
+        state.currentId = id;
+
+        var st = getEffectiveStatus(p);
+        var title = $('detailModalTitle');
+        if (title) title.textContent = '💳 ' + (p.title || 'پرداخت');
+
+        var html = '' +
+          '<div class="wam-pay__section-box">' +
+            '<h4 class="wam-pay__section-box-title">📋 اطلاعات پرداخت</h4>' +
+            '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">شناسه:</span><span class="wam-pay__detail-value" dir="ltr">' + esc(p.id) + '</span></div>' +
+            (p.caseId ? '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">پرونده:</span><span class="wam-pay__detail-value" dir="ltr">' + esc(p.caseId) + '</span></div>' : '') +
+            '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">مبلغ:</span><span class="wam-pay__detail-value">' + fmtAmountFine(p.amount) + ' میلیون ریال</span></div>' +
+            '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">روش:</span><span class="wam-pay__detail-value">' + methodLabel(p.method) + '</span></div>' +
+            '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">وضعیت:</span><span class="wam-pay__detail-value">' + statusLabel(st) + '</span></div>' +
+            (p.installmentNum ? '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">شماره قسط:</span><span class="wam-pay__detail-value">' + toFa(p.installmentNum) + ' از ' + toFa(p.totalInstallments) + '</span></div>' : '') +
+            (p.ref ? '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">شماره پیگیری:</span><span class="wam-pay__detail-value" dir="ltr">' + esc(p.ref) + '</span></div>' : '') +
+          '</div>' +
+
+          '<div class="wam-pay__section-box">' +
+            '<h4 class="wam-pay__section-box-title">📅 تاریخ‌ها</h4>' +
+            '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">تاریخ ثبت:</span><span class="wam-pay__detail-value">' + esc(fmtDate(p.createdAt)) + ' • ' + esc(fmtTime(p.createdAt)) + '</span></div>' +
+            (p.dueAt ? '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">سررسید:</span><span class="wam-pay__detail-value">' + esc(fmtDate(p.dueAt)) + (p.status !== 'paid' && p.status !== 'cancelled' ? ' (' + esc(relTime(p.dueAt)) + ')' : '') + '</span></div>' : '') +
+            (p.paidAt ? '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">تاریخ پرداخت:</span><span class="wam-pay__detail-value">' + esc(fmtDate(p.paidAt)) + '</span></div>' : '') +
+          '</div>' +
+
+          (p.userName ? '<div class="wam-pay__section-box">' +
+            '<h4 class="wam-pay__section-box-title">👤 کاربر</h4>' +
+            '<div class="wam-pay__detail-row"><span class="wam-pay__detail-label">نام:</span><span class="wam-pay__detail-value">' + esc(p.userName) + '</span></div>' +
+          '</div>' : '');
+
+        var body = $('detailBody');
+        if (body) body.innerHTML = html;
+
+        // Action button
+        var actionBtn = $('detailActionBtn');
+        if (actionBtn) {
+          if (st === 'pending' || st === 'overdue' || st === 'scheduled') {
+            if (canManage()) {
+              actionBtn.style.display = '';
+              actionBtn.textContent = '✓ تأیید پرداخت';
+              actionBtn.className = 'wam-btn wam-btn--success';
+              actionBtn.onclick = function () { markPaid(id); };
+            } else {
+              actionBtn.style.display = 'none';
+            }
+          } else {
+            actionBtn.style.display = 'none';
+          }
+        }
+
+        var m = $('detailModal');
+        if (m) m.classList.add('is-open');
+      }
+
+      function closeDetail() {
+        var m = $('detailModal');
+        if (m) m.classList.remove('is-open');
+        state.currentId = null;
+      }
+
+      function markPaid(id) {
+        var p = state.all.find(function (x) { return x.id === id; });
+        if (!p) return;
+
+        if (!confirm('این پرداخت به‌عنوان پرداخت‌شده ثبت شود؟')) return;
+
+        p.status = 'paid';
+        p.paidAt = Date.now();
+
+        var all = readJSON(STORAGE_PAYMENTS, []);
+        if (Array.isArray(all)) {
+          for (var i = 0; i < all.length; i++) {
+            if (all[i].id === id) {
+              all[i] = p;
+              break;
+            }
+          }
+          writeJSON(STORAGE_PAYMENTS, all);
+        }
+
+        emitEvent('payment:marked-paid', {
+          id: id,
+          amount: p.amount
+        });
+
+        state.all = loadPayments();
+        updateStats();
+        applyFilters();
+        closeDetail();
+        showToast('✓ پرداخت تأیید شد');
+      }
+
+      // ═══════════════════════════════════
+      // Modal پرداخت جدید
+      // ═══════════════════════════════════
+
+      function openNewModal() {
+        if ($('newCaseId')) $('newCaseId').value = '';
+        if ($('newTitle')) $('newTitle').value = '';
+        if ($('newAmount')) $('newAmount').value = '';
+        if ($('newMethod')) $('newMethod').value = 'online';
+        if ($('newStatus')) $('newStatus').value = 'pending';
+        if ($('newDueAt')) $('newDueAt').value = '';
+        if ($('newRef')) $('newRef').value = '';
+
+        var m = $('newModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('newCaseId')) $('newCaseId').focus(); }, 150);
+      }
+
+      function closeNewModal() {
+        var m = $('newModal');
+        if (m) m.classList.remove('is-open');
+      }
+
+      function submitNew() {
+        var caseId = (($('newCaseId') || {}).value || '').trim();
+        var title = (($('newTitle') || {}).value || '').trim();
+        var amount = parseFloat(($('newAmount') || {}).value) || 0;
+        var method = ($('newMethod') || {}).value || 'online';
+        var status = ($('newStatus') || {}).value || 'pending';
+        var dueStr = ($('newDueAt') || {}).value || '';
+        var ref = (($('newRef') || {}).value || '').trim();
+
+        if (!caseId) {
+          showToast('شناسه پرونده الزامی است.');
+          return;
+        }
+        if (amount <= 0) {
+          showToast('مبلغ معتبر وارد کنید.');
+          return;
+        }
+
+        var dueAt = null;
+        if (dueStr !== '') {
+          var days = parseInt(dueStr, 10);
+          if (isNaN(days) || days < 0) days = 0;
+          dueAt = Date.now() + days * 86400000;
+        }
+
+        var me = state.user;
+        var newP = {
+          id: uid(),
+          caseId: caseId,
+          title: title || ('پرداخت — ' + caseId),
+          userId: currentUserId(),
+          userName: me.name || me.username || 'کاربر',
+          createdBy: currentUserId(),
+          amount: amount,
+          method: method,
+          status: status,
+          dueAt: dueAt,
+          paidAt: status === 'paid' ? Date.now() : null,
+          ref: ref,
+          createdAt: Date.now()
+        };
+
+        var all = readJSON(STORAGE_PAYMENTS, []);
+        if (!Array.isArray(all)) all = [];
+        all.push(newP);
+
+        if (!writeJSON(STORAGE_PAYMENTS, all)) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        emitEvent('payment:created', {
+          id: newP.id,
+          amount: amount
+        });
+
+        state.all = loadPayments();
+        updateStats();
+        applyFilters();
+        closeNewModal();
+        showToast('✓ پرداخت ثبت شد');
+      }
+
+      // ═══════════════════════════════════
+      // Export
+      // ═══════════════════════════════════
+
+      function exportCSV() {
+        var rows = [];
+        rows.push(['ID', 'CaseID', 'Title', 'Amount', 'Method', 'Status', 'DueAt', 'PaidAt', 'Ref', 'User']);
+        state.filtered.forEach(function (p) {
+          rows.push([
+            p.id || '',
+            p.caseId || '',
+            (p.title || '').replace(/,/g, ' '),
+            p.amount || 0,
+            p.method || '',
+            getEffectiveStatus(p),
+            p.dueAt ? new Date(p.dueAt).toISOString().slice(0, 10) : '',
+            p.paidAt ? new Date(p.paidAt).toISOString().slice(0, 10) : '',
+            p.ref || '',
+            p.userName || ''
+          ]);
+        });
+        var csv = '\uFEFF' + rows.map(function (r) { return r.join(','); }).join('\n');
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'payments-' + Date.now() + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        showToast('✓ خروجی CSV دانلود شد');
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        var input = $('searchInput');
+        var clearBtn = $('searchClear');
+        if (input) {
+          input.addEventListener('input', function () {
+            state.query = input.value || '';
+            if (clearBtn) clearBtn.classList.toggle('is-visible', state.query.length > 0);
+            applyFilters();
+          });
+        }
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function () {
+            if (input) input.value = '';
+            state.query = '';
+            clearBtn.classList.remove('is-visible');
+            applyFilters();
+          });
+        }
+
+        $$('.wam-pay__chip').forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            $$('.wam-pay__chip').forEach(function (x) { x.classList.remove('is-active'); });
+            chip.classList.add('is-active');
+            state.status = chip.getAttribute('data-status') || 'all';
+            applyFilters();
+          });
+        });
+
+        var sortSelect = $('sortSelect');
+        if (sortSelect) {
+          sortSelect.addEventListener('change', function () {
+            state.sort = sortSelect.value;
+            applyFilters();
+          });
+        }
+
+        // New
+        if ($('newBtn')) $('newBtn').addEventListener('click', openNewModal);
+        if ($('fabBtn')) $('fabBtn').addEventListener('click', openNewModal);
+
+        // Export
+        if ($('exportBtn')) $('exportBtn').addEventListener('click', exportCSV);
+
+        // Detail modal
+        if ($('detailModalClose')) $('detailModalClose').addEventListener('click', closeDetail);
+        if ($('detailCloseBtn')) $('detailCloseBtn').addEventListener('click', closeDetail);
+        var dm = $('detailModal');
+        if (dm) {
+          dm.addEventListener('click', function (e) {
+            if (e.target === dm) closeDetail();
+          });
+        }
+
+        // New modal
+        if ($('newModalClose')) $('newModalClose').addEventListener('click', closeNewModal);
+        if ($('newCancelBtn')) $('newCancelBtn').addEventListener('click', closeNewModal);
+        if ($('newSubmitBtn')) $('newSubmitBtn').addEventListener('click', submitNew);
+        var nm = $('newModal');
+        if (nm) {
+          nm.addEventListener('click', function (e) {
+            if (e.target === nm) closeNewModal();
+          });
+        }
+
+        // Quick chips
+        $$('.wam-pay__quick-chip').forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            var v = chip.getAttribute('data-quick');
+            if (v && $('newAmount')) $('newAmount').value = v;
+          });
+        });
+
+        // Pagination
+        if ($('prevPage')) $('prevPage').addEventListener('click', function () {
+          if (state.page > 1) { state.page--; render(); try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_){} }
+        });
+        if ($('nextPage')) $('nextPage').addEventListener('click', function () {
+          var totalPages = Math.max(1, Math.ceil(state.filtered.length / PAGE_SIZE));
+          if (state.page < totalPages) { state.page++; render(); try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_){} }
+        });
+
+        // Back
+        if ($('backLink')) {
+          $('backLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.history.length > 1) window.history.back();
+            else window.location.href = 'dashboard.html';
+          });
+        }
+
+        // Esc
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') { closeDetail(); closeNewModal(); }
+        });
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        state.user = currentUser();
+        seedIfEmpty();
+        state.all = loadPayments();
+        updateStats();
+        applyFilters();
+        bindEvents();
+
+        emitEvent('payments:opened', {});
+
+        setInterval(function () {
+          state.all = loadPayments();
+          updateStats();
+          applyFilters();
+        }, 60000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b3b23">
+<title>داشبورد متقاضی | وام پی</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<style>
+:root{
+    --primary:#0b3b23; --primary-light:#1a5c3a;
+    --gold:#d4a62a; --gold-light:#f0c651;
+    --muted:#6b7d73; --bg:#f4f7f4; --card:#fff;
+    --text:#1a2b22; --error:#c0392b; --success:#1e8e4a;
+    --warn:#e67e22; --info:#2980b9; --credit:#8e44ad;
+    --line:rgba(11,59,35,.12);
+    --shadow-sm:0 2px 8px rgba(11,59,35,.06);
+    --shadow-md:0 8px 24px rgba(11,59,35,.10);
+}
+[data-theme="dark"]{
+    --bg:#0d1712; --card:#142219; --text:#e8f1ea;
+    --muted:#8aa093; --line:rgba(255,255,255,.1);
+    --shadow-sm:0 2px 8px rgba(0,0,0,.3);
+    --shadow-md:0 8px 24px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{
+    margin:0; font-family:'Vazirmatn',-apple-system,Tahoma,sans-serif;
+    background:var(--bg); color:var(--text); min-height:100vh; padding:16px;
+}
+.wrap{max-width:900px;margin:0 auto}
+
+/* ===== Topbar ===== */
+.topbar{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 18px; background:var(--card); border-radius:12px;
+    margin-bottom:16px; border:1px solid var(--line); box-shadow:var(--shadow-sm);
+}
+.brand{font-weight:800;font-size:18px;color:var(--primary)}
+.brand span{color:var(--gold)}
+.user-info{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.user-info strong{color:var(--text);font-weight:700}
+.btn-icon{
+    background:transparent; border:1.5px solid var(--line); color:var(--text);
+    padding:6px 10px; border-radius:8px; font-family:inherit; font-size:14px;
+    cursor:pointer; transition:all .2s;
+}
+.btn-icon:hover{background:var(--bg)}
+.btn-logout{
+    background:transparent; border:1.5px solid var(--line); color:var(--error);
+    padding:6px 14px; border-radius:8px; font-family:inherit; font-size:12px;
+    cursor:pointer; font-weight:600;
+}
+.btn-logout:hover{background:rgba(192,57,43,.08)}
+
+/* ===== Welcome ===== */
+.welcome{
+    background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    color:#fff; border-radius:14px; padding:22px 26px; margin-bottom:16px;
+    position:relative; overflow:hidden; box-shadow:var(--shadow-md);
+}
+.welcome::before{
+    content:''; position:absolute; top:-60px; left:-60px;
+    width:200px; height:200px; border-radius:50%;
+    background:rgba(212,166,42,.15);
+}
+.welcome h1{margin:0 0 6px;font-size:20px;position:relative;z-index:1}
+.welcome p{margin:0;font-size:13px;opacity:.9;position:relative;z-index:1}
+
+/* ===== CTA ===== */
+.cta-card{
+    background:var(--card); border-radius:12px; padding:18px 20px;
+    margin-bottom:16px; border:1px solid var(--line); box-shadow:var(--shadow-sm);
+    display:flex; justify-content:space-between; align-items:center;
+    gap:16px; flex-wrap:wrap;
+}
+.cta-card__text h3{margin:0 0 4px;font-size:15px;color:var(--primary)}
+.cta-card__text p{margin:0;font-size:12px;color:var(--muted)}
+.btn-new{
+    padding:11px 22px; background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    color:var(--primary); text-decoration:none; border-radius:10px;
+    font-weight:800; font-size:14px; white-space:nowrap;
+    transition:transform .15s, box-shadow .2s;
+    box-shadow:0 4px 12px rgba(212,166,42,.3);
+}
+.btn-new:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(212,166,42,.4)}
+
+/* ===== Stats ===== */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+@media (max-width:540px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{
+    background:var(--card); border-radius:12px; padding:14px;
+    text-align:center; border:1px solid var(--line);
+    border-right:4px solid var(--primary); box-shadow:var(--shadow-sm);
+}
+.stat.pending{border-right-color:var(--warn)}
+.stat.approved{border-right-color:var(--success)}
+.stat.rejected{border-right-color:var(--error)}
+.stat .num{font-size:24px;font-weight:800;color:var(--primary);line-height:1.2}
+.stat .lbl{font-size:11px;color:var(--muted);margin-top:4px}
+.stat.pending .num{color:var(--warn)}
+.stat.approved .num{color:var(--success)}
+.stat.rejected .num{color:var(--error)}
+
+/* ===== Case Card (main) ===== */
+.case-card{
+    background:var(--card); border-radius:14px; padding:22px;
+    margin-bottom:16px; border:1px solid var(--line);
+    box-shadow:var(--shadow-md); position:relative; overflow:hidden;
+}
+.case-card::before{
+    content:''; position:absolute; top:0; right:0;
+    width:6px; height:100%; background:linear-gradient(180deg,var(--gold),var(--primary));
+}
+.case-card__header{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:14px; margin-bottom:18px; padding-bottom:16px;
+    border-bottom:1px dashed var(--line); flex-wrap:wrap;
+}
+.case-card__title{font-size:17px;font-weight:800;color:var(--primary);margin:0 0 4px}
+.case-card__subtitle{font-size:12px;color:var(--muted);font-family:monospace;direction:ltr;text-align:right}
+
+/* Status Badge */
+.status-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:6px 14px; border-radius:99px;
+    font-size:12px; font-weight:800; white-space:nowrap;
+}
+.status-badge.pending{background:rgba(230,126,34,.12);color:var(--warn)}
+.status-badge.progress{background:rgba(41,128,185,.12);color:var(--info)}
+.status-badge.success{background:rgba(30,142,74,.12);color:var(--success)}
+.status-badge.error{background:rgba(192,57,43,.12);color:var(--error)}
+.status-badge.waiting-you{background:linear-gradient(135deg,rgba(212,166,42,.2),rgba(212,166,42,.1));color:#8a6a08;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,166,42,.5)}50%{box-shadow:0 0 0 8px rgba(212,166,42,0)}}
+
+/* Progress Bar */
+.progress-wrap{margin-bottom:18px}
+.progress-label{
+    display:flex; justify-content:space-between;
+    font-size:12px; color:var(--muted); margin-bottom:8px; font-weight:600;
+}
+.progress-label strong{color:var(--primary)}
+.progress-bar{
+    height:10px; background:rgba(11,59,35,.08);
+    border-radius:99px; overflow:hidden; position:relative;
+}
+.progress-fill{
+    height:100%; border-radius:99px;
+    background:linear-gradient(90deg,var(--primary),var(--gold));
+    transition:width .5s ease;
+    position:relative;
+}
+.progress-fill::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+    animation:shine 2s infinite;
+}
+@keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* Info Grid */
+.info-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px; margin-bottom:18px;
+}
+.info-item{
+    background:var(--bg); border-radius:10px; padding:12px 14px;
+    border:1px solid var(--line);
+}
+.info-item__label{
+    font-size:11px; color:var(--muted); margin-bottom:4px;
+    display:flex; align-items:center; gap:4px;
+}
+.info-item__value{font-size:14px; font-weight:700; color:var(--text)}
+.info-item__value--credit{color:var(--credit)}
+.info-item__value--success{color:var(--success)}
+.info-item__value--info{color:var(--info)}
+.info-item__value--warning{color:var(--warn)}
+
+/* Action Box */
+.action-box{
+    background:linear-gradient(135deg,rgba(212,166,42,.1),rgba(11,59,35,.05));
+    border:2px solid rgba(212,166,42,.35); border-radius:12px;
+    padding:16px 18px; margin-top:16px;
+}
+.action-box__title{
+    font-size:13px; font-weight:800; color:var(--primary);
+    margin-bottom:8px; display:flex; align-items:center; gap:6px;
+}
+[data-theme="dark"] .action-box__title{color:var(--gold-light)}
+.action-box__desc{font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:14px}
+.btn-action{
+    padding:12px 24px; background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    color:var(--primary); border:none; border-radius:10px;
+    font-family:inherit; font-size:14px; font-weight:800;
+    cursor:pointer; text-decoration:none; display:inline-flex;
+    align-items:center; gap:8px;
+    box-shadow:0 4px 12px rgba(212,166,42,.3);
+    transition:transform .15s;
+}
+.btn-action:hover{transform:translateY(-2px)}
+
+/* Timeline */
+.timeline{
+    display:flex; align-items:center; gap:4px; flex-wrap:wrap;
+    padding:14px 8px; overflow-x:auto;
+}
+.tl-step{
+    display:flex; align-items:center; gap:4px;
+    flex-shrink:0;
+}
+.tl-num{
+    width:26px; height:26px; border-radius:50%;
+    background:var(--card); border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:10px; font-weight:800; color:var(--muted);
+    transition:all .3s;
+}
+.tl-step.done .tl-num{background:var(--success); border-color:var(--success); color:#fff}
+.tl-step.active .tl-num{
+    background:var(--gold); border-color:var(--gold); color:var(--primary);
+    box-shadow:0 0 0 4px rgba(212,166,42,.2);
+    animation:pulse 2s infinite;
+}
+.tl-line{width:16px; height:2px; background:var(--line); border-radius:2px}
+.tl-step.done + .tl-line{background:var(--success)}
+
+/* Notifications */
+.notif-list{display:flex; flex-direction:column; gap:6px}
+.notif-item{
+    display:flex; gap:10px; padding:10px 12px;
+    background:var(--bg); border-radius:10px;
+    border:1px solid var(--line);
+}
+.notif-item__icon{
+    width:32px; height:32px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; flex-shrink:0;
+}
+.notif-item__icon--info{background:rgba(41,128,185,.12);color:var(--info)}
+.notif-item__icon--success{background:rgba(30,142,74,.12);color:var(--success)}
+.notif-item__icon--warning{background:rgba(230,126,34,.12);color:var(--warn)}
+.notif-item__body{flex:1}
+.notif-item__title{font-size:13px; font-weight:700; margin-bottom:2px}
+.notif-item__time{font-size:11px; color:var(--muted)}
+
+/* Section */
+.section-title{
+    font-size:15px; font-weight:800; color:var(--primary);
+    margin:20px 0 10px; padding-right:8px;
+    border-right:4px solid var(--gold); line-height:1.4;
+}
+
+/* Empty */
+.empty{
+    background:var(--card); border-radius:12px;
+    padding:36px 20px; text-align:center;
+    border:2px dashed var(--line); color:var(--muted);
+}
+.empty-icon{font-size:44px; margin-bottom:10px; opacity:.5}
+.empty__title{font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px}
+.empty__desc{font-size:12px}
+
+/* Login Loading */
+.loading{
+    display:flex; flex-direction:column; align-items:center;
+    justify-content:center; min-height:60vh; gap:14px;
+}
+.spinner{
+    width:44px; height:44px; border:4px solid var(--line);
+    border-top-color:var(--gold); border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Toast */
+.toast{
+    position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(120%);
+    background:var(--primary); color:#fff; padding:12px 20px;
+    border-radius:10px; font-size:13px; font-weight:600;
+    box-shadow:var(--shadow-md); z-index:9999;
+    transition:transform .3s; max-width:90%;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.error{background:var(--error)}
+.toast.success{background:var(--success)}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="mainWrap">
+    <!-- Loading -->
+    <div class="loading" id="loadingEl">
+        <div class="spinner"></div>
+        <div style="font-size:13px; color:var(--muted);">در حال بارگذاری...</div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="contentEl" class="hidden">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="brand">وام<span>پی</span></div>
+            <div class="user-info">
+                <button class="btn-icon" id="themeBtn" title="تغییر تم">🌙</button>
+                <strong id="userName">—</strong>
+                <button class="btn-logout" id="logoutBtn">خروج</button>
+            </div>
+        </div>
+
+        <!-- Welcome -->
+        <div class="welcome">
+            <h1>سلام <span id="welcomeName">—</span> 👋</h1>
+            <p id="welcomeSubtitle">به داشبورد وام پی خوش آمدید</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat">
+                <div class="num" id="statTotal">۰</div>
+                <div class="lbl">کل پرونده‌ها</div>
+            </div>
+            <div class="stat pending">
+                <div class="num" id="statPending">۰</div>
+                <div class="lbl">در جریان</div>
+            </div>
+            <div class="stat approved">
+                <div class="num" id="statCompleted">۰</div>
+                <div class="lbl">تکمیل‌شده</div>
+            </div>
+            <div class="stat rejected">
+                <div class="num" id="statAction">۰</div>
+                <div class="lbl">نیاز به اقدام شما</div>
+            </div>
+        </div>
+
+        <!-- Active Case -->
+        <div id="activeCaseWrap"></div>
+
+        <!-- Notifications -->
+        <div id="notifWrap"></div>
+
+        <!-- CTA: New Request -->
+        <div class="cta-card">
+            <div class="cta-card__text">
+                <h3>➕ درخواست تسهیلات جدید</h3>
+                <p>اگر کارگزار معرفی نکرده، می‌توانید خودتان درخواست ثبت کنید</p>
+            </div>
+            <a href="applicant-wizard.html" class="btn-new">شروع درخواست</a>
+        </div>
+
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/permissions.js"></script>
+<script>
+(function(){
+    'use strict';
+
+    // ═══════════════════════════════════════════════════════════
+    // Helpers
+    // ═══════════════════════════════════════════════════════════
+    const $ = (s) => document.querySelector(s);
+    const safeParse = (key, fb = []) => {
+        try {
+            const v = localStorage.getItem(key);
+            if (!v || v === 'null' || v === 'undefined' || v === '') return fb;
+            return JSON.parse(v);
+        } catch (e) { return fb; }
+    };
+    const faNum = (n) => String(n || 0).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+    const faDate = (iso) => {
+        if (!iso) return '—';
+        try {
+            return new Intl.DateTimeFormat('fa-IR', {
+                year: 'numeric', month: '2-digit', day: '2-digit'
+            }).format(new Date(iso));
+        } catch (e) { return '—'; }
+    };
+    const faRelTime = (iso) => {
+        if (!iso) return '—';
+        const diff = Date.now() - new Date(iso).getTime();
+        const min = Math.floor(diff / 60000);
+        if (min < 1) return 'همین الان';
+        if (min < 60) return `${faNum(min)} دقیقه پیش`;
+        const hr = Math.floor(min / 60);
+        if (hr < 24) return `${faNum(hr)} ساعت پیش`;
+        const day = Math.floor(hr / 24);
+        if (day < 30) return `${faNum(day)} روز پیش`;
+        return faDate(iso);
+    };
+    let toastTimer;
+    function toast(msg, type) {
+        const el = $('#toast');
+        el.textContent = msg;
+        el.className = 'toast show' + (type ? ' ' + type : '');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Status Mapping
+    // ═══════════════════════════════════════════════════════════
+    const STATUS_MAP = {
+        draft:                              { label: 'پیش‌نویس',                icon: '📝', cls: 'pending',    step: 0,  action: false },
+        consultation_pending:               { label: 'در انتظار مشاوره',        icon: '💬', cls: 'progress',   step: 0,  action: false },
+        consultation_in_progress:           { label: 'در حال مشاوره',           icon: '💬', cls: 'progress',   step: 0,  action: false },
+        awaiting_broker_admin_review:       { label: 'در بررسی ادمین کارگزار',  icon: '🤝', cls: 'progress',   step: 1,  action: false },
+        awaiting_accounting_review:         { label: 'در بررسی حسابداری',       icon: '💰', cls: 'progress',   step: 2,  action: false },
+        awaiting_super_admin_financial:     { label: 'در انتظار تأیید مالی',    icon: '👑', cls: 'progress',   step: 3,  action: false },
+        awaiting_legal_draft:               { label: 'در تنظیم قرارداد',        icon: '⚖️', cls: 'progress',   step: 4,  action: false },
+        awaiting_broker_sign:               { label: 'در انتظار امضای کارگزار', icon: '✍️', cls: 'progress',   step: 5,  action: false },
+        awaiting_site_sign:                 { label: 'در انتظار امضای سایت',    icon: '✍️', cls: 'progress',   step: 6,  action: false },
+        awaiting_applicant_sign:            { label: '🔔 نیاز به امضای شما!',   icon: '✍️', cls: 'waiting-you',step: 7,  action: true,
+            actionType: 'sign',      actionTitle: 'امضای قرارداد فروش',
+            actionDesc: 'قرارداد فروش آماده‌ی امضای شماست. برای مشاهده و امضا کلیک کنید.',
+            actionLink: 'applicant-contract-sign.html' },
+        contract_signed_by_all:             { label: 'قرارداد امضا شد',         icon: '✅', cls: 'success',    step: 8,  action: false },
+        payment_pending:                    { label: '🔔 نیاز به پرداخت امانی', icon: '💰', cls: 'waiting-you',step: 9,  action: true,
+            actionType: 'payment',   actionTitle: 'پرداخت امانی',
+            actionDesc: 'برای شروع فرآیند، مبلغ امانی را پرداخت کنید.',
+            actionLink: 'applicant-escrow-payment.html' },
+        payment_in_escrow:                  { label: 'پرداخت امانی انجام شد',   icon: '🏦', cls: 'progress',   step: 9,  action: false },
+        broker_transferred:                 { label: 'انتقال امتیاز انجام شد',  icon: '📤', cls: 'progress',   step: 10, action: false },
+        super_admin_verified:               { label: 'تأیید مدیر کل',           icon: '👑', cls: 'progress',   step: 11, action: false },
+        applicant_confirmed:                { label: 'تأیید دریافت انجام شد',   icon: '✅', cls: 'progress',   step: 12, action: false },
+        awaiting_applicant_confirm:         { label: '🔔 تأیید دریافت',         icon: '📸', cls: 'waiting-you',step: 12, action: true,
+            actionType: 'confirm',   actionTitle: 'تأیید دریافت امتیاز',
+            actionDesc: 'امتیاز به حساب شما منتقل شده. برای تأیید نهایی کلیک کنید.',
+            actionLink: 'applicant-confirm-receipt.html' },
+        awaiting_declaration:               { label: '🔔 امضای اقرارنامه',       icon: '📜', cls: 'waiting-you',step: 13, action: true,
+            actionType: 'declaration', actionTitle: 'امضای اقرارنامه سه‌طرفه',
+            actionDesc: 'آخرین مرحله — امضای اقرارنامه برای آزادسازی نهایی.',
+            actionLink: 'declaration-three-way.html' },
+        declaration_signed:                 { label: 'اقرارنامه امضا شد',       icon: '✅', cls: 'progress',   step: 13, action: false },
+        payment_released:                   { label: 'آزادسازی انجام شد',       icon: '💰', cls: 'success',    step: 14, action: false },
+        completed:                          { label: '🎉 تکمیل‌شده',            icon: '🎉', cls: 'success',    step: 14, action: false },
+        rejected:                           { label: '❌ ردشده',               icon: '❌', cls: 'error',      step: 0,  action: false },
+        refunded:                           { label: '↩️ عودت داده‌شده',         icon: '↩️', cls: 'error',      step: 0,  action: false }
+    };
+
+    const TOTAL_STEPS = 14;
+
+    // ═══════════════════════════════════════════════════════════
+    // Auth Check
+    // ═══════════════════════════════════════════════════════════
+    const Auth = window.WamPayAuth;
+    if (!Auth) {
+        console.error('permissions.js لود نشد!');
+        return;
+    }
+
+    const user = Auth.getCurrentUser();
+    if (!user) {
+        sessionStorage.setItem('wamPayLoginMessage', 'برای دیدن داشبورد ابتدا وارد شوید.');
+        window.location.replace('login.html');
+        return;
+    }
+    if (user.role !== 'applicant') {
+        window.location.replace(Auth.getRoleDashboard(user.role));
+        return;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Find My Cases
+    // ═══════════════════════════════════════════════════════════
+    function findMyCases() {
+        const allCases = safeParse('wamPayApplications', []);
+        const myMobile = user.mobile;
+
+        return allCases.filter(c => {
+            // 1. متصل مستقیم
+            if (user.linkedCaseId && c.id === user.linkedCaseId) return true;
+            // 2. بر اساس موبایل
+            if (c.applicantData?.mobile === myMobile) return true;
+            // 3. بر اساس applicantId
+            if (c.applicantId === user.id) return true;
+            return false;
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Render Header
+    // ═══════════════════════════════════════════════════════════
+    function renderHeader() {
+        const name = user.name || user.mobile || 'کاربر';
+        $('#userName').textContent = name;
+        $('#welcomeName').textContent = name;
+
+        const sub = user.source === 'broker_referral'
+            ? `پرونده‌ی شما توسط ${user.brokerName || 'کارگزار'} ثبت شده است`
+            : 'به داشبورد وام پی خوش آمدید';
+        $('#welcomeSubtitle').textContent = sub;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Render Stats
+    // ═══════════════════════════════════════════════════════════
+    function renderStats(cases) {
+        const total = cases.length;
+        const inProgress = cases.filter(c => 
+            !['completed', 'rejected', 'refunded', 'draft'].includes(c.status)
+        ).length;
+        const completed = cases.filter(c => c.status === 'completed').length;
+        const needAction = cases.filter(c => {
+            const info = STATUS_MAP[c.status];
+            return info && info.action === true;
+        }).length;
+
+        $('#statTotal').textContent = faNum(total);
+        $('#statPending').textContent = faNum(inProgress);
+        $('#statCompleted').textContent = faNum(completed);
+        $('#statAction').textContent = faNum(needAction);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Render Active Case
+    // ═══════════════════════════════════════════════════════════
+    function renderActiveCase(cases) {
+        const wrap = $('#activeCaseWrap');
+
+        // اگه پرونده‌ای نیست
+        if (cases.length === 0) {
+            wrap.innerHTML = `
+                <h3 class="section-title">📁 پرونده‌ی من</h3>
+                <div class="empty">
+                    <div class="empty-icon">📭</div>
+                    <div class="empty__title">هنوز پرونده‌ای ندارید</div>
+                    <div class="empty__desc">از دکمه‌ی پایین می‌توانید درخواست تسهیلات جدید ثبت کنید.</div>
+                </div>
+            `;
+            return;
+        }
+
+        // آخرین پرونده (جدیدترین)
+        const sorted = cases.slice().sort((a, b) => 
+            new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt)
+        );
+        const activeCase = sorted[0];
+        const statusInfo = STATUS_MAP[activeCase.status] || { 
+            label: activeCase.status, icon: '📋', cls: 'progress', step: 0, action: false 
+        };
+
+        // اطلاعات پرونده
+        const applicant = activeCase.applicantData || {};
+        const loanAmount = activeCase.loanData?.loanAmount || activeCase.loanAmount || 0;
+        const creditCount = activeCase.creditInvoice?.creditCount || 0;
+        const creditName = activeCase.creditInvoice?.creditName || '—';
+        const finalAmount = activeCase.creditInvoice?.sale?.total || 0;
+
+        // پیشرفت
+        const currentStep = statusInfo.step;
+        const progressPct = Math.min(100, Math.round((currentStep / TOTAL_STEPS) * 100));
+
+        // Timeline
+        const timelineHTML = renderTimeline(currentStep, statusInfo.action);
+
+        // Action Box (اگه نیاز به اقدام داره)
+        let actionBoxHTML = '';
+        if (statusInfo.action && statusInfo.actionLink) {
+            actionBoxHTML = `
+                <div class="action-box">
+                    <div class="action-box__title">
+                        <span>⚡</span>
+                        <span>نیاز به اقدام شما</span>
+                    </div>
+                    <div class="action-box__desc">${statusInfo.actionDesc}</div>
+                    <a href="${statusInfo.actionLink}?caseId=${activeCase.id}" class="btn-action">
+                        <span>${statusInfo.icon}</span>
+                        <span>${statusInfo.actionTitle}</span>
+                    </a>
+                </div>
+            `;
+        }
+
+        wrap.innerHTML = `
+            <h3 class="section-title">📁 پرونده‌ی من</h3>
+            <div class="case-card">
+                <div class="case-card__header">
+                    <div>
+                        <div class="case-card__title">
+                            ${statusInfo.icon} ${statusInfo.label}
+                        </div>
+                        <div class="case-card__subtitle">${activeCase.caseNumber || activeCase.id}</div>
+                    </div>
+                    <span class="status-badge ${statusInfo.cls}">${statusInfo.icon} ${statusInfo.label}</span>
+                </div>
+
+                <div class="progress-wrap">
+                    <div class="progress-label">
+                        <span>پیشرفت پرونده</span>
+                        <span><strong>${faNum(currentStep)}</strong> از <strong>${faNum(TOTAL_STEPS)}</strong> مرحله</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width:${progressPct}%"></div>
+                    </div>
+                </div>
+
+                <div class="timeline">${timelineHTML}</div>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-item__label">💵 مبلغ وام</div>
+                        <div class="info-item__value">${faPrice(loanAmount)} تومان</div>
+                    </div>
+                    ${creditCount > 0 ? `
+                        <div class="info-item">
+                            <div class="info-item__label">💎 تعداد امتیاز</div>
+                            <div class="info-item__value info-item__value--credit">${faNum(creditCount)} امتیاز (${creditName})</div>
+                        </div>
+                    ` : ''}
+                    ${finalAmount > 0 ? `
+                        <div class="info-item">
+                            <div class="info-item__label">💰 مبلغ نهایی پرداخت شما</div>
+                            <div class="info-item__value info-item__value--info">${faPrice(finalAmount)} تومان</div>
+                        </div>
+                    ` : ''}
+                    <div class="info-item">
+                        <div class="info-item__label">🤝 کارگزار معرف</div>
+                        <div class="info-item__value">${activeCase.brokerName || '—'}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-item__label">📅 تاریخ ثبت</div>
+                        <div class="info-item__value">${faDate(activeCase.createdAt)}</div>
+                    </div>
+                </div>
+
+                ${actionBoxHTML}
+            </div>
+        `;
+    }
+
+    function renderTimeline(currentStep, hasAction) {
+        let html = '';
+        const stepLabels = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹','۱۰','۱۱','۱۲','۱۳','۱۴'];
+        // فقط چند مرحله‌ی کلیدی رو نشون میدیم
+        const shownSteps = [
+            { n: 0,  label: 'ثبت' },
+            { n: 4,  label: 'قرارداد' },
+            { n: 7,  label: 'امضا' },
+            { n: 9,  label: 'امانت' },
+            { n: 14, label: 'تکمیل' }
+        ];
+
+        shownSteps.forEach((s, i) => {
+            const isDone = currentStep > s.n;
+            const isActive = currentStep === s.n || (hasAction && currentStep === s.n);
+            const cls = isDone ? 'done' : isActive ? 'active' : '';
+            html += `
+                <div class="tl-step ${cls}">
+                    <div class="tl-num">${isDone ? '✓' : faNum(s.n)}</div>
+                </div>
+            `;
+            if (i < shownSteps.length - 1) {
+                html += `<div class="tl-line ${isDone ? 'done' : ''}"></div>`;
+            }
+        });
+        return html;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Render Notifications
+    // ═══════════════════════════════════════════════════════════
+    function renderNotifications(cases) {
+        const wrap = $('#notifWrap');
+        
+        // اعلانات از وضعیت پرونده‌ها ساخته میشن
+        const notifs = [];
+        
+        cases.forEach(c => {
+            const info = STATUS_MAP[c.status];
+            if (!info) return;
+            
+            // اعلان از زمان ایجاد
+            notifs.push({
+                icon: '📁',
+                cls: 'info',
+                title: `پرونده ${c.caseNumber} ثبت شد`,
+                time: c.createdAt
+            });
+
+            // اعلان‌های جدیدتر بر اساس وضعیت
+            if (c.updatedAt && c.updatedAt !== c.createdAt) {
+                notifs.push({
+                    icon: info.icon,
+                    cls: info.cls === 'waiting-you' ? 'warning' : (info.cls === 'success' ? 'success' : 'info'),
+                    title: `پرونده شما: ${info.label}`,
+                    time: c.updatedAt
+                });
+            }
+        });
+
+        // مرتب‌سازی بر اساس زمان
+        notifs.sort((a, b) => new Date(b.time) - new Date(a.time));
+        const top = notifs.slice(0, 5);
+
+        if (top.length === 0) {
+            wrap.innerHTML = '';
+            return;
+        }
+
+        wrap.innerHTML = `
+            <h3 class="section-title">🔔 آخرین اطلاع‌رسانی‌ها</h3>
+            <div class="notif-list">
+                ${top.map(n => `
+                    <div class="notif-item">
+                        <div class="notif-item__icon notif-item__icon--${n.cls}">${n.icon}</div>
+                        <div class="notif-item__body">
+                            <div class="notif-item__title">${n.title}</div>
+                            <div class="notif-item__time">${faRelTime(n.time)}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Theme
+    // ═══════════════════════════════════════════════════════════
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        if (!btn) return;
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light');
+                btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark');
+                btn.textContent = '☀️';
+            }
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Logout
+    // ═══════════════════════════════════════════════════════════
+    function initLogout() {
+        $('#logoutBtn').addEventListener('click', () => {
+            if (!confirm('از حساب خود خارج می‌شوید؟')) return;
+            localStorage.removeItem('wamPayToken');
+            localStorage.removeItem('wamPayCurrentUser');
+            window.location.href = 'login.html';
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Init
+    // ═══════════════════════════════════════════════════════════
+    function init() {
+        const cases = findMyCases();
+        
+        renderHeader();
+        renderStats(cases);
+        renderActiveCase(cases);
+        renderNotifications(cases);
+
+        initTheme();
+        initLogout();
+
+        // نمایش محتوا
+        $('#loadingEl').classList.add('hidden');
+        $('#contentEl').classList.remove('hidden');
+
+        console.log('%c📊 داشبورد متقاضی v2.0', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+        console.log('%c👤 متقاضی:', 'color:#d4a62a;', user.name, '|', user.mobile);
+        console.log('%c📁 پرونده‌ها:', 'color:#d4a62a;', cases.length);
+        if (cases.length > 0) {
+            console.log('%c🆕 فعال‌ترین:', 'color:#1e8e4a;', cases[0].caseNumber, '|', cases[0].status);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

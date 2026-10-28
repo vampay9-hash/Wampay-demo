@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b3b23">
+<title>درخواست تسهیلات | وام پی</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+:root{--card:var(--wam-bg-alt,#fff);--error:var(--wam-danger,#c0392b);--warn:var(--wam-warning,#c98a00);--line:var(--wam-border,rgba(11,59,35,.12))}
+[data-theme="dark"]{--card:var(--wam-bg-alt,#142219);--line:var(--wam-border,rgba(255,255,255,.1))}
+.wrap{max-width:760px;margin:0 auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--card);border-radius:12px;margin-bottom:16px;border:1px solid var(--line)}
+.brand{font-weight:800;font-size:18px;color:var(--wam-primary)}
+.brand span{color:var(--wam-gold)}
+.back{background:none;border:1.5px solid var(--line);color:var(--wam-text);padding:6px 14px;border-radius:8px;font-family:inherit;font-size:13px;cursor:pointer}
+.back:hover{border-color:var(--wam-primary);color:var(--wam-primary)}
+.progress-card{background:var(--card);border-radius:12px;padding:16px;margin-bottom:16px;border:1px solid var(--line)}
+.progress-info{display:flex;justify-content:space-between;font-size:12px;color:var(--wam-text-muted);margin-bottom:8px}
+.progress-info strong{color:var(--wam-primary)}
+.progress-bar{height:8px;background:rgba(11,59,35,.08);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--wam-primary),var(--wam-gold));border-radius:99px;transition:width .3s ease;width:10%}
+.steps-mini{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;justify-content:center}
+.step-dot{width:26px;height:26px;border-radius:50%;background:rgba(11,59,35,.08);color:var(--wam-text-muted);display:grid;place-items:center;font-size:11px;font-weight:700}
+.step-dot.active{background:var(--wam-primary);color:#fff}
+.step-dot.done{background:var(--wam-gold);color:#fff}
+.form-card{background:var(--card);border-radius:12px;padding:22px;border:1px solid var(--line);margin-bottom:16px}
+.step-title{font-size:18px;font-weight:700;color:var(--wam-primary);margin:0 0 4px}
+.step-sub{font-size:13px;color:var(--wam-text-muted);margin:0 0 20px}
+fieldset{border:1.5px solid var(--line);border-radius:10px;padding:16px 14px 6px;margin:0 0 20px}
+fieldset legend{font-size:13px;font-weight:800;color:var(--wam-primary);padding:0 8px;background:var(--card)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--wam-text)}
+.field label .req{color:var(--error);margin-right:2px}
+.field input,.field select,.field textarea{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;font-size:14px;background:transparent;color:var(--wam-text)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--wam-primary);box-shadow:0 0 0 4px rgba(11,59,35,.08)}
+.field textarea{resize:vertical;min-height:70px}
+.field .hint{font-size:11px;color:var(--wam-text-muted);margin-top:4px;display:block}
+.field .err{font-size:11px;color:var(--error);margin-top:4px;display:none}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--error)}
+.field.invalid .err{display:block}
+.date-jalali{display:grid;grid-template-columns:1.2fr 1.5fr 1fr;gap:8px;direction:rtl}
+.date-jalali select{width:100%;padding:11px 8px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;font-size:13.5px;background:var(--card);color:var(--wam-text);text-align:center;appearance:none;padding-left:26px}
+@media (max-width:480px){.date-jalali{grid-template-columns:1fr 1.2fr 0.9fr;gap:6px}}
+.radio-group{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.radio-opt{display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px solid var(--line);border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;user-select:none}
+.radio-opt input{display:none}
+.radio-opt.checked{border-color:var(--wam-primary);background:rgba(11,59,35,.06);color:var(--wam-primary)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:540px){.row{grid-template-columns:1fr}}
+.info-box{background:rgba(43,107,192,.08);border:1px solid rgba(43,107,192,.2);border-radius:9px;padding:12px 14px;font-size:12.5px;color:#2b6bc0;line-height:1.9;margin-bottom:16px}
+.info-box strong{color:#1d4f92}
+.actions{display:flex;gap:10px;justify-content:space-between}
+.btn{padding:12px 22px;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:transform .1s,opacity .2s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--wam-primary);color:#fff;flex:1}
+.btn-primary:hover{background:#0a3220}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-secondary{background:transparent;color:var(--wam-text);border:1.5px solid var(--line)}
+.btn-secondary:hover{border-color:var(--wam-primary);color:var(--wam-primary)}
+.btn-gold{background:linear-gradient(135deg,var(--wam-gold),#b78e1f);color:#1a2b22;font-weight:800}
+.btn-gold:hover{filter:brightness(1.08)}
+.msg{padding:11px 14px;border-radius:9px;font-size:13px;margin-bottom:14px;line-height:1.7}
+.msg.error{background:rgba(192,57,43,.1);color:var(--error);border:1px solid rgba(192,57,43,.2)}
+.msg.success{background:rgba(30,142,74,.1);color:var(--wam-success);border:1px solid rgba(30,142,74,.2)}
+.msg.warn{background:rgba(201,138,0,.1);color:var(--warn);border:1px solid rgba(201,138,0,.2)}
+.hidden{display:none!important}
+.success-screen{text-align:center;padding:40px 20px}
+.success-icon{font-size:64px;margin-bottom:16px}
+.success-title{font-size:22px;font-weight:800;color:var(--wam-success);margin:0 0 8px}
+.success-sub{font-size:14px;color:var(--wam-text-muted);line-height:1.8;margin:0 0 24px}
+
+/* ═══ گام ۳ — مشاوره ═══ */
+.consult-card{background:linear-gradient(135deg,rgba(11,59,35,.04),rgba(212,166,42,.08));border:1.5px solid rgba(212,166,42,.3);border-radius:14px;padding:28px 22px;text-align:center;margin-bottom:22px}
+.consult-icon{font-size:52px;margin-bottom:14px;display:inline-block;animation:pulseSoft 2.5s ease-in-out infinite}
+@keyframes pulseSoft{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.9}}
+.consult-title{font-size:17px;font-weight:800;color:var(--wam-primary);margin:0 0 14px;line-height:1.7}
+.consult-text{font-size:13.5px;line-height:2.1;color:var(--wam-text);margin:0 0 20px;text-align:center}
+.consult-time{display:flex;align-items:center;gap:14px;background:rgba(212,166,42,.15);border:1.5px solid rgba(212,166,42,.35);border-radius:11px;padding:14px 18px;margin-bottom:18px;text-align:right}
+.consult-time-icon{font-size:34px;flex-shrink:0;animation:bellRing 3s ease-in-out infinite}
+@keyframes bellRing{0%,88%,100%{transform:rotate(0)}90%{transform:rotate(-15deg)}92%{transform:rotate(15deg)}94%{transform:rotate(-10deg)}96%{transform:rotate(10deg)}}
+.consult-time-body{display:flex;flex-direction:column;gap:4px}
+.consult-time-body strong{font-size:15px;color:var(--wam-primary);font-weight:900}
+.consult-time-body span{font-size:12.5px;color:var(--wam-text);line-height:1.8}
+.consult-footer{font-size:12.5px;color:var(--wam-text-muted);line-height:2;margin:0;text-align:center;font-style:italic;padding-top:14px;border-top:1px dashed rgba(212,166,42,.3)}
+.rating-card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:22px 20px}
+.rating-title{font-size:15px;font-weight:800;color:var(--wam-primary);margin:0 0 8px}
+.rating-sub{font-size:12.5px;color:var(--wam-text-muted);line-height:1.9;margin:0 0 18px}
+.rating-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
+@media (max-width:480px){.rating-options{grid-template-columns:1fr}}
+.rating-option{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1.5px solid var(--line);border-radius:11px;cursor:pointer;user-select:none}
+.rating-option input{display:none}
+.rating-option .ro-icon{font-size:22px}
+.rating-option .ro-text{font-size:13px;font-weight:700;color:var(--wam-text);line-height:1.5}
+.rating-option.checked[data-value="called"]{border-color:var(--wam-success);background:rgba(30,142,74,.08)}
+.rating-option.checked[data-value="called"] .ro-text{color:var(--wam-success)}
+.rating-option.checked[data-value="not_called"]{border-color:var(--error);background:rgba(192,57,43,.08)}
+.rating-option.checked[data-value="not_called"] .ro-text{color:var(--error)}
+.stars-section{margin-top:18px;padding:16px;background:rgba(212,166,42,.06);border-radius:11px;border:1px solid rgba(212,166,42,.25)}
+.stars-label{display:block;font-size:13px;font-weight:700;color:var(--wam-primary);margin-bottom:12px}
+.stars{display:flex;gap:8px;justify-content:center;direction:ltr;margin-bottom:8px}
+.stars span{font-size:42px;color:#d8d8d8;cursor:pointer;user-select:none;line-height:1}
+.stars span:hover,.stars span.active{color:var(--wam-gold);transform:scale(1.15)}
+.stars-caption{text-align:center;font-size:12.5px;color:var(--wam-gold);min-height:20px;margin-bottom:14px;font-weight:800}
+.stars-section textarea,.complaint-section textarea{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;font-size:13px;background:var(--card);color:var(--wam-text);resize:vertical}
+.complaint-section{margin-top:18px;padding:16px;background:rgba(192,57,43,.05);border-radius:11px;border:1px solid rgba(192,57,43,.25)}
+.complaint-note{font-size:11.5px;color:var(--warn);margin-top:10px;line-height:1.7}
+.btn-rate{width:100%;margin-top:18px;padding:13px;border:none;border-radius:10px;background:var(--wam-primary);color:#fff;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer}
+.btn-rate:disabled{opacity:.6;cursor:not-allowed}
+.rating-success{margin-top:14px;padding:13px;background:rgba(30,142,74,.1);border:1px solid rgba(30,142,74,.35);border-radius:10px;color:var(--wam-success);font-size:13px;font-weight:700;text-align:center}
+.rating-err{margin-top:12px;padding:11px 14px;background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.25);border-radius:9px;color:var(--error);font-size:12.5px;font-weight:600;text-align:center;display:none;line-height:1.8}
+.rating-err.show{display:block}
+
+/* ═══ گام ۴ — مدارک ═══ */
+.trust-banner{display:flex;gap:14px;padding:16px 18px;background:linear-gradient(135deg,rgba(30,142,74,.08),rgba(212,166,42,.06));border:1.5px solid rgba(30,142,74,.3);border-radius:12px;margin-bottom:18px;align-items:flex-start}
+.trust-icon{font-size:26px;flex-shrink:0}
+.trust-body{flex:1}
+.trust-body strong{display:block;font-size:13.5px;color:var(--wam-success);font-weight:800;margin-bottom:6px}
+.trust-body p{font-size:12px;line-height:1.9;color:var(--wam-text);margin:0}
+.trust-body p strong{display:inline;color:var(--wam-primary);font-size:12px;font-weight:800}
+.upload-progress-card{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.upload-progress-head{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--wam-text-muted);margin-bottom:8px;font-weight:700}
+.upload-progress-head strong{color:var(--wam-primary);font-weight:900;font-size:14px}
+.upload-progress-bar{height:8px;background:rgba(11,59,35,.08);border-radius:99px;overflow:hidden}
+.upload-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--wam-primary),var(--wam-gold));border-radius:99px;transition:width .35s ease}
+.category-info{display:flex;gap:14px;align-items:center;padding:14px 16px;background:linear-gradient(135deg,rgba(11,59,35,.06),rgba(212,166,42,.05));border:1.5px solid rgba(11,59,35,.15);border-radius:11px;margin-bottom:18px}
+.category-icon{font-size:32px;line-height:1;flex-shrink:0}
+.category-body{display:flex;flex-direction:column;gap:2px}
+.category-body strong{font-size:14px;font-weight:800;color:var(--wam-primary)}
+.category-body span{font-size:11.5px;color:var(--wam-text-muted)}
+.docs-list{display:flex;flex-direction:column;gap:12px}
+.doc-item{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:16px}
+.doc-item.uploaded{border-color:rgba(30,142,74,.4);background:linear-gradient(135deg,var(--card),rgba(30,142,74,.03))}
+.doc-item.required{border-right:4px solid var(--wam-primary)}
+.doc-item.optional{border-right:4px solid var(--wam-text-muted);opacity:.9}
+.doc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.doc-head-left{flex:1}
+.doc-title{font-size:13.5px;font-weight:800;color:var(--wam-text);margin:0 0 4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.doc-title .badge-required{font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(192,57,43,.12);color:var(--error);font-weight:700}
+.doc-title .badge-optional{font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(119,132,123,.15);color:var(--wam-text-muted);font-weight:700}
+.doc-desc{font-size:11.5px;color:var(--wam-text-muted);line-height:1.7;margin:0}
+.doc-status{flex-shrink:0;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;white-space:nowrap}
+.doc-status.pending{background:rgba(201,138,0,.12);color:var(--warn)}
+.doc-status.done{background:rgba(30,142,74,.12);color:var(--wam-success)}
+.doc-upload-area{display:flex;flex-direction:column;gap:10px}
+.doc-file-input{display:none}
+.doc-upload-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border:2px dashed rgba(11,59,35,.25);border-radius:10px;background:transparent;color:var(--wam-primary);font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;text-align:center}
+.doc-upload-btn:hover{border-color:var(--wam-primary);background:rgba(11,59,35,.03)}
+.doc-file-info{display:flex;align-items:center;gap:12px;padding:11px 13px;background:rgba(30,142,74,.06);border:1px solid rgba(30,142,74,.25);border-radius:10px}
+.doc-file-preview{width:52px;height:52px;border-radius:8px;background:rgba(11,59,35,.06);display:grid;place-items:center;overflow:hidden;flex-shrink:0;font-size:24px}
+.doc-file-preview img{width:100%;height:100%;object-fit:cover}
+.doc-file-details{flex:1;min-width:0}
+.doc-file-name{font-size:12px;font-weight:700;color:var(--wam-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:left}
+.doc-file-meta{font-size:10.5px;color:var(--wam-text-muted);margin-top:3px}
+.doc-actions{display:flex;gap:8px;flex-shrink:0}
+.doc-action-btn{width:34px;height:34px;border-radius:8px;border:none;background:transparent;color:var(--wam-text-muted);font-size:15px;cursor:pointer;display:grid;place-items:center}
+.doc-action-btn:hover{background:rgba(11,59,35,.06);color:var(--wam-primary)}
+.doc-action-btn.danger:hover{background:rgba(192,57,43,.1);color:var(--error)}
+.doc-error{font-size:11.5px;color:var(--error);margin-top:8px;display:none}
+.doc-error.show{display:block}
+.doc-preview-modal{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
+.doc-preview-modal.open{display:flex}
+.doc-preview-inner{background:var(--card);border-radius:14px;max-width:560px;width:100%;max-height:90vh;overflow:auto}
+.doc-preview-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+.doc-preview-head h3{margin:0;font-size:14px;font-weight:800;color:var(--wam-primary)}
+.doc-preview-close{width:34px;height:34px;border-radius:8px;border:none;background:rgba(11,59,35,.06);color:var(--wam-text);font-size:18px;cursor:pointer}
+.doc-preview-body{padding:16px 18px}
+.doc-preview-body img{width:100%;border-radius:10px}
+.doc-preview-body iframe{width:100%;height:60vh;border:0;border-radius:10px}
+
+/* ═══ گام ۵ — اعتبارسنجی ═══ */
+.verify-result-card{background:linear-gradient(135deg,rgba(30,142,74,.06),rgba(212,166,42,.04));border:1.5px solid rgba(30,142,74,.35);border-radius:12px;padding:18px;margin-bottom:14px}
+.verify-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed rgba(30,142,74,.3);flex-wrap:wrap}
+.verify-head-left{display:flex;align-items:center;gap:10px}
+.verify-status-icon{font-size:32px;line-height:1}
+.verify-status-title{font-size:15px;font-weight:900;color:var(--wam-success)}
+.verify-status-sub{font-size:11.5px;color:var(--wam-text-muted)}
+.verify-badge{padding:5px 14px;border-radius:99px;font-size:11px;font-weight:800;background:rgba(30,142,74,.15);color:var(--wam-success)}
+.verify-image-wrap{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;margin-bottom:12px;text-align:center}
+.verify-image{width:100%;border-radius:8px;display:block;max-height:400px;object-fit:contain}
+.verify-image-hint{font-size:11px;color:var(--wam-text-muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.verify-notes{background:var(--card);border-radius:8px;padding:11px 13px;font-size:12.5px;line-height:1.9;color:var(--wam-text);border-right:3px solid var(--wam-gold)}
+.verify-notes strong{display:block;font-size:11.5px;color:var(--wam-primary);margin-bottom:4px}
+.consult-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media (max-width:540px){.consult-result-grid{grid-template-columns:1fr}}
+.consult-result-item{background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.consult-result-item.highlight{background:linear-gradient(135deg,rgba(212,166,42,.08),rgba(212,166,42,.04));border-color:rgba(212,166,42,.4)}
+.consult-result-icon{font-size:20px}
+.consult-result-label{font-size:11.5px;color:var(--wam-text-muted);font-weight:700}
+.consult-result-value{font-size:17px;font-weight:900;color:var(--wam-primary);direction:ltr;text-align:left;word-break:break-all}
+.consult-result-value small{font-size:11px;color:var(--wam-text-muted);font-weight:600;margin-right:4px}
+.payment-methods{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.payment-method{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1.5px solid var(--line);border-radius:11px;cursor:pointer;background:transparent;user-select:none}
+.payment-method input{display:none}
+.payment-method:hover{border-color:var(--wam-primary);background:rgba(11,59,35,.02)}
+.payment-method.checked{border-color:var(--wam-primary);background:rgba(11,59,35,.05);box-shadow:0 0 0 3px rgba(11,59,35,.06)}
+.payment-method-icon{font-size:24px;flex-shrink:0}
+.payment-method-body{flex:1;display:flex;flex-direction:column;gap:3px}
+.payment-method-title{font-size:13.5px;font-weight:800;color:var(--wam-text)}
+.payment-method-desc{font-size:11.5px;color:var(--wam-text-muted);line-height:1.6}
+.payment-method-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;flex-shrink:0}
+.payment-method.checked .payment-method-check{border-color:var(--wam-primary);background:var(--wam-primary);color:#fff}
+.payment-method-check::after{content:"✓";font-size:13px;font-weight:900;color:#fff;opacity:0}
+.payment-method.checked .payment-method-check::after{opacity:1}
+.final-docs-list{display:flex;flex-direction:column;gap:12px}
+.terms-box{background:rgba(11,59,35,.03);border:1.5px solid var(--line);border-radius:11px;padding:16px;margin-bottom:14px}
+.terms-scroll{max-height:220px;overflow-y:auto;padding:12px 14px;background:var(--card);border-radius:8px;font-size:12.5px;line-height:2;color:var(--wam-text);border:1px solid var(--line);margin-bottom:14px}
+.terms-scroll h5{font-size:13px;font-weight:800;color:var(--wam-primary);margin:12px 0 6px}
+.terms-scroll h5:first-child{margin-top:0}
+.terms-scroll ol{padding-right:20px;margin:6px 0}
+.terms-scroll li{margin-bottom:6px}
+.terms-check{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:rgba(212,166,42,.06);border:1.5px solid rgba(212,166,42,.3);border-radius:10px;cursor:pointer;user-select:none}
+.terms-check:hover{background:rgba(212,166,42,.1)}
+.terms-check.checked{background:rgba(30,142,74,.08);border-color:rgba(30,142,74,.4)}
+.terms-check input{display:none}
+.terms-check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--wam-border-strong,#c8d0c8);display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+.terms-check.checked .terms-check-box{border-color:var(--wam-success);background:var(--wam-success)}
+.terms-check-box::after{content:"✓";color:#fff;font-size:14px;font-weight:900;opacity:0}
+.terms-check.checked .terms-check-box::after{opacity:1}
+.terms-check-text{font-size:12.5px;line-height:1.9;color:var(--wam-text);font-weight:600}
+.terms-check-text strong{color:var(--wam-primary);font-weight:800}
+
+/* ═══ گام ۶ — قرارداد ═══ */
+.contract-flow{display:flex;flex-direction:column;gap:14px}
+.contract-stage{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:16px;position:relative;transition:all .3s}
+.contract-stage.done{border-color:rgba(30,142,74,.4);background:linear-gradient(135deg,var(--card),rgba(30,142,74,.03))}
+.contract-stage.active{border-color:var(--wam-gold);background:linear-gradient(135deg,var(--card),rgba(212,166,42,.05));box-shadow:0 0 0 3px rgba(212,166,42,.1)}
+.contract-stage.waiting{opacity:.7}
+.contract-stage-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.contract-stage-num{width:36px;height:36px;border-radius:50%;background:rgba(11,59,35,.08);color:var(--wam-text-muted);display:grid;place-items:center;font-weight:900;font-size:14px;flex-shrink:0;transition:all .3s}
+.contract-stage.done .contract-stage-num{background:var(--wam-success);color:#fff}
+.contract-stage.active .contract-stage-num{background:var(--wam-gold);color:#1a2b22;animation:pulseSoft 2s ease-in-out infinite}
+.contract-stage-title{font-size:14px;font-weight:800;color:var(--text-primary,#1a2b22);margin:0 0 4px;line-height:1.5}
+.contract-stage-title strong{color:var(--wam-primary)}
+.contract-stage-sub{font-size:11.5px;color:var(--wam-text-muted);line-height:1.7;margin:0}
+.contract-stage-body{margin-right:48px;padding-top:10px;border-top:1px dashed var(--line)}
+.contract-stage-status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:800;margin-bottom:10px}
+.contract-stage-status.done{background:rgba(30,142,74,.12);color:var(--wam-success)}
+.contract-stage-status.active{background:rgba(212,166,42,.15);color:#8a6d1a}
+.contract-stage-status.waiting{background:rgba(119,132,123,.12);color:var(--wam-text-muted)}
+.contract-person{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--wam-text);margin-top:6px;line-height:1.7}
+.contract-person .avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--wam-primary),var(--wam-gold));color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800;flex-shrink:0}
+.contract-draft-card{background:rgba(212,166,42,.06);border:1.5px solid rgba(212,166,42,.3);border-radius:11px;padding:16px;margin-top:12px}
+.contract-draft-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.contract-draft-icon{font-size:40px;flex-shrink:0}
+.contract-draft-info{flex:1;min-width:0}
+.contract-draft-name{font-size:13.5px;font-weight:800;color:var(--wam-primary);word-break:break-all;line-height:1.5}
+.contract-draft-meta{font-size:11px;color:var(--wam-text-muted);margin-top:4px;line-height:1.7}
+.contract-download-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border:none;border-radius:10px;background:var(--wam-primary);color:#fff;font-family:inherit;font-size:13.5px;font-weight:800;cursor:pointer;transition:all .2s;margin-top:12px}
+.contract-download-btn:hover{background:#0a3220;transform:translateY(-1px)}
+.contract-download-btn.done{background:var(--wam-success)}
+.contract-download-btn.done:hover{background:#257a45}
+.contract-check{display:flex;align-items:flex-start;gap:10px;padding:14px;background:rgba(30,142,74,.05);border:1.5px solid rgba(30,142,74,.3);border-radius:11px;cursor:pointer;margin-top:12px;user-select:none;transition:all .2s}
+.contract-check:hover{background:rgba(30,142,74,.08)}
+.contract-check.checked{background:rgba(30,142,74,.12);border-color:var(--wam-success)}
+.contract-check input{display:none}
+.contract-check-box{width:24px;height:24px;border-radius:7px;border:2px solid var(--wam-border-strong,#c8d0c8);display:grid;place-items:center;flex-shrink:0;margin-top:1px;transition:all .2s}
+.contract-check.checked .contract-check-box{border-color:var(--wam-success);background:var(--wam-success)}
+.contract-check-box::after{content:"✓";color:#fff;font-size:15px;font-weight:900;opacity:0}
+.contract-check.checked .contract-check-box::after{opacity:1}
+.contract-check-text{font-size:13px;line-height:1.9;color:var(--wam-text);font-weight:600}
+.contract-check-text strong{color:var(--wam-primary);font-weight:800}
+.contract-note{display:flex;gap:12px;padding:16px;background:linear-gradient(135deg,rgba(192,57,43,.06),rgba(212,166,42,.08));border:1.5px solid rgba(212,166,42,.4);border-radius:12px;margin-top:16px;line-height:2}
+.contract-note-icon{font-size:26px;flex-shrink:0}
+.contract-note-body{flex:1}
+.contract-note-title{font-size:14px;font-weight:900;color:#8a6d1a;margin:0 0 8px}
+.contract-note-text{font-size:12.5px;color:var(--wam-text);line-height:2;margin:0}
+.contract-note-text strong{color:var(--error);font-weight:800}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">وام<span>پی</span></div>
+    <button class="back" onclick="location.href='applicant-dashboard.html'">← بازگشت</button>
+  </div>
+
+  <div class="progress-card" id="progressCard">
+    <div class="progress-info">
+      <span>گام <strong id="stepNum">۱</strong> از <strong>۱۰</strong></span>
+      <span id="stepLabel">اطلاعات هویتی و شغلی</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="steps-mini" id="stepsMini"></div>
+  </div>
+
+  <div id="globalMessage" class="msg hidden"></div>
+
+  <div id="formWrap">
+
+    <!-- ═══ گام ۱ ═══ -->
+    <div class="form-card step-panel" data-step="0">
+      <h2 class="step-title">اطلاعات هویتی و شغلی</h2>
+      <p class="step-sub">لطفاً اطلاعات شناسنامه‌ای و شغلی خود را با دقت وارد کنید.</p>
+
+      <fieldset>
+        <legend>🆔 اطلاعات هویتی</legend>
+        <div class="row">
+          <div class="field" data-key="firstName">
+            <label>نام <span class="req">*</span></label>
+            <input type="text" id="w_firstName" placeholder="مثلاً: علی">
+            <div class="err">نام را وارد کنید (حداقل ۲ حرف).</div>
+          </div>
+          <div class="field" data-key="lastName">
+            <label>نام خانوادگی <span class="req">*</span></label>
+            <input type="text" id="w_lastName" placeholder="مثلاً: رضایی">
+            <div class="err">نام خانوادگی را وارد کنید (حداقل ۲ حرف).</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field" data-key="nationalId">
+            <label>کد ملی <span class="req">*</span></label>
+            <input type="tel" inputmode="numeric" id="w_nationalId" placeholder="۱۰ رقم" maxlength="10">
+            <span class="hint">کد ملی ۱۰ رقمی</span>
+            <div class="err">کد ملی معتبر نیست (۱۰ رقم با چک‌سام).</div>
+          </div>
+          <div class="field" data-key="fatherName">
+            <label>نام پدر <span class="req">*</span></label>
+            <input type="text" id="w_fatherName" placeholder="مثلاً: محمود">
+            <div class="err">نام پدر را وارد کنید.</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field" data-key="birthDate">
+            <label>تاریخ تولد <span class="req">*</span></label>
+            <div class="date-jalali">
+              <select id="w_birthYear" aria-label="سال تولد"></select>
+              <select id="w_birthMonth" aria-label="ماه تولد"></select>
+              <select id="w_birthDay" aria-label="روز تولد"></select>
+            </div>
+            <input type="hidden" id="w_birthDate">
+            <div class="err">تاریخ تولد معتبر وارد کنید (۱۸ تا ۷۵ سال).</div>
+          </div>
+          <div class="field" data-key="gender">
+            <label>جنسیت <span class="req">*</span></label>
+            <div class="radio-group" id="genderGroup">
+              <label class="radio-opt"><input type="radio" name="gender" value="male"> مرد</label>
+              <label class="radio-opt"><input type="radio" name="gender" value="female"> زن</label>
+            </div>
+            <div class="err">جنسیت را انتخاب کنید.</div>
+          </div>
+        </div>
+        <div class="field hidden" data-key="militaryStatus" id="militaryField">
+          <label>وضعیت نظام وظیفه <span class="req">*</span></label>
+          <div class="radio-group" id="militaryGroup">
+            <label class="radio-opt"><input type="radio" name="militaryStatus" value="yes"> بله (پایان خدمت / معاف)</label>
+            <label class="radio-opt"><input type="radio" name="militaryStatus" value="no"> خیر (مشمول)</label>
+          </div>
+          <div class="err">وضعیت نظام وظیفه را انتخاب کنید.</div>
+        </div>
+        <div class="row">
+          <div class="field" data-key="phone">
+            <label>تلفن ثابت <span class="hint" style="display:inline">(اختیاری)</span></label>
+            <input type="tel" inputmode="numeric" id="w_phone" placeholder="۰۲۱۱۲۳۴۵۶۷۸" maxlength="11">
+            <div class="err">تلفن ثابت معتبر وارد کنید.</div>
+          </div>
+          <div class="field" data-key="postalCode">
+            <label>کد پستی <span class="req">*</span></label>
+            <input type="tel" inputmode="numeric" id="w_postalCode" placeholder="۱۰ رقم" maxlength="10">
+            <div class="err">کد پستی باید ۱۰ رقم باشد.</div>
+          </div>
+        </div>
+        <div class="field" data-key="address">
+          <label>آدرس محل سکونت <span class="req">*</span></label>
+          <textarea id="w_address" rows="3" placeholder="استان، شهر، خیابان، کوچه، پلاک، واحد..."></textarea>
+          <div class="err">آدرس را کامل وارد کنید (حداقل ۱۵ کاراکتر).</div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>💼 اطلاعات شغلی</legend>
+        <div class="row">
+          <div class="field" data-key="jobType">
+            <label>نوع شغل <span class="req">*</span></label>
+            <select id="w_jobType">
+              <option value="">انتخاب کنید...</option>
+              <option value="کارمند دولتی">کارمند دولتی</option>
+              <option value="کارمند خصوصی">کارمند خصوصی</option>
+              <option value="کارمند تعاونی">کارمند شرکت تعاونی</option>
+              <option value="بازنشسته">بازنشسته</option>
+              <option value="آزاد">آزاد (کسب‌وکار شخصی)</option>
+              <option value="کارگر">کارگر</option>
+              <option value="کشاورز">کشاورز</option>
+              <option value="پزشک">پزشک / پرستار</option>
+              <option value="وکیل">وکیل / مهندس</option>
+              <option value="معلم">معلم / استاد</option>
+              <option value="راننده">راننده</option>
+              <option value="صاحب شرکت">صاحب شرکت خصوصی</option>
+              <option value="دانشجو">دانشجو</option>
+              <option value="خانه‌دار">خانه‌دار</option>
+              <option value="بیکار">بیکار</option>
+              <option value="سایر">سایر</option>
+            </select>
+            <div class="err">نوع شغل را انتخاب کنید.</div>
+          </div>
+          <div class="field" data-key="employerName">
+            <label>نام محل کار <span class="req">*</span></label>
+            <input type="text" id="w_employerName" placeholder="مثلاً: شرکت فناوری پارس">
+            <div class="err">نام محل کار را وارد کنید.</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field" data-key="position">
+            <label>سمت / عنوان شغلی <span class="hint" style="display:inline">(اختیاری)</span></label>
+            <input type="text" id="w_position" placeholder="مثلاً: کارشناس IT">
+          </div>
+          <div class="field" data-key="workYears">
+            <label>سابقه کار (سال) <span class="req">*</span></label>
+            <input type="tel" inputmode="numeric" id="w_workYears" placeholder="مثلاً: ۵" maxlength="2">
+            <div class="err">سابقه کار را وارد کنید (۰ تا ۶۰).</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field" data-key="monthlyIncome">
+            <label>درآمد ماهانه (ریال) <span class="req">*</span></label>
+            <input type="tel" inputmode="numeric" id="w_monthlyIncome" placeholder="مثلاً: ۱۵۰۰۰۰۰۰۰">
+            <span class="hint">حداقل ۱۰٬۰۰۰٬۰۰۰ ریال</span>
+            <div class="err">درآمد معتبر وارد کنید.</div>
+          </div>
+          <div class="field" data-key="otherIncome">
+            <label>درآمد جانبی (ریال) <span class="hint" style="display:inline">(اختیاری)</span></label>
+            <input type="tel" inputmode="numeric" id="w_otherIncome" placeholder="۰">
+          </div>
+        </div>
+        <div class="row">
+          <div class="field" data-key="workPhone">
+            <label>تلفن محل کار <span class="hint" style="display:inline">(اختیاری)</span></label>
+            <input type="tel" inputmode="numeric" id="w_workPhone" placeholder="۰۲۱۸۸۷۷۶۶۵۵" maxlength="11">
+          </div>
+          <div class="field" data-key="workAddress">
+            <label>آدرس محل کار <span class="hint" style="display:inline">(اختیاری)</span></label>
+            <input type="text" id="w_workAddress" placeholder="آدرس محل کار">
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- ═══ گام ۲ ═══ -->
+    <div class="form-card step-panel hidden" data-step="1">
+      <h2 class="step-title">اطلاعات ثبت وام</h2>
+      <p class="step-sub">نوع وام و توان بازپرداخت خود را مشخص کنید.</p>
+      <div class="info-box">
+        <strong>💰 راهنمای مبلغ وام:</strong><br>
+        حداقل: <b>۱۰,۰۰۰,۰۰۰</b> تومان — حداکثر: <b>۵۰۰,۰۰۰,۰۰۰</b> تومان
+      </div>
+      <div class="field" data-key="bankLoanType">
+        <label>نوع وام بانکی <span class="req">*</span></label>
+        <select id="w_bankLoanType"><option value="">انتخاب کنید...</option></select>
+        <span class="hint">بانک عامل تسهیلات را انتخاب کنید</span>
+        <div class="err">نوع وام بانکی را انتخاب کنید.</div>
+      </div>
+      <div class="field" data-key="loanAmount">
+        <label>مبلغ وام درخواستی (تومان) <span class="req">*</span></label>
+        <input type="tel" inputmode="numeric" id="w_loanAmount" placeholder="مثلاً: 100000000">
+        <span class="hint">حداقل ۱۰ میلیون — حداکثر ۵۰۰ میلیون تومان</span>
+        <div class="err">مبلغ باید بین ۱۰ تا ۵۰۰ میلیون تومان باشد.</div>
+      </div>
+      <div class="row">
+        <div class="field" data-key="minInstallment">
+          <label>حداقل توان قسط ماهیانه (تومان) <span class="req">*</span></label>
+          <input type="tel" inputmode="numeric" id="w_minInstallment" placeholder="۱,۵۰۰,۰۰۰">
+          <div class="err">حداقل ۱۰۰ هزار تومان.</div>
+        </div>
+        <div class="field" data-key="maxInstallment">
+          <label>حداکثر توان قسط ماهیانه (تومان) <span class="req">*</span></label>
+          <input type="tel" inputmode="numeric" id="w_maxInstallment" placeholder="۵,۰۰۰,۰۰۰">
+          <div class="err">باید ≥ حداقل باشد.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ گام ۳ ═══ -->
+    <div class="form-card step-panel hidden" data-step="2">
+      <h2 class="step-title">بررسی و مشاوره</h2>
+      <p class="step-sub">اطلاعات مهم در مورد روند بررسی درخواست شما</p>
+      <div class="consult-card">
+        <div class="consult-icon">🕐</div>
+        <h3 class="consult-title">با احترام، پرونده‌ی شما در دست بررسی است</h3>
+        <p class="consult-text">
+          کاربر گرامی، از اعتماد و انتخاب شما سپاسگزاریم.<br>
+          پرونده‌ی درخواست شما با نهایت دقت و وسواس، توسط کارشناسان متخصص و کارآزموده‌ی ما در دست بررسی قرار گرفته است.
+        </p>
+        <div class="consult-time">
+          <div class="consult-time-icon">🔔</div>
+          <div class="consult-time-body">
+            <strong>در کمتر از ۷۲ ساعت</strong>
+            <span>پرونده‌ی شما بررسی و کارشناس مربوطه با شما تماس خواهد گرفت</span>
+          </div>
+        </div>
+        <p class="consult-footer">
+          در فضایی صمیمی و محترمانه، شما را در انتخاب بهترین مسیر یاری خواهیم رساند.
+        </p>
+      </div>
+      <div class="rating-card">
+        <h4 class="rating-title">🌟 نظر شما درباره‌ی مشاور</h4>
+        <p class="rating-sub">پس از تماس کارشناس، لطفاً تجربه‌ی خود را با ما به اشتراک بگذارید.</p>
+        <div class="rating-options" id="ratingOptions">
+          <label class="rating-option" data-value="called">
+            <input type="radio" name="consultStatus" value="called">
+            <span class="ro-icon">✅</span><span class="ro-text">مشاور با من تماس گرفت</span>
+          </label>
+          <label class="rating-option" data-value="not_called">
+            <input type="radio" name="consultStatus" value="not_called">
+            <span class="ro-icon">❌</span><span class="ro-text">مشاور با من تماس نگرفت</span>
+          </label>
+        </div>
+        <div class="stars-section hidden" id="starsSection">
+          <label class="stars-label">امتیاز شما به مشاور عزیز:</label>
+          <div class="stars" id="starsContainer">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div class="stars-caption" id="starsCaption">—</div>
+          <input type="hidden" id="w_consultRating">
+          <textarea id="w_consultComment" placeholder="اگر نکته‌ای دارید، بنویسید (اختیاری)..." rows="2"></textarea>
+        </div>
+        <div class="complaint-section hidden" id="complaintSection">
+          <label class="stars-label">توضیح دهید تا پیگیری شود (اختیاری):</label>
+          <textarea id="w_consultComplaint" placeholder="چرا با شما تماس نگرفتند؟..." rows="3"></textarea>
+          <div class="complaint-note">⚠️ نظر شما در اولویت بررسی قرار خواهد گرفت.</div>
+        </div>
+        <button type="button" class="btn-rate" id="saveRatingBtn">💾 ثبت نظر</button>
+        <div class="rating-success hidden" id="ratingSuccess">✅ نظر شما با موفقیت ثبت شد. سپاسگزاریم.</div>
+        <div class="rating-err" id="ratingErr"></div>
+      </div>
+    </div>
+
+    <!-- ═══ گام ۴ ═══ -->
+    <div class="form-card step-panel hidden" data-step="3">
+      <h2 class="step-title">ارسال مدارک</h2>
+      <p class="step-sub">با توجه به شغل شما، مدارک زیر مورد نیاز است.</p>
+      <div class="trust-banner">
+        <div class="trust-icon">🔒</div>
+        <div class="trust-body">
+          <strong>اطمینان خاطر شما، اولویت ماست</strong>
+          <p>مدارک ارسالی شما صرفاً در چارچوب اعتبارسنجی پرونده و جهت ارائه به بانک عامل استفاده می‌شود. امنیت اطلاعات و محرمانگی کامل مدارک شما نزد وام پی <strong>تضمین شده</strong> است.</p>
+        </div>
+      </div>
+      <div class="upload-progress-card">
+        <div class="upload-progress-head">
+          <span>📎 وضعیت بارگذاری</span>
+          <strong id="uploadProgressText">۰ از ۰</strong>
+        </div>
+        <div class="upload-progress-bar"><div class="upload-progress-fill" id="uploadProgressFill"></div></div>
+      </div>
+      <div class="category-info">
+        <div class="category-icon" id="categoryIcon">💼</div>
+        <div class="category-body">
+          <strong id="categoryTitle">دسته‌ی شغلی</strong>
+          <span id="categorySub">مدارک موردنیاز شما</span>
+        </div>
+      </div>
+      <div class="docs-list" id="docsList"></div>
+      <div class="info-box" style="margin-top:16px">
+        <strong>📌 راهنمای فنی:</strong><br>
+        • فرمت‌های مجاز: JPG، JPEG، PNG، PDF<br>
+        • حداکثر حجم هر فایل: ۲ مگابایت<br>
+        • تصاویر باید واضح و خوانا باشند
+      </div>
+    </div>
+
+    <!-- ═══ گام ۵ ═══ -->
+    <div class="form-card step-panel hidden" data-step="4">
+      <h2 class="step-title">تکمیل مدارک و اعتبارسنجی</h2>
+      <p class="step-sub">پرونده‌ی شما توسط کارشناس اعتبارسنجی بررسی شد. لطفاً اطلاعات نهایی را تکمیل کنید.</p>
+
+      <fieldset>
+        <legend>📋 نتیجه اعتبارسنجی</legend>
+        <div id="verificationResult"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>💬 مشاوره اعتبارسنجی</legend>
+        <div id="consultationResult"></div>
+        <div class="field" data-key="paymentMethod" id="paymentMethodField">
+          <label>روش پرداخت هزینه امتیاز <span class="req">*</span></label>
+          <div class="payment-methods" id="paymentMethods">
+            <label class="payment-method" data-value="escrow">
+              <input type="radio" name="paymentMethod" value="escrow">
+              <span class="payment-method-icon">🏦</span>
+              <span class="payment-method-body">
+                <span class="payment-method-title">حساب امانی وام پی</span>
+                <span class="payment-method-desc">واریز هزینه امتیاز به حساب امانی سامانه</span>
+              </span>
+              <span class="payment-method-check"></span>
+            </label>
+            <label class="payment-method" data-value="check">
+              <input type="radio" name="paymentMethod" value="check">
+              <span class="payment-method-icon">📄</span>
+              <span class="payment-method-body">
+                <span class="payment-method-title">پرداخت با چک</span>
+                <span class="payment-method-desc">صدور چک به نام وام پی و تسویه پس از تأیید</span>
+              </span>
+              <span class="payment-method-check"></span>
+            </label>
+          </div>
+          <div class="err">روش پرداخت هزینه را انتخاب کنید.</div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>📎 تکمیل مدارک</legend>
+        <div class="field" data-key="finalBankAccount">
+          <label>شماره حساب بانکی <span class="req">*</span></label>
+          <input type="tel" inputmode="numeric" id="w_finalBankAccount" placeholder="مثلاً: 1234567890123456">
+          <span class="hint">شماره حسابی که وام به آن واریز می‌شود</span>
+          <div class="err">شماره حساب را وارد کنید (حداقل ۱۰ رقم).</div>
+        </div>
+        <div class="final-docs-list" id="finalDocsList"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>⚖️ تایید قوانین و مقررات</legend>
+        <div class="terms-box">
+          <div class="terms-scroll">
+            <h5>۱. ماهیت سامانه وام پی</h5>
+            <p>سامانه وام پی صرفاً یک پلتفرم مشاوره‌ای و معرفی به بانک‌ها و مؤسسات اعتباری است. این سامانه به هیچ عنوان خریدار، فروشنده، یا واسطه‌ی وام و امتیاز وام نمی‌باشد و هیچ‌گونه معامله، خرید، فروش، یا مبادله‌ی وام در آن انجام نمی‌شود.</p>
+            <p>وام پی در قبال هرگونه خرید و فروش وام، امتیاز وام، یا هرگونه واسطه‌گری که خارج از چارچوب این سامانه توسط اشخاص ثالث یا کاربران انجام شود، هیچ‌گونه مسئولیت قانونی، حقوقی، یا مالی نمی‌پذیرد.</p>
+
+            <h5>۲. تأیید صحت اطلاعات</h5>
+            <p>اینجانب با آگاهی کامل تأیید می‌نمایم که تمامی اطلاعات وارد شده صحیح و مطابق واقع است.</p>
+
+            <h5>۳. شرایط تسهیلات</h5>
+            <ol>
+              <li>مبلغ تسهیلات و شرایط بازپرداخت تابع مصوبات بانک عامل است.</li>
+              <li>هزینه امتیاز مطابق مبلغ اعلام‌شده محاسبه می‌شود.</li>
+              <li>تأخیر در پرداخت اقساط موجب جریمه تأخیر خواهد شد.</li>
+              <li>وام پی در فرآیند تأیید تسهیلات و مبلغ نهایی هیچ‌گونه دخالتی ندارد و تصمیم‌گیری نهایی صرفاً بر عهده‌ی بانک عامل است.</li>
+            </ol>
+
+            <h5>۴. محرمانگی اطلاعات</h5>
+            <p>سامانه وام پی متعهد می‌گردد اطلاعات شخصی و مدارک شما را محرمانه نگهداری نماید.</p>
+
+            <h5>۵. حق انصراف</h5>
+            <p>متقاضی می‌تواند تا پیش از امضای نهایی قرارداد انصراف دهد.</p>
+
+            <h5>۶. تأیید نهایی</h5>
+            <p>با تیک زدن گزینه زیر، اینجانب تأیید می‌کنم که:</p>
+            <ol>
+              <li>وام پی صرفاً یک سامانه‌ی مشاوره‌ای و معرفی است و هیچ‌گونه خرید و فروش وام یا امتیاز وام در آن انجام نمی‌شود.</li>
+              <li>تمامی اطلاعات وارد شده توسط اینجانب صحیح و مطابق واقع است.</li>
+              <li>شرایط تسهیلات، مبلغ، و نرخ بازپرداخت صرفاً توسط بانک عامل تعیین می‌شود.</li>
+              <li>وام پی در قبال هرگونه معامله‌ی وام، امتیاز وام، یا واسطه‌گری که خارج از این سامانه انجام شود، هیچ‌گونه مسئولیت قانونی، حقوقی، یا مالی نمی‌پذیرد.</li>
+            </ol>
+          </div>
+          <label class="terms-check" id="termsCheck">
+            <input type="checkbox" id="w_termsAgreed">
+            <span class="terms-check-box"></span>
+            <span class="terms-check-text">
+              <strong>اینجانب تأیید می‌کنم</strong> که تمامی اطلاعات وارد شده صحیح است و
+              <strong>قوانین و مقررات وام پی و بانک عامل</strong> را مطالعه کرده و می‌پذیرم.
+            </span>
+          </label>
+          <div class="err" id="termsErr" style="color:var(--error);font-size:11.5px;margin-top:8px;display:none">
+            لطفاً قوانین و مقررات را بپذیرید.
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <!-- ═══ گام ۶ — بررسی کارگزار و قرارداد ═══ -->
+    <div class="form-card step-panel hidden" data-step="5">
+      <h2 class="step-title">بررسی کارگزار و پیش‌نویس قرارداد</h2>
+      <p class="step-sub">در این مرحله، کارگزار پرونده‌ی شما را بررسی کرده و پیش‌نویس قرارداد تنظیم شده است.</p>
+
+      <div class="contract-flow" id="contractFlow"></div>
+
+      <div class="contract-note">
+        <div class="contract-note-icon">⚠️</div>
+        <div class="contract-note-body">
+          <h4 class="contract-note-title">توجه مهم — پیش‌نویس ≠ اصل قرارداد</h4>
+          <p class="contract-note-text">
+            تأیید پیش‌نویس قرارداد به‌عنوان <strong>اخذ اصل قرارداد نیست</strong> و صرفاً به‌منزله‌ی تأیید مفاد و متن پیش‌نویس می‌باشد.
+            <br><br>
+            پس از تکمیل این مرحله، در گام بعدی امکان <strong>امضای الکترونیکی اصل قرارداد</strong> برای شما فراهم خواهد شد.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ گام ۷ — امضای الکترونیکی قرارداد ═══ -->
+    <div class="form-card step-panel hidden" data-step="6">
+      <h2 class="step-title">امضای الکترونیکی قرارداد</h2>
+      <p class="step-sub">برای نهایی‌سازی قرارداد، مراحل زیر را به‌ترتیب تکمیل کنید.</p>
+      <div id="signatureFlow"></div>
+    </div>
+
+    <!-- ═══ گام ۸ — پرداخت امانی ═══ -->
+    <div class="form-card step-panel hidden" data-step="7">
+      <h2 class="step-title">پرداخت امانی</h2>
+      <p class="step-sub">پرداخت هزینه‌ی امتیاز از طریق امانت‌داری وام‌پی — این مبلغ تا تأیید نهایی نزد سامانه به‌عنوان امین نگهداری می‌شود.</p>
+      <div id="step8Flow"></div>
+    </div>
+
+    <!-- ═══ گام ۹ — اقرار سه‌طرفه + آزادسازی ═══ -->
+    <div class="form-card step-panel hidden" data-step="8">
+      <h2 class="step-title">اقرار سه‌طرفه و آزادسازی وجه</h2>
+      <p class="step-sub">پس از تأیید دریافت امتیاز، اقرارنامه‌های رسمی از طرفین گرفته می‌شود و وجه امانت آزاد می‌گردد.</p>
+      <div id="step9Flow"></div>
+    </div>
+
+    <!-- ═══ گام ۱۰ — بایگانی و اتمام پرونده ═══ -->
+    <div class="form-card step-panel hidden" data-step="9">
+      <h2 class="step-title">بایگانی و اتمام پرونده</h2>
+      <p class="step-sub">پرونده‌ی شما با موفقیت تکمیل می‌شود و در بایگانی رسمی سامانه وام‌پی ثبت می‌گردد.</p>
+      <div id="step10Flow"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-secondary" id="prevBtn">قبلی</button>
+      <button class="btn btn-primary" id="nextBtn">بعدی</button>
+    </div>
+
+  </div>
+
+  <div id="successScreen" class="form-card success-screen hidden">
+    <div class="success-icon">✅</div>
+    <h2 class="success-title">درخواست شما ثبت شد!</h2>
+    <p class="success-sub">کد پیگیری: <strong id="trackingId" style="direction:ltr;display:inline-block">—</strong></p>
+  </div>
+
+</div>
+
+<!-- 🆕 Supabase Scripts (فاز ۴) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/storage.js"></script>
+<script src="js/config.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/storage-adapter.js"></script>
+<script src="js/auth-bridge.js"></script>
+
+<!-- اسکریپت‌های اصلی Wizard -->
+<script src="js/permissions.js"></script>
+<script src="js/applicant-store.js"></script>
+<script src="js/trust-service.js"></script>
+<script src="js/html2pdf.bundle.min.js"></script>
+<script src="js/applicant-wizard.js"></script>
+</body>
+</html>

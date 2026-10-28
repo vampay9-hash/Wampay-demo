@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="داشبورد مدیر — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>داشبورد مدیر | وام پی</title>
+
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    .wam-admin__welcome {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 55%, #1a6b42 100%);
+      color: #fff;
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-lg);
+      margin-bottom: var(--wam-space-lg);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      flex-wrap: wrap;
+    }
+
+    .wam-admin__welcome::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.28), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-admin__welcome-body {
+      z-index: 1;
+      flex: 1 1 260px;
+      min-width: 0;
+    }
+
+    .wam-admin__welcome-greet {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-bottom: 4px;
+    }
+
+    .wam-admin__welcome-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin: 0 0 6px;
+      color: #fff;
+    }
+
+    .wam-admin__welcome-title span {
+      color: #f4d477;
+    }
+
+    .wam-admin__welcome-text {
+      font-size: 0.82rem;
+      opacity: 0.88;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .wam-admin__welcome-actions {
+      z-index: 1;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .wam-admin__welcome-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: var(--wam-radius);
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background var(--wam-t), transform var(--wam-t-fast);
+    }
+
+    .wam-admin__welcome-btn:hover {
+      background: rgba(255, 255, 255, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .wam-admin__welcome-btn--gold {
+      background: var(--wam-gold);
+      color: #3a2a00;
+      border-color: var(--wam-gold);
+    }
+
+    .wam-admin__welcome-btn--gold:hover {
+      background: var(--wam-gold-light);
+    }
+
+    [data-dashboard-root] {
+      display: flex;
+      flex-direction: column;
+      gap: var(--wam-space-lg);
+    }
+  </style>
+</head>
+
+<body data-page="admin-dashboard">
+
+  <div class="wam-admin" id="adminRoot">
+
+    <!-- ═══ OVERLAY موبایل ═══ -->
+    <div class="wam-admin__overlay" id="adminOverlay"></div>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="wam-admin__sidebar" aria-label="منوی مدیریت">
+
+      <div class="wam-admin__brand">
+        <span class="wam-admin__brand-icon">و</span>
+        <span>وام پی</span>
+      </div>
+
+      <nav class="wam-admin__nav" role="navigation">
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">اصلی</div>
+
+          <a class="wam-admin__nav-item is-active" href="admin-dashboard.html">
+            <span class="wam-admin__nav-icon">📊</span>
+            <span>داشبورد</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">مدیریت</div>
+
+          <a class="wam-admin__nav-item" href="admin-users.html">
+            <span class="wam-admin__nav-icon">👥</span>
+            <span>کاربران</span>
+            <span class="wam-admin__nav-badge" data-badge="users" hidden>0</span>
+          </a>
+
+          <a class="wam-admin__nav-item" href="admin-cases.html">
+            <span class="wam-admin__nav-icon">📁</span>
+            <span>پرونده‌ها</span>
+          </a>
+
+          <a class="wam-admin__nav-item" href="admin-approvals.html">
+            <span class="wam-admin__nav-icon">✓</span>
+            <span>تأییدها</span>
+            <span class="wam-admin__nav-badge" data-badge="approvals" hidden>0</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">مالی</div>
+
+          <a class="wam-admin__nav-item" href="payments.html">
+            <span class="wam-admin__nav-icon">💳</span>
+            <span>پرداخت‌ها</span>
+          </a>
+
+          <a class="wam-admin__nav-item" href="financial-reports.html">
+            <span class="wam-admin__nav-icon">📈</span>
+            <span>گزارشات</span>
+          </a>
+
+          <a class="wam-admin__nav-item" href="advanced-reports.html">
+            <span class="wam-admin__nav-icon">📊</span>
+            <span>گزارشات پیشرفته</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group">
+          <div class="wam-admin__nav-group-title">سیستم</div>
+
+          <a class="wam-admin__nav-item" href="follow-ups.html">
+            <span class="wam-admin__nav-icon">📌</span>
+            <span>پیگیری‌ها</span>
+            <span class="wam-admin__nav-badge" data-badge="followups" hidden>0</span>
+          </a>
+
+          <a class="wam-admin__nav-item" href="dashboard.html">
+            <span class="wam-admin__nav-icon">🧩</span>
+            <span>داشبورد عمومی</span>
+          </a>
+
+          <a class="wam-admin__nav-item" href="admin-settings.html">
+            <span class="wam-admin__nav-icon">⚙️</span>
+            <span>تنظیمات</span>
+          </a>
+        </div>
+
+        <div class="wam-admin__nav-group" style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+          <button type="button" class="wam-admin__nav-item" id="adminLogoutBtn">
+            <span class="wam-admin__nav-icon">🚪</span>
+            <span>خروج از حساب</span>
+          </button>
+        </div>
+
+      </nav>
+
+    </aside>
+
+    <!-- ═══ MAIN ═══ -->
+    <div class="wam-admin__main">
+
+      <header class="wam-admin__topbar">
+
+        <button type="button" class="wam-admin__menu-toggle"
+                id="adminMenuToggle" aria-label="باز کردن منو">
+          ☰
+        </button>
+
+        <h1 class="wam-admin__topbar-title">
+          📊 داشبورد مدیر
+        </h1>
+
+        <div class="wam-admin__topbar-actions">
+          <button type="button" class="wam-btn wam-btn--ghost wam-btn--sm"
+                  id="adminRefreshBtn" title="بروزرسانی">
+            🔄
+          </button>
+
+          <div class="wam-admin__user" id="adminUserChip" title="پروفایل">
+            <span class="wam-admin__user-avatar" id="adminUserAvatar">م</span>
+            <span id="adminUserName">مدیر</span>
+          </div>
+        </div>
+
+      </header>
+
+      <main class="wam-admin__content">
+
+        <nav class="wam-admin__breadcrumb" aria-label="مسیر">
+          <a href="admin-dashboard.html">خانه</a>
+          <span class="wam-admin__breadcrumb-sep">/</span>
+          <span>داشبورد</span>
+        </nav>
+
+        <section class="wam-admin__welcome">
+          <div class="wam-admin__welcome-body">
+            <div class="wam-admin__welcome-greet" id="welcomeGreet">
+              خوش آمدید 👋
+            </div>
+            <h2 class="wam-admin__welcome-title">
+              <span id="welcomeName">مدیر عزیز</span>
+            </h2>
+            <p class="wam-admin__welcome-text">
+              نمای کلی سیستم، آخرین پرونده‌ها و پرداخت‌ها در یک نگاه.
+            </p>
+          </div>
+
+          <div class="wam-admin__welcome-actions">
+            <a href="admin-users.html" class="wam-admin__welcome-btn">
+              👥 کاربران
+            </a>
+            <a href="admin-approvals.html" class="wam-admin__welcome-btn wam-admin__welcome-btn--gold">
+              ✓ تأییدها
+            </a>
+          </div>
+        </section>
+
+        <!-- ریشه داشبورد -->
+        <div data-dashboard-root>
+          <div class="wam-card" style="padding:32px;text-align:center;">
+            <p style="font-size:2.4rem;margin:0 0 8px;">📊</p>
+            <p style="font-size:1rem;font-weight:700;color:var(--wam-primary);margin:0 0 6px;">
+              داشبورد در حال آماده‌سازی است
+            </p>
+            <p style="font-size:0.85rem;color:var(--wam-text-muted);margin:0;">
+              ویجت‌های آماری در فازهای بعدی به این بخش اضافه می‌شوند.
+            </p>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       Scripts — به ترتیب وابستگی
+       ═══════════════════════════════════════════ -->
+  <script src="js/permissions.js" defer></script>
+  <script src="js/auth-guard.js" defer></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+
+      var adminRoot   = $('adminRoot');
+      var menuToggle  = $('adminMenuToggle');
+      var overlay     = $('adminOverlay');
+      var logoutBtn   = $('adminLogoutBtn');
+      var refreshBtn  = $('adminRefreshBtn');
+      var userChip    = $('adminUserChip');
+      var userAvatar  = $('adminUserAvatar');
+      var userName    = $('adminUserName');
+      var welcomeName = $('welcomeName');
+
+      // ── گارد ورود ──
+      if (window.WamPayGuard) {
+        var ok = window.WamPayGuard.requireRole(
+          ['admin', 'super_admin'],
+          { redirectToOwn: true }
+        );
+        if (!ok) return;
+      }
+
+      // ── Sidebar Mobile ──
+      function openSidebar() {
+        if (adminRoot) adminRoot.classList.add('is-sidebar-open');
+        if (overlay) overlay.classList.add('is-open');
+      }
+      function closeSidebar() {
+        if (adminRoot) adminRoot.classList.remove('is-sidebar-open');
+        if (overlay) overlay.classList.remove('is-open');
+      }
+      function toggleSidebar() {
+        if (!adminRoot) return;
+        if (adminRoot.classList.contains('is-sidebar-open')) closeSidebar();
+        else openSidebar();
+      }
+
+      if (menuToggle) menuToggle.addEventListener('click', toggleSidebar);
+      if (overlay) overlay.addEventListener('click', closeSidebar);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeSidebar();
+      });
+
+      // ── کاربر جاری ──
+      function readUser() {
+        if (window.WamPayAuth && typeof window.WamPayAuth.getCurrentUser === 'function') {
+          return window.WamPayAuth.getCurrentUser();
+        }
+        try {
+          var raw = localStorage.getItem('wamPayCurrentUser');
+          return raw ? JSON.parse(raw) : null;
+        } catch (_) { return null; }
+      }
+
+      function applyUser() {
+        var u = readUser();
+        if (!u) return;
+        var displayName = u.name || u.fullName || u.username || 'مدیر';
+        var initial = displayName.trim().charAt(0).toUpperCase() || 'م';
+
+        if (userAvatar) userAvatar.textContent = initial;
+        if (userName) userName.textContent = displayName;
+        if (welcomeName) welcomeName.textContent = displayName + ' عزیز';
+
+        var role = u.role || u.userRole;
+        if (role === 'super_admin') {
+          var greetEl = $('welcomeGreet');
+          if (greetEl) greetEl.textContent = 'سلام مدیر ارشد 👑';
+        }
+      }
+
+      // ── خروج ──
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+          if (!window.confirm('از حساب کاربری خارج می‌شوید؟')) return;
+
+          if (window.WamPayGuard && typeof window.WamPayGuard.logout === 'function') {
+            window.WamPayGuard.logout();
+            return;
+          }
+
+          try {
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+            localStorage.removeItem('wamPayRemember');
+          } catch (_) {}
+
+          window.location.replace('login.html');
+        });
+      }
+
+      // ── بروزرسانی ──
+      if (refreshBtn) {
+        refreshBtn.addEventListener('click', function () {
+          window.location.reload();
+        });
+      }
+
+      // ── کاربر چیپ ──
+      if (userChip) {
+        userChip.addEventListener('click', function () {
+          var u = readUser();
+          if (!u) return;
+          window.alert(
+            '👤 ' + (u.name || '—') + '\n' +
+            '📱 ' + (u.mobile || '—') + '\n' +
+            '🎭 ' + (window.WamPayAuth
+                     ? window.WamPayAuth.getRoleLabel(u.role)
+                     : (u.role || '—'))
+          );
+        });
+      }
+
+      // ── نشان‌های سایدبار ──
+      function updateBadges() {
+        try {
+          var raw = localStorage.getItem('wamPayUsers');
+          if (raw) {
+            var users = JSON.parse(raw);
+            if (Array.isArray(users)) setBadge('users', users.length);
+          }
+        } catch (_) {}
+
+        try {
+          if (window.WamPayAuth && typeof window.WamPayAuth.getCasesByStage === 'function') {
+            var pending = window.WamPayAuth.getCasesByStage([
+              'verifier_pending',
+              'broker_admin_pending'
+            ]).length;
+            setBadge('approvals', pending);
+          }
+        } catch (_) {}
+      }
+
+      function setBadge(name, count) {
+        var el = document.querySelector('[data-badge="' + name + '"]');
+        if (!el) return;
+        if (!count || count <= 0) {
+          el.hidden = true;
+          el.textContent = '0';
+        } else {
+          el.hidden = false;
+          el.textContent = count > 99 ? '99+' : String(count);
+        }
+      }
+
+      // ── راه‌اندازی ──
+      function init() {
+        applyUser();
+        updateBadges();
+        setInterval(updateBadges, 30000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      console.log('📊 admin-dashboard.html آماده');
+
+    })();
+  </script>
+
+</body>
+</html>

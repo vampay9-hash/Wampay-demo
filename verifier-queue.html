@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="صف بررسی اعتبارسنج — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>صف بررسی | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/verifier-panel.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ─── Verifier Queue ─── */
+
+    .wam-verifier {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 76px;
+    }
+
+    .wam-verifier__main {
+      padding: var(--wam-space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .wam-verifier__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-verifier__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-verifier__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+
+    .wam-verifier__topbar-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+    }
+
+    .wam-verifier__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-verifier__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+    }
+    .wam-verifier__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    /* Search */
+    .wam-verifier__search {
+      position: relative;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-verifier__search input {
+      width: 100%;
+      padding: 11px 42px 11px 42px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-verifier__search input:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    .wam-verifier__search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      color: var(--wam-text-muted);
+      pointer-events: none;
+    }
+
+    .wam-verifier__search-clear {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: var(--wam-text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: none;
+    }
+    .wam-verifier__search-clear.is-visible { display: inline-flex; }
+
+    /* Stats mini */
+    .wam-verifier__mini-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-verifier__mini-stat {
+      padding: 10px 6px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      text-align: center;
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-verifier__mini-stat-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.1;
+    }
+
+    .wam-verifier__mini-stat-value--urgent { color: var(--wam-danger); }
+    .wam-verifier__mini-stat-value--high { color: var(--wam-warning-text); }
+    .wam-verifier__mini-stat-value--normal { color: var(--wam-info-text); }
+    .wam-verifier__mini-stat-value--low { color: var(--wam-text-muted); }
+
+    .wam-verifier__mini-stat-label {
+      font-size: 0.65rem;
+      color: var(--wam-text-muted);
+      margin-top: 2px;
+    }
+
+    /* Tabs */
+    .wam-verifier__tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      margin-bottom: var(--wam-space-md);
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .wam-verifier__tabs::-webkit-scrollbar { display: none; }
+
+    .wam-verifier__tab {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .wam-verifier__tab:hover {
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary-light);
+    }
+
+    .wam-verifier__tab.is-active {
+      background: var(--wam-primary-light);
+      color: #fff;
+      border-color: var(--wam-primary-light);
+    }
+
+    .wam-verifier__tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .wam-verifier__tab.is-active .wam-verifier__tab-count {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+    }
+
+    /* Sort row */
+    .wam-verifier__sort-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-verifier__sort-select {
+      padding: 5px 10px;
+      border-radius: var(--wam-radius-sm);
+      border: 1px solid var(--wam-border);
+      background: var(--wam-bg-alt);
+      font-size: 0.75rem;
+      font-family: inherit;
+      color: var(--wam-text);
+      cursor: pointer;
+    }
+
+    /* Queue list */
+    .wam-verifier__queue-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--wam-space-sm);
+    }
+
+    .wam-verifier__queue-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: var(--wam-space-md);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-right: 4px solid var(--wam-info);
+      border-radius: var(--wam-radius-md);
+      cursor: pointer;
+      transition: all var(--wam-t);
+    }
+
+    .wam-verifier__queue-card:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .wam-verifier__queue-card[data-priority="urgent"] { border-right-color: var(--wam-danger); }
+    .wam-verifier__queue-card[data-priority="high"]   { border-right-color: var(--wam-warning); }
+    .wam-verifier__queue-card[data-priority="normal"] { border-right-color: var(--wam-info); }
+    .wam-verifier__queue-card[data-priority="low"]    { border-right-color: var(--wam-muted); }
+
+    .wam-verifier__queue-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .wam-verifier__queue-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .wam-verifier__queue-title-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-verifier__queue-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-verifier__queue-id {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      font-family: 'Menlo', monospace;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .wam-verifier__queue-priority-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 8px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.68rem;
+      font-weight: 800;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text-muted);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .wam-verifier__queue-priority-badge[data-priority="urgent"] {
+      background: var(--wam-danger-soft);
+      color: var(--wam-danger-text);
+    }
+    .wam-verifier__queue-priority-badge[data-priority="high"] {
+      background: var(--wam-warning-soft);
+      color: var(--wam-warning-text);
+    }
+    .wam-verifier__queue-priority-badge[data-priority="normal"] {
+      background: var(--wam-info-soft);
+      color: var(--wam-info-text);
+    }
+
+    .wam-verifier__queue-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 0.75rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-verifier__queue-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--wam-border-soft);
+    }
+
+    .wam-verifier__queue-amount {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+    }
+
+    .wam-verifier__queue-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border-radius: var(--wam-radius);
+      background: var(--wam-primary-light);
+      color: #fff;
+      border: 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-verifier__queue-btn:hover {
+      background: var(--wam-primary);
+      transform: translateY(-1px);
+    }
+
+    /* Empty */
+    .wam-verifier__empty {
+      text-align: center;
+      padding: 48px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+
+    .wam-verifier__empty-icon {
+      font-size: 2.6rem;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+
+    .wam-verifier__empty-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 6px;
+    }
+
+    .wam-verifier__empty-text {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0;
+    }
+
+    /* Bottom Nav */
+    .wam-verifier__bottomnav {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 68px;
+      background: var(--wam-bg-alt);
+      border-top: 1px solid var(--wam-border);
+      box-shadow: 0 -2px 10px rgba(11, 59, 35, 0.06);
+      display: flex;
+      align-items: stretch;
+      z-index: var(--wam-z-sticky);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    .wam-verifier__nav-item {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 6px 4px;
+      color: var(--wam-text-muted);
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      transition: color var(--wam-t);
+      font-family: inherit;
+      position: relative;
+    }
+    .wam-verifier__nav-item:hover { color: var(--wam-primary); }
+    .wam-verifier__nav-item.is-active { color: var(--wam-primary); }
+    .wam-verifier__nav-item.is-active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 25%;
+      left: 25%;
+      height: 3px;
+      background: var(--wam-gold);
+      border-radius: 0 0 6px 6px;
+    }
+
+    .wam-verifier__nav-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+    .wam-verifier__nav-label {
+      font-size: 0.68rem;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+      .wam-verifier__main { padding: var(--wam-space-md); }
+      .wam-verifier__mini-stats { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+      .wam-verifier__mini-stat { padding: 8px 4px; }
+      .wam-verifier__mini-stat-value { font-size: 0.95rem; }
+      .wam-verifier__mini-stat-label { font-size: 0.58rem; }
+    }
+
+    @media (min-width: 900px) {
+      .wam-verifier { padding-bottom: 0; }
+      .wam-verifier__bottomnav {
+        position: sticky;
+        top: 0;
+        height: auto;
+        padding: 0 var(--wam-space-lg);
+        justify-content: center;
+        gap: 4px;
+        border-top: 0;
+        border-bottom: 1px solid var(--wam-border);
+        box-shadow: var(--wam-shadow-sm);
+      }
+      .wam-verifier__nav-item {
+        flex: 0 0 auto;
+        flex-direction: row;
+        gap: 6px;
+        padding: 12px 16px;
+        font-size: 0.85rem;
+      }
+      .wam-verifier__nav-item.is-active::before {
+        top: auto;
+        bottom: 0;
+        right: 8px;
+        left: 8px;
+      }
+      .wam-verifier__nav-label { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+
+<body data-page="verifier-queue">
+
+  <div class="wam-verifier" id="verifierRoot">
+
+    <!-- Topbar -->
+    <header class="wam-verifier__topbar">
+      <div class="wam-verifier__topbar-info">
+        <a href="verifier-dashboard.html" class="wam-verifier__topbar-back">↩ بازگشت</a>
+        <span class="wam-verifier__topbar-name">📋 صف بررسی</span>
+      </div>
+      <div class="wam-verifier__topbar-actions">
+        <button type="button" class="wam-verifier__icon-btn" id="sortBtn" title="مرتب‌سازی">⇅</button>
+        <button type="button" class="wam-verifier__icon-btn" id="refreshBtn" title="بروزرسانی">🔄</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="wam-verifier__main">
+
+      <!-- Search -->
+      <div class="wam-verifier__search">
+        <input type="text" id="searchInput" placeholder="جستجو در عنوان، شناسه، متقاضی...">
+        <span class="wam-verifier__search-icon">🔍</span>
+        <button type="button" class="wam-verifier__search-clear" id="searchClear" aria-label="پاک">✕</button>
+      </div>
+
+      <!-- Stats by priority -->
+      <section class="wam-verifier__mini-stats">
+        <div class="wam-verifier__mini-stat">
+          <div class="wam-verifier__mini-stat-value wam-verifier__mini-stat-value--urgent" id="statUrgent">۰</div>
+          <div class="wam-verifier__mini-stat-label">🚨 فوری</div>
+        </div>
+        <div class="wam-verifier__mini-stat">
+          <div class="wam-verifier__mini-stat-value wam-verifier__mini-stat-value--high" id="statHigh">۰</div>
+          <div class="wam-verifier__mini-stat-label">⚠️ بالا</div>
+        </div>
+        <div class="wam-verifier__mini-stat">
+          <div class="wam-verifier__mini-stat-value wam-verifier__mini-stat-value--normal" id="statNormal">۰</div>
+          <div class="wam-verifier__mini-stat-label">عادی</div>
+        </div>
+        <div class="wam-verifier__mini-stat">
+          <div class="wam-verifier__mini-stat-value wam-verifier__mini-stat-value--low" id="statLow">۰</div>
+          <div class="wam-verifier__mini-stat-label">کم</div>
+        </div>
+      </section>
+
+      <!-- Tabs -->
+      <div class="wam-verifier__tabs" id="queueTabs">
+        <button type="button" class="wam-verifier__tab is-active" data-tab="all">
+          همه <span class="wam-verifier__tab-count" data-count="all">۰</span>
+        </button>
+        <button type="button" class="wam-verifier__tab" data-tab="urgent">
+          🚨 فوری <span class="wam-verifier__tab-count" data-count="urgent">۰</span>
+        </button>
+        <button type="button" class="wam-verifier__tab" data-tab="high">
+          ⚠️ بالا <span class="wam-verifier__tab-count" data-count="high">۰</span>
+        </button>
+        <button type="button" class="wam-verifier__tab" data-tab="pending">
+          ⏳ جدید <span class="wam-verifier__tab-count" data-count="pending">۰</span>
+        </button>
+        <button type="button" class="wam-verifier__tab" data-tab="in_review">
+          🔎 در بررسی <span class="wam-verifier__tab-count" data-count="in_review">۰</span>
+        </button>
+      </div>
+
+      <!-- Sort row -->
+      <div class="wam-verifier__sort-row">
+        <span id="resultsCount">۰ پرونده</span>
+        <select class="wam-verifier__sort-select" id="sortSelect">
+          <option value="priority">اولویت</option>
+          <option value="newest">جدیدترین</option>
+          <option value="oldest">قدیمی‌ترین</option>
+          <option value="amount_high">مبلغ: زیاد به کم</option>
+          <option value="amount_low">مبلغ: کم به زیاد</option>
+        </select>
+      </div>
+
+      <!-- Queue list -->
+      <div class="wam-verifier__queue-list" id="queueList">
+        <!-- توسط JS پر می‌شود -->
+      </div>
+
+      <!-- Empty -->
+      <div class="wam-verifier__empty" id="emptyState" style="display:none;">
+        <div class="wam-verifier__empty-icon">🎉</div>
+        <p class="wam-verifier__empty-title" id="emptyTitle">صف بررسی خالی است!</p>
+        <p class="wam-verifier__empty-text" id="emptyText">همه پرونده‌ها بررسی شده‌اند.</p>
+      </div>
+
+      <div style="height: 20px;"></div>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="wam-verifier__bottomnav" role="navigation">
+      <a href="verifier-dashboard.html" class="wam-verifier__nav-item">
+        <span class="wam-verifier__nav-icon">🏠</span>
+        <span class="wam-verifier__nav-label">خانه</span>
+      </a>
+      <a href="verifier-queue.html" class="wam-verifier__nav-item is-active">
+        <span class="wam-verifier__nav-icon">📋</span>
+        <span class="wam-verifier__nav-label">صف</span>
+      </a>
+      <a href="cases.html" class="wam-verifier__nav-item">
+        <span class="wam-verifier__nav-icon">📁</span>
+        <span class="wam-verifier__nav-label">پرونده‌ها</span>
+      </a>
+      <a href="follow-ups.html" class="wam-verifier__nav-item">
+        <span class="wam-verifier__nav-icon">📌</span>
+        <span class="wam-verifier__nav-label">پیگیری‌ها</span>
+      </a>
+      <a href="dashboard.html" class="wam-verifier__nav-item">
+        <span class="wam-verifier__nav-icon">👤</span>
+        <span class="wam-verifier__nav-label">پروفایل</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+  <script src="js/bundle-verifier.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       VERIFIER QUEUE CONTROLLER
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_CASES = 'wamPayCases';
+
+      var state = {
+        user: null,
+        all: [],
+        filtered: [],
+        tab: 'all',
+        query: '',
+        sort: 'priority'
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = Date.now() - ts;
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه پیش';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت پیش';
+        return Math.round(abs / 86400000) + ' روز پیش';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'اعتبارسنج', username: 'verifier', role: 'verifier', id: 'verifier' };
+      }
+
+      function typeLabel(t) {
+        var map = {
+          home: '🏠 مسکن', car: '🚗 خودرو', personal: '👤 شخصی',
+          business: '💼 کسب‌وکار', equipment: '🏭 تجهیزات', education: '🎓 تحصیلی'
+        };
+        return map[t] || t || 'وام';
+      }
+
+      function priorityOf(c) {
+        var age = Date.now() - (c.createdAt || 0);
+        var ageDays = age / 86400000;
+        var amount = Number(c.amount) || 0;
+        if (ageDays >= 3 || amount >= 1000) return 'urgent';
+        if (ageDays >= 1 || amount >= 500) return 'high';
+        if (ageDays >= 0.25) return 'normal';
+        return 'low';
+      }
+
+      function priorityLabel(p) {
+        return { urgent: '🚨 فوری', high: '⚠️ بالا', normal: 'عادی', low: 'کم' }[p] || p;
+      }
+
+      var PRIORITY_WEIGHT = { urgent: 4, high: 3, normal: 2, low: 1 };
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadCases() {
+        var all = readJSON(STORAGE_CASES, []);
+        if (!Array.isArray(all)) return [];
+        // فقط pending و in_review
+        return all.filter(function (c) {
+          return c && (c.status === 'pending' || c.status === 'in_review');
+        });
+      }
+
+      // ═══════════════════════════════════
+      // فیلتر و مرتب‌سازی
+      // ═══════════════════════════════════
+
+      function applyFilters() {
+        var q = state.query.toLowerCase();
+        var tab = state.tab;
+
+        state.filtered = state.all.filter(function (c) {
+          var p = priorityOf(c);
+          if (tab === 'urgent' && p !== 'urgent') return false;
+          if (tab === 'high' && p !== 'high') return false;
+          if (tab === 'pending' && c.status !== 'pending') return false;
+          if (tab === 'in_review' && c.status !== 'in_review') return false;
+
+          if (q) {
+            var hay = [
+              c.title, c.id, c.applicantName, c.brokerName, c.type
+            ].join(' ').toLowerCase();
+            if (hay.indexOf(q) < 0) return false;
+          }
+          return true;
+        });
+
+        // مرتب‌سازی
+        var s = state.sort;
+        state.filtered.sort(function (a, b) {
+          if (s === 'newest') return (b.createdAt || 0) - (a.createdAt || 0);
+          if (s === 'oldest') return (a.createdAt || 0) - (b.createdAt || 0);
+          if (s === 'amount_high') return (Number(b.amount) || 0) - (Number(a.amount) || 0);
+          if (s === 'amount_low') return (Number(a.amount) || 0) - (Number(b.amount) || 0);
+          // priority (پیش‌فرض)
+          var wa = PRIORITY_WEIGHT[priorityOf(a)] || 0;
+          var wb = PRIORITY_WEIGHT[priorityOf(b)] || 0;
+          if (wa !== wb) return wb - wa;
+          return (a.createdAt || 0) - (b.createdAt || 0); // قدیمی‌تر در اولویت
+        });
+
+        render();
+      }
+
+      // ═══════════════════════════════════
+      // آمار و تب‌ها
+      // ═══════════════════════════════════
+
+      function updateStats() {
+        var counts = { urgent: 0, high: 0, normal: 0, low: 0 };
+        state.all.forEach(function (c) {
+          var p = priorityOf(c);
+          if (counts[p] != null) counts[p]++;
+        });
+
+        if ($('statUrgent')) $('statUrgent').textContent = toFa(counts.urgent);
+        if ($('statHigh')) $('statHigh').textContent = toFa(counts.high);
+        if ($('statNormal')) $('statNormal').textContent = toFa(counts.normal);
+        if ($('statLow')) $('statLow').textContent = toFa(counts.low);
+      }
+
+      function updateTabCounts() {
+        var counts = {
+          all: state.all.length,
+          urgent: 0, high: 0, pending: 0, in_review: 0
+        };
+
+        state.all.forEach(function (c) {
+          var p = priorityOf(c);
+          if (p === 'urgent') counts.urgent++;
+          if (p === 'high') counts.high++;
+          if (c.status === 'pending') counts.pending++;
+          if (c.status === 'in_review') counts.in_review++;
+        });
+
+        Object.keys(counts).forEach(function (k) {
+          var el = document.querySelector('[data-count="' + k + '"]');
+          if (el) el.textContent = toFa(counts[k]);
+        });
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function render() {
+        var container = $('queueList');
+        var empty = $('emptyState');
+        var countEl = $('resultsCount');
+
+        if (countEl) countEl.textContent = toFa(state.filtered.length) + ' پرونده';
+
+        if (state.filtered.length === 0) {
+          if (container) container.innerHTML = '';
+          if (empty) {
+            empty.style.display = '';
+            var et = $('emptyTitle');
+            var ex = $('emptyText');
+            if (state.query || state.tab !== 'all') {
+              if (et) et.textContent = 'نتیجه‌ای یافت نشد';
+              if (ex) ex.textContent = 'با فیلترهای فعلی پرونده‌ای وجود ندارد.';
+            } else {
+              if (et) et.textContent = 'صف بررسی خالی است!';
+              if (ex) ex.textContent = 'همه پرونده‌ها بررسی شده‌اند.';
+            }
+          }
+          return;
+        }
+        if (empty) empty.style.display = 'none';
+
+        var html = '';
+        state.filtered.forEach(function (c) {
+          html += renderCard(c);
+        });
+        if (container) container.innerHTML = html;
+
+        // Bind
+        container.querySelectorAll('.wam-verifier__queue-card').forEach(function (card) {
+          card.addEventListener('click', function (e) {
+            if (e.target.closest('[data-act]')) return;
+            var id = card.getAttribute('data-id');
+            if (id) window.location.href = 'verifier-review.html?id=' + encodeURIComponent(id);
+          });
+        });
+
+        container.querySelectorAll('[data-act="review"]').forEach(function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var id = btn.getAttribute('data-id');
+            if (id) window.location.href = 'verifier-review.html?id=' + encodeURIComponent(id);
+          });
+        });
+      }
+
+      function renderCard(c) {
+        var prio = priorityOf(c);
+        var stLabel = c.status === 'in_review' ? 'در بررسی' : 'در انتظار';
+        var stColor = c.status === 'in_review' ? 'info' : 'warning';
+
+        return '' +
+          '<div class="wam-verifier__queue-card" data-priority="' + prio + '" data-id="' + esc(c.id) + '">' +
+            '<div class="wam-verifier__queue-head">' +
+              '<div class="wam-verifier__queue-icon">📁</div>' +
+              '<div class="wam-verifier__queue-title-wrap">' +
+                '<p class="wam-verifier__queue-title">' + esc(c.title || 'بدون عنوان') + '</p>' +
+                '<div class="wam-verifier__queue-id">' + esc(c.id) + '</div>' +
+              '</div>' +
+              '<span class="wam-verifier__queue-priority-badge" data-priority="' + prio + '">' +
+                priorityLabel(prio) +
+              '</span>' +
+            '</div>' +
+
+            '<div class="wam-verifier__queue-meta">' +
+              '<span>👤 ' + esc(c.applicantName || '—') + '</span>' +
+              '<span>🏷 ' + typeLabel(c.type) + '</span>' +
+              (c.brokerName ? '<span>💼 ' + esc(c.brokerName) + '</span>' : '') +
+              (c.createdAt ? '<span>🗓 ' + relTime(c.createdAt) + '</span>' : '') +
+            '</div>' +
+
+            '<div class="wam-verifier__queue-footer">' +
+              '<div class="wam-verifier__queue-amount">' +
+                fmtAmount(c.amount) + ' م.ر' +
+              '</div>' +
+              '<div style="display:flex;gap:6px;align-items:center;">' +
+                '<span class="wam-badge wam-badge--' + stColor + '">' + stLabel + '</span>' +
+                '<button type="button" class="wam-verifier__queue-btn" data-act="review" data-id="' + esc(c.id) + '">' +
+                  '🔍 بررسی' +
+                '</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // Seed
+      // ═══════════════════════════════════
+
+      function seedIfEmpty() {
+        var cases = readJSON(STORAGE_CASES, []);
+        if (!Array.isArray(cases)) cases = [];
+
+        var hasPending = cases.some(function (c) {
+          return c && (c.status === 'pending' || c.status === 'in_review');
+        });
+        if (hasPending) return;
+
+        var now = Date.now();
+        var samples = [
+          {
+            id: 'C-' + now.toString(36).toUpperCase().slice(-5) + 'A',
+            title: 'وام مسکن ۵۰۰ میلیونی',
+            applicantName: 'علی رضایی',
+            applicantPhone: '09120000001',
+            type: 'home', amount: 500, term: 60, rate: 18,
+            status: 'pending', progress: 30,
+            brokerName: 'حسن کریمی',
+            createdAt: now - 1000 * 60 * 60 * 5,
+            updatedAt: now - 1000 * 60 * 60 * 5
+          },
+          {
+            id: 'C-' + now.toString(36).toUpperCase().slice(-5) + 'B',
+            title: 'وام خودرو ۲۰۰ میلیونی',
+            applicantName: 'مریم احمدی',
+            applicantPhone: '09120000002',
+            type: 'car', amount: 200, term: 36, rate: 16,
+            status: 'in_review', progress: 55,
+            brokerName: 'زهرا نوری',
+            createdAt: now - 1000 * 60 * 60 * 24 * 2,
+            updatedAt: now - 1000 * 60 * 60 * 12
+          },
+          {
+            id: 'C-' + now.toString(36).toUpperCase().slice(-5) + 'C',
+            title: 'وام تجهیزات ۱ میلیاردی',
+            applicantName: 'شرکت آریا',
+            applicantPhone: '09120000004',
+            type: 'equipment', amount: 1000, term: 84, rate: 20,
+            status: 'pending', progress: 30,
+            brokerName: 'حسن کریمی',
+            createdAt: now - 1000 * 60 * 60 * 24 * 4,
+            updatedAt: now - 1000 * 60 * 60 * 24 * 4
+          },
+          {
+            id: 'C-' + now.toString(36).toUpperCase().slice(-5) + 'D',
+            title: 'وام شخصی ۸۰ میلیونی',
+            applicantName: 'رضا کاظمی',
+            applicantPhone: '09120000003',
+            type: 'personal', amount: 80, term: 24, rate: 18,
+            status: 'pending', progress: 30,
+            brokerName: 'زهرا نوری',
+            createdAt: now - 1000 * 60 * 60 * 2,
+            updatedAt: now - 1000 * 60 * 60 * 2
+          },
+          {
+            id: 'C-' + now.toString(36).toUpperCase().slice(-5) + 'E',
+            title: 'وام کسب‌وکار ۷۰۰ میلیونی',
+            applicantName: 'فاطمه تقوی',
+            applicantPhone: '09120000005',
+            type: 'business', amount: 700, term: 48, rate: 19,
+            status: 'pending', progress: 30,
+            brokerName: 'حسن کریمی',
+            createdAt: now - 1000 * 60 * 60 * 30,
+            updatedAt: now - 1000 * 60 * 60 * 30
+          }
+        ];
+
+        cases = cases.concat(samples);
+        try { localStorage.setItem(STORAGE_CASES, JSON.stringify(cases)); } catch (_) {}
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Search
+        var input = $('searchInput');
+        var clearBtn = $('searchClear');
+        if (input) {
+          input.addEventListener('input', function () {
+            state.query = input.value || '';
+            if (clearBtn) clearBtn.classList.toggle('is-visible', state.query.length > 0);
+            applyFilters();
+          });
+        }
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function () {
+            if (input) input.value = '';
+            state.query = '';
+            clearBtn.classList.remove('is-visible');
+            applyFilters();
+          });
+        }
+
+        // Tabs
+        $$('.wam-verifier__tab').forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            $$('.wam-verifier__tab').forEach(function (x) { x.classList.remove('is-active'); });
+            tab.classList.add('is-active');
+            state.tab = tab.getAttribute('data-tab') || 'all';
+            applyFilters();
+          });
+        });
+
+        // Sort
+        var sortSelect = $('sortSelect');
+        if (sortSelect) {
+          sortSelect.addEventListener('change', function () {
+            state.sort = sortSelect.value;
+            applyFilters();
+          });
+        }
+
+        // Sort button (focus to select)
+        if ($('sortBtn')) {
+          $('sortBtn').addEventListener('click', function () {
+            var sel = $('sortSelect');
+            if (sel) {
+              sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              sel.focus();
+            }
+          });
+        }
+
+        // Refresh
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            load();
+            $('refreshBtn').textContent = '✓';
+            setTimeout(function () { $('refreshBtn').textContent = '🔄'; }, 900);
+          });
+        }
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function load() {
+        state.all = loadCases();
+        updateStats();
+        updateTabCounts();
+        applyFilters();
+      }
+
+      function init() {
+        state.user = currentUser();
+        seedIfEmpty();
+        load();
+        bindEvents();
+
+        // Auto-refresh هر ۶۰ ثانیه
+        setInterval(load, 60000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>داشبورد حسابداری | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23; --primary-light: #1a5c3a; --primary-dark: #062416;
+    --gold: #d4a62a; --gold-light: #f0c651;
+    --text: #1a2b22; --text-muted: #6b7d73;
+    --bg: #f4f7f4; --bg-card: #ffffff; --border: #e0e8e3;
+    --error: #c0392b; --success: #1e8e4a; --warning: #e67e22; --info: #2980b9;
+    --acc: #d4a62a; --acc-light: #f0c651; --acc-dark: #b8860b;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px; --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.7; transition: background 0.3s, color 0.3s;
+}
+
+/* Header حسابداری */
+.acc-header {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; box-shadow: 0 8px 24px rgba(11,59,35,0.35);
+    position: sticky; top: 0; z-index: 100; height: 68px;
+    border-bottom: 3px solid var(--gold);
+}
+.acc-header__inner {
+    max-width: 1400px; width: 100%; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.acc-header__right { display: flex; align-items: center; gap: 14px; }
+.acc-header__menu-btn {
+    display: none; width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(212,166,42,0.3);
+    background: rgba(255,255,255,0.08); color: var(--gold-light);
+    cursor: pointer; font-size: 20px;
+}
+.acc-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 17px; color: #fff; text-decoration: none;
+}
+.acc-logo__icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 0 20px rgba(212,166,42,0.5);
+}
+.acc-header__left { display: flex; align-items: center; gap: 10px; }
+.acc-header__btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(212,166,42,0.3);
+    background: rgba(255,255,255,0.08); color: var(--gold-light);
+    cursor: pointer; font-size: 18px;
+    position: relative; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+}
+.acc-header__btn:hover { background: rgba(212,166,42,0.2); }
+.acc-header__badge {
+    position: absolute; top: -4px; left: -4px;
+    background: var(--error); color: #fff;
+    font-size: 10px; font-weight: 800;
+    min-width: 18px; height: 18px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 4px; border: 2px solid #062416;
+}
+.acc-user {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 12px 6px 6px; border-radius: 10px;
+    background: rgba(212,166,42,0.15);
+    border: 1px solid rgba(212,166,42,0.3);
+    cursor: pointer; transition: var(--transition);
+    position: relative;
+}
+.acc-user:hover { background: rgba(212,166,42,0.25); }
+.acc-user__avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--primary-dark); font-weight: 800;
+}
+.acc-user__name { font-size: 13px; font-weight: 700; color: #fff; }
+.acc-user__role { font-size: 11px; opacity: 0.85; color: var(--gold-light); }
+.acc-user__dropdown {
+    position: absolute; top: calc(100% + 8px); left: 0;
+    background: var(--bg-card); color: var(--text);
+    border-radius: var(--radius-sm); padding: 6px;
+    box-shadow: var(--shadow-lg); min-width: 220px;
+    border: 1px solid var(--border);
+    display: none; z-index: 200;
+}
+.acc-user__dropdown--open { display: block; }
+.acc-user__dropdown a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 12px; border-radius: 6px;
+    color: var(--text); text-decoration: none;
+    font-size: 13px; font-weight: 600; transition: var(--transition);
+}
+.acc-user__dropdown a:hover { background: var(--bg); color: var(--primary); }
+.acc-user__dropdown hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
+/* Layout */
+.acc-layout {
+    display: grid; grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 68px);
+}
+.acc-sidebar {
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    padding: 20px 12px;
+    position: sticky; top: 68px;
+    height: calc(100vh - 68px); overflow-y: auto;
+}
+.acc-sidebar__section {
+    font-size: 11px; font-weight: 800; color: var(--text-muted);
+    padding: 12px 12px 6px; text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.acc-nav { display: flex; flex-direction: column; gap: 4px; }
+.acc-nav__item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px; border-radius: var(--radius-sm);
+    color: var(--text); text-decoration: none;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: var(--transition);
+    border: none; background: transparent;
+    width: 100%; text-align: right; font-family: inherit;
+}
+.acc-nav__item:hover { background: var(--bg); color: var(--primary); }
+.acc-nav__item--active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(11,59,35,0.25);
+}
+.acc-nav__item__icon { font-size: 18px; width: 22px; text-align: center; }
+.acc-nav__item__badge {
+    margin-right: auto;
+    background: var(--error); color: #fff;
+    font-size: 10px; font-weight: 800;
+    padding: 2px 7px; border-radius: 10px;
+}
+
+/* Main */
+.acc-main { padding: 24px 28px 100px; max-width: 1400px; width: 100%; }
+.acc-section { display: none; animation: fadeIn 0.3s ease; }
+.acc-section--active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.acc-page-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+.acc-page-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; }
+
+/* Banner حسابداری */
+.acc-banner {
+    background: linear-gradient(135deg, #062416 0%, #0b3b23 40%, #b8860b 100%);
+    color: #fff; border-radius: var(--radius);
+    padding: 24px 28px; margin-bottom: 22px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 32px rgba(11,59,35,0.35);
+    border: 2px solid rgba(212,166,42,0.5);
+}
+.acc-banner::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+}
+.acc-banner__content {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+}
+.acc-banner__title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.acc-banner__subtitle { font-size: 13px; opacity: 0.9; max-width: 500px; }
+.acc-banner__date {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.15); color: #fff;
+    padding: 6px 12px; border-radius: 8px;
+    font-size: 12px; font-weight: 700;
+    margin-top: 10px;
+}
+.acc-banner__icon {
+    font-size: 72px;
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.6));
+    animation: coin-spin 4s ease-in-out infinite;
+}
+@keyframes coin-spin {
+    0%, 100% { transform: rotateY(0deg); }
+    50% { transform: rotateY(20deg); }
+}
+
+/* Stats */
+.acc-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+.acc-stat {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 18px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--primary);
+    transition: var(--transition);
+    position: relative;
+    cursor: pointer;
+}
+.acc-stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.acc-stat--gold { border-right-color: var(--gold); }
+.acc-stat--success { border-right-color: var(--success); }
+.acc-stat--warning { border-right-color: var(--warning); }
+.acc-stat--error { border-right-color: var(--error); }
+.acc-stat--info { border-right-color: var(--info); }
+
+.acc-stat__icon { font-size: 22px; margin-bottom: 4px; }
+.acc-stat__label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.acc-stat__value { font-size: 22px; font-weight: 800; line-height: 1.2; }
+.acc-stat__value span { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-right: 4px; }
+.acc-stat__action {
+    position: absolute; top: 12px; left: 12px;
+    font-size: 11px; font-weight: 700; color: var(--text-muted);
+}
+
+/* Card */
+.acc-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    margin-bottom: 18px; overflow: hidden;
+}
+.acc-card__header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+}
+.acc-card__title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.acc-card__body { padding: 18px 20px; }
+
+/* Quick Actions */
+.quick-actions {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+}
+.quick-action {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 20px 14px; text-align: center;
+    border: 1.5px solid var(--border);
+    cursor: pointer; transition: var(--transition);
+    text-decoration: none; color: var(--text);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.quick-action:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow-md);
+}
+.quick-action__icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(212,166,42,0.12), rgba(11,59,35,0.05));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    transition: var(--transition);
+}
+.quick-action:hover .quick-action__icon {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    transform: scale(1.1);
+    color: var(--primary-dark);
+}
+.quick-action__label { font-size: 13px; font-weight: 800; }
+.quick-action__desc { font-size: 11px; color: var(--text-muted); }
+
+/* Queue Card */
+.queue-list { display: flex; flex-direction: column; gap: 12px; }
+.queue-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px; border-radius: var(--radius-sm);
+    background: var(--bg); border: 1px solid var(--border);
+    transition: var(--transition);
+    cursor: pointer;
+}
+.queue-item:hover { border-color: var(--gold); transform: translateX(-4px); }
+.queue-item__icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(212,166,42,0.12), rgba(11,59,35,0.05));
+}
+.queue-item__content { flex: 1; min-width: 0; }
+.queue-item__title { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+.queue-item__meta { font-size: 11px; color: var(--text-muted); }
+.queue-item__count {
+    font-size: 22px; font-weight: 800;
+    color: var(--primary);
+    padding: 0 10px;
+}
+.queue-item__count--urgent { color: var(--error); }
+.queue-item__count--warning { color: var(--warning); }
+.queue-item__count--empty { color: var(--text-muted); }
+
+/* Invoice Card */
+.invoice-list { display: flex; flex-direction: column; gap: 12px; }
+.invoice-item {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 14px; border: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 10px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+.invoice-item:hover { border-color: var(--gold); }
+.invoice-item__header {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; flex-wrap: wrap;
+}
+.invoice-item__number {
+    font-family: monospace; font-weight: 800;
+    font-size: 13px; direction: ltr;
+}
+.invoice-item__badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.invoice-item__amount {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    font-size: 12px;
+}
+.invoice-item__amount-item {
+    display: flex; align-items: center; gap: 4px;
+    color: var(--text-muted);
+}
+.invoice-item__amount-item strong {
+    color: var(--text);
+    font-weight: 800;
+}
+.invoice-item__meta {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    font-size: 11px; color: var(--text-muted);
+}
+
+/* Badges */
+.acc-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 800;
+}
+.acc-badge--pending { background: rgba(230,126,34,0.12); color: var(--warning); }
+.acc-badge--approved { background: rgba(30,142,74,0.12); color: var(--success); }
+.acc-badge--rejected { background: rgba(192,57,43,0.12); color: var(--error); }
+.acc-badge--info { background: rgba(41,128,185,0.12); color: var(--info); }
+.acc-badge--gold { background: rgba(212,166,42,0.15); color: var(--gold); }
+.acc-badge--credit { background: rgba(142,68,173,0.12); color: var(--credit); }
+
+/* Activity */
+.activity-list { display: flex; flex-direction: column; gap: 6px; }
+.activity-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px; border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+.activity-item:hover { background: var(--bg); }
+.activity-item__icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+}
+.activity-item__icon--success { background: rgba(30,142,74,0.12); color: var(--success); }
+.activity-item__icon--pending { background: rgba(230,126,34,0.12); color: var(--warning); }
+.activity-item__icon--error { background: rgba(192,57,43,0.12); color: var(--error); }
+.activity-item__icon--info { background: rgba(41,128,185,0.12); color: var(--info); }
+.activity-item__icon--gold { background: rgba(212,166,42,0.12); color: var(--gold); }
+.activity-item__content { flex: 1; min-width: 0; }
+.activity-item__title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.activity-item__meta { font-size: 11px; color: var(--text-muted); }
+
+/* Financial Summary Grid */
+.fin-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.fin-item {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 14px; border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+}
+.fin-item__icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(212,166,42,0.12), rgba(11,59,35,0.05));
+}
+.fin-item__content { flex: 1; min-width: 0; }
+.fin-item__label { font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
+.fin-item__value { font-size: 16px; font-weight: 800; }
+
+/* Settlement Table */
+.settlement-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+}
+.settlement-table th {
+    background: var(--bg); padding: 12px 14px; text-align: right;
+    font-weight: 800; font-size: 12px; color: var(--text-muted);
+    border-bottom: 2px solid var(--border); white-space: nowrap;
+}
+.settlement-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+}
+.settlement-table tr:last-child td { border-bottom: none; }
+.settlement-table tr:hover td { background: var(--bg); }
+.settlement-table__mono { font-family: monospace; direction: ltr; text-align: right; }
+
+/* Buttons */
+.acc-btn {
+    padding: 10px 16px; border-radius: var(--radius-sm);
+    border: none; font-family: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    text-decoration: none;
+}
+.acc-btn--primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; box-shadow: 0 4px 12px rgba(11,59,35,0.25);
+}
+.acc-btn--primary:hover { transform: translateY(-1px); }
+.acc-btn--gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--primary-dark);
+}
+.acc-btn--gold:hover { transform: translateY(-1px); }
+.acc-btn--ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border);
+}
+.acc-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.acc-btn--sm { padding: 6px 12px; font-size: 12px; }
+
+/* Empty */
+.acc-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+.acc-empty__icon { font-size: 50px; margin-bottom: 12px; opacity: 0.4; }
+.acc-empty__desc { font-size: 13px; }
+
+/* Loading */
+.loading-screen { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+.loading-spinner {
+    width: 50px; height: 50px; border: 4px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Toast */
+.toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 22px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 10000; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px; max-width: 90%;
+}
+.toast--show { transform: translateX(-50%) translateY(0); }
+.toast--error { background: var(--error); }
+.toast--success { background: var(--success); }
+
+/* Bottom Nav */
+.acc-bottom-nav {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--bg-card); border-top: 2px solid var(--gold);
+    padding: 6px; z-index: 90; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+.acc-bottom-nav__inner { display: flex; justify-content: space-around; }
+.acc-bottom-nav__item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 3px; padding: 6px 10px; border-radius: 8px;
+    color: var(--text-muted); font-size: 10px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    background: transparent; border: none; font-family: inherit; flex: 1;
+}
+.acc-bottom-nav__item--active { color: var(--gold); background: rgba(212,166,42,0.1); }
+.acc-bottom-nav__icon { font-size: 20px; }
+
+/* Overlay */
+.acc-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 150; display: none;
+}
+.acc-overlay--show { display: block; }
+
+@media (max-width: 1024px) {
+    .acc-stats { grid-template-columns: repeat(2, 1fr); }
+    .acc-layout { grid-template-columns: 1fr; }
+    .acc-sidebar {
+        position: fixed; top: 68px; right: 0;
+        width: 260px; transform: translateX(100%);
+        transition: transform 0.3s ease; z-index: 200;
+        box-shadow: var(--shadow-lg);
+    }
+    .acc-sidebar--open { transform: translateX(0); }
+    .acc-header__menu-btn { display: flex; align-items: center; justify-content: center; }
+    .quick-actions { grid-template-columns: repeat(2, 1fr); }
+    .fin-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+    .acc-header { padding: 12px 16px; height: 60px; }
+    .acc-logo { font-size: 15px; }
+    .acc-logo__icon { width: 36px; height: 36px; font-size: 18px; }
+    .acc-user__name, .acc-user__role { display: none; }
+    .acc-main { padding: 16px 14px 100px; }
+    .acc-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .acc-stat { padding: 14px; }
+    .acc-stat__value { font-size: 18px; }
+    .acc-page-title { font-size: 20px; }
+    .quick-actions { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .acc-bottom-nav { display: block; }
+    .acc-header__menu-btn { display: flex; }
+    .acc-sidebar { top: 60px; height: calc(100vh - 60px); }
+    .acc-banner__icon { font-size: 48px; }
+    .acc-banner__title { font-size: 18px; }
+    .settlement-table { font-size: 11px; }
+    .settlement-table th, .settlement-table td { padding: 8px 6px; }
+}
+</style>
+</head>
+<body>
+
+<header class="acc-header">
+    <div class="acc-header__inner">
+        <div class="acc-header__right">
+            <button class="acc-header__menu-btn" id="menuBtn">☰</button>
+            <a href="admin-accounting-dashboard.html" class="acc-logo">
+                <div class="acc-logo__icon">💰</div>
+                <span>پنل حسابداری وام پی</span>
+            </a>
+        </div>
+        <div class="acc-header__left">
+            <button class="acc-header__btn" id="themeBtn" title="تغییر تم">🌙</button>
+            <button class="acc-header__btn" id="refreshBtn" title="به‌روزرسانی">🔄</button>
+            <button class="acc-header__btn" id="exportBtn" title="خروجی CSV">📥</button>
+            <button class="acc-header__btn" id="notifBtn" title="اعلانات">
+                🔔
+                <span class="acc-header__badge" id="notifBadge" style="display:none;">۰</span>
+            </button>
+            <div class="acc-user" id="userMenu">
+                <div class="acc-user__avatar" id="userAvatar">💰</div>
+                <div>
+                    <div class="acc-user__name" id="userName">ادمین حسابداری</div>
+                    <div class="acc-user__role">💰 حسابداری</div>
+                </div>
+                <div class="acc-user__dropdown" id="userDropdown">
+                    <a href="#" data-nav="overview">📈 نمای کلی</a>
+                    <a href="#" data-nav="queue">📋 صف بررسی فاکتور</a>
+                    <a href="#" data-nav="invoices">🧾 همه‌ی فاکتورها</a>
+                    <a href="#" data-nav="wallets">🏦 کیف پول کارگزاران</a>
+                    <hr>
+                    <a href="admin-accounting-invoice.html">💰 بررسی فاکتور</a>
+                    <a href="admin-accounting-analytics.html">📊 تحلیل مالی</a>
+                    <hr>
+                    <a href="#" id="logoutBtn">🚪 خروج</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="acc-overlay" id="overlay"></div>
+
+<div class="acc-layout">
+
+    <aside class="acc-sidebar" id="sidebar">
+        <div class="acc-sidebar__section">منوی اصلی</div>
+        <nav class="acc-nav">
+            <button class="acc-nav__item acc-nav__item--active" data-nav="overview">
+                <span class="acc-nav__item__icon">📈</span>
+                <span>نمای کلی</span>
+            </button>
+            <button class="acc-nav__item" data-nav="queue">
+                <span class="acc-nav__item__icon">📋</span>
+                <span>صف بررسی فاکتور</span>
+                <span class="acc-nav__item__badge" id="queueBadge" style="display:none;">۰</span>
+            </button>
+            <button class="acc-nav__item" data-nav="invoices">
+                <span class="acc-nav__item__icon">🧾</span>
+                <span>همه‌ی فاکتورها</span>
+            </button>
+        </nav>
+        <div class="acc-sidebar__section">مدیریت مالی</div>
+        <nav class="acc-nav">
+            <button class="acc-nav__item" data-nav="wallets">
+                <span class="acc-nav__item__icon">🏦</span>
+                <span>کیف پول کارگزاران</span>
+            </button>
+            <button class="acc-nav__item" data-nav="settlements">
+                <span class="acc-nav__item__icon">💸</span>
+                <span>تسویه‌ها</span>
+            </button>
+        </nav>
+        <div class="acc-sidebar__section">دسترسی سریع</div>
+        <nav class="acc-nav">
+            <button class="acc-nav__item" onclick="window.location.href='admin-accounting-invoice.html'">
+                <span class="acc-nav__item__icon">💰</span>
+                <span>بررسی فاکتور</span>
+            </button>
+            <button class="acc-nav__item" onclick="window.location.href='admin-accounting-analytics.html'">
+                <span class="acc-nav__item__icon">📊</span>
+                <span>تحلیل مالی</span>
+            </button>
+            <button class="acc-nav__item" onclick="window.location.href='contracts-archive.html'">
+                <span class="acc-nav__item__icon">📚</span>
+                <span>آرشیو قراردادها</span>
+            </button>
+        </nav>
+    </aside>
+
+    <main class="acc-main" id="mainContainer">
+
+        <!-- ============ OVERVIEW ============ -->
+        <section class="acc-section acc-section--active" id="section-overview">
+            <div class="acc-banner">
+                <div class="acc-banner__content">
+                    <div>
+                        <div class="acc-banner__title">💰 خوش آمدید، ادمین حسابداری</div>
+                        <div class="acc-banner__subtitle">
+                            بررسی فاکتورها، مدیریت مالی، و نظارت بر کیف پول کارگزاران
+                        </div>
+                        <div class="acc-banner__date">
+                            <span>📅</span>
+                            <span id="currentDate">—</span>
+                        </div>
+                    </div>
+                    <div class="acc-banner__icon">💰</div>
+                </div>
+            </div>
+
+            <h1 class="acc-page-title">📈 نمای کلی مالی</h1>
+            <p class="acc-page-subtitle">خلاصه‌ی زنده‌ی مالی، صف‌ها و تراکنش‌ها</p>
+
+            <!-- Stats Row 1 -->
+            <div class="acc-stats">
+                <div class="acc-stat acc-stat--warning" data-nav="queue">
+                    <div class="acc-stat__icon">⏳</div>
+                    <div class="acc-stat__label">در انتظار بررسی</div>
+                    <div class="acc-stat__value" id="statPending">۰</div>
+                    <div class="acc-stat__action">مشاهده ←</div>
+                </div>
+                <div class="acc-stat acc-stat--success">
+                    <div class="acc-stat__icon">✅</div>
+                    <div class="acc-stat__label">تأییدشده</div>
+                    <div class="acc-stat__value" id="statApproved">۰</div>
+                </div>
+                <div class="acc-stat acc-stat--gold">
+                    <div class="acc-stat__icon">✨</div>
+                    <div class="acc-stat__label">سود خالص سایت</div>
+                    <div class="acc-stat__value" id="statProfit">۰<span>تومان</span></div>
+                </div>
+                <div class="acc-stat acc-stat--info">
+                    <div class="acc-stat__icon">💰</div>
+                    <div class="acc-stat__label">سهم کارگزاران</div>
+                    <div class="acc-stat__value" id="statBroker">۰<span>تومان</span></div>
+                </div>
+            </div>
+
+            <!-- Stats Row 2 -->
+            <div class="acc-stats">
+                <div class="acc-stat" data-nav="invoices">
+                    <div class="acc-stat__icon">🧾</div>
+                    <div class="acc-stat__label">کل فاکتورها</div>
+                    <div class="acc-stat__value" id="statTotalInvoices">۰</div>
+                    <div class="acc-stat__action">همه ←</div>
+                </div>
+                <div class="acc-stat acc-stat--gold">
+                    <div class="acc-stat__icon">🏦</div>
+                    <div class="acc-stat__label">مجموع امانت فعال</div>
+                    <div class="acc-stat__value" id="statEscrow">۰<span>تومان</span></div>
+                </div>
+                <div class="acc-stat acc-stat--success" data-nav="wallets">
+                    <div class="acc-stat__icon">💳</div>
+                    <div class="acc-stat__label">موجودی کل کیف‌ها</div>
+                    <div class="acc-stat__value" id="statWallets">۰<span>تومان</span></div>
+                    <div class="acc-stat__action">مدیریت ←</div>
+                </div>
+                <div class="acc-stat acc-stat--info">
+                    <div class="acc-stat__icon">📊</div>
+                    <div class="acc-stat__label">مجموع فروش</div>
+                    <div class="acc-stat__value" id="statTotalSale">۰<span>تومان</span></div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="acc-card">
+                <div class="acc-card__header">
+                    <div class="acc-card__title">⚡ دسترسی سریع</div>
+                </div>
+                <div class="acc-card__body">
+                    <div class="quick-actions">
+                        <a href="admin-accounting-invoice.html" class="quick-action">
+                            <div class="quick-action__icon">💰</div>
+                            <div class="quick-action__label">بررسی فاکتور</div>
+                            <div class="quick-action__desc">صف در انتظار</div>
+                        </a>
+                        <a href="admin-accounting-analytics.html" class="quick-action">
+                            <div class="quick-action__icon">📊</div>
+                            <div class="quick-action__label">تحلیل مالی</div>
+                            <div class="quick-action__desc">گزارش‌های جامع</div>
+                        </a>
+                        <a href="contracts-archive.html" class="quick-action">
+                            <div class="quick-action__icon">📚</div>
+                            <div class="quick-action__label">آرشیو قراردادها</div>
+                            <div class="quick-action__desc">جستجو و تأیید</div>
+                        </a>
+                        <a href="admin-super-dashboard.html" class="quick-action">
+                            <div class="quick-action__icon">👑</div>
+                            <div class="quick-action__label">پنل مدیر کل</div>
+                            <div class="quick-action__desc">دسترسی پادشاهی</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Summary -->
+            <div class="acc-card">
+                <div class="acc-card__header">
+                    <div class="acc-card__title">💰 خلاصه‌ی جریان مالی</div>
+                    <a href="admin-accounting-analytics.html" class="acc-btn acc-btn--gold acc-btn--sm">تحلیل جامع ←</a>
+                </div>
+                <div class="acc-card__body">
+                    <div class="fin-grid" id="finGrid"></div>
+                </div>
+            </div>
+
+            <!-- Recent Queue -->
+            <div class="acc-card">
+                <div class="acc-card__header">
+                    <div class="acc-card__title">⏳ آخرین فاکتورهای در انتظار بررسی</div>
+                    <button class="acc-btn acc-btn--ghost acc-btn--sm" data-nav="queue">مشاهده‌ی همه ←</button>
+                </div>
+                <div class="acc-card__body">
+                    <div class="invoice-list" id="recentQueue"></div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="acc-card">
+                <div class="acc-card__header">
+                    <div class="acc-card__title">🕐 آخرین فعالیت‌های مالی</div>
+                </div>
+                <div class="acc-card__body">
+                    <div class="activity-list" id="recentActivity"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ QUEUE ============ -->
+        <section class="acc-section" id="section-queue">
+            <h1 class="acc-page-title">📋 صف بررسی فاکتور</h1>
+            <p class="acc-page-subtitle">فاکتورهای امتیاز آماده‌ی بررسی مالی توسط حسابداری</p>
+
+            <div class="acc-card">
+                <div class="acc-card__header">
+                    <div class="acc-card__title">⏳ در انتظار بررسی</div>
+                    <a href="admin-accounting-invoice.html" class="acc-btn acc-btn--gold acc-btn--sm">
+                        💰 ورود به پنل بررسی ←
+                    </a>
+                </div>
+                <div class="acc-card__body">
+                    <div class="invoice-list" id="queueFull"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ INVOICES ============ -->
+        <section class="acc-section" id="section-invoices">
+            <h1 class="acc-page-title">🧾 همه‌ی فاکتورها</h1>
+            <p class="acc-page-subtitle">لیست کامل فاکتورهای امتیاز ثبت‌شده در سامانه</p>
+
+            <div class="acc-card">
+                <div class="acc-card__body" style="overflow-x:auto;">
+                    <table class="settlement-table" id="invoicesTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>شماره فاکتور</th>
+                                <th>کارگزار</th>
+                                <th>امتیاز</th>
+                                <th>خرید</th>
+                                <th>فروش</th>
+                                <th>سود سایت</th>
+                                <th>وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoicesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ WALLETS ============ -->
+        <section class="acc-section" id="section-wallets">
+            <h1 class="acc-page-title">🏦 کیف پول کارگزاران</h1>
+            <p class="acc-page-subtitle">مدیریت موجودی و تراکنش‌های کیف پول کارگزاران</p>
+
+            <div class="acc-stats">
+                <div class="acc-stat acc-stat--success">
+                    <div class="acc-stat__icon">💰</div>
+                    <div class="acc-stat__label">مجموع موجودی</div>
+                    <div class="acc-stat__value" id="walletTotalBalance">۰<span>تومان</span></div>
+                </div>
+                <div class="acc-stat acc-stat--gold">
+                    <div class="acc-stat__icon">📈</div>
+                    <div class="acc-stat__label">مجموع درآمد کل</div>
+                    <div class="acc-stat__value" id="walletTotalEarned">۰<span>تومان</span></div>
+                </div>
+                <div class="acc-stat acc-stat--warning">
+                    <div class="acc-stat__icon">🔒</div>
+                    <div class="acc-stat__label">مسدود</div>
+                    <div class="acc-stat__value" id="walletTotalBlocked">۰<span>تومان</span></div>
+                </div>
+                <div class="acc-stat acc-stat--info">
+                    <div class="acc-stat__icon">👥</div>
+                    <div class="acc-stat__label">تعداد کارگزاران</div>
+                    <div class="acc-stat__value" id="walletCount">۰</div>
+                </div>
+            </div>
+
+            <div class="acc-card">
+                <div class="acc-card__header">
+                    <div class="acc-card__title">🏦 لیست کیف پول‌ها</div>
+                </div>
+                <div class="acc-card__body" style="overflow-x:auto;">
+                    <table class="settlement-table" id="walletsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>کارگزار</th>
+                                <th>موجودی</th>
+                                <th>مسدود</th>
+                                <th>درآمد کل</th>
+                                <th>تعداد تراکنش</th>
+                            </tr>
+                        </thead>
+                        <tbody id="walletsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SETTLEMENTS ============ -->
+        <section class="acc-section" id="section-settlements">
+            <h1 class="acc-page-title">💸 تسویه‌ها</h1>
+            <p class="acc-page-subtitle">درخواست‌های تسویه و تراکنش‌های مالی</p>
+
+            <div class="acc-stats">
+                <div class="acc-stat acc-stat--warning">
+                    <div class="acc-stat__icon">⏳</div>
+                    <div class="acc-stat__label">در انتظار تسویه</div>
+                    <div class="acc-stat__value" id="settlePending">۰</div>
+                </div>
+                <div class="acc-stat acc-stat--success">
+                    <div class="acc-stat__icon">✅</div>
+                    <div class="acc-stat__label">تسویه‌شده</div>
+                    <div class="acc-stat__value" id="settleCompleted">۰</div>
+                </div>
+                <div class="acc-stat acc-stat--gold">
+                    <div class="acc-stat__icon">💵</div>
+                    <div class="acc-stat__label">مجموع تسویه‌شده</div>
+                    <div class="acc-stat__value" id="settleAmount">۰<span>تومان</span></div>
+                </div>
+                <div class="acc-stat acc-stat--info">
+                    <div class="acc-stat__icon">📊</div>
+                    <div class="acc-stat__label">کل تراکنش‌ها</div>
+                    <div class="acc-stat__value" id="txnCount">۰</div>
+                </div>
+            </div>
+
+            <div class="acc-card">
+                <div class="acc-card__header">
+                    <div class="acc-card__title">💸 آخرین تراکنش‌ها</div>
+                </div>
+                <div class="acc-card__body" style="overflow-x:auto;">
+                    <table class="settlement-table" id="txnTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>کارگزار</th>
+                                <th>نوع</th>
+                                <th>مبلغ</th>
+                                <th>توضیحات</th>
+                                <th>وضعیت</th>
+                                <th>تاریخ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="txnTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<nav class="acc-bottom-nav">
+    <div class="acc-bottom-nav__inner">
+        <button class="acc-bottom-nav__item acc-bottom-nav__item--active" data-nav="overview">
+            <span class="acc-bottom-nav__icon">📈</span>
+            <span>نمای کلی</span>
+        </button>
+        <button class="acc-bottom-nav__item" data-nav="queue">
+            <span class="acc-bottom-nav__icon">📋</span>
+            <span>صف</span>
+        </button>
+        <button class="acc-bottom-nav__item" data-nav="invoices">
+            <span class="acc-bottom-nav__icon">🧾</span>
+            <span>فاکتورها</span>
+        </button>
+        <button class="acc-bottom-nav__item" data-nav="wallets">
+            <span class="acc-bottom-nav__icon">🏦</span>
+            <span>کیف‌ها</span>
+        </button>
+        <button class="acc-bottom-nav__item" data-nav="settlements">
+            <span class="acc-bottom-nav__icon">💸</span>
+            <span>تسویه</span>
+        </button>
+    </div>
+</nav>
+
+<div class="toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<!-- Services -->
+<script src="js/credit-invoice-service.js"></script>
+<script src="js/contract-service.js"></script>
+<script src="js/financial-log-service.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    const state = {
+        user: null,
+        invoices: [],
+        cases: [],
+        wallets: [],
+        transactions: [],
+        admins: [],
+        accountingQueue: [],
+        logs: []
+    };
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+    const faPriceShort = (n) => {
+        n = Number(n || 0);
+        if (n >= 1e9) return faNum((n / 1e9).toFixed(1)) + ' میلیارد';
+        if (n >= 1e6) return faNum((n / 1e6).toFixed(1)) + ' میلیون';
+        if (n >= 1e3) return faNum((n / 1e3).toFixed(0)) + ' هزار';
+        return faPrice(n);
+    };
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'toast toast--show';
+        if (type === 'error') el.classList.add('toast--error');
+        if (type === 'success') el.classList.add('toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('toast--show'), 3200);
+    }
+
+    // ===== Auth =====
+    function checkAuth() {
+        try {
+            const cu = JSON.parse(localStorage.getItem('wamPayCurrentUser') || 'null');
+            if (!cu) {
+                toast('ابتدا وارد شوید', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            const allowed = ['accounting_admin', 'super_admin', 'deputy_admin'];
+            if (!allowed.includes(cu.role)) {
+                toast('دسترسی فقط برای ادمین حسابداری', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            state.user = cu;
+            return true;
+        } catch (e) {
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    // ===== Load Data =====
+    function loadData() {
+        try {
+            state.invoices = window.WamPayCreditInvoice
+                ? WamPayCreditInvoice.getAllInvoices()
+                : JSON.parse(localStorage.getItem('wamPayCreditInvoices') || '[]');
+            state.cases = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+            state.wallets = JSON.parse(localStorage.getItem('wamPayBrokerWallets') || '[]');
+            state.transactions = JSON.parse(localStorage.getItem('wamPayBrokerTransactions') || '[]');
+            state.admins = JSON.parse(localStorage.getItem('wamPayAdmins') || '[]');
+            state.accountingQueue = JSON.parse(localStorage.getItem('wamPayAccountingQueue') || '[]');
+            state.logs = JSON.parse(localStorage.getItem('wamPayFinancialLog') || '[]');
+        } catch (e) {
+            console.error('Load error:', e);
+        }
+    }
+
+    // ===== Helpers =====
+    function formatShamsi(iso) {
+        if (!iso) return '—';
+        try {
+            const d = new Date(iso);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            return `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())}`;
+        } catch { return '—'; }
+    }
+
+    function formatRelativeTime(iso) {
+        if (!iso) return '—';
+        const diff = Date.now() - new Date(iso).getTime();
+        const m = Math.floor(diff / 60000);
+        if (m < 1) return 'همین الان';
+        if (m < 60) return `${faNum(m)} دقیقه پیش`;
+        const h = Math.floor(m / 60);
+        if (h < 24) return `${faNum(h)} ساعت پیش`;
+        const d = Math.floor(h / 24);
+        if (d < 30) return `${faNum(d)} روز پیش`;
+        return formatShamsi(iso);
+    }
+
+    function getInvoiceStatus(inv) {
+        if (inv.status === 'rejected') return { label: '❌ ردشده', cls: 'acc-badge--rejected' };
+        if (inv.approvals?.accounting?.adjustments) return { label: '⚙️ تنظیم‌شده', cls: 'acc-badge--info' };
+        if (inv.approvals?.accounting?.approved) return { label: '✅ تأییدشده', cls: 'acc-badge--approved' };
+        if (inv.status === 'awaiting_accounting_review') return { label: '⏳ در انتظار', cls: 'acc-badge--pending' };
+        if (inv.status === 'awaiting_super_admin_financial') return { label: '👑 در انتظار مدیر کل', cls: 'acc-badge--gold' };
+        return { label: inv.status || '—', cls: 'acc-badge--info' };
+    }
+
+    // ===== Render Stats =====
+    function renderStats() {
+        const pending = state.invoices.filter(i => i.status === 'awaiting_accounting_review').length;
+        const approved = state.invoices.filter(i => i.approvals?.accounting?.approved).length;
+
+        let totalProfit = 0, totalBroker = 0, totalSale = 0, totalEscrow = 0;
+        state.invoices.forEach(inv => {
+            if (inv.status === 'rejected') return;
+            totalProfit += inv.profit?.siteShare || 0;
+            totalBroker += inv.profit?.brokerShare || 0;
+            totalSale += inv.sale?.total || 0;
+        });
+        state.cases.forEach(c => {
+            if (c.escrow?.total && c.status !== 'completed') totalEscrow += c.escrow.total;
+        });
+
+        let walletBalance = 0;
+        state.wallets.forEach(w => walletBalance += (w.balance || 0));
+
+        $('#statPending').textContent = faNum(pending);
+        $('#statApproved').textContent = faNum(approved);
+        $('#statProfit').innerHTML = faPriceShort(totalProfit) + '<span>تومان</span>';
+        $('#statBroker').innerHTML = faPriceShort(totalBroker) + '<span>تومان</span>';
+        $('#statTotalInvoices').textContent = faNum(state.invoices.length);
+        $('#statEscrow').innerHTML = faPriceShort(totalEscrow) + '<span>تومان</span>';
+        $('#statWallets').innerHTML = faPriceShort(walletBalance) + '<span>تومان</span>';
+        $('#statTotalSale').innerHTML = faPriceShort(totalSale) + '<span>تومان</span>';
+
+        if (pending > 0) {
+            $('#queueBadge').style.display = 'inline-block';
+            $('#queueBadge').textContent = faNum(pending);
+            $('#notifBadge').style.display = 'flex';
+            $('#notifBadge').textContent = faNum(pending);
+        } else {
+            $('#queueBadge').style.display = 'none';
+            $('#notifBadge').style.display = 'none';
+        }
+    }
+
+    // ===== Render Financial Summary =====
+    function renderFinancialSummary() {
+        let totalProfit = 0, totalBroker = 0, totalSale = 0, totalPurchase = 0;
+        state.invoices.forEach(inv => {
+            if (inv.status === 'rejected') return;
+            totalProfit += inv.profit?.siteShare || 0;
+            totalBroker += inv.profit?.brokerShare || 0;
+            totalSale += inv.sale?.total || 0;
+            totalPurchase += inv.purchase?.total || 0;
+        });
+
+        const avgPercent = totalSale > 0 ? Math.round((totalProfit / totalSale) * 100) : 0;
+
+        const items = [
+            { icon: '💵', label: 'مجموع فروش', value: faPriceShort(totalSale) + ' تومان', cls: 'acc-badge--info' },
+            { icon: '🛒', label: 'مجموع خرید', value: faPriceShort(totalPurchase) + ' تومان', cls: 'acc-badge--approved' },
+            { icon: '✨', label: 'سود خالص سایت', value: faPriceShort(totalProfit) + ' تومان', cls: 'acc-badge--gold' },
+            { icon: '💰', label: 'سهم کارگزاران', value: faPriceShort(totalBroker) + ' تومان', cls: 'acc-badge--approved' },
+            { icon: '📊', label: 'میانگین درصد سود', value: faNum(avgPercent) + '٪', cls: 'acc-badge--info' },
+            { icon: '🧾', label: 'تعداد فاکتورها', value: faNum(state.invoices.length) + ' فاکتور', cls: 'acc-badge--info' }
+        ];
+
+        $('#finGrid').innerHTML = items.map(item => `
+            <div class="fin-item">
+                <div class="fin-item__icon">${item.icon}</div>
+                <div class="fin-item__content">
+                    <div class="fin-item__label">${item.label}</div>
+                    <div class="fin-item__value">${item.value}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ===== Render Recent Queue =====
+    function renderRecentQueue() {
+        const list = state.invoices
+            .filter(i => i.status === 'awaiting_accounting_review')
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 4);
+
+        const box = $('#recentQueue');
+        if (list.length === 0) {
+            box.innerHTML = `
+                <div class="acc-empty" style="padding:20px;">
+                    <div class="acc-empty__icon">✅</div>
+                    <div class="acc-empty__desc">هیچ فاکتوری در انتظار بررسی نیست</div>
+                </div>`;
+            return;
+        }
+
+        box.innerHTML = list.map(inv => {
+            const status = getInvoiceStatus(inv);
+            return `
+                <div class="invoice-item" onclick="window.location.href='admin-accounting-invoice.html?invoice=${inv.id}'">
+                    <div class="invoice-item__header">
+                        <div class="invoice-item__number">${inv.invoiceNumber}</div>
+                        <div class="invoice-item__badges">
+                            <span class="acc-badge ${status.cls}">${status.label}</span>
+                        </div>
+                    </div>
+                    <div class="invoice-item__amount">
+                        <div class="invoice-item__amount-item">
+                            🛒 خرید: <strong>${faPrice(inv.purchase?.total)}</strong>
+                        </div>
+                        <div class="invoice-item__amount-item">
+                            💰 فروش: <strong>${faPrice(inv.sale?.total)}</strong>
+                        </div>
+                        <div class="invoice-item__amount-item">
+                            ✨ سود: <strong style="color:var(--gold);">${faPrice(inv.profit?.siteShare)}</strong>
+                        </div>
+                    </div>
+                    <div class="invoice-item__meta">
+                        <span>👤 ${inv.brokerName || '—'}</span>
+                        <span>💎 ${faNum(inv.creditCount || 0)} × ${inv.creditName || '—'}</span>
+                        <span>📅 ${formatRelativeTime(inv.createdAt)}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Render Recent Activity =====
+    function renderRecentActivity() {
+        const logs = state.logs
+            .filter(l => l.eventType?.includes('invoice') || l.eventType?.includes('payment') || l.eventType?.includes('wallet'))
+            .sort((a, b) => new Date(b.at) - new Date(a.at))
+            .slice(0, 6);
+
+        const box = $('#recentActivity');
+
+        if (logs.length === 0) {
+            const mock = [
+                { icon: '💰', title: 'تأیید فاکتور جدید', sub: 'توسط ادمین حسابداری', cls: 'success', time: '۵ دقیقه پیش' },
+                { icon: '📋', title: 'بررسی فاکتور', sub: 'INV-CRD-2026-0042', cls: 'pending', time: '۲۰ دقیقه پیش' },
+                { icon: '🏦', title: 'واریز به کیف پول کارگزار', sub: 'علی محمدی', cls: 'gold', time: '۱ ساعت پیش' },
+                { icon: '💸', title: 'درخواست تسویه', sub: 'مبلغ ۵,۰۰۰,۰۰۰ تومان', cls: 'info', time: '۲ ساعت پیش' }
+            ];
+            box.innerHTML = mock.map(a => `
+                <div class="activity-item">
+                    <div class="activity-item__icon activity-item__icon--${a.cls}">${a.icon}</div>
+                    <div class="activity-item__content">
+                        <div class="activity-item__title">${a.title}</div>
+                        <div class="activity-item__meta">${a.sub} • ${a.time}</div>
+                    </div>
+                </div>
+            `).join('');
+            return;
+        }
+
+        box.innerHTML = logs.map(l => {
+            const icon = l.eventType?.includes('invoice') ? '📋' :
+                        l.eventType?.includes('wallet') ? '🏦' :
+                        l.eventType?.includes('payment') ? '💰' : '📄';
+            const cls = l.eventType?.includes('approved') ? 'success' :
+                        l.eventType?.includes('rejected') ? 'error' :
+                        l.eventType?.includes('created') ? 'pending' : 'info';
+            return `
+                <div class="activity-item">
+                    <div class="activity-item__icon activity-item__icon--${cls}">${icon}</div>
+                    <div class="activity-item__content">
+                        <div class="activity-item__title">${l.title || 'رویداد مالی'}</div>
+                        <div class="activity-item__meta">${l.actor?.name || '—'} • ${formatRelativeTime(l.at)}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Render Queue Full =====
+    function renderQueueFull() {
+        const list = state.invoices
+            .filter(i => i.status === 'awaiting_accounting_review')
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        const box = $('#queueFull');
+        if (list.length === 0) {
+            box.innerHTML = `
+                <div class="acc-empty">
+                    <div class="acc-empty__icon">✅</div>
+                    <div style="font-size:16px;font-weight:800;margin-bottom:8px;">صف خالی است</div>
+                    <div class="acc-empty__desc">هیچ فاکتوری در انتظار بررسی نیست.</div>
+                </div>`;
+            return;
+        }
+
+        box.innerHTML = list.map(inv => {
+            const status = getInvoiceStatus(inv);
+            return `
+                <div class="invoice-item" onclick="window.location.href='admin-accounting-invoice.html?invoice=${inv.id}'">
+                    <div class="invoice-item__header">
+                        <div class="invoice-item__number">${inv.invoiceNumber}</div>
+                        <div class="invoice-item__badges">
+                            <span class="acc-badge ${status.cls}">${status.label}</span>
+                            ${inv.adjusted ? '<span class="acc-badge acc-badge--info">⚙️ تنظیم‌شده</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="invoice-item__amount">
+                        <div class="invoice-item__amount-item">
+                            🛒 خرید: <strong>${faPrice(inv.purchase?.total)}</strong>
+                        </div>
+                        <div class="invoice-item__amount-item">
+                            💰 فروش: <strong>${faPrice(inv.sale?.total)}</strong>
+                        </div>
+                        <div class="invoice-item__amount-item">
+                            ✨ سود: <strong style="color:var(--gold);">${faPrice(inv.profit?.siteShare)}</strong>
+                        </div>
+                    </div>
+                    <div class="invoice-item__meta">
+                        <span>👤 ${inv.brokerName || '—'}</span>
+                        <span>📁 ${inv.caseNumber || '—'}</span>
+                        <span>📅 ${formatRelativeTime(inv.createdAt)}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Render All Invoices =====
+    function renderInvoicesTable() {
+        const list = state.invoices.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 50);
+        const tbody = $('#invoicesTableBody');
+
+        if (list.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:var(--text-muted);">هیچ فاکتوری وجود ندارد</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = list.map((inv, i) => {
+            const status = getInvoiceStatus(inv);
+            return `
+                <tr>
+                    <td>${faNum(i+1)}</td>
+                    <td class="settlement-table__mono">${inv.invoiceNumber}</td>
+                    <td>${inv.brokerName || '—'}</td>
+                    <td>${faNum(inv.creditCount || 0)} × ${inv.creditName || '—'}</td>
+                    <td style="color:var(--success);font-weight:800;">${faPrice(inv.purchase?.total)}</td>
+                    <td style="color:var(--info);font-weight:800;">${faPrice(inv.sale?.total)}</td>
+                    <td style="color:var(--gold);font-weight:800;">${faPrice(inv.profit?.siteShare)}</td>
+                    <td><span class="acc-badge ${status.cls}">${status.label}</span></td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    // ===== Render Wallets =====
+    function renderWallets() {
+        let totalBalance = 0, totalEarned = 0, totalBlocked = 0;
+        state.wallets.forEach(w => {
+            totalBalance += w.balance || 0;
+            totalEarned += w.totalEarned || 0;
+            totalBlocked += w.blocked || 0;
+        });
+
+        $('#walletTotalBalance').innerHTML = faPriceShort(totalBalance) + '<span>تومان</span>';
+        $('#walletTotalEarned').innerHTML = faPriceShort(totalEarned) + '<span>تومان</span>';
+        $('#walletTotalBlocked').innerHTML = faPriceShort(totalBlocked) + '<span>تومان</span>';
+        $('#walletCount').textContent = faNum(state.wallets.length);
+
+        const tbody = $('#walletsTableBody');
+        if (state.wallets.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--text-muted);">هیچ کیف پولی وجود ندارد</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = state.wallets.map((w, i) => {
+            const broker = JSON.parse(localStorage.getItem('wamPayUsers') || '[]').find(u => u.id === w.brokerId);
+            const txns = state.transactions.filter(t => t.brokerId === w.brokerId).length;
+            return `
+                <tr>
+                    <td>${faNum(i+1)}</td>
+                    <td>${broker?.name || '—'}</td>
+                    <td style="color:var(--success);font-weight:800;">${faPrice(w.balance)}</td>
+                    <td style="color:var(--warning);">${faPrice(w.blocked)}</td>
+                    <td style="color:var(--info);">${faPrice(w.totalEarned)}</td>
+                    <td>${faNum(txns)}</td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    // ===== Render Settlements =====
+    function renderSettlements() {
+        const pending = state.transactions.filter(t => t.status === 'pending' && t.type === 'withdrawal').length;
+        const completed = state.transactions.filter(t => t.status === 'completed' && t.type === 'withdrawal').length;
+        let totalAmount = 0;
+        state.transactions.forEach(t => {
+            if (t.type === 'withdrawal' && t.status === 'completed') {
+                totalAmount += Math.abs(t.amount || 0);
+            }
+        });
+
+        $('#settlePending').textContent = faNum(pending);
+        $('#settleCompleted').textContent = faNum(completed);
+        $('#settleAmount').innerHTML = faPriceShort(totalAmount) + '<span>تومان</span>';
+        $('#txnCount').textContent = faNum(state.transactions.length);
+
+        const tbody = $('#txnTableBody');
+        if (state.transactions.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--text-muted);">هیچ تراکنشی وجود ندارد</td></tr>`;
+            return;
+        }
+
+        const recent = state.transactions.slice(0, 30);
+        tbody.innerHTML = recent.map((t, i) => {
+            const typeLabel = t.type === 'commission' ? '💰 کمیسیون' : t.type === 'withdrawal' ? '💸 تسویه' : '📊 سایر';
+            const statusCls = t.status === 'completed' ? 'acc-badge--approved' : t.status === 'pending' ? 'acc-badge--pending' : 'acc-badge--rejected';
+            const statusLabel = t.status === 'completed' ? '✅ تکمیل' : t.status === 'pending' ? '⏳ در انتظار' : '❌ ردشده';
+            return `
+                <tr>
+                    <td>${faNum(i+1)}</td>
+                    <td>${t.brokerName || '—'}</td>
+                    <td>${typeLabel}</td>
+                    <td style="font-weight:800;color:${t.amount > 0 ? 'var(--success)' : 'var(--error)'};">${t.amount > 0 ? '+' : ''}${faPrice(t.amount)}</td>
+                    <td style="font-size:11px;">${t.title || '—'}</td>
+                    <td><span class="acc-badge ${statusCls}">${statusLabel}</span></td>
+                    <td style="font-size:11px;">${formatShamsi(t.createdAt)}</td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    // ===== Export =====
+    function exportCSV() {
+        if (state.invoices.length === 0) {
+            toast('داده‌ای برای خروجی وجود ندارد', 'error');
+            return;
+        }
+
+        const headers = ['شماره فاکتور', 'کارگزار', 'امتیاز', 'خرید', 'فروش', 'سود سایت', 'وضعیت', 'تاریخ'];
+        const rows = state.invoices.map(inv => [
+            inv.invoiceNumber,
+            inv.brokerName || '',
+            `${inv.creditCount || 0} × ${inv.creditName || ''}`,
+            inv.purchase?.total || 0,
+            inv.sale?.total || 0,
+            inv.profit?.siteShare || 0,
+            inv.status || '',
+            inv.createdAt?.slice(0, 10) || ''
+        ]);
+
+        const bom = '\uFEFF';
+        const csv = [headers, ...rows].map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+        const blob = new Blob([bom + csv], { type: 'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `wampay-accounting-${Date.now()}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        toast('📥 خروجی CSV دانلود شد', 'success');
+    }
+
+    // ===== Render Current Date =====
+    function renderCurrentDate() {
+        const d = new Date();
+        const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+        const days = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'];
+        $('#currentDate').textContent = `${days[d.getDay()]} — ${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())} • ${fa(d.getHours())}:${fa(d.getMinutes())}`;
+    }
+
+    // ===== Navigation =====
+    function goToSection(name) {
+        $$('.acc-section').forEach(s => s.classList.remove('acc-section--active'));
+        $('#section-' + name)?.classList.add('acc-section--active');
+        $$('.acc-nav__item').forEach(i => i.classList.toggle('acc-nav__item--active', i.dataset.nav === name));
+        $$('.acc-bottom-nav__item').forEach(i => i.classList.toggle('acc-bottom-nav__item--active', i.dataset.nav === name));
+        $('#sidebar').classList.remove('acc-sidebar--open');
+        $('#overlay').classList.remove('acc-overlay--show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (name === 'queue') renderQueueFull();
+        if (name === 'invoices') renderInvoicesTable();
+        if (name === 'wallets') renderWallets();
+        if (name === 'settlements') renderSettlements();
+    }
+
+    // ===== Theme =====
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        if (!btn) return;
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light');
+                btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark');
+                btn.textContent = '☀️';
+            }
+        });
+    }
+
+    // ===== Events =====
+    function attachEvents() {
+        $$('[data-nav]').forEach(el => el.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (el.dataset.nav) goToSection(el.dataset.nav);
+        }));
+
+        $('#menuBtn')?.addEventListener('click', () => {
+            $('#sidebar').classList.toggle('acc-sidebar--open');
+            $('#overlay').classList.toggle('acc-overlay--show');
+        });
+        $('#overlay')?.addEventListener('click', () => {
+            $('#sidebar').classList.remove('acc-sidebar--open');
+            $('#overlay').classList.remove('acc-overlay--show');
+        });
+
+        $('#refreshBtn')?.addEventListener('click', () => {
+            loadData();
+            renderStats();
+            renderFinancialSummary();
+            renderRecentQueue();
+            renderRecentActivity();
+            renderCurrentDate();
+            toast('به‌روزرسانی شد', 'success');
+        });
+
+        $('#exportBtn')?.addEventListener('click', exportCSV);
+
+        $('#notifBtn')?.addEventListener('click', () => {
+            goToSection('queue');
+            toast('به صف بررسی منتقل شدید', 'info');
+        });
+
+        $('#userMenu')?.addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
+            e.stopPropagation();
+            $('#userDropdown').classList.toggle('acc-user__dropdown--open');
+        });
+        document.addEventListener('click', () => $('#userDropdown')?.classList.remove('acc-user__dropdown--open'));
+        $('#userDropdown')?.addEventListener('click', (e) => e.stopPropagation());
+
+        const logout = () => {
+            if (!confirm('خروج از حساب؟')) return;
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+            window.location.href = 'login.html';
+        };
+        $('#logoutBtn')?.addEventListener('click', logout);
+    }
+
+    // ===== Init =====
+    function init() {
+        if (!checkAuth()) return;
+
+        loadData();
+
+        $('#userAvatar').textContent = '💰';
+        $('#userName').textContent = state.user.name || 'ادمین حسابداری';
+
+        renderCurrentDate();
+        renderStats();
+        renderFinancialSummary();
+        renderRecentQueue();
+        renderRecentActivity();
+
+        initTheme();
+        attachEvents();
+
+        console.log('%c💰 WAM PAY — Accounting Dashboard v1.0', 'color:#d4a62a;font-weight:bold;font-size:14px;');
+        console.log('%c👤 ادمین حسابداری:', 'color:#0b3b23;font-weight:bold;', state.user.name);
+        console.log('%c📋 فاکتورها:', 'color:#0b3b23;font-weight:bold;', state.invoices.length);
+        console.log('%c🏦 کیف‌ها:', 'color:#0b3b23;font-weight:bold;', state.wallets.length);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

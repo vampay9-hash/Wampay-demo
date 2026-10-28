@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحلیل مالی | حسابداری وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23; --primary-light: #1a5c3a; --primary-dark: #062416;
+    --gold: #d4a62a; --gold-light: #f0c651;
+    --text: #1a2b22; --text-muted: #6b7d73;
+    --bg: #f4f7f4; --bg-card: #ffffff; --border: #e0e8e3;
+    --error: #c0392b; --success: #1e8e4a; --warning: #e67e22; --info: #2980b9;
+    --chart-1: #0b3b23;
+    --chart-2: #2980b9;
+    --chart-3: #d4a62a;
+    --chart-4: #8e44ad;
+    --chart-5: #e67e22;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px; --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.7; transition: background 0.3s, color 0.3s;
+}
+.ana-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; box-shadow: var(--shadow-md);
+    position: sticky; top: 0; z-index: 100; height: 68px;
+}
+.ana-header__inner {
+    max-width: 1400px; width: 100%; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.ana-header__right { display: flex; align-items: center; gap: 14px; }
+.ana-header__menu-btn {
+    display: none; width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: #fff;
+    cursor: pointer; font-size: 20px;
+}
+.ana-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 17px; color: #fff; text-decoration: none;
+}
+.ana-logo__icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 4px 12px rgba(212,166,42,0.4);
+}
+.ana-header__left { display: flex; align-items: center; gap: 10px; }
+.ana-header__btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: #fff;
+    cursor: pointer; font-size: 18px;
+    transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+}
+.ana-header__btn:hover { background: rgba(255,255,255,0.18); }
+.ana-user {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 12px 6px 6px; border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer; transition: var(--transition);
+    position: relative;
+}
+.ana-user:hover { background: rgba(255,255,255,0.18); }
+.ana-user__avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--primary-dark); font-weight: 800;
+}
+.ana-user__name { font-size: 13px; font-weight: 700; }
+.ana-user__role { font-size: 11px; opacity: 0.85; }
+.ana-user__dropdown {
+    position: absolute; top: calc(100% + 8px); left: 0;
+    background: var(--bg-card); color: var(--text);
+    border-radius: var(--radius-sm); padding: 6px;
+    box-shadow: var(--shadow-lg); min-width: 200px;
+    border: 1px solid var(--border);
+    display: none; z-index: 200;
+}
+.ana-user__dropdown--open { display: block; }
+.ana-user__dropdown a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 12px; border-radius: 6px;
+    color: var(--text); text-decoration: none;
+    font-size: 13px; font-weight: 600; transition: var(--transition);
+}
+.ana-user__dropdown a:hover { background: var(--bg); color: var(--primary); }
+.ana-user__dropdown hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
+/* Layout */
+.ana-layout {
+    display: grid; grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 68px);
+}
+.ana-sidebar {
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    padding: 20px 12px;
+    position: sticky; top: 68px;
+    height: calc(100vh - 68px); overflow-y: auto;
+}
+.ana-sidebar__section {
+    font-size: 11px; font-weight: 800; color: var(--text-muted);
+    padding: 12px 12px 6px; text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.ana-nav { display: flex; flex-direction: column; gap: 4px; }
+.ana-nav__item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px; border-radius: var(--radius-sm);
+    color: var(--text); text-decoration: none;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: var(--transition);
+    border: none; background: transparent;
+    width: 100%; text-align: right; font-family: inherit;
+}
+.ana-nav__item:hover { background: var(--bg); color: var(--primary); }
+.ana-nav__item--active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(11,59,35,0.25);
+}
+.ana-nav__item__icon { font-size: 18px; width: 22px; text-align: center; }
+
+/* Main */
+.ana-main { padding: 24px 28px 100px; max-width: 1400px; width: 100%; }
+.ana-section { display: none; animation: fadeIn 0.3s ease; }
+.ana-section--active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.ana-page-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+.ana-page-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; }
+
+/* Period Filter */
+.period-bar {
+    display: flex; gap: 8px; margin-bottom: 20px;
+    flex-wrap: wrap; align-items: center;
+    background: var(--bg-card); padding: 12px 16px;
+    border-radius: var(--radius); border: 1px solid var(--border);
+}
+.period-btn {
+    padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--border);
+    background: transparent; color: var(--text-muted);
+    font-family: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+}
+.period-btn:hover { border-color: var(--primary); color: var(--primary); }
+.period-btn--active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border-color: var(--primary); color: #fff;
+    box-shadow: 0 4px 12px rgba(11,59,35,0.25);
+}
+.period-info {
+    margin-right: auto;
+    font-size: 12px; color: var(--text-muted);
+    padding: 6px 12px; background: var(--bg);
+    border-radius: 6px;
+}
+
+/* Stats */
+.ana-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+.ana-stat {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 18px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--primary);
+    transition: var(--transition);
+    position: relative;
+}
+.ana-stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.ana-stat--gold { border-right-color: var(--gold); }
+.ana-stat--success { border-right-color: var(--success); }
+.ana-stat--info { border-right-color: var(--info); }
+.ana-stat--warning { border-right-color: var(--warning); }
+.ana-stat--purple { border-right-color: var(--chart-4); }
+
+.ana-stat__icon { font-size: 22px; margin-bottom: 4px; }
+.ana-stat__label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.ana-stat__value {
+    font-size: 22px; font-weight: 800; line-height: 1.2;
+    direction: rtl;
+}
+.ana-stat__value span { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-right: 4px; }
+.ana-stat__trend {
+    position: absolute; top: 14px; left: 14px;
+    font-size: 11px; font-weight: 800;
+    padding: 3px 8px; border-radius: 6px;
+}
+.ana-stat__trend--up { background: rgba(30,142,74,0.12); color: var(--success); }
+.ana-stat__trend--down { background: rgba(192,57,43,0.12); color: var(--error); }
+.ana-stat__trend--flat { background: rgba(107,125,115,0.12); color: var(--text-muted); }
+
+/* Card */
+.ana-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    margin-bottom: 18px; overflow: hidden;
+}
+.ana-card__header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+}
+.ana-card__title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.ana-card__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.ana-card__body { padding: 20px; }
+
+/* Chart */
+.chart-wrap {
+    position: relative; padding: 10px 0;
+    height: 280px;
+}
+.chart-canvas {
+    width: 100%; height: 100%;
+    display: block;
+}
+.chart-legend {
+    display: flex; justify-content: center;
+    gap: 20px; margin-top: 14px; flex-wrap: wrap;
+}
+.chart-legend__item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700;
+}
+.chart-legend__dot {
+    width: 12px; height: 12px; border-radius: 3px;
+}
+
+/* Table */
+.ana-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+}
+.ana-table th {
+    background: var(--bg);
+    padding: 12px 14px; text-align: right;
+    font-weight: 800; font-size: 12px;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+}
+.ana-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+}
+.ana-table tr:last-child td { border-bottom: none; }
+.ana-table tr:hover td { background: var(--bg); }
+.ana-table__mono { font-family: monospace; direction: ltr; text-align: right; }
+
+/* Bar chart for top performers */
+.bar-chart { display: flex; flex-direction: column; gap: 14px; }
+.bar-item { display: flex; flex-direction: column; gap: 6px; }
+.bar-item__header {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px;
+}
+.bar-item__name { font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.bar-item__value { font-weight: 800; color: var(--success); }
+.bar-track {
+    background: var(--bg); border-radius: 999px;
+    height: 12px; overflow: hidden;
+    border: 1px solid var(--border);
+}
+.bar-fill {
+    height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+.bar-fill--gold { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+.bar-fill--info { background: linear-gradient(90deg, var(--info), #3498db); }
+.bar-fill--purple { background: linear-gradient(90deg, var(--chart-4), #a569bd); }
+
+/* KPI Grid */
+.kpi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+.kpi-item {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 16px; text-align: center;
+    border: 2px solid var(--border);
+    transition: var(--transition);
+}
+.kpi-item:hover { border-color: var(--primary); }
+.kpi-item__icon { font-size: 28px; margin-bottom: 8px; }
+.kpi-item__label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.kpi-item__value {
+    font-size: 20px; font-weight: 800; color: var(--text);
+    direction: rtl;
+}
+.kpi-item__sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* Empty */
+.ana-empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.ana-empty__icon { font-size: 60px; margin-bottom: 14px; opacity: 0.4; }
+.ana-empty__title { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.ana-empty__desc { font-size: 13px; }
+
+/* Buttons */
+.ana-btn {
+    padding: 10px 16px; border-radius: var(--radius-sm);
+    border: none; font-family: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    text-decoration: none;
+}
+.ana-btn--primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; box-shadow: 0 4px 12px rgba(11,59,35,0.25);
+}
+.ana-btn--primary:hover { transform: translateY(-1px); }
+.ana-btn--gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--primary-dark);
+}
+.ana-btn--gold:hover { transform: translateY(-1px); }
+.ana-btn--ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border);
+}
+.ana-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.ana-btn--sm { padding: 6px 12px; font-size: 12px; }
+
+/* Loading */
+.loading-screen { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+.loading-spinner {
+    width: 50px; height: 50px; border: 4px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Toast */
+.toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 22px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 10000; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px; max-width: 90%;
+}
+.toast--show { transform: translateX(-50%) translateY(0); }
+.toast--error { background: var(--error); }
+.toast--success { background: var(--success); }
+
+/* Bottom Nav */
+.ana-bottom-nav {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--bg-card); border-top: 2px solid var(--primary);
+    padding: 6px; z-index: 90; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+.ana-bottom-nav__inner { display: flex; justify-content: space-around; }
+.ana-bottom-nav__item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 3px; padding: 6px 10px; border-radius: 8px;
+    color: var(--text-muted); font-size: 10px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    background: transparent; border: none; font-family: inherit; flex: 1;
+}
+.ana-bottom-nav__item--active { color: var(--primary); background: rgba(11,59,35,0.08); }
+.ana-bottom-nav__icon { font-size: 20px; }
+
+/* Overlay */
+.ana-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 150; display: none;
+}
+.ana-overlay--show { display: block; }
+
+@media (max-width: 1024px) {
+    .ana-stats { grid-template-columns: repeat(2, 1fr); }
+    .ana-layout { grid-template-columns: 1fr; }
+    .ana-sidebar {
+        position: fixed; top: 68px; right: 0;
+        width: 260px; transform: translateX(100%);
+        transition: transform 0.3s ease; z-index: 200;
+        box-shadow: var(--shadow-lg);
+    }
+    .ana-sidebar--open { transform: translateX(0); }
+    .ana-header__menu-btn { display: flex; align-items: center; justify-content: center; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+    .ana-header { padding: 12px 16px; height: 60px; }
+    .ana-logo { font-size: 15px; }
+    .ana-logo__icon { width: 36px; height: 36px; font-size: 18px; }
+    .ana-user__name, .ana-user__role { display: none; }
+    .ana-main { padding: 16px 14px 100px; }
+    .ana-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .ana-stat { padding: 14px; }
+    .ana-stat__value { font-size: 18px; }
+    .ana-page-title { font-size: 20px; }
+    .kpi-grid { grid-template-columns: 1fr; }
+    .period-bar { padding: 10px 12px; }
+    .period-info { width: 100%; text-align: center; }
+    .ana-bottom-nav { display: block; }
+    .ana-header__menu-btn { display: flex; }
+    .ana-sidebar { top: 60px; height: calc(100vh - 60px); }
+    .ana-table { font-size: 11px; }
+    .ana-table th, .ana-table td { padding: 8px 6px; }
+}
+</style>
+</head>
+<body>
+
+<header class="ana-header">
+    <div class="ana-header__inner">
+        <div class="ana-header__right">
+            <button class="ana-header__menu-btn" id="menuBtn">☰</button>
+            <a href="admin-accounting-dashboard.html" class="ana-logo">
+                <div class="ana-logo__icon">📊</div>
+                <span>تحلیل مالی وام پی</span>
+            </a>
+        </div>
+        <div class="ana-header__left">
+            <button class="ana-header__btn" id="themeBtn" title="تغییر تم">🌙</button>
+            <button class="ana-header__btn" id="refreshBtn" title="به‌روزرسانی">🔄</button>
+            <button class="ana-header__btn" id="exportBtn" title="خروجی CSV">📥</button>
+            <div class="ana-user" id="userMenu">
+                <div class="ana-user__avatar" id="userAvatar">؟</div>
+                <div>
+                    <div class="ana-user__name" id="userName">ادمین حسابداری</div>
+                    <div class="ana-user__role">💰 حسابداری</div>
+                </div>
+                <div class="ana-user__dropdown" id="userDropdown">
+                    <a href="#" data-nav="overview">📈 نمای کلی</a>
+                    <a href="#" data-nav="invoices">📋 تحلیل فاکتورها</a>
+                    <a href="#" data-nav="brokers">🏆 عملکرد کارگزاران</a>
+                    <a href="#" data-nav="credits">💎 امتیازها</a>
+                    <hr>
+                    <a href="#" id="logoutBtn">🚪 خروج</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="ana-overlay" id="overlay"></div>
+
+<div class="ana-layout">
+
+    <aside class="ana-sidebar" id="sidebar">
+        <div class="ana-sidebar__section">تحلیل</div>
+        <nav class="ana-nav">
+            <button class="ana-nav__item ana-nav__item--active" data-nav="overview">
+                <span class="ana-nav__item__icon">📈</span>
+                <span>نمای کلی</span>
+            </button>
+            <button class="ana-nav__item" data-nav="invoices">
+                <span class="ana-nav__item__icon">📋</span>
+                <span>تحلیل فاکتورها</span>
+            </button>
+            <button class="ana-nav__item" data-nav="brokers">
+                <span class="ana-nav__item__icon">🏆</span>
+                <span>عملکرد کارگزاران</span>
+            </button>
+            <button class="ana-nav__item" data-nav="credits">
+                <span class="ana-nav__item__icon">💎</span>
+                <span>تحلیل امتیازها</span>
+            </button>
+        </nav>
+    </aside>
+
+    <main class="ana-main" id="mainContainer">
+
+        <!-- ============ OVERVIEW ============ -->
+        <section class="ana-section ana-section--active" id="section-overview">
+            <h1 class="ana-page-title">📈 تحلیل مالی جامع</h1>
+            <p class="ana-page-subtitle">نمای کلی از سود سایت، فاکتورها و عملکرد کارگزاران</p>
+
+            <!-- Period Filter -->
+            <div class="period-bar">
+                <button class="period-btn" data-period="7d">۷ روز اخیر</button>
+                <button class="period-btn" data-period="30d">۳۰ روز اخیر</button>
+                <button class="period-btn period-btn--active" data-period="90d">۳ ماه اخیر</button>
+                <button class="period-btn" data-period="1y">۱ سال اخیر</button>
+                <button class="period-btn" data-period="all">همه</button>
+                <span class="period-info" id="periodInfo">— بازه‌ی فعلی —</span>
+            </div>
+
+            <!-- Stats -->
+            <div class="ana-stats">
+                <div class="ana-stat ana-stat--gold">
+                    <div class="ana-stat__icon">✨</div>
+                    <div class="ana-stat__label">سود خالص سایت</div>
+                    <div class="ana-stat__value" id="statTotalProfit">۰<span>تومان</span></div>
+                    <div class="ana-stat__trend" id="trendProfit"></div>
+                </div>
+                <div class="ana-stat ana-stat--success">
+                    <div class="ana-stat__icon">💰</div>
+                    <div class="ana-stat__label">مجموع سهم کارگزاران</div>
+                    <div class="ana-stat__value" id="statTotalBroker">۰<span>تومان</span></div>
+                    <div class="ana-stat__trend" id="trendBroker"></div>
+                </div>
+                <div class="ana-stat ana-stat--info">
+                    <div class="ana-stat__icon">💵</div>
+                    <div class="ana-stat__label">مجموع فروش</div>
+                    <div class="ana-stat__value" id="statTotalSale">۰<span>تومان</span></div>
+                    <div class="ana-stat__trend" id="trendSale"></div>
+                </div>
+                <div class="ana-stat ana-stat--purple">
+                    <div class="ana-stat__icon">📋</div>
+                    <div class="ana-stat__label">تعداد فاکتورها</div>
+                    <div class="ana-stat__value" id="statTotalInvoices">۰</div>
+                    <div class="ana-stat__trend" id="trendInvoices"></div>
+                </div>
+            </div>
+
+            <!-- KPIs -->
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">🎯 شاخص‌های کلیدی عملکرد (KPI)</div>
+                </div>
+                <div class="ana-card__body">
+                    <div class="kpi-grid">
+                        <div class="kpi-item">
+                            <div class="kpi-item__icon">📊</div>
+                            <div class="kpi-item__label">میانگین درصد سود</div>
+                            <div class="kpi-item__value" id="kpiAvgPercent">۰٪</div>
+                            <div class="kpi-item__sub">از مبلغ فروش</div>
+                        </div>
+                        <div class="kpi-item">
+                            <div class="kpi-item__icon">💎</div>
+                            <div class="kpi-item__label">میانگین ارزش فاکتور</div>
+                            <div class="kpi-item__value" id="kpiAvgInvoice" style="font-size:16px;">۰</div>
+                            <div class="kpi-item__sub">تومان</div>
+                        </div>
+                        <div class="kpi-item">
+                            <div class="kpi-item__icon">🎯</div>
+                            <div class="kpi-item__label">نرخ تأیید</div>
+                            <div class="kpi-item__value" id="kpiApprovalRate">۰٪</div>
+                            <div class="kpi-item__sub">فاکتورهای تأییدشده</div>
+                        </div>
+                        <div class="kpi-item">
+                            <div class="kpi-item__icon">⏱️</div>
+                            <div class="kpi-item__label">میانگین زمان چرخه</div>
+                            <div class="kpi-item__value" id="kpiAvgCycle">۰</div>
+                            <div class="kpi-item__sub">ساعت</div>
+                        </div>
+                        <div class="kpi-item">
+                            <div class="kpi-item__icon">🏦</div>
+                            <div class="kpi-item__label">مجموع امانت</div>
+                            <div class="kpi-item__value" id="kpiTotalEscrow" style="font-size:16px;">۰</div>
+                            <div class="kpi-item__sub">تومان</div>
+                        </div>
+                        <div class="kpi-item">
+                            <div class="kpi-item__icon">✅</div>
+                            <div class="kpi-item__label">پرداخت‌های آزادشده</div>
+                            <div class="kpi-item__value" id="kpiReleasedCount">۰</div>
+                            <div class="kpi-item__sub">پرونده</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trend Chart -->
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">📊 روند سود سایت</div>
+                    <div class="ana-card__actions">
+                        <button class="ana-btn ana-btn--ghost ana-btn--sm" data-chart="line">خطی</button>
+                        <button class="ana-btn ana-btn--ghost ana-btn--sm" data-chart="bar">میله‌ای</button>
+                    </div>
+                </div>
+                <div class="ana-card__body">
+                    <div class="chart-wrap">
+                        <canvas class="chart-canvas" id="trendChart"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="chart-legend__item">
+                            <div class="chart-legend__dot" style="background:var(--gold);"></div>
+                            <span>سود سایت</span>
+                        </div>
+                        <div class="chart-legend__item">
+                            <div class="chart-legend__dot" style="background:var(--success);"></div>
+                            <span>سهم کارگزاران</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Invoices -->
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">📋 آخرین فاکتورها</div>
+                </div>
+                <div class="ana-card__body" id="recentInvoices"></div>
+            </div>
+        </section>
+
+        <!-- ============ INVOICES ============ -->
+        <section class="ana-section" id="section-invoices">
+            <h1 class="ana-page-title">📋 تحلیل فاکتورها</h1>
+            <p class="ana-page-subtitle">تحلیل تفصیلی تمام فاکتورهای امتیاز</p>
+
+            <div class="ana-stats">
+                <div class="ana-stat">
+                    <div class="ana-stat__icon">📋</div>
+                    <div class="ana-stat__label">کل فاکتورها</div>
+                    <div class="ana-stat__value" id="statInvTotal">۰</div>
+                </div>
+                <div class="ana-stat ana-stat--success">
+                    <div class="ana-stat__icon">✅</div>
+                    <div class="ana-stat__label">تأییدشده</div>
+                    <div class="ana-stat__value" id="statInvApproved">۰</div>
+                </div>
+                <div class="ana-stat ana-stat--warning">
+                    <div class="ana-stat__icon">⏳</div>
+                    <div class="ana-stat__label">در انتظار</div>
+                    <div class="ana-stat__value" id="statInvPending">۰</div>
+                </div>
+                <div class="ana-stat" style="border-right-color:var(--error);">
+                    <div class="ana-stat__icon">❌</div>
+                    <div class="ana-stat__label">ردشده</div>
+                    <div class="ana-stat__value" id="statInvRejected">۰</div>
+                </div>
+            </div>
+
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">📊 توزیع فاکتورها بر اساس وضعیت</div>
+                </div>
+                <div class="ana-card__body">
+                    <div class="bar-chart" id="invoicesByStatus"></div>
+                </div>
+            </div>
+
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">💎 توزیع بر اساس نام امتیاز</div>
+                </div>
+                <div class="ana-card__body">
+                    <div class="bar-chart" id="invoicesByCredit"></div>
+                </div>
+            </div>
+
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">📅 توزیع ماهانه</div>
+                </div>
+                <div class="ana-card__body" id="invoicesByMonth"></div>
+            </div>
+        </section>
+
+        <!-- ============ BROKERS ============ -->
+        <section class="ana-section" id="section-brokers">
+            <h1 class="ana-page-title">🏆 عملکرد کارگزاران</h1>
+            <p class="ana-page-subtitle">رتبه‌بندی کارگزاران بر اساس سود سایت و تعداد پرونده</p>
+
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">🏆 ۱۰ کارگزار برتر (سود سایت)</div>
+                </div>
+                <div class="ana-card__body">
+                    <div class="bar-chart" id="topBrokersChart"></div>
+                </div>
+            </div>
+
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">📋 جدول کامل کارگزاران</div>
+                </div>
+                <div class="ana-card__body" style="overflow-x:auto;">
+                    <table class="ana-table" id="brokersTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>نام کارگزار</th>
+                                <th>تعداد پرونده</th>
+                                <th>سود سایت</th>
+                                <th>سهم کارگزار</th>
+                                <th>میانگین ارزش</th>
+                            </tr>
+                        </thead>
+                        <tbody id="brokersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CREDITS ============ -->
+        <section class="ana-section" id="section-credits">
+            <h1 class="ana-page-title">💎 تحلیل امتیازها</h1>
+            <p class="ana-page-subtitle">تحلیل فروش و سود بر اساس نوع امتیاز</p>
+
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">📊 سود سایت بر اساس نام امتیاز</div>
+                </div>
+                <div class="ana-card__body">
+                    <div class="bar-chart" id="creditsByProfit"></div>
+                </div>
+            </div>
+
+            <div class="ana-card">
+                <div class="ana-card__header">
+                    <div class="ana-card__title">📋 جدول تفصیلی امتیازها</div>
+                </div>
+                <div class="ana-card__body" style="overflow-x:auto;">
+                    <table class="ana-table" id="creditsTable">
+                        <thead>
+                            <tr>
+                                <th>نام امتیاز</th>
+                                <th>تعداد فاکتور</th>
+                                <th>میانگین قیمت خرید</th>
+                                <th>میانگین قیمت فروش</th>
+                                <th>سود سایت</th>
+                                <th>درصد سود</th>
+                            </tr>
+                        </thead>
+                        <tbody id="creditsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<nav class="ana-bottom-nav">
+    <div class="ana-bottom-nav__inner">
+        <button class="ana-bottom-nav__item ana-bottom-nav__item--active" data-nav="overview">
+            <span class="ana-bottom-nav__icon">📈</span>
+            <span>نمای کلی</span>
+        </button>
+        <button class="ana-bottom-nav__item" data-nav="invoices">
+            <span class="ana-bottom-nav__icon">📋</span>
+            <span>فاکتورها</span>
+        </button>
+        <button class="ana-bottom-nav__item" data-nav="brokers">
+            <span class="ana-bottom-nav__icon">🏆</span>
+            <span>کارگزاران</span>
+        </button>
+        <button class="ana-bottom-nav__item" data-nav="credits">
+            <span class="ana-bottom-nav__icon">💎</span>
+            <span>امتیازها</span>
+        </button>
+    </div>
+</nav>
+
+<div class="toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<!-- Services -->
+<script src="js/credit-invoice-service.js"></script>
+<script src="js/financial-log-service.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    const state = {
+        user: null,
+        invoices: [],
+        cases: [],
+        brokers: [],
+        logs: [],
+        period: '90d',
+        periodStart: null,
+        periodEnd: null,
+        chartType: 'line'
+    };
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(Math.round(Number(n) || 0)).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+    const faPriceShort = (n) => {
+        n = Number(n || 0);
+        if (n >= 1e9) return faNum(n / 1e9) + ' میلیارد';
+        if (n >= 1e6) return faNum(n / 1e6) + ' میلیون';
+        if (n >= 1e3) return faNum(n / 1e3) + ' هزار';
+        return faPrice(n);
+    };
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'toast toast--show';
+        if (type === 'error') el.classList.add('toast--error');
+        if (type === 'success') el.classList.add('toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('toast--show'), 3200);
+    }
+
+    // ===== Auth =====
+    function checkAuth() {
+        try {
+            const cu = JSON.parse(localStorage.getItem('wamPayCurrentUser') || 'null');
+            if (!cu) {
+                toast('ابتدا وارد شوید', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            const allowedRoles = ['accounting_admin', 'super_admin', 'deputy_admin'];
+            if (!allowedRoles.includes(cu.role)) {
+                toast('دسترسی فقط برای ادمین حسابداری', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            state.user = cu;
+            return true;
+        } catch (e) {
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    // ===== Load Data =====
+    function loadData() {
+        try {
+            if (window.WamPayCreditInvoice) {
+                state.invoices = WamPayCreditInvoice.getAllInvoices();
+            } else {
+                state.invoices = JSON.parse(localStorage.getItem('wamPayCreditInvoices') || '[]');
+            }
+            state.cases = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+            state.brokers = JSON.parse(localStorage.getItem('wamPayUsers') || '[]')
+                .filter(u => u.role === 'broker');
+
+            if (window.WamPayFinancialLog) {
+                state.logs = WamPayFinancialLog.getAllLogs?.() ||
+                    JSON.parse(localStorage.getItem('wamPayFinancialLog') || '[]');
+            } else {
+                state.logs = JSON.parse(localStorage.getItem('wamPayFinancialLog') || '[]');
+            }
+        } catch (e) {
+            console.error('Load error:', e);
+        }
+    }
+
+    // ===== Period Filter =====
+    function setPeriod(period) {
+        state.period = period;
+        const now = new Date();
+        let start = null;
+
+        switch (period) {
+            case '7d': start = new Date(now.getTime() - 7 * 24 * 3600 * 1000); break;
+            case '30d': start = new Date(now.getTime() - 30 * 24 * 3600 * 1000); break;
+            case '90d': start = new Date(now.getTime() - 90 * 24 * 3600 * 1000); break;
+            case '1y': start = new Date(now.getTime() - 365 * 24 * 3600 * 1000); break;
+            case 'all': start = null; break;
+        }
+
+        state.periodStart = start;
+        state.periodEnd = now;
+
+        // Update UI
+        $$('.period-btn').forEach(btn => {
+            btn.classList.toggle('period-btn--active', btn.dataset.period === period);
+        });
+
+        const label = $('#periodInfo');
+        if (label) {
+            if (start) {
+                const fa = (d) => {
+                    const fa2 = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+                    return `${fa2(d.getFullYear())}/${fa2(d.getMonth()+1)}/${fa2(d.getDate())}`;
+                };
+                label.textContent = `از ${fa(start)} تا ${fa(now)}`;
+            } else {
+                label.textContent = 'همه‌ی زمان‌ها';
+            }
+        }
+
+        // Refresh
+        renderAll();
+    }
+
+    // ===== Get Filtered Invoices =====
+    function getFilteredInvoices() {
+        if (!state.periodStart) return state.invoices;
+        const startTime = state.periodStart.getTime();
+        return state.invoices.filter(i => {
+            const t = new Date(i.createdAt).getTime();
+            return t >= startTime;
+        });
+    }
+
+    // ===== Calculate Stats =====
+    function calculateStats() {
+        const invoices = getFilteredInvoices();
+        const now = new Date();
+        const periodMs = state.periodStart ? (now - state.periodStart) : null;
+        const prevStart = periodMs ? new Date(state.periodStart.getTime() - periodMs) : null;
+
+        let totalProfit = 0, totalBroker = 0, totalSale = 0, totalPurchase = 0;
+        let approvedCount = 0, pendingCount = 0, rejectedCount = 0;
+        let totalEscrow = 0, releasedCount = 0;
+
+        invoices.forEach(inv => {
+            if (inv.status === 'rejected') { rejectedCount++; return; }
+            const saleTotal = inv.sale?.total || 0;
+            const purchaseTotal = inv.purchase?.total || 0;
+            const profit = inv.profit?.siteShare || 0;
+
+            totalSale += saleTotal;
+            totalPurchase += purchaseTotal;
+            totalProfit += profit;
+            totalBroker += purchaseTotal;
+
+            if (inv.approvals?.superAdmin?.approved) approvedCount++;
+            else if (inv.status !== 'rejected') pendingCount++;
+        });
+
+        // Escrow & Released
+        state.cases.forEach(c => {
+            if (state.periodStart && new Date(c.createdAt).getTime() < state.periodStart.getTime()) return;
+            if (c.escrow?.total) totalEscrow += c.escrow.total;
+            if (c.status === 'completed') releasedCount++;
+        });
+
+        // Previous period comparison
+        let prevProfit = 0;
+        if (prevStart && state.periodStart) {
+            const prevInvoices = state.invoices.filter(i => {
+                const t = new Date(i.createdAt).getTime();
+                return t >= prevStart.getTime() && t < state.periodStart.getTime();
+            });
+            prevProfit = prevInvoices.reduce((s, i) => s + (i.profit?.siteShare || 0), 0);
+        }
+
+        const profitTrend = prevProfit > 0 ? Math.round(((totalProfit - prevProfit) / prevProfit) * 100) : 0;
+
+        return {
+            totalProfit, totalBroker, totalSale, totalPurchase,
+            approvedCount, pendingCount, rejectedCount,
+            totalEscrow, releasedCount,
+            totalCount: invoices.length,
+            profitTrend,
+            avgPercent: totalSale > 0 ? Math.round((totalProfit / totalSale) * 100) : 0,
+            avgInvoice: invoices.length > 0 ? Math.round(totalSale / invoices.length) : 0,
+            approvalRate: invoices.length > 0 ? Math.round((approvedCount / invoices.length) * 100) : 0
+        };
+    }
+
+    // ===== Render Stats =====
+    function renderStats() {
+        const s = calculateStats();
+
+        $('#statTotalProfit').innerHTML = faPriceShort(s.totalProfit) + '<span>تومان</span>';
+        $('#statTotalBroker').innerHTML = faPriceShort(s.totalBroker) + '<span>تومان</span>';
+        $('#statTotalSale').innerHTML = faPriceShort(s.totalSale) + '<span>تومان</span>';
+        $('#statTotalInvoices').textContent = faNum(s.totalCount);
+
+        // Trends
+        const renderTrend = (id, value) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (value > 0) {
+                el.textContent = '↑ ' + faNum(value) + '٪';
+                el.className = 'ana-stat__trend ana-stat__trend--up';
+            } else if (value < 0) {
+                el.textContent = '↓ ' + faNum(Math.abs(value)) + '٪';
+                el.className = 'ana-stat__trend ana-stat__trend--down';
+            } else {
+                el.textContent = '—';
+                el.className = 'ana-stat__trend ana-stat__trend--flat';
+            }
+        };
+        renderTrend('trendProfit', s.profitTrend);
+        renderTrend('trendBroker', 0);
+        renderTrend('trendSale', 0);
+        renderTrend('trendInvoices', 0);
+
+        // KPIs
+        $('#kpiAvgPercent').textContent = faNum(s.avgPercent) + '٪';
+        $('#kpiAvgInvoice').textContent = faPriceShort(s.avgInvoice);
+        $('#kpiApprovalRate').textContent = faNum(s.approvalRate) + '٪';
+        $('#kpiAvgCycle').textContent = faNum(36);  // ثابت نمونه
+        $('#kpiTotalEscrow').textContent = faPriceShort(s.totalEscrow);
+        $('#kpiReleasedCount').textContent = faNum(s.releasedCount);
+    }
+
+    // ===== Render Trend Chart =====
+    function renderTrendChart() {
+        const canvas = $('#trendChart');
+        if (!canvas) return;
+
+        const wrap = canvas.parentElement;
+        const w = wrap.clientWidth;
+        const h = wrap.clientHeight;
+        canvas.width = w * window.devicePixelRatio;
+        canvas.height = h * window.devicePixelRatio;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+
+        const ctx = canvas.getContext('2d');
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+        // Generate data points
+        const invoices = getFilteredInvoices();
+        const points = groupByDay(invoices);
+
+        if (points.length === 0) {
+            ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#6b7d73';
+            ctx.font = '14px Vazirmatn';
+            ctx.textAlign = 'center';
+            ctx.fillText('داده‌ای برای نمایش وجود ندارد', w / 2, h / 2);
+            return;
+        }
+
+        // Theme colors
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const gridColor = isDark ? '#1f3429' : '#e0e8e3';
+        const textColor = isDark ? '#8fa398' : '#6b7d73';
+
+        // Padding
+        const padding = { top: 20, right: 20, bottom: 40, left: 60 };
+        const chartW = w - padding.left - padding.right;
+        const chartH = h - padding.top - padding.bottom;
+
+        // Max value
+        const maxVal = Math.max(...points.map(p => p.profit + p.brokerShare), 1);
+        const stepX = points.length > 1 ? chartW / (points.length - 1) : chartW;
+        const stepY = chartH / 5;
+
+        // Grid
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 5; i++) {
+            const y = padding.top + i * stepY;
+            ctx.beginPath();
+            ctx.moveTo(padding.left, y);
+            ctx.lineTo(padding.left + chartW, y);
+            ctx.stroke();
+
+            // Y labels
+            ctx.fillStyle = textColor;
+            ctx.font = '11px Vazirmatn';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            const v = maxVal * (5 - i) / 5;
+            ctx.fillText(faPriceShort(v), padding.left - 8, y);
+        }
+
+        // Draw bars or line
+        if (state.chartType === 'bar') {
+            const barW = Math.max(stepX * 0.7, 6);
+            points.forEach((p, i) => {
+                const x = padding.left + i * stepX - barW / 2;
+                const totalH = ((p.profit + p.brokerShare) / maxVal) * chartH;
+                const profitH = (p.profit / (p.profit + p.brokerShare || 1)) * totalH;
+
+                // Broker share
+                ctx.fillStyle = 'rgba(30,142,74,0.6)';
+                ctx.fillRect(x, padding.top + chartH - totalH, barW, totalH - profitH);
+
+                // Profit
+                ctx.fillStyle = isDark ? '#f0c651' : '#d4a62a';
+                ctx.fillRect(x, padding.top + chartH - profitH, barW, profitH);
+            });
+        } else {
+            // Area chart
+            // Broker share area
+            ctx.beginPath();
+            ctx.moveTo(padding.left, padding.top + chartH);
+            points.forEach((p, i) => {
+                const x = padding.left + i * stepX;
+                const y = padding.top + chartH - ((p.brokerShare + p.profit) / maxVal) * chartH;
+                ctx.lineTo(x, y);
+            });
+            ctx.lineTo(padding.left + (points.length - 1) * stepX, padding.top + chartH);
+            ctx.closePath();
+            const grad1 = ctx.createLinearGradient(0, padding.top, 0, padding.top + chartH);
+            grad1.addColorStop(0, 'rgba(30,142,74,0.4)');
+            grad1.addColorStop(1, 'rgba(30,142,74,0)');
+            ctx.fillStyle = grad1;
+            ctx.fill();
+
+            // Profit line
+            ctx.beginPath();
+            points.forEach((p, i) => {
+                const x = padding.left + i * stepX;
+                const y = padding.top + chartH - (p.profit / maxVal) * chartH;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.strokeStyle = isDark ? '#f0c651' : '#d4a62a';
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+
+            // Points
+            points.forEach((p, i) => {
+                const x = padding.left + i * stepX;
+                const y = padding.top + chartH - (p.profit / maxVal) * chartH;
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = isDark ? '#f0c651' : '#d4a62a';
+                ctx.fill();
+                ctx.strokeStyle = isDark ? '#10201a' : '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            });
+        }
+
+        // X labels
+        ctx.fillStyle = textColor;
+        ctx.font = '10px Vazirmatn';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        const labelStep = Math.max(1, Math.floor(points.length / 7));
+        points.forEach((p, i) => {
+            if (i % labelStep !== 0 && i !== points.length - 1) return;
+            const x = padding.left + i * stepX;
+            ctx.fillText(p.label, x, padding.top + chartH + 8);
+        });
+    }
+
+    function groupByDay(invoices) {
+        const map = {};
+        invoices.forEach(inv => {
+            const d = new Date(inv.createdAt);
+            const key = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+            if (!map[key]) {
+                map[key] = {
+                    date: d,
+                    label: `${faNum(d.getMonth()+1)}/${faNum(d.getDate())}`,
+                    profit: 0,
+                    brokerShare: 0,
+                    count: 0
+                };
+            }
+            map[key].profit += inv.profit?.siteShare || 0;
+            map[key].brokerShare += inv.purchase?.total || 0;
+            map[key].count++;
+        });
+        return Object.values(map).sort((a, b) => a.date - b.date);
+    }
+
+    // ===== Render Recent Invoices =====
+    function renderRecentInvoices() {
+        const invoices = getFilteredInvoices().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+        const box = $('#recentInvoices');
+
+        if (invoices.length === 0) {
+            box.innerHTML = `
+                <div class="ana-empty" style="padding:30px;">
+                    <div class="ana-empty__icon">📭</div>
+                    <div class="ana-empty__title">فاکتوری در بازه‌ی فعلی وجود ندارد</div>
+                </div>`;
+            return;
+        }
+
+        box.innerHTML = `
+            <div style="overflow-x:auto;">
+                <table class="ana-table">
+                    <thead>
+                        <tr>
+                            <th>شماره فاکتور</th>
+                            <th>کارگزار</th>
+                            <th>امتیاز</th>
+                            <th>فروش</th>
+                            <th>سود سایت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${invoices.map(inv => `
+                            <tr>
+                                <td class="ana-table__mono">${inv.invoiceNumber}</td>
+                                <td>${inv.brokerName || '—'}</td>
+                                <td>${faNum(inv.creditCount || 0)} ${inv.creditName || ''}</td>
+                                <td style="color:var(--info);">${faPrice(inv.sale?.total)}</td>
+                                <td style="color:var(--warning);font-weight:800;">${faPrice(inv.profit?.siteShare)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    // ===== Render Invoices Section =====
+    function renderInvoicesSection() {
+        const invoices = getFilteredInvoices();
+
+        const approved = invoices.filter(i => i.approvals?.superAdmin?.approved).length;
+        const pending = invoices.filter(i => i.status !== 'rejected' && !i.approvals?.superAdmin?.approved).length;
+        const rejected = invoices.filter(i => i.status === 'rejected').length;
+
+        $('#statInvTotal').textContent = faNum(invoices.length);
+        $('#statInvApproved').textContent = faNum(approved);
+        $('#statInvPending').textContent = faNum(pending);
+        $('#statInvRejected').textContent = faNum(rejected);
+
+        // By status
+        const statusData = [
+            { label: '✅ تأییدشده', value: approved, cls: '' },
+            { label: '⏳ در انتظار', value: pending, cls: 'bar-fill--gold' },
+            { label: '❌ ردشده', value: rejected, cls: 'bar-fill--info' }
+        ];
+        const maxStatus = Math.max(approved, pending, rejected, 1);
+        $('#invoicesByStatus').innerHTML = statusData.map(d => `
+            <div class="bar-item">
+                <div class="bar-item__header">
+                    <span class="bar-item__name">${d.label}</span>
+                    <span class="bar-item__value">${faNum(d.value)}</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill ${d.cls}" style="width:${(d.value / maxStatus * 100).toFixed(1)}%"></div>
+                </div>
+            </div>
+        `).join('');
+
+        // By credit name
+        const byCredit = {};
+        invoices.forEach(inv => {
+            const k = inv.creditName || 'نامشخص';
+            if (!byCredit[k]) byCredit[k] = { count: 0, profit: 0, sale: 0 };
+            byCredit[k].count++;
+            byCredit[k].profit += inv.profit?.siteShare || 0;
+            byCredit[k].sale += inv.sale?.total || 0;
+        });
+        const creditEntries = Object.entries(byCredit).sort((a, b) => b[1].profit - a[1].profit);
+        const maxProfit = Math.max(...creditEntries.map(e => e[1].profit), 1);
+
+        $('#invoicesByCredit').innerHTML = creditEntries.length === 0 ? `
+            <div class="ana-empty" style="padding:20px;"><div class="ana-empty__desc">داده‌ای موجود نیست</div></div>
+        ` : creditEntries.map(([name, d], i) => `
+            <div class="bar-item">
+                <div class="bar-item__header">
+                    <span class="bar-item__name">💎 ${name} <span style="font-size:11px;color:var(--text-muted);font-weight:500;">(${faNum(d.count)} فاکتور)</span></span>
+                    <span class="bar-item__value" style="color:var(--gold);">${faPriceShort(d.profit)}</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill ${i % 3 === 0 ? '' : i % 3 === 1 ? 'bar-fill--gold' : 'bar-fill--info'}" style="width:${(d.profit / maxProfit * 100).toFixed(1)}%"></div>
+                </div>
+            </div>
+        `).join('');
+
+        // By month
+        const byMonth = {};
+        invoices.forEach(inv => {
+            const d = new Date(inv.createdAt);
+            const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2, '0')}`;
+            if (!byMonth[k]) byMonth[k] = { count: 0, profit: 0, sale: 0 };
+            byMonth[k].count++;
+            byMonth[k].profit += inv.profit?.siteShare || 0;
+            byMonth[k].sale += inv.sale?.total || 0;
+        });
+        const monthKeys = Object.keys(byMonth).sort().reverse().slice(0, 12);
+
+        $('#invoicesByMonth').innerHTML = monthKeys.length === 0 ? `
+            <div class="ana-empty" style="padding:20px;"><div class="ana-empty__desc">داده‌ای موجود نیست</div></div>
+        ` : `
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;">
+                ${monthKeys.map(k => `
+                    <div style="background:var(--bg);border-radius:8px;padding:14px;text-align:center;border:1px solid var(--border);">
+                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;font-family:monospace;">${k}</div>
+                        <div style="font-size:20px;font-weight:800;color:var(--primary);">${faNum(byMonth[k].count)}</div>
+                        <div style="font-size:11px;color:var(--warning);margin-top:4px;font-weight:700;">${faPriceShort(byMonth[k].profit)}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    // ===== Render Brokers Section =====
+    function renderBrokersSection() {
+        const invoices = getFilteredInvoices();
+        const brokerMap = {};
+
+        invoices.forEach(inv => {
+            const bid = inv.brokerId || 'unknown';
+            if (!brokerMap[bid]) {
+                brokerMap[bid] = {
+                    id: bid,
+                    name: inv.brokerName || 'نامشخص',
+                    count: 0,
+                    siteProfit: 0,
+                    brokerShare: 0,
+                    totalSale: 0
+                };
+            }
+            brokerMap[bid].count++;
+            brokerMap[bid].siteProfit += inv.profit?.siteShare || 0;
+            brokerMap[bid].brokerShare += inv.purchase?.total || 0;
+            brokerMap[bid].totalSale += inv.sale?.total || 0;
+        });
+
+        const brokers = Object.values(brokerMap).sort((a, b) => b.siteProfit - a.siteProfit);
+
+        // Top 10 chart
+        const top10 = brokers.slice(0, 10);
+        const maxProfit = Math.max(...top10.map(b => b.siteProfit), 1);
+
+        $('#topBrokersChart').innerHTML = top10.length === 0 ? `
+            <div class="ana-empty" style="padding:20px;"><div class="ana-empty__desc">داده‌ای موجود نیست</div></div>
+        ` : top10.map((b, i) => `
+            <div class="bar-item">
+                <div class="bar-item__header">
+                    <span class="bar-item__name">
+                        <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--primary-dark);font-weight:800;font-size:12px;">${faNum(i+1)}</span>
+                        ${b.name}
+                    </span>
+                    <span class="bar-item__value" style="color:var(--gold);">${faPriceShort(b.siteProfit)}</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill ${i < 3 ? '' : i < 6 ? 'bar-fill--gold' : 'bar-fill--info'}" style="width:${(b.siteProfit / maxProfit * 100).toFixed(1)}%"></div>
+                </div>
+            </div>
+        `).join('');
+
+        // Table
+        const tbody = $('#brokersTableBody');
+        if (brokers.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--text-muted);">داده‌ای موجود نیست</td></tr>`;
+        } else {
+            tbody.innerHTML = brokers.map((b, i) => `
+                <tr>
+                    <td style="font-weight:800;">${faNum(i+1)}</td>
+                    <td>${b.name}</td>
+                    <td>${faNum(b.count)}</td>
+                    <td style="color:var(--warning);font-weight:800;">${faPrice(b.siteProfit)}</td>
+                    <td style="color:var(--success);">${faPrice(b.brokerShare)}</td>
+                    <td style="color:var(--info);">${faPrice(Math.round(b.totalSale / b.count))}</td>
+                </tr>
+            `).join('');
+        }
+    }
+
+    // ===== Render Credits Section =====
+    function renderCreditsSection() {
+        const invoices = getFilteredInvoices();
+        const creditMap = {};
+
+        invoices.forEach(inv => {
+            const k = inv.creditName || 'نامشخص';
+            if (!creditMap[k]) {
+                creditMap[k] = {
+                    name: k,
+                    count: 0,
+                    totalPurchase: 0,
+                    totalSale: 0,
+                    siteProfit: 0,
+                    avgPurchase: 0,
+                    avgSale: 0
+                };
+            }
+            creditMap[k].count++;
+            creditMap[k].totalPurchase += inv.purchase?.total || 0;
+            creditMap[k].totalSale += inv.sale?.total || 0;
+            creditMap[k].siteProfit += inv.profit?.siteShare || 0;
+            creditMap[k].avgPurchase = Math.round(creditMap[k].totalPurchase / creditMap[k].count);
+            creditMap[k].avgSale = Math.round(creditMap[k].totalSale / creditMap[k].count);
+        });
+
+        const credits = Object.values(creditMap).sort((a, b) => b.siteProfit - a.siteProfit);
+        const maxProfit = Math.max(...credits.map(c => c.siteProfit), 1);
+
+        // Chart
+        $('#creditsByProfit').innerHTML = credits.length === 0 ? `
+            <div class="ana-empty" style="padding:20px;"><div class="ana-empty__desc">داده‌ای موجود نیست</div></div>
+        ` : credits.map((c, i) => `
+            <div class="bar-item">
+                <div class="bar-item__header">
+                    <span class="bar-item__name">💎 ${c.name} <span style="font-size:11px;color:var(--text-muted);font-weight:500;">(${faNum(c.count)} فاکتور)</span></span>
+                    <span class="bar-item__value" style="color:var(--gold);">${faPriceShort(c.siteProfit)}</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill ${i % 4 === 0 ? '' : i % 4 === 1 ? 'bar-fill--gold' : i % 4 === 2 ? 'bar-fill--info' : 'bar-fill--purple'}" style="width:${(c.siteProfit / maxProfit * 100).toFixed(1)}%"></div>
+                </div>
+            </div>
+        `).join('');
+
+        // Table
+        const tbody = $('#creditsTableBody');
+        if (credits.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--text-muted);">داده‌ای موجود نیست</td></tr>`;
+        } else {
+            tbody.innerHTML = credits.map(c => {
+                const percent = c.totalSale > 0 ? Math.round((c.siteProfit / c.totalSale) * 100) : 0;
+                return `
+                    <tr>
+                        <td style="font-weight:800;">💎 ${c.name}</td>
+                        <td>${faNum(c.count)}</td>
+                        <td>${faPrice(c.avgPurchase)}</td>
+                        <td>${faPrice(c.avgSale)}</td>
+                        <td style="color:var(--warning);font-weight:800;">${faPrice(c.siteProfit)}</td>
+                        <td style="color:var(--success);font-weight:800;">${faNum(percent)}٪</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    }
+
+    // ===== Export =====
+    function exportCSV() {
+        const invoices = getFilteredInvoices();
+        if (invoices.length === 0) {
+            toast('داده‌ای برای خروجی وجود ندارد', 'error');
+            return;
+        }
+
+        const headers = ['شماره فاکتور', 'شماره پرونده', 'کارگزار', 'نام امتیاز', 'تعداد', 'مبلغ خرید', 'مبلغ فروش', 'سود سایت', 'سهم کارگزار', 'وضعیت', 'تاریخ'];
+        const rows = invoices.map(inv => [
+            inv.invoiceNumber || '',
+            inv.caseNumber || '',
+            inv.brokerName || '',
+            inv.creditName || '',
+            inv.creditCount || 0,
+            inv.purchase?.total || 0,
+            inv.sale?.total || 0,
+            inv.profit?.siteShare || 0,
+            inv.profit?.brokerShare || 0,
+            inv.status || '',
+            new Date(inv.createdAt).toISOString().slice(0, 10)
+        ]);
+
+        const bom = '\uFEFF';
+        const csv = [headers, ...rows].map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+        const blob = new Blob([bom + csv], { type: 'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `wampay-financial-${Date.now()}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        toast('📥 خروجی CSV دانلود شد', 'success');
+    }
+
+    // ===== Render All =====
+    function renderAll() {
+        renderStats();
+        renderTrendChart();
+        renderRecentInvoices();
+        renderInvoicesSection();
+        renderBrokersSection();
+        renderCreditsSection();
+    }
+
+    // ===== Navigation =====
+    function goToSection(name) {
+        $$('.ana-section').forEach(s => s.classList.remove('ana-section--active'));
+        $('#section-' + name)?.classList.add('ana-section--active');
+        $$('.ana-nav__item').forEach(i => i.classList.toggle('ana-nav__item--active', i.dataset.nav === name));
+        $$('.ana-bottom-nav__item').forEach(i => i.classList.toggle('ana-bottom-nav__item--active', i.dataset.nav === name));
+        $('#sidebar').classList.remove('ana-sidebar--open');
+        $('#overlay').classList.remove('ana-overlay--show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== Theme =====
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        if (!btn) return;
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light');
+                btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark');
+                btn.textContent = '☀️';
+            }
+            setTimeout(renderTrendChart, 100);
+        });
+    }
+
+    // ===== Events =====
+    function attachEvents() {
+        $$('[data-nav]').forEach(el => el.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (el.dataset.nav) goToSection(el.dataset.nav);
+        }));
+
+        $$('.period-btn').forEach(btn => btn.addEventListener('click', () => {
+            setPeriod(btn.dataset.period);
+        }));
+
+        $$('[data-chart]').forEach(btn => btn.addEventListener('click', () => {
+            state.chartType = btn.dataset.chart;
+            $$('[data-chart]').forEach(b => {
+                b.classList.toggle('ana-btn--primary', b.dataset.chart === state.chartType);
+                b.classList.toggle('ana-btn--ghost', b.dataset.chart !== state.chartType);
+            });
+            renderTrendChart();
+        }));
+
+        $('#menuBtn')?.addEventListener('click', () => {
+            $('#sidebar').classList.toggle('ana-sidebar--open');
+            $('#overlay').classList.toggle('ana-overlay--show');
+        });
+        $('#overlay')?.addEventListener('click', () => {
+            $('#sidebar').classList.remove('ana-sidebar--open');
+            $('#overlay').classList.remove('ana-overlay--show');
+        });
+
+        $('#refreshBtn')?.addEventListener('click', () => {
+            loadData();
+            renderAll();
+            toast('به‌روزرسانی شد', 'success');
+        });
+
+        $('#exportBtn')?.addEventListener('click', exportCSV);
+
+        $('#userMenu')?.addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
+            e.stopPropagation();
+            $('#userDropdown').classList.toggle('ana-user__dropdown--open');
+        });
+        document.addEventListener('click', () => $('#userDropdown')?.classList.remove('ana-user__dropdown--open'));
+        $('#userDropdown')?.addEventListener('click', (e) => e.stopPropagation());
+
+        const logout = () => {
+            if (!confirm('خروج از حساب؟')) return;
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+            window.location.href = 'login.html';
+        };
+        $('#logoutBtn')?.addEventListener('click', logout);
+
+        // Resize chart
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(renderTrendChart, 200);
+        });
+    }
+
+    // ===== Init =====
+    function init() {
+        if (!checkAuth()) return;
+
+        loadData();
+
+        $('#userAvatar').textContent = (state.user.name?.[0] || '؟');
+        $('#userName').textContent = state.user.name || 'ادمین حسابداری';
+
+        setPeriod('90d');
+        initTheme();
+        attachEvents();
+
+        console.log('%c📊 WAM PAY — Accounting Analytics v1.0', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+        console.log('%c👤 ادمین:', 'color:#d4a62a;', state.user.name);
+        console.log('%c📋 تعداد فاکتورها:', 'color:#d4a62a;', state.invoices.length);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

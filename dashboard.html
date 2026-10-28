@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="داشبورد عمومی — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>داشبورد | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ═══════════════════════════════════════
+       GENERAL DASHBOARD (Shared)
+       ═══════════════════════════════════════ */
+
+    .wam-dash {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 100px;
+    }
+
+    .wam-dash__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-dash__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-dash__topbar-greeting {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-dash__topbar-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+    }
+
+    .wam-dash__topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-dash__icon-btn {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+    .wam-dash__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    .wam-dash__icon-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 999px;
+      background: var(--wam-danger);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--wam-bg-alt);
+    }
+
+    .wam-dash__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--wam-primary), var(--wam-primary-light));
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .wam-dash__main {
+      padding: var(--wam-space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Hero */
+    .wam-dash__hero {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 55%, #1a6b42 100%);
+      color: #fff;
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-lg);
+      margin-bottom: var(--wam-space-lg);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      flex-wrap: wrap;
+    }
+
+    .wam-dash__hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.28), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-dash__hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.18), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-dash__hero-body {
+      flex: 1 1 260px;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-dash__hero-greet {
+      font-size: 0.78rem;
+      opacity: 0.85;
+      margin-bottom: 4px;
+    }
+
+    .wam-dash__hero-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin: 0 0 6px;
+      color: #fff;
+    }
+
+    .wam-dash__hero-title span {
+      color: #f4d477;
+    }
+
+    .wam-dash__hero-text {
+      font-size: 0.82rem;
+      opacity: 0.88;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .wam-dash__hero-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-dash__hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: var(--wam-radius);
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-dash__hero-btn:hover {
+      background: rgba(255, 255, 255, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .wam-dash__hero-btn--gold {
+      background: var(--wam-gold);
+      color: #3a2a00;
+      border-color: var(--wam-gold);
+    }
+
+    .wam-dash__hero-btn--gold:hover {
+      background: var(--wam-gold-light);
+    }
+
+    /* Stats grid */
+    .wam-dash__stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--wam-space-sm);
+      margin-bottom: var(--wam-space-lg);
+    }
+
+    .wam-dash__stat {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-md);
+      box-shadow: var(--wam-shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      text-decoration: none;
+      color: inherit;
+      font-family: inherit;
+      text-align: right;
+    }
+
+    .wam-dash__stat:hover {
+      box-shadow: var(--wam-shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .wam-dash__stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--wam-radius);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex: 0 0 auto;
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    .wam-dash__stat--warning .wam-dash__stat-icon { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-dash__stat--success .wam-dash__stat-icon { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-dash__stat--danger  .wam-dash__stat-icon { background: var(--wam-danger-soft);  color: var(--wam-danger-text); }
+    .wam-dash__stat--info    .wam-dash__stat-icon { background: var(--wam-info-soft);    color: var(--wam-info-text); }
+    .wam-dash__stat--gold    .wam-dash__stat-icon { background: var(--wam-gold-soft);    color: #7a5a00; }
+
+    .wam-dash__stat-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-dash__stat-label {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .wam-dash__stat-value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      line-height: 1.1;
+    }
+
+    .wam-dash__stat-sub {
+      font-size: 0.68rem;
+      color: var(--wam-text-muted);
+      margin-top: 2px;
+    }
+
+    /* Sections */
+    .wam-dash__section {
+      margin-bottom: var(--wam-space-lg);
+    }
+
+    .wam-dash__section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-dash__section-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-dash__section-link {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--wam-primary-light);
+      text-decoration: none;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      font-family: inherit;
+      padding: 0;
+    }
+
+    .wam-dash__section-link:hover { color: var(--wam-gold); }
+
+    /* Quick actions */
+    .wam-dash__quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .wam-dash__quick-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 18px 12px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      color: var(--wam-text);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--wam-t);
+      font-family: inherit;
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-dash__quick-btn:hover {
+      background: var(--wam-primary-soft);
+      border-color: var(--wam-primary-light);
+      color: var(--wam-primary);
+      transform: translateY(-2px);
+      box-shadow: var(--wam-shadow-md);
+    }
+
+    .wam-dash__quick-emoji {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    /* Two-column layout */
+    .wam-dash__columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--wam-space-lg);
+    }
+
+    /* Activity feed */
+    .wam-dash__activity {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .wam-dash__activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius);
+      transition: all var(--wam-t);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .wam-dash__activity-item:hover {
+      box-shadow: var(--wam-shadow);
+      transform: translateX(-2px);
+    }
+
+    .wam-dash__activity-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex: 0 0 auto;
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    .wam-dash__activity-icon--success { background: var(--wam-success-soft); color: var(--wam-success); }
+    .wam-dash__activity-icon--warning { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+    .wam-dash__activity-icon--danger  { background: var(--wam-danger-soft);  color: var(--wam-danger); }
+    .wam-dash__activity-icon--gold    { background: var(--wam-gold-soft);    color: #7a5a00; }
+    .wam-dash__activity-icon--info    { background: var(--wam-info-soft);    color: var(--wam-info-text); }
+
+    .wam-dash__activity-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-dash__activity-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 3px;
+      line-height: 1.5;
+    }
+
+    .wam-dash__activity-time {
+      font-size: 0.7rem;
+      color: var(--wam-text-muted);
+    }
+
+    /* Alert cards */
+    .wam-dash__alert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .wam-dash__alert {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-right: 4px solid var(--wam-warning);
+      border-radius: var(--wam-radius);
+    }
+
+    .wam-dash__alert--success { border-right-color: var(--wam-success); }
+    .wam-dash__alert--danger  { border-right-color: var(--wam-danger); }
+    .wam-dash__alert--info    { border-right-color: var(--wam-info); }
+    .wam-dash__alert--gold    { border-right-color: var(--wam-gold); }
+
+    .wam-dash__alert-icon {
+      font-size: 1.2rem;
+      flex: 0 0 auto;
+    }
+
+    .wam-dash__alert-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-dash__alert-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0;
+    }
+
+    .wam-dash__alert-text {
+      font-size: 0.75rem;
+      color: var(--wam-text-muted);
+      margin: 3px 0 0;
+      line-height: 1.6;
+    }
+
+    /* Empty */
+    .wam-dash__empty {
+      text-align: center;
+      padding: 32px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+
+    .wam-dash__empty-icon {
+      font-size: 2.2rem;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+
+    .wam-dash__empty-text {
+      font-size: 0.83rem;
+      color: var(--wam-text-muted);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* Progress widget */
+    .wam-dash__progress-card {
+      padding: var(--wam-space-md);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-dash__progress-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .wam-dash__progress-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--wam-text);
+      margin: 0;
+    }
+
+    .wam-dash__progress-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+    }
+
+    .wam-dash__progress-bar {
+      height: 8px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius-pill);
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .wam-dash__progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--wam-primary-light), var(--wam-gold));
+      border-radius: var(--wam-radius-pill);
+      transition: width var(--wam-t);
+    }
+
+    .wam-dash__progress-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+    }
+
+    /* Bottom nav */
+    .wam-dash__bottomnav {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      height: 68px;
+      background: var(--wam-bg-alt);
+      border-top: 1px solid var(--wam-border);
+      box-shadow: 0 -2px 10px rgba(11, 59, 35, 0.06);
+      display: flex;
+      align-items: stretch;
+      z-index: var(--wam-z-sticky);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    .wam-dash__nav-item {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 6px 4px;
+      color: var(--wam-text-muted);
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      transition: color var(--wam-t);
+      font-family: inherit;
+      position: relative;
+    }
+    .wam-dash__nav-item:hover { color: var(--wam-primary); }
+    .wam-dash__nav-item.is-active { color: var(--wam-primary); }
+    .wam-dash__nav-item.is-active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 25%;
+      left: 25%;
+      height: 3px;
+      background: var(--wam-gold);
+      border-radius: 0 0 6px 6px;
+    }
+
+    .wam-dash__nav-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .wam-dash__nav-label {
+      font-size: 0.68rem;
+      white-space: nowrap;
+    }
+
+    /* Toast */
+    .wam-dash__toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .wam-dash__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 900px) {
+      .wam-dash__columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wam-dash__main { padding: var(--wam-space-md); }
+      .wam-dash__hero { padding: var(--wam-space-md); }
+      .wam-dash__hero-title { font-size: 1.1rem; }
+      .wam-dash__stats { grid-template-columns: 1fr 1fr; gap: 6px; }
+      .wam-dash__stat { padding: 10px; flex-direction: column; align-items: flex-start; text-align: right; gap: 6px; }
+      .wam-dash__stat-icon { width: 34px; height: 34px; font-size: 1rem; }
+      .wam-dash__stat-value { font-size: 1.15rem; }
+      .wam-dash__quick-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .wam-dash__quick-btn { padding: 14px 8px; font-size: 0.72rem; }
+      .wam-dash__quick-emoji { font-size: 1.3rem; }
+    }
+
+    @media (min-width: 900px) {
+      .wam-dash { padding-bottom: 0; }
+      .wam-dash__bottomnav {
+        position: sticky;
+        top: 0;
+        height: auto;
+        padding: 0 var(--wam-space-lg);
+        justify-content: center;
+        gap: 4px;
+        border-top: 0;
+        border-bottom: 1px solid var(--wam-border);
+        box-shadow: var(--wam-shadow-sm);
+      }
+      .wam-dash__nav-item {
+        flex: 0 0 auto;
+        flex-direction: row;
+        gap: 6px;
+        padding: 12px 16px;
+        font-size: 0.85rem;
+      }
+      .wam-dash__nav-item.is-active::before {
+        top: auto;
+        bottom: 0;
+        right: 8px;
+        left: 8px;
+      }
+      .wam-dash__nav-label { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+
+<body data-page="dashboard">
+
+  <div class="wam-dash" id="dashRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-dash__topbar">
+      <div class="wam-dash__topbar-info">
+        <span class="wam-dash__topbar-greeting" id="topbarGreeting">سلام 👋</span>
+        <h1 class="wam-dash__topbar-title">داشبورد</h1>
+      </div>
+      <div class="wam-dash__topbar-actions">
+        <button type="button" class="wam-dash__icon-btn" id="refreshBtn" title="بروزرسانی">🔄</button>
+        <button type="button" class="wam-dash__icon-btn" id="notifBtn" title="اعلان‌ها">
+          🔔
+          <span class="wam-dash__icon-badge" id="notifBadge" hidden>0</span>
+        </button>
+        <div class="wam-dash__avatar" id="avatarBtn" role="button" tabindex="0" aria-label="پروفایل">م</div>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-dash__main">
+
+      <!-- ═══ HERO ═══ -->
+      <section class="wam-dash__hero">
+        <div class="wam-dash__hero-body">
+          <div class="wam-dash__hero-greet" id="heroGreet">خوش آمدید</div>
+          <h2 class="wam-dash__hero-title">
+            سلام <span id="heroName">کاربر</span> عزیز
+          </h2>
+          <p class="wam-dash__hero-text" id="heroText">
+            به داشبورد وام پی خوش آمدید. خلاصه فعالیت‌های شما در یک نگاه.
+          </p>
+        </div>
+
+        <div class="wam-dash__hero-actions" id="heroActions">
+          <!-- توسط JS پر می‌شود -->
+        </div>
+      </section>
+
+      <!-- ═══ STATS ═══ -->
+      <section class="wam-dash__stats" id="statsGrid">
+        <!-- توسط JS پر می‌شود -->
+      </section>
+
+      <!-- ═══ QUICK ACTIONS ═══ -->
+      <section class="wam-dash__section">
+        <div class="wam-dash__section-head">
+          <h2 class="wam-dash__section-title">⚡ دسترسی سریع</h2>
+        </div>
+        <div class="wam-dash__quick-grid" id="quickGrid">
+          <!-- توسط JS پر می‌شود -->
+        </div>
+      </section>
+
+      <!-- ═══ COLUMNS ═══ -->
+      <div class="wam-dash__columns">
+
+        <!-- Activity -->
+        <section class="wam-dash__section">
+          <div class="wam-dash__section-head">
+            <h2 class="wam-dash__section-title">📊 آخرین فعالیت‌ها</h2>
+          </div>
+          <div class="wam-dash__activity" id="activityList">
+            <!-- توسط JS پر می‌شود -->
+          </div>
+        </section>
+
+        <!-- Alerts + Progress -->
+        <section class="wam-dash__section">
+          <div class="wam-dash__section-head">
+            <h2 class="wam-dash__section-title">🔔 هشدارها</h2>
+          </div>
+          <div class="wam-dash__alert-list" id="alertsList">
+            <!-- توسط JS پر می‌شود -->
+          </div>
+
+          <div style="height:16px;"></div>
+
+          <div id="progressWidget">
+            <!-- توسط JS پر می‌شود -->
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+
+    <!-- ═══ BOTTOM NAV ═══ -->
+    <nav class="wam-dash__bottomnav" role="navigation">
+      <a href="dashboard.html" class="wam-dash__nav-item is-active">
+        <span class="wam-dash__nav-icon">🏠</span>
+        <span class="wam-dash__nav-label">داشبورد</span>
+      </a>
+      <a href="cases.html" class="wam-dash__nav-item">
+        <span class="wam-dash__nav-icon">📁</span>
+        <span class="wam-dash__nav-label">پرونده‌ها</span>
+      </a>
+      <a href="payments.html" class="wam-dash__nav-item">
+        <span class="wam-dash__nav-icon">💳</span>
+        <span class="wam-dash__nav-label">پرداخت‌ها</span>
+      </a>
+      <a href="wallet.html" class="wam-dash__nav-item">
+        <span class="wam-dash__nav-icon">💰</span>
+        <span class="wam-dash__nav-label">کیف پول</span>
+      </a>
+      <a href="consultations.html" class="wam-dash__nav-item">
+        <span class="wam-dash__nav-icon">💬</span>
+        <span class="wam-dash__nav-label">مشاوره</span>
+      </a>
+    </nav>
+
+    <!-- ═══ TOAST ═══ -->
+    <div class="wam-dash__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       GENERAL DASHBOARD CONTROLLER (Shared)
+       - نقش‌محور: هر نقش داده‌های خودش را می‌بیند
+       - آمار زنده از همه منابع
+       - Quick actions و activity feed
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var state = {
+        user: null,
+        cases: [],
+        payments: [],
+        consultations: [],
+        tasks: [],
+        transactions: [],
+        contracts: []
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = Date.now() - ts;
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه پیش';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت پیش';
+        return Math.round(abs / 86400000) + ' روز پیش';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'کاربر', username: 'user', role: 'applicant', id: 'user' };
+      }
+
+      function currentUserId() {
+        var u = state.user;
+        return (u && (u.id || u.username)) || 'user';
+      }
+
+      function roleOf() {
+        var u = state.user;
+        return (u && (u.role || u.userRole)) || 'applicant';
+      }
+
+      function canSeeAll() {
+        var r = roleOf();
+        return r === 'super_admin' || r === 'admin' || r === 'verifier' || r === 'broker';
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری منابع
+      // ═══════════════════════════════════
+
+      function loadMyData() {
+        var me = currentUserId();
+        var myName = (state.user && state.user.name) || '';
+        var seeAll = canSeeAll();
+
+        // Cases
+        var allCases = readJSON('wamPayCases', []);
+        state.cases = Array.isArray(allCases) ? allCases.filter(function (c) {
+          if (!c) return false;
+          if (seeAll) return true;
+          return c.applicantId === me ||
+                 (c.applicantName && myName && c.applicantName === myName) ||
+                 c.brokerId === me ||
+                 (c.brokerName && myName && c.brokerName === myName);
+        }) : [];
+
+        // Payments
+        var allPay = readJSON('wamPayPayments', []);
+        state.payments = Array.isArray(allPay) ? allPay.filter(function (p) {
+          if (!p) return false;
+          if (seeAll) return true;
+          return p.userId === me ||
+                 (p.userName && myName && p.userName === myName) ||
+                 p.createdBy === me;
+        }) : [];
+
+        // Consultations
+        var allCons = readJSON('wamPayConsultations', []);
+        state.consultations = Array.isArray(allCons) ? allCons.filter(function (c) {
+          if (!c) return false;
+          if (seeAll) return true;
+          return c.userId === me ||
+                 (c.userName && myName && c.userName === myName);
+        }) : [];
+
+        // Tasks
+        var allTasks = readJSON('wamPayConsultationTasks', []);
+        state.tasks = Array.isArray(allTasks) ? allTasks.filter(function (t) {
+          if (!t) return false;
+          if (seeAll) return true;
+          return t.assigneeId === me ||
+                 (t.assigneeName && myName && t.assigneeName === myName) ||
+                 t.createdBy === me;
+        }) : [];
+
+        // Wallet transactions
+        var allTx = readJSON('wamPayWalletTransactions', []);
+        state.transactions = Array.isArray(allTx) ? allTx.filter(function (tx) {
+          return tx && tx.userId === me;
+        }) : [];
+
+        // Contracts
+        var allCont = readJSON('wamPayContracts', []);
+        state.contracts = Array.isArray(allCont) ? allCont.filter(function (c) {
+          if (!c) return false;
+          if (seeAll) return true;
+          return c.applicantId === me ||
+                 (c.applicantName && myName && c.applicantName === myName) ||
+                 c.brokerId === me ||
+                 (c.brokerName && myName && c.brokerName === myName);
+        }) : [];
+      }
+
+      // ═══════════════════════════════════
+      // محاسبات
+      // ═══════════════════════════════════
+
+      function computeStats() {
+        var s = {
+          cases: { total: 0, pending: 0, inReview: 0, approved: 0, rejected: 0, active: 0 },
+          payments: { total: 0, paid: 0, pending: 0, overdue: 0 },
+          consultations: { total: 0, pending: 0, inProgress: 0 },
+          tasks: { total: 0, pending: 0, overdue: 0 },
+          wallet: { balance: 0, in: 0, out: 0, commission: 0 },
+          contracts: { total: 0, pending: 0, signed: 0 }
+        };
+
+        // Cases
+        state.cases.forEach(function (c) {
+          var st = c.status || 'pending';
+          s.cases.total++;
+          if (st === 'pending') s.cases.pending++;
+          else if (st === 'in_review') s.cases.inReview++;
+          else if (st === 'approved') s.cases.approved++;
+          else if (st === 'rejected') s.cases.rejected++;
+          else if (st === 'completed') s.cases.active++;
+        });
+
+        // Payments
+        state.payments.forEach(function (p) {
+          var st = p.status || 'pending';
+          if (st !== 'paid' && st !== 'cancelled' && st !== 'refunded' && p.dueAt && p.dueAt < Date.now()) {
+            st = 'overdue';
+          }
+          s.payments.total++;
+          if (st === 'paid') s.payments.paid++;
+          else if (st === 'pending') s.payments.pending++;
+          else if (st === 'overdue') s.payments.overdue++;
+        });
+
+        // Consultations
+        state.consultations.forEach(function (c) {
+          var st = c.status || 'pending';
+          s.consultations.total++;
+          if (st === 'pending') s.consultations.pending++;
+          else if (st === 'in_progress') s.consultations.inProgress++;
+        });
+
+        // Tasks
+        state.tasks.forEach(function (t) {
+          var st = t.status || 'pending';
+          s.tasks.total++;
+          if (st === 'pending' || st === 'in_progress') {
+            if (t.dueAt && t.dueAt < Date.now()) s.tasks.overdue++;
+            else s.tasks.pending++;
+          }
+        });
+
+        // Wallet
+        state.transactions.forEach(function (tx) {
+          var amt = Number(tx.amount) || 0;
+          if (tx.status !== 'approved') return;
+          if (tx.type === 'in') {
+            s.wallet.in += amt;
+            s.wallet.balance += amt;
+          } else if (tx.type === 'commission') {
+            s.wallet.commission += amt;
+            s.wallet.balance += amt;
+          } else if (tx.type === 'out') {
+            s.wallet.out += amt;
+            s.wallet.balance -= amt;
+          }
+        });
+
+        // Contracts
+        state.contracts.forEach(function (c) {
+          var st = c.status || 'draft';
+          s.contracts.total++;
+          if (st === 'pending' || st === 'draft' || st === 'sent') s.contracts.pending++;
+          else if (st === 'signed' || st === 'active') s.contracts.signed++;
+        });
+
+        return s;
+      }
+
+      // ═══════════════════════════════════
+      // رندر Header
+      // ═══════════════════════════════════
+
+      function renderHeader() {
+        var u = state.user;
+        var name = u.name || u.username || 'کاربر';
+        var initial = name.trim().charAt(0).toUpperCase() || 'م';
+
+        var hour = new Date().getHours();
+        var greet = 'سلام 👋';
+        if (hour < 12) greet = 'صبح بخیر ☀️';
+        else if (hour < 17) greet = 'ظهر بخیر 🌤';
+        else if (hour < 20) greet = 'عصر بخیر 🌆';
+        else greet = 'شب بخیر 🌙';
+
+        if ($('topbarGreeting')) $('topbarGreeting').textContent = greet;
+        if ($('heroGreet')) $('heroGreet').textContent = greet;
+        if ($('heroName')) $('heroName').textContent = name;
+        if ($('avatarBtn')) $('avatarBtn').textContent = initial;
+      }
+
+      // ═══════════════════════════════════
+      // Hero actions (نقش‌محور)
+      // ═══════════════════════════════════
+
+      function renderHeroActions() {
+        var role = roleOf();
+        var el = $('heroActions');
+        if (!el) return;
+
+        var actions = [];
+
+        if (role === 'broker') {
+          actions.push({ label: '➕ پرونده جدید', icon: '➕', href: 'broker-wizard.html', gold: true });
+          actions.push({ label: '📁 پرونده‌های من', icon: '📁', href: 'broker-cases.html' });
+        } else if (role === 'verifier') {
+          actions.push({ label: '📋 صف بررسی', icon: '📋', href: 'verifier-queue.html', gold: true });
+          actions.push({ label: '🏠 داشبورد اعتبارسنج', icon: '🏠', href: 'verifier-dashboard.html' });
+        } else if (role === 'admin' || role === 'super_admin') {
+          actions.push({ label: '⚙️ داشبورد ادمین', icon: '⚙️', href: 'admin-dashboard.html', gold: true });
+          actions.push({ label: '👥 کاربران', icon: '👥', href: 'admin-users.html' });
+        } else {
+          actions.push({ label: '➕ درخواست وام', icon: '➕', href: 'applicant-new-request.html', gold: true });
+          actions.push({ label: '📁 درخواست‌های من', icon: '📁', href: 'applicant-cases.html' });
+        }
+
+        var html = '';
+        actions.forEach(function (a) {
+          html += '<a href="' + a.href + '" class="wam-dash__hero-btn' +
+                  (a.gold ? ' wam-dash__hero-btn--gold' : '') + '">' +
+                  a.icon + ' ' + a.label +
+                  '</a>';
+        });
+        el.innerHTML = html;
+      }
+
+      // ═══════════════════════════════════
+      // Stats
+      // ═══════════════════════════════════
+
+      function renderStats() {
+        var s = computeStats();
+        var el = $('statsGrid');
+        if (!el) return;
+
+        var cards = [
+          {
+            icon: '📁',
+            label: 'پرونده‌ها',
+            value: toFa(s.cases.total),
+            sub: toFa(s.cases.pending) + ' در انتظار',
+            tone: '',
+            href: 'cases.html'
+          },
+          {
+            icon: '💳',
+            label: 'پرداخت‌ها',
+            value: toFa(s.payments.total),
+            sub: toFa(s.payments.overdue) + ' عقب‌افتاده',
+            tone: s.payments.overdue > 0 ? 'danger' : 'info',
+            href: 'payments.html'
+          },
+          {
+            icon: '💰',
+            label: 'کیف پول',
+            value: fmtAmount(s.wallet.balance),
+            sub: 'میلیون ریال',
+            tone: 'gold',
+            href: 'wallet.html'
+          },
+          {
+            icon: '💬',
+            label: 'مشاوره‌ها',
+            value: toFa(s.consultations.total),
+            sub: toFa(s.consultations.pending) + ' در انتظار',
+            tone: 'info',
+            href: 'consultations.html'
+          },
+          {
+            icon: '✅',
+            label: 'تسک‌ها',
+            value: toFa(s.tasks.total),
+            sub: s.tasks.overdue > 0 ? toFa(s.tasks.overdue) + ' عقب‌افتاده' : 'در جریان',
+            tone: s.tasks.overdue > 0 ? 'danger' : 'success',
+            href: 'consultation-tasks.html'
+          },
+          {
+            icon: '📝',
+            label: 'قراردادها',
+            value: toFa(s.contracts.total),
+            sub: toFa(s.contracts.pending) + ' در انتظار امضا',
+            tone: 'warning',
+            href: 'contracts.html'
+          }
+        ];
+
+        var html = '';
+        cards.forEach(function (c) {
+          html += '' +
+            '<a href="' + c.href + '" class="wam-dash__stat wam-dash__stat--' + c.tone + '">' +
+              '<div class="wam-dash__stat-icon">' + c.icon + '</div>' +
+              '<div class="wam-dash__stat-body">' +
+                '<div class="wam-dash__stat-label">' + c.label + '</div>' +
+                '<div class="wam-dash__stat-value">' + c.value + '</div>' +
+                '<div class="wam-dash__stat-sub">' + c.sub + '</div>' +
+              '</div>' +
+            '</a>';
+        });
+        el.innerHTML = html;
+      }
+
+      // ═══════════════════════════════════
+      // Quick actions (نقش‌محور)
+      // ═══════════════════════════════════
+
+      function renderQuickActions() {
+        var role = roleOf();
+        var el = $('quickGrid');
+        if (!el) return;
+
+        var common = [
+          { emoji: '📁', label: 'پرونده‌ها', href: 'cases.html' },
+          { emoji: '💳', label: 'پرداخت‌ها', href: 'payments.html' },
+          { emoji: '💰', label: 'کیف پول', href: 'wallet.html' },
+          { emoji: '🧮', label: 'ماشین‌حساب', href: 'calculator.html' },
+          { emoji: '💬', label: 'مشاوره', href: 'consultations.html' },
+          { emoji: '📝', label: 'قراردادها', href: 'contracts.html' },
+          { emoji: '📌', label: 'پیگیری‌ها', href: 'follow-ups.html' },
+          { emoji: '📊', label: 'گزارشات', href: 'financial-reports.html' }
+        ];
+
+        var roleSpecific = [];
+
+        if (role === 'broker') {
+          roleSpecific = [
+            { emoji: '➕', label: 'پرونده جدید', href: 'broker-wizard.html' },
+            { emoji: '👥', label: 'متقاضیان', href: 'broker-applicants.html' },
+            { emoji: '📁', label: 'پرونده‌های من', href: 'broker-cases.html' },
+            { emoji: '👤', label: 'پروفایل', href: 'broker-profile.html' }
+          ];
+        } else if (role === 'verifier') {
+          roleSpecific = [
+            { emoji: '📋', label: 'صف بررسی', href: 'verifier-queue.html' },
+            { emoji: '🔍', label: 'بررسی پرونده', href: 'verifier-review.html' },
+            { emoji: '🏠', label: 'داشبورد', href: 'verifier-dashboard.html' }
+          ];
+        } else if (role === 'admin' || role === 'super_admin') {
+          roleSpecific = [
+            { emoji: '👥', label: 'کاربران', href: 'admin-users.html' },
+            { emoji: '✓', label: 'تأییدها', href: 'admin-approvals.html' },
+            { emoji: '📁', label: 'پرونده‌ها', href: 'admin-cases.html' },
+            { emoji: '⚙️', label: 'تنظیمات', href: 'admin-settings.html' }
+          ];
+        } else {
+          roleSpecific = [
+            { emoji: '➕', label: 'درخواست وام', href: 'applicant-new-request.html' },
+            { emoji: '📁', label: 'درخواست‌های من', href: 'applicant-cases.html' }
+          ];
+        }
+
+        var all = roleSpecific.concat(common).slice(0, 8);
+
+        var html = '';
+        all.forEach(function (a) {
+          html += '' +
+            '<a href="' + a.href + '" class="wam-dash__quick-btn">' +
+              '<span class="wam-dash__quick-emoji">' + a.emoji + '</span>' +
+              '<span>' + a.label + '</span>' +
+            '</a>';
+        });
+        el.innerHTML = html;
+      }
+
+      // ═══════════════════════════════════
+      // Activity Feed
+      // ═══════════════════════════════════
+
+      function renderActivity() {
+        var el = $('activityList');
+        if (!el) return;
+
+        var events = [];
+
+        // از پرونده‌ها
+        state.cases.forEach(function (c) {
+          events.push({
+            type: 'case',
+            icon: '📁',
+            iconClass: 'info',
+            title: 'پرونده: ' + (c.title || c.id),
+            time: c.updatedAt || c.createdAt,
+            href: 'case-details.html?id=' + encodeURIComponent(c.id)
+          });
+        });
+
+        // از پرداخت‌ها
+        state.payments.forEach(function (p) {
+          events.push({
+            type: 'payment',
+            icon: '💳',
+            iconClass: p.status === 'paid' ? 'success' : 'warning',
+            title: (p.status === 'paid' ? 'پرداخت: ' : 'قسط: ') + (p.title || p.id),
+            time: p.paidAt || p.createdAt,
+            href: 'payments.html'
+          });
+        });
+
+        // از کیف پول
+        state.transactions.slice(0, 5).forEach(function (tx) {
+          events.push({
+            type: 'wallet',
+            icon: tx.type === 'in' ? '↓' : (tx.type === 'commission' ? '💰' : '↑'),
+            iconClass: tx.type === 'in' ? 'success' : (tx.type === 'commission' ? 'gold' : 'danger'),
+            title: tx.title || 'تراکنش کیف پول',
+            time: tx.createdAt,
+            href: 'wallet.html'
+          });
+        });
+
+        // از قراردادها
+        state.contracts.forEach(function (c) {
+          events.push({
+            type: 'contract',
+            icon: '📝',
+            iconClass: c.status === 'signed' ? 'success' : 'warning',
+            title: 'قرارداد: ' + (c.title || c.id),
+            time: c.updatedAt || c.createdAt,
+            href: 'contracts.html'
+          });
+        });
+
+        events = events.filter(function (e) { return e.time; });
+        events.sort(function (a, b) { return (b.time || 0) - (a.time || 0); });
+        events = events.slice(0, 8);
+
+        if (events.length === 0) {
+          el.innerHTML =
+            '<div class="wam-dash__empty">' +
+              '<div class="wam-dash__empty-icon">📭</div>' +
+              '<p class="wam-dash__empty-text">هنوز فعالیتی ثبت نشده است.</p>' +
+            '</div>';
+          return;
+        }
+
+        var html = '';
+        events.forEach(function (e) {
+          html += '' +
+            '<a href="' + e.href + '" class="wam-dash__activity-item">' +
+              '<div class="wam-dash__activity-icon wam-dash__activity-icon--' + e.iconClass + '">' + e.icon + '</div>' +
+              '<div class="wam-dash__activity-body">' +
+                '<p class="wam-dash__activity-title">' + e.title + '</p>' +
+                '<div class="wam-dash__activity-time">' + relTime(e.time) + '</div>' +
+              '</div>' +
+            '</a>';
+        });
+        el.innerHTML = html;
+      }
+
+      // ═══════════════════════════════════
+      // Alerts
+      // ═══════════════════════════════════
+
+      function renderAlerts() {
+        var el = $('alertsList');
+        if (!el) return;
+
+        var s = computeStats();
+        var alerts = [];
+
+        if (s.payments.overdue > 0) {
+          alerts.push({
+            icon: '🚨',
+            tone: 'danger',
+            title: toFa(s.payments.overdue) + ' پرداخت عقب‌افتاده',
+            text: 'لطفاً هرچه سریع‌تر نسبت به پرداخت اقساط اقدام کنید.'
+          });
+        }
+
+        if (s.tasks.overdue > 0) {
+          alerts.push({
+            icon: '⚠️',
+            tone: 'warning',
+            title: toFa(s.tasks.overdue) + ' تسک عقب‌افتاده',
+            text: 'تسک‌های عقب‌افتاده نیاز به بررسی دارند.'
+          });
+        }
+
+        if (s.contracts.pending > 0) {
+          alerts.push({
+            icon: '📝',
+            tone: 'info',
+            title: toFa(s.contracts.pending) + ' قرارداد در انتظار امضا',
+            text: 'برای تکمیل فرآیند، قراردادها را امضا کنید.'
+          });
+        }
+
+        if (s.consultations.pending > 0) {
+          alerts.push({
+            icon: '💬',
+            tone: 'gold',
+            title: toFa(s.consultations.pending) + ' مشاوره در انتظار پاسخ',
+            text: 'مشاوره‌ها در انتظار بررسی هستند.'
+          });
+        }
+
+        if (alerts.length === 0) {
+          alerts.push({
+            icon: '✓',
+            tone: 'success',
+            title: 'همه چیز مرتب است',
+            text: 'هیچ هشدار یا مورد فوری وجود ندارد.'
+          });
+        }
+
+        var html = '';
+        alerts.forEach(function (a) {
+          html += '' +
+            '<div class="wam-dash__alert wam-dash__alert--' + a.tone + '">' +
+              '<span class="wam-dash__alert-icon">' + a.icon + '</span>' +
+              '<div class="wam-dash__alert-body">' +
+                '<p class="wam-dash__alert-title">' + a.title + '</p>' +
+                '<p class="wam-dash__alert-text">' + a.text + '</p>' +
+              '</div>' +
+            '</div>';
+        });
+        el.innerHTML = html;
+
+        // Badge اعلان
+        var total = alerts.length;
+        var badge = $('notifBadge');
+        if (badge) {
+          if (alerts[0] && alerts[0].tone === 'success') {
+            badge.hidden = true;
+          } else {
+            badge.hidden = false;
+            badge.textContent = toFa(total);
+          }
+        }
+      }
+
+      // ═══════════════════════════════════
+      // Progress widget (نقش‌محور)
+      // ═══════════════════════════════════
+
+      function renderProgressWidget() {
+        var el = $('progressWidget');
+        if (!el) return;
+
+        var role = roleOf();
+        var s = computeStats();
+        var title = 'پیشرفت کلی';
+        var progress = 0;
+        var stats = [];
+        var hidden = false;
+
+        if (role === 'broker') {
+          title = '📈 عملکرد کارگزار';
+          var approvedCount = state.cases.filter(function (c) {
+            return c.status === 'approved' || c.status === 'completed';
+          }).length;
+          progress = s.cases.total > 0 ? Math.round((approvedCount / s.cases.total) * 100) : 0;
+          stats = [
+            { label: 'پرونده‌های موفق', value: toFa(approvedCount) },
+            { label: 'کل پرونده‌ها', value: toFa(s.cases.total) },
+            { label: 'نرخ موفقیت', value: toFa(progress) + '٪' }
+          ];
+        } else if (role === 'verifier') {
+          title = '📈 عملکرد اعتبارسنج';
+          var reviewedCount = state.cases.filter(function (c) {
+            return c.status === 'approved' || c.status === 'rejected';
+          }).length;
+          progress = s.cases.total > 0 ? Math.round((reviewedCount / s.cases.total) * 100) : 0;
+          stats = [
+            { label: 'بررسی‌شده', value: toFa(reviewedCount) },
+            { label: 'در انتظار', value: toFa(s.cases.pending + s.cases.inReview) },
+            { label: 'نرخ پیشرفت', value: toFa(progress) + '٪' }
+          ];
+        } else if (role === 'admin' || role === 'super_admin') {
+          title = '📈 سلامت سیستم';
+          var totalItems = s.cases.total + s.payments.total + s.contracts.total;
+          var okItems = s.cases.approved + s.payments.paid + s.contracts.signed;
+          progress = totalItems > 0 ? Math.round((okItems / totalItems) * 100) : 0;
+          stats = [
+            { label: 'تأییدشده', value: toFa(okItems) },
+            { label: 'در انتظار', value: toFa(s.cases.pending + s.payments.pending + s.contracts.pending) },
+            { label: 'سلامت', value: toFa(progress) + '٪' }
+          ];
+        } else if (role === 'applicant') {
+          title = '📈 وضعیت درخواست‌ها';
+          var doneCases = state.cases.filter(function (c) {
+            return c.status === 'approved' || c.status === 'completed';
+          }).length;
+          progress = s.cases.total > 0 ? Math.round((doneCases / s.cases.total) * 100) : 0;
+          stats = [
+            { label: 'تأییدشده', value: toFa(doneCases) },
+            { label: 'در انتظار', value: toFa(s.cases.pending + s.cases.inReview) },
+            { label: 'پیشرفت', value: toFa(progress) + '٪' }
+          ];
+        } else {
+          hidden = true;
+        }
+
+        if (hidden) {
+          el.innerHTML = '';
+          return;
+        }
+
+        var statsHtml = '';
+        stats.forEach(function (st) {
+          statsHtml += '<span>' + st.label + ': <strong>' + st.value + '</strong></span>';
+        });
+
+        el.innerHTML = '' +
+          '<div class="wam-dash__progress-card">' +
+            '<div class="wam-dash__progress-head">' +
+              '<h3 class="wam-dash__progress-title">' + title + '</h3>' +
+              '<div class="wam-dash__progress-value">' + toFa(progress) + '٪</div>' +
+            '</div>' +
+            '<div class="wam-dash__progress-bar">' +
+              '<div class="wam-dash__progress-fill" style="width:' + progress + '%;"></div>' +
+            '</div>' +
+            '<div class="wam-dash__progress-stats">' + statsHtml + '</div>' +
+          '</div>';
+      }
+
+      // ═══════════════════════════════════
+      // رندر کلی
+      // ═══════════════════════════════════
+
+      function refreshAll() {
+        loadMyData();
+        renderHeader();
+        renderHeroActions();
+        renderStats();
+        renderQuickActions();
+        renderActivity();
+        renderAlerts();
+        renderProgressWidget();
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Refresh
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            refreshAll();
+            $('refreshBtn').textContent = '✓';
+            setTimeout(function () { $('refreshBtn').textContent = '🔄'; }, 900);
+            showToast('✓ بروزرسانی شد');
+          });
+        }
+
+        // Notif
+        if ($('notifBtn')) {
+          $('notifBtn').addEventListener('click', function () {
+            var el = $('alertsList');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+        }
+
+        // Avatar
+        if ($('avatarBtn')) {
+          $('avatarBtn').addEventListener('click', function () {
+            var role = roleOf();
+            if (role === 'broker') window.location.href = 'broker-profile.html';
+            else if (role === 'admin' || role === 'super_admin') window.location.href = 'admin-settings.html';
+            else window.location.href = 'wallet.html';
+          });
+        }
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        state.user = currentUser();
+        refreshAll();
+        bindEvents();
+
+        emitEvent('dashboard:opened', {
+          role: roleOf()
+        });
+
+        // Auto-refresh ۶۰ ثانیه
+        setInterval(refreshAll, 60000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

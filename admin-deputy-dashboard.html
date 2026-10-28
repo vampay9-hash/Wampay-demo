@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>داشبورد ادمین معاون | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23; --primary-light: #1a5c3a; --primary-dark: #062416;
+    --gold: #d4a62a; --gold-light: #f0c651;
+    --text: #1a2b22; --text-muted: #6b7d73;
+    --bg: #f4f7f4; --bg-card: #ffffff; --border: #e0e8e3;
+    --error: #c0392b; --success: #1e8e4a; --warning: #e67e22; --info: #2980b9;
+    --royal: #6d28d9; --royal-light: #8b5cf6; --royal-dark: #4c1d95;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px; --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.7; transition: background 0.3s, color 0.3s;
+    background-image:
+        radial-gradient(circle at 10% 10%, rgba(109,40,217,0.04), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(11,59,35,0.05), transparent 40%);
+}
+
+/* Header معاون */
+.dep-header {
+    background: linear-gradient(135deg, #2e1065 0%, #4c1d95 40%, #6d28d9 100%);
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; box-shadow: 0 8px 24px rgba(76,29,149,0.35);
+    position: sticky; top: 0; z-index: 100; height: 68px;
+    border-bottom: 3px solid #a78bfa;
+}
+.dep-header__inner {
+    max-width: 1400px; width: 100%; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.dep-header__right { display: flex; align-items: center; gap: 14px; }
+.dep-header__menu-btn {
+    display: none; width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(167,139,250,0.3);
+    background: rgba(255,255,255,0.08); color: #d8b4fe;
+    cursor: pointer; font-size: 20px;
+}
+.dep-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 17px; color: #fff; text-decoration: none;
+}
+.dep-logo__icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, #a78bfa, #c4b5fd);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 0 20px rgba(167,139,250,0.6);
+}
+.dep-header__left { display: flex; align-items: center; gap: 10px; }
+.dep-header__btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(167,139,250,0.3);
+    background: rgba(255,255,255,0.08); color: #d8b4fe;
+    cursor: pointer; font-size: 18px;
+    position: relative; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+}
+.dep-header__btn:hover { background: rgba(167,139,250,0.2); }
+.dep-header__badge {
+    position: absolute; top: -4px; left: -4px;
+    background: var(--error); color: #fff;
+    font-size: 10px; font-weight: 800;
+    min-width: 18px; height: 18px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 4px; border: 2px solid #2e1065;
+}
+.dep-user {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 12px 6px 6px; border-radius: 10px;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.3);
+    cursor: pointer; transition: var(--transition);
+    position: relative;
+}
+.dep-user:hover { background: rgba(167,139,250,0.25); }
+.dep-user__avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, #a78bfa, #c4b5fd);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: #2e1065; font-weight: 800;
+}
+.dep-user__name { font-size: 13px; font-weight: 700; color: #fff; }
+.dep-user__role { font-size: 11px; opacity: 0.85; color: #d8b4fe; }
+.dep-user__dropdown {
+    position: absolute; top: calc(100% + 8px); left: 0;
+    background: var(--bg-card); color: var(--text);
+    border-radius: var(--radius-sm); padding: 6px;
+    box-shadow: var(--shadow-lg); min-width: 220px;
+    border: 1px solid var(--border);
+    display: none; z-index: 200;
+}
+.dep-user__dropdown--open { display: block; }
+.dep-user__dropdown a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 12px; border-radius: 6px;
+    color: var(--text); text-decoration: none;
+    font-size: 13px; font-weight: 600; transition: var(--transition);
+}
+.dep-user__dropdown a:hover { background: var(--bg); color: var(--royal); }
+.dep-user__dropdown hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
+/* Layout */
+.dep-layout {
+    display: grid; grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 68px);
+}
+.dep-sidebar {
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    padding: 20px 12px;
+    position: sticky; top: 68px;
+    height: calc(100vh - 68px); overflow-y: auto;
+}
+.dep-sidebar__section {
+    font-size: 11px; font-weight: 800; color: var(--text-muted);
+    padding: 12px 12px 6px; text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.dep-nav { display: flex; flex-direction: column; gap: 4px; }
+.dep-nav__item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px; border-radius: var(--radius-sm);
+    color: var(--text); text-decoration: none;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: var(--transition);
+    border: none; background: transparent;
+    width: 100%; text-align: right; font-family: inherit;
+}
+.dep-nav__item:hover { background: var(--bg); color: var(--royal); }
+.dep-nav__item--active {
+    background: linear-gradient(135deg, var(--royal), var(--royal-light));
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(109,40,217,0.35);
+}
+.dep-nav__item__icon { font-size: 18px; width: 22px; text-align: center; }
+.dep-nav__item__badge {
+    margin-right: auto;
+    background: var(--error); color: #fff;
+    font-size: 10px; font-weight: 800;
+    padding: 2px 7px; border-radius: 10px;
+}
+
+/* Main */
+.dep-main { padding: 24px 28px 100px; max-width: 1400px; width: 100%; }
+.dep-section { display: none; animation: fadeIn 0.3s ease; }
+.dep-section--active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.dep-page-title { font-size: 24px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+.dep-page-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 22px; }
+
+/* Banner معاون */
+.dep-banner {
+    background: linear-gradient(135deg, #2e1065 0%, #4c1d95 60%, #6d28d9 100%);
+    color: #fff; border-radius: var(--radius);
+    padding: 24px 28px; margin-bottom: 22px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 32px rgba(76,29,149,0.35);
+    border: 2px solid rgba(167,139,250,0.5);
+}
+.dep-banner::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(167,139,250,0.35), transparent);
+}
+.dep-banner__content {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+}
+.dep-banner__title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+.dep-banner__subtitle { font-size: 13px; opacity: 0.9; max-width: 500px; }
+.dep-banner__date {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(167,139,250,0.2); color: #d8b4fe;
+    padding: 6px 12px; border-radius: 8px;
+    font-size: 12px; font-weight: 700;
+    margin-top: 10px;
+}
+.dep-banner__icon {
+    font-size: 72px;
+    filter: drop-shadow(0 0 20px rgba(167,139,250,0.8));
+    animation: shield-pulse 3s ease-in-out infinite;
+}
+@keyframes shield-pulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.08) rotate(3deg); }
+}
+
+/* Restricted banner */
+.dep-restricted {
+    background: linear-gradient(135deg, rgba(230,126,34,0.10), rgba(192,57,43,0.05));
+    border: 2px solid rgba(230,126,34,0.4);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px; margin-bottom: 18px;
+    display: flex; gap: 12px; align-items: flex-start;
+}
+.dep-restricted__icon { font-size: 26px; flex-shrink: 0; }
+.dep-restricted__content { flex: 1; }
+.dep-restricted__title {
+    font-size: 13px; font-weight: 800; color: var(--warning);
+    margin-bottom: 4px;
+}
+.dep-restricted__desc {
+    font-size: 12px; color: var(--text-muted); line-height: 1.8;
+}
+
+/* Stats */
+.dep-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+.dep-stat {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 18px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--royal);
+    transition: var(--transition);
+    position: relative;
+    cursor: pointer;
+}
+.dep-stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.dep-stat--gold { border-right-color: var(--gold); }
+.dep-stat--success { border-right-color: var(--success); }
+.dep-stat--warning { border-right-color: var(--warning); }
+.dep-stat--error { border-right-color: var(--error); }
+.dep-stat--info { border-right-color: var(--info); }
+
+.dep-stat__icon { font-size: 22px; margin-bottom: 4px; }
+.dep-stat__label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.dep-stat__value { font-size: 22px; font-weight: 800; line-height: 1.2; }
+.dep-stat__value span { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-right: 4px; }
+.dep-stat__action {
+    position: absolute; top: 12px; left: 12px;
+    font-size: 11px; font-weight: 700; color: var(--text-muted);
+}
+.dep-stat--locked {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+.dep-stat--locked:hover { transform: none; }
+.dep-stat--locked::after {
+    content: '🔒';
+    position: absolute; bottom: 12px; left: 12px;
+    font-size: 16px;
+    opacity: 0.5;
+}
+
+/* Card */
+.dep-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    margin-bottom: 18px; overflow: hidden;
+}
+.dep-card__header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+}
+.dep-card__title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.dep-card__body { padding: 18px 20px; }
+
+/* Queue Grid */
+.queue-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+}
+.queue-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px; border-radius: var(--radius-sm);
+    background: var(--bg); border: 1px solid var(--border);
+    transition: var(--transition);
+    cursor: pointer;
+}
+.queue-item:hover { border-color: var(--royal-light); transform: translateX(-4px); }
+.queue-item__icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(109,40,217,0.08), rgba(11,59,35,0.04));
+}
+.queue-item__content { flex: 1; min-width: 0; }
+.queue-item__title { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+.queue-item__meta { font-size: 11px; color: var(--text-muted); }
+.queue-item__count {
+    font-size: 22px; font-weight: 800;
+    color: var(--royal);
+    padding: 0 10px;
+}
+.queue-item__count--urgent { color: var(--error); }
+.queue-item__count--warning { color: var(--warning); }
+.queue-item__count--empty { color: var(--text-muted); }
+
+/* Team Card */
+.team-card {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 14px; border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 14px;
+    transition: var(--transition);
+}
+.team-card:hover { border-color: var(--royal-light); }
+.team-card__avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 800; flex-shrink: 0;
+    color: #fff;
+}
+.team-card__avatar--super { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--primary-dark); }
+.team-card__avatar--deputy { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+.team-card__avatar--verifier { background: linear-gradient(135deg, #2980b9, #3498db); }
+.team-card__avatar--broker { background: linear-gradient(135deg, #0b3b23, #1a5c3a); }
+.team-card__avatar--legal { background: linear-gradient(135deg, #1f3a5f, #2c5282); }
+.team-card__avatar--accounting { background: linear-gradient(135deg, #d4a62a, #f0c651); color: var(--primary-dark); }
+.team-card__avatar--consultation { background: linear-gradient(135deg, #e67e22, #f39c12); }
+.team-card__avatar--developer { background: linear-gradient(135deg, #6b7d73, #8fa398); }
+
+.team-card__content { flex: 1; min-width: 0; }
+.team-card__name { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+.team-card__role { font-size: 11px; color: var(--text-muted); }
+.team-card__meta {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 6px;
+}
+
+/* Badges */
+.dep-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 800;
+}
+.dep-badge--pending { background: rgba(230,126,34,0.12); color: var(--warning); }
+.dep-badge--approved { background: rgba(30,142,74,0.12); color: var(--success); }
+.dep-badge--rejected { background: rgba(192,57,43,0.12); color: var(--error); }
+.dep-badge--info { background: rgba(41,128,185,0.12); color: var(--info); }
+.dep-badge--gold { background: rgba(212,166,42,0.15); color: var(--gold); }
+.dep-badge--royal { background: rgba(109,40,217,0.12); color: var(--royal); }
+.dep-badge--active { background: rgba(30,142,74,0.12); color: var(--success); }
+.dep-badge--suspended { background: rgba(192,57,43,0.12); color: var(--error); }
+
+/* Table */
+.dep-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+}
+.dep-table th {
+    background: var(--bg); padding: 12px 14px; text-align: right;
+    font-weight: 800; font-size: 12px; color: var(--text-muted);
+    border-bottom: 2px solid var(--border); white-space: nowrap;
+}
+.dep-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+}
+.dep-table tr:last-child td { border-bottom: none; }
+.dep-table tr:hover td { background: var(--bg); }
+.dep-table__mono { font-family: monospace; direction: ltr; text-align: right; }
+
+/* Bar chart */
+.bar-chart { display: flex; flex-direction: column; gap: 14px; }
+.bar-item { display: flex; flex-direction: column; gap: 6px; }
+.bar-item__header {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px;
+}
+.bar-item__name { font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.bar-item__value { font-weight: 800; color: var(--royal); }
+.bar-track {
+    background: var(--bg); border-radius: 999px;
+    height: 12px; overflow: hidden;
+    border: 1px solid var(--border);
+}
+.bar-fill {
+    height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--royal), var(--royal-light));
+    transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Activity */
+.activity-list { display: flex; flex-direction: column; gap: 6px; }
+.activity-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px; border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+.activity-item:hover { background: var(--bg); }
+.activity-item__icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+}
+.activity-item__icon--success { background: rgba(30,142,74,0.12); color: var(--success); }
+.activity-item__icon--pending { background: rgba(230,126,34,0.12); color: var(--warning); }
+.activity-item__icon--error { background: rgba(192,57,43,0.12); color: var(--error); }
+.activity-item__icon--info { background: rgba(41,128,185,0.12); color: var(--info); }
+.activity-item__icon--royal { background: rgba(109,40,217,0.12); color: var(--royal); }
+.activity-item__content { flex: 1; min-width: 0; }
+.activity-item__title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.activity-item__meta { font-size: 11px; color: var(--text-muted); }
+
+/* Buttons */
+.dep-btn {
+    padding: 10px 16px; border-radius: var(--radius-sm);
+    border: none; font-family: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    text-decoration: none;
+}
+.dep-btn--primary {
+    background: linear-gradient(135deg, var(--royal), var(--royal-light));
+    color: #fff; box-shadow: 0 4px 12px rgba(109,40,217,0.25);
+}
+.dep-btn--primary:hover { transform: translateY(-1px); }
+.dep-btn--gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--primary-dark);
+}
+.dep-btn--gold:hover { transform: translateY(-1px); }
+.dep-btn--ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border);
+}
+.dep-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.dep-btn--sm { padding: 6px 12px; font-size: 12px; }
+.dep-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Empty */
+.dep-empty { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+.dep-empty__icon { font-size: 50px; margin-bottom: 12px; opacity: 0.4; }
+.dep-empty__desc { font-size: 13px; }
+
+/* Loading */
+.loading-screen { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+.loading-spinner {
+    width: 50px; height: 50px; border: 4px solid var(--border);
+    border-top-color: var(--royal-light);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Toast */
+.toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 22px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 10000; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px; max-width: 90%;
+}
+.toast--show { transform: translateX(-50%) translateY(0); }
+.toast--error { background: var(--error); }
+.toast--success { background: var(--success); }
+
+/* Bottom Nav */
+.dep-bottom-nav {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--bg-card); border-top: 2px solid var(--royal-light);
+    padding: 6px; z-index: 90; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+.dep-bottom-nav__inner { display: flex; justify-content: space-around; }
+.dep-bottom-nav__item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 3px; padding: 6px 10px; border-radius: 8px;
+    color: var(--text-muted); font-size: 10px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    background: transparent; border: none; font-family: inherit; flex: 1;
+}
+.dep-bottom-nav__item--active { color: var(--royal); background: rgba(109,40,217,0.08); }
+.dep-bottom-nav__icon { font-size: 20px; }
+
+/* Overlay */
+.dep-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 150; display: none;
+}
+.dep-overlay--show { display: block; }
+
+@media (max-width: 1024px) {
+    .dep-stats { grid-template-columns: repeat(2, 1fr); }
+    .dep-layout { grid-template-columns: 1fr; }
+    .dep-sidebar {
+        position: fixed; top: 68px; right: 0;
+        width: 260px; transform: translateX(100%);
+        transition: transform 0.3s ease; z-index: 200;
+        box-shadow: var(--shadow-lg);
+    }
+    .dep-sidebar--open { transform: translateX(0); }
+    .dep-header__menu-btn { display: flex; align-items: center; justify-content: center; }
+    .queue-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+    .dep-header { padding: 12px 16px; height: 60px; }
+    .dep-logo { font-size: 15px; }
+    .dep-logo__icon { width: 36px; height: 36px; font-size: 18px; }
+    .dep-user__name, .dep-user__role { display: none; }
+    .dep-main { padding: 16px 14px 100px; }
+    .dep-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .dep-stat { padding: 14px; }
+    .dep-stat__value { font-size: 18px; }
+    .dep-page-title { font-size: 20px; }
+    .queue-grid { grid-template-columns: 1fr; }
+    .dep-bottom-nav { display: block; }
+    .dep-header__menu-btn { display: flex; }
+    .dep-sidebar { top: 60px; height: calc(100vh - 60px); }
+    .dep-banner__icon { font-size: 48px; }
+    .dep-banner__title { font-size: 18px; }
+    .dep-table { font-size: 11px; }
+    .dep-table th, .dep-table td { padding: 8px 6px; }
+}
+</style>
+</head>
+<body>
+
+<header class="dep-header">
+    <div class="dep-header__inner">
+        <div class="dep-header__right">
+            <button class="dep-header__menu-btn" id="menuBtn">☰</button>
+            <a href="admin-deputy-dashboard.html" class="dep-logo">
+                <div class="dep-logo__icon">🎖️</div>
+                <span>پنل ادمین معاون</span>
+            </a>
+        </div>
+        <div class="dep-header__left">
+            <button class="dep-header__btn" id="themeBtn" title="تغییر تم">🌙</button>
+            <button class="dep-header__btn" id="refreshBtn" title="به‌روزرسانی">🔄</button>
+            <button class="dep-header__btn" id="notifBtn" title="اعلانات">
+                🔔
+                <span class="dep-header__badge" id="notifBadge" style="display:none;">۰</span>
+            </button>
+            <div class="dep-user" id="userMenu">
+                <div class="dep-user__avatar" id="userAvatar">🎖️</div>
+                <div>
+                    <div class="dep-user__name" id="userName">ادمین معاون</div>
+                    <div class="dep-user__role">🎖️ معاون</div>
+                </div>
+                <div class="dep-user__dropdown" id="userDropdown">
+                    <a href="#" data-nav="overview">📈 نمای کلی</a>
+                    <a href="#" data-nav="queues">📋 صف‌های کاری</a>
+                    <a href="#" data-nav="team">👥 تیم مدیریت</a>
+                    <a href="#" data-nav="reports">📊 گزارش‌ها</a>
+                    <hr>
+                    <a href="admin-broker-dashboard.html">🤝 ادمین کارگزار</a>
+                    <a href="admin-legal-dashboard.html">⚖️ حقوقی</a>
+                    <a href="admin-accounting-dashboard.html">💰 حسابداری</a>
+                    <hr>
+                    <a href="#" id="logoutBtn">🚪 خروج</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="dep-overlay" id="overlay"></div>
+
+<div class="dep-layout">
+
+    <aside class="dep-sidebar" id="sidebar">
+        <div class="dep-sidebar__section">منوی اصلی</div>
+        <nav class="dep-nav">
+            <button class="dep-nav__item dep-nav__item--active" data-nav="overview">
+                <span class="dep-nav__item__icon">📈</span>
+                <span>نمای کلی</span>
+            </button>
+            <button class="dep-nav__item" data-nav="queues">
+                <span class="dep-nav__item__icon">📋</span>
+                <span>صف‌های کاری</span>
+                <span class="dep-nav__item__badge" id="queuesBadge" style="display:none;">۰</span>
+            </button>
+            <button class="dep-nav__item" data-nav="team">
+                <span class="dep-nav__item__icon">👥</span>
+                <span>تیم مدیریت</span>
+            </button>
+            <button class="dep-nav__item" data-nav="reports">
+                <span class="dep-nav__item__icon">📊</span>
+                <span>گزارش‌ها</span>
+            </button>
+        </nav>
+        <div class="dep-sidebar__section">پنل‌های ستادی</div>
+        <nav class="dep-nav">
+            <button class="dep-nav__item" onclick="window.location.href='admin-broker-dashboard.html'">
+                <span class="dep-nav__item__icon">🤝</span>
+                <span>ادمین کارگزار</span>
+            </button>
+            <button class="dep-nav__item" onclick="window.location.href='admin-legal-dashboard.html'">
+                <span class="dep-nav__item__icon">⚖️</span>
+                <span>ادمین حقوقی</span>
+            </button>
+            <button class="dep-nav__item" onclick="window.location.href='admin-accounting-dashboard.html'">
+                <span class="dep-nav__item__icon">💰</span>
+                <span>ادمین حسابداری</span>
+            </button>
+            <button class="dep-nav__item" onclick="window.location.href='admin-accounting-analytics.html'">
+                <span class="dep-nav__item__icon">📊</span>
+                <span>تحلیل مالی</span>
+            </button>
+        </nav>
+    </aside>
+
+    <main class="dep-main" id="mainContainer">
+
+        <!-- ============ OVERVIEW ============ -->
+        <section class="dep-section dep-section--active" id="section-overview">
+            <div class="dep-banner">
+                <div class="dep-banner__content">
+                    <div>
+                        <div class="dep-banner__title">🎖️ خوش آمدید، ادمین معاون</div>
+                        <div class="dep-banner__subtitle">
+                            نظارت کامل بر صف‌ها، تیم و عملکرد — دسترسی گسترده بجز تراکنش‌های مالی
+                        </div>
+                        <div class="dep-banner__date">
+                            <span>📅</span>
+                            <span id="currentDate">—</span>
+                        </div>
+                    </div>
+                    <div class="dep-banner__icon">🛡️</div>
+                </div>
+            </div>
+
+            <!-- Restricted Alert -->
+            <div class="dep-restricted">
+                <div class="dep-restricted__icon">🔒</div>
+                <div class="dep-restricted__content">
+                    <div class="dep-restricted__title">دسترسی محدود مالی</div>
+                    <div class="dep-restricted__desc">
+                        به عنوان ادمین معاون، دسترسی شما به <strong>تراکنش‌های مالی،
+                        آزادسازی وجه امانی، تنظیم کارمزد و تعریف ادمین معاون جدید</strong>
+                        محدود است. برای این موارد با مدیر کل تماس بگیرید.
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="dep-page-title">📈 نمای کلی سامانه</h1>
+            <p class="dep-page-subtitle">خلاصه‌ی زنده‌ی وضعیت، صف‌ها و تیم</p>
+
+            <!-- Stats -->
+            <div class="dep-stats">
+                <div class="dep-stat dep-stat--warning" data-nav="queues">
+                    <div class="dep-stat__icon">⏳</div>
+                    <div class="dep-stat__label">کل صف‌های در انتظار</div>
+                    <div class="dep-stat__value" id="statTotalPending">۰</div>
+                    <div class="dep-stat__action">مشاهده ←</div>
+                </div>
+                <div class="dep-stat dep-stat--success">
+                    <div class="dep-stat__icon">✅</div>
+                    <div class="dep-stat__label">تأییدشده امروز</div>
+                    <div class="dep-stat__value" id="statApprovedToday">۰</div>
+                </div>
+                <div class="dep-stat dep-stat--info">
+                    <div class="dep-stat__icon">👥</div>
+                    <div class="dep-stat__label">اعضای تیم فعال</div>
+                    <div class="dep-stat__value" id="statTeamActive">۰</div>
+                    <div class="dep-stat__action" data-nav="team">مدیریت ←</div>
+                </div>
+                <div class="dep-stat dep-stat--royal">
+                    <div class="dep-stat__icon">📁</div>
+                    <div class="dep-stat__label">کل پرونده‌ها</div>
+                    <div class="dep-stat__value" id="statTotalCases">۰</div>
+                </div>
+            </div>
+
+            <div class="dep-stats">
+                <div class="dep-stat dep-stat--gold">
+                    <div class="dep-stat__icon">💎</div>
+                    <div class="dep-stat__label">کل فاکتورها</div>
+                    <div class="dep-stat__value" id="statTotalInvoices">۰</div>
+                </div>
+                <div class="dep-stat dep-stat--info">
+                    <div class="dep-stat__icon">🤝</div>
+                    <div class="dep-stat__label">کارگزاران فعال</div>
+                    <div class="dep-stat__value" id="statTotalBrokers">۰</div>
+                </div>
+                <div class="dep-stat dep-stat--success">
+                    <div class="dep-stat__icon">📄</div>
+                    <div class="dep-stat__label">قراردادهای امضاشده</div>
+                    <div class="dep-stat__value" id="statSignedContracts">۰</div>
+                </div>
+                <div class="dep-stat dep-stat--locked" title="دسترسی محدود">
+                    <div class="dep-stat__icon">💰</div>
+                    <div class="dep-stat__label">سود کل سایت</div>
+                    <div class="dep-stat__value" id="statTotalProfit" style="font-size:16px;color:var(--text-muted);">محدود</div>
+                </div>
+            </div>
+
+            <!-- Queues Overview -->
+            <div class="dep-card">
+                <div class="dep-card__header">
+                    <div class="dep-card__title">📋 صف‌های کاری</div>
+                    <button class="dep-btn dep-btn--ghost dep-btn--sm" data-nav="queues">مشاهده‌ی همه ←</button>
+                </div>
+                <div class="dep-card__body">
+                    <div class="queue-grid" id="queuesOverview"></div>
+                </div>
+            </div>
+
+            <!-- Team Overview -->
+            <div class="dep-card">
+                <div class="dep-card__header">
+                    <div class="dep-card__title">👥 تیم مدیریت</div>
+                    <button class="dep-btn dep-btn--ghost dep-btn--sm" data-nav="team">مشاهده‌ی همه ←</button>
+                </div>
+                <div class="dep-card__body" id="teamOverview"></div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="dep-card">
+                <div class="dep-card__header">
+                    <div class="dep-card__title">🕐 آخرین فعالیت‌های سامانه</div>
+                </div>
+                <div class="dep-card__body">
+                    <div class="activity-list" id="recentActivity"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ QUEUES ============ -->
+        <section class="dep-section" id="section-queues">
+            <h1 class="dep-page-title">📋 صف‌های کاری</h1>
+            <p class="dep-page-subtitle">نظارت بر تمام صف‌های تأیید و بررسی</p>
+
+            <div class="queue-grid" id="queuesFull"></div>
+        </section>
+
+        <!-- ============ TEAM ============ -->
+        <section class="dep-section" id="section-team">
+            <h1 class="dep-page-title">👥 تیم مدیریت</h1>
+            <p class="dep-page-subtitle">لیست ادمین‌ها و اعضای تیم (فقط مشاهده)</p>
+
+            <div class="dep-stats">
+                <div class="dep-stat dep-stat--royal">
+                    <div class="dep-stat__icon">🎖️</div>
+                    <div class="dep-stat__label">معاونین</div>
+                    <div class="dep-stat__value" id="teamDeputies">۰</div>
+                </div>
+                <div class="dep-stat dep-stat--info">
+                    <div class="dep-stat__icon">🔍</div>
+                    <div class="dep-stat__label">اعتبارسنجی</div>
+                    <div class="dep-stat__value" id="teamVerifiers">۰</div>
+                </div>
+                <div class="dep-stat dep-stat--success">
+                    <div class="dep-stat__icon">🤝</div>
+                    <div class="dep-stat__label">ادمین کارگزار</div>
+                    <div class="dep-stat__value" id="teamBrokerAdmins">۰</div>
+                </div>
+                <div class="dep-stat dep-stat--gold">
+                    <div class="dep-stat__icon">💰</div>
+                    <div class="dep-stat__label">حسابداری</div>
+                    <div class="dep-stat__value" id="teamAccountings">۰</div>
+                </div>
+            </div>
+
+            <div class="dep-stats">
+                <div class="dep-stat dep-stat--info" style="border-right-color:var(--legal);">
+                    <div class="dep-stat__icon">⚖️</div>
+                    <div class="dep-stat__label">حقوقی</div>
+                    <div class="dep-stat__value" id="teamLegals">۰</div>
+                </div>
+                <div class="dep-stat" style="border-right-color:var(--warning);">
+                    <div class="dep-stat__icon">💬</div>
+                    <div class="dep-stat__label">مشاوره</div>
+                    <div class="dep-stat__value" id="teamConsultations">۰</div>
+                </div>
+                <div class="dep-stat">
+                    <div class="dep-stat__icon">💻</div>
+                    <div class="dep-stat__label">برنامه‌نویس</div>
+                    <div class="dep-stat__value" id="teamDevelopers">۰</div>
+                </div>
+                <div class="dep-stat dep-stat--success">
+                    <div class="dep-stat__icon">👥</div>
+                    <div class="dep-stat__label">کل تیم</div>
+                    <div class="dep-stat__value" id="teamTotal">۰</div>
+                </div>
+            </div>
+
+            <div class="dep-card">
+                <div class="dep-card__header">
+                    <div class="dep-card__title">👥 لیست کامل تیم مدیریت</div>
+                    <button class="dep-btn dep-btn--ghost dep-btn--sm" disabled title="دسترسی محدود">
+                        🔒 مدیریت توسط مدیر کل
+                    </button>
+                </div>
+                <div class="dep-card__body">
+                    <div class="queue-list" id="teamList"></div>
+                </div>
+            </div>
+
+            <div class="dep-card">
+                <div class="dep-card__header">
+                    <div class="dep-card__title">📊 جدول ادمین‌ها</div>
+                </div>
+                <div class="dep-card__body" style="overflow-x:auto;">
+                    <table class="dep-table" id="teamTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>نام</th>
+                                <th>نقش</th>
+                                <th>موبایل</th>
+                                <th>وضعیت</th>
+                                <th>آخرین ورود</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teamTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ REPORTS ============ -->
+        <section class="dep-section" id="section-reports">
+            <h1 class="dep-page-title">📊 گزارش‌ها</h1>
+            <p class="dep-page-subtitle">آمار و تحلیل عملکرد سامانه (بدون داده‌های مالی)</p>
+
+            <div class="dep-card">
+                <div class="dep-card__header">
+                    <div class="dep-card__title">📁 پرونده‌ها بر اساس وضعیت</div>
+                </div>
+                <div class="dep-card__body">
+                    <div class="bar-chart" id="casesByStatus"></div>
+                </div>
+            </div>
+
+            <div class="dep-card">
+                <div class="dep-card__header">
+                    <div class="dep-card__title">🏆 برترین کارگزاران (تعداد پرونده)</div>
+                </div>
+                <div class="dep-card__body">
+                    <div class="bar-chart" id="topBrokers"></div>
+                </div>
+            </div>
+
+            <div class="dep-card">
+                <div class="dep-card__header">
+                    <div class="dep-card__title">📅 توزیع ماهانه پرونده‌ها</div>
+                </div>
+                <div class="dep-card__body" id="monthlyReports"></div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<nav class="dep-bottom-nav">
+    <div class="dep-bottom-nav__inner">
+        <button class="dep-bottom-nav__item dep-bottom-nav__item--active" data-nav="overview">
+            <span class="dep-bottom-nav__icon">📈</span>
+            <span>نمای کلی</span>
+        </button>
+        <button class="dep-bottom-nav__item" data-nav="queues">
+            <span class="dep-bottom-nav__icon">📋</span>
+            <span>صف‌ها</span>
+        </button>
+        <button class="dep-bottom-nav__item" data-nav="team">
+            <span class="dep-bottom-nav__icon">👥</span>
+            <span>تیم</span>
+        </button>
+        <button class="dep-bottom-nav__item" data-nav="reports">
+            <span class="dep-bottom-nav__icon">📊</span>
+            <span>گزارش‌ها</span>
+        </button>
+    </div>
+</nav>
+
+<div class="toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<!-- Services -->
+<script src="js/credit-invoice-service.js"></script>
+<script src="js/contract-service.js"></script>
+<script src="js/financial-log-service.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    const state = {
+        user: null,
+        cases: [],
+        invoices: [],
+        contracts: [],
+        admins: [],
+        brokers: [],
+        queues: {},
+        logs: []
+    };
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+    const faPriceShort = (n) => {
+        n = Number(n || 0);
+        if (n >= 1e9) return faNum((n / 1e9).toFixed(1)) + ' میلیارد';
+        if (n >= 1e6) return faNum((n / 1e6).toFixed(1)) + ' میلیون';
+        if (n >= 1e3) return faNum((n / 1e3).toFixed(0)) + ' هزار';
+        return faPrice(n);
+    };
+
+    const ROLE_NAMES = {
+        super_admin: { label: '👑 مدیر کل', cls: 'dep-badge--gold' },
+        deputy_admin: { label: '🎖️ معاون', cls: 'dep-badge--royal' },
+        verification_admin: { label: '🔍 اعتبارسنجی', cls: 'dep-badge--info' },
+        consultation_admin: { label: '💬 مشاوره', cls: 'dep-badge--info' },
+        broker_admin: { label: '🤝 کارگزار', cls: 'dep-badge--approved' },
+        legal_admin: { label: '⚖️ حقوقی', cls: 'dep-badge--info' },
+        accounting_admin: { label: '💰 حسابداری', cls: 'dep-badge--gold' },
+        developer_admin: { label: '💻 برنامه‌نویس', cls: 'dep-badge--info' }
+    };
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'toast toast--show';
+        if (type === 'error') el.classList.add('toast--error');
+        if (type === 'success') el.classList.add('toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('toast--show'), 3200);
+    }
+
+    // ===== Auth =====
+    function checkAuth() {
+        try {
+            const cu = JSON.parse(localStorage.getItem('wamPayCurrentUser') || 'null');
+            if (!cu) {
+                toast('ابتدا وارد شوید', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            const allowed = ['deputy_admin', 'super_admin'];
+            if (!allowed.includes(cu.role)) {
+                toast('دسترسی فقط برای ادمین معاون', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            state.user = cu;
+            return true;
+        } catch (e) {
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    // ===== Load Data =====
+    function loadData() {
+        try {
+            state.cases = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+            state.admins = JSON.parse(localStorage.getItem('wamPayAdmins') || '[]');
+            const allUsers = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+            state.brokers = allUsers.filter(u => u.role === 'broker');
+
+            state.invoices = window.WamPayCreditInvoice
+                ? WamPayCreditInvoice.getAllInvoices()
+                : JSON.parse(localStorage.getItem('wamPayCreditInvoices') || '[]');
+
+            state.contracts = window.WamPayContracts
+                ? WamPayContracts.getAllContracts()
+                : JSON.parse(localStorage.getItem('wamPayContracts') || '[]');
+
+            state.logs = JSON.parse(localStorage.getItem('wamPayFinancialLog') || '[]');
+
+            state.queues = {
+                brokerAdmin: JSON.parse(localStorage.getItem('wamPayBrokerAdminQueue') || '[]'),
+                accounting: JSON.parse(localStorage.getItem('wamPayAccountingQueue') || '[]'),
+                superFinancial: JSON.parse(localStorage.getItem('wamPaySuperAdminFinancialQueue') || '[]'),
+                legal: JSON.parse(localStorage.getItem('wamPayLegalQueue') || '[]'),
+                siteSign: JSON.parse(localStorage.getItem('wamPaySiteSignQueue') || '[]'),
+                brokerTransfer: JSON.parse(localStorage.getItem('wamPayBrokerTransferQueue') || '[]'),
+                superTransfer: JSON.parse(localStorage.getItem('wamPaySuperAdminTransferQueue') || '[]'),
+                applicantConfirm: JSON.parse(localStorage.getItem('wamPayApplicantConfirmQueue') || '[]'),
+                declaration: JSON.parse(localStorage.getItem('wamPayDeclarationQueue') || [])
+            };
+        } catch (e) {
+            console.error('Load error:', e);
+        }
+    }
+
+    // ===== Helpers =====
+    function formatShamsi(iso) {
+        if (!iso) return '—';
+        try {
+            const d = new Date(iso);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            return `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())}`;
+        } catch { return '—'; }
+    }
+
+    function formatRelativeTime(iso) {
+        if (!iso) return '—';
+        const diff = Date.now() - new Date(iso).getTime();
+        const m = Math.floor(diff / 60000);
+        if (m < 1) return 'همین الان';
+        if (m < 60) return `${faNum(m)} دقیقه پیش`;
+        const h = Math.floor(m / 60);
+        if (h < 24) return `${faNum(h)} ساعت پیش`;
+        const d = Math.floor(h / 24);
+        if (d < 30) return `${faNum(d)} روز پیش`;
+        return formatShamsi(iso);
+    }
+
+    function getQueueCount(queueKey, statusFilter) {
+        const q = state.queues[queueKey] || [];
+        if (statusFilter) return q.filter(x => x.status === statusFilter).length;
+        return q.length;
+    }
+
+    // ===== Stats =====
+    function renderStats() {
+        // Total pending across all queues (excluding financial ones that are locked)
+        let totalPending = 0;
+        totalPending += getQueueCount('brokerAdmin', 'pending');
+        totalPending += getQueueCount('legal', 'pending_draft');
+        totalPending += getQueueCount('superFinancial', 'pending');
+        totalPending += getQueueCount('superTransfer', 'awaiting_super_admin_verify');
+        totalPending += getQueueCount('applicantConfirm', 'awaiting_applicant_confirm');
+        totalPending += getQueueCount('declaration', 'awaiting_declaration');
+
+        $('#statTotalPending').textContent = faNum(totalPending);
+
+        // Approved today
+        const today = new Date().toDateString();
+        const approvedToday = state.cases.filter(c =>
+            c.status === 'completed' &&
+            c.completedAt && new Date(c.completedAt).toDateString() === today
+        ).length;
+        $('#statApprovedToday').textContent = faNum(approvedToday);
+
+        // Team active
+        const teamActive = state.admins.filter(a => a.status === 'active').length;
+        $('#statTeamActive').textContent = faNum(teamActive);
+
+        // Cases, invoices, brokers, contracts
+        $('#statTotalCases').textContent = faNum(state.cases.length);
+        $('#statTotalInvoices').textContent = faNum(state.invoices.length);
+        $('#statTotalBrokers').textContent = faNum(state.brokers.filter(b => b.status === 'active').length);
+
+        const signedContracts = state.contracts.filter(c => {
+            if (!window.WamPayContracts) return false;
+            return WamPayContracts.isContractFullySigned(c.id);
+        }).length;
+        $('#statSignedContracts').textContent = faNum(signedContracts);
+
+        // Badges
+        if (totalPending > 0) {
+            $('#queuesBadge').style.display = 'inline-block';
+            $('#queuesBadge').textContent = faNum(totalPending);
+            $('#notifBadge').style.display = 'flex';
+            $('#notifBadge').textContent = faNum(totalPending);
+        } else {
+            $('#queuesBadge').style.display = 'none';
+            $('#notifBadge').style.display = 'none';
+        }
+    }
+
+    // ===== Render Queues Overview =====
+    function renderQueuesOverview() {
+        const queuesConfig = [
+            { key: 'brokerAdmin', status: 'pending', icon: '🤝', title: 'ادمین کارگزار', desc: 'بررسی پرونده‌های جدید', link: 'admin-broker-dashboard.html', color: 'info' },
+            { key: 'accounting', status: 'pending', icon: '💰', title: 'حسابداری', desc: 'بررسی فاکتورها', link: 'admin-accounting-invoice.html', color: 'gold' },
+            { key: 'superFinancial', status: 'pending', icon: '👑', title: 'تأیید مالی مدیر کل', desc: 'در انتظار تأیید نهایی', link: 'admin-super-financial.html', color: 'warning' },
+            { key: 'legal', status: 'pending_draft', icon: '⚖️', title: 'حقوقی', desc: 'تنظیم قراردادها', link: 'admin-legal-contract-draft.html', color: 'info' },
+            { key: 'superTransfer', status: 'awaiting_super_admin_verify', icon: '📤', title: 'تأیید انتقال', desc: 'سند انتقال امتیاز', link: 'admin-super-verify-transfer.html', color: 'warning' },
+            { key: 'declaration', status: 'awaiting_declaration', icon: '📜', title: 'اقرار سه‌طرفه', desc: 'در انتظار امضا', link: 'declaration-three-way.html', color: 'info' }
+        ];
+
+        const box = $('#queuesOverview');
+        if (!box) return;
+
+        box.innerHTML = queuesConfig.map(q => {
+            const count = getQueueCount(q.key, q.status);
+            const countCls = count === 0 ? 'empty' : (q.color === 'warning' ? 'warning' : q.color === 'info' ? '' : '');
+            return `
+                <div class="queue-item" onclick="window.location.href='${q.link}'">
+                    <div class="queue-item__icon">${q.icon}</div>
+                    <div class="queue-item__content">
+                        <div class="queue-item__title">${q.title}</div>
+                        <div class="queue-item__meta">${q.desc}</div>
+                    </div>
+                    <div class="queue-item__count queue-item__count--${countCls}">${faNum(count)}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Render Team Overview =====
+    function renderTeamOverview() {
+        const box = $('#teamOverview');
+        if (!box) return;
+
+        const roleEmojis = {
+            'super_admin': '👑',
+            'deputy_admin': '🎖️',
+            'verification_admin': '🔍',
+            'consultation_admin': '💬',
+            'broker_admin': '🤝',
+            'legal_admin': '⚖️',
+            'accounting_admin': '💰',
+            'developer_admin': '💻'
+        };
+
+        const roleClasses = {
+            'super_admin': 'team-card__avatar--super',
+            'deputy_admin': 'team-card__avatar--deputy',
+            'verification_admin': 'team-card__avatar--verifier',
+            'consultation_admin': 'team-card__avatar--consultation',
+            'broker_admin': 'team-card__avatar--broker',
+            'legal_admin': 'team-card__avatar--legal',
+            'accounting_admin': 'team-card__avatar--accounting',
+            'developer_admin': 'team-card__avatar--developer'
+        };
+
+        const team = state.admins.slice(0, 6);
+        if (team.length === 0) {
+            box.innerHTML = `<div class="dep-empty" style="padding:20px;"><div class="dep-empty__desc">هنوز ادمینی تعریف نشده است</div></div>`;
+            return;
+        }
+
+        box.innerHTML = team.map(a => {
+            const emoji = roleEmojis[a.role] || '👤';
+            const cls = roleClasses[a.role] || '';
+            const roleInfo = ROLE_NAMES[a.role] || { label: a.role, cls: 'dep-badge--info' };
+            const statusCls = a.status === 'active' ? 'dep-badge--active' : a.status === 'pending' ? 'dep-badge--pending' : 'dep-badge--suspended';
+            const statusLabel = a.status === 'active' ? '✅ فعال' : a.status === 'pending' ? '⏳ در انتظار' : '❌ مسدود';
+            return `
+                <div class="team-card" style="margin-bottom:10px;">
+                    <div class="team-card__avatar ${cls}">${emoji}</div>
+                    <div class="team-card__content">
+                        <div class="team-card__name">${a.name || '—'} <span class="dep-badge ${statusCls}" style="margin-right:6px;font-size:10px;">${statusLabel}</span></div>
+                        <div class="team-card__role">${roleInfo.label}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Render Recent Activity =====
+    function renderRecentActivity() {
+        const logs = state.logs
+            .sort((a, b) => new Date(b.at) - new Date(a.at))
+            .slice(0, 6);
+
+        const box = $('#recentActivity');
+        if (!box) return;
+
+        if (logs.length === 0) {
+            const mock = [
+                { icon: '📋', title: 'پرونده‌ی جدید ثبت شد', sub: 'CASE-2026-0042', cls: 'info', time: '۵ دقیقه پیش' },
+                { icon: '✍️', title: 'امضای قرارداد خرید', sub: 'توسط کارگزار علی محمدی', cls: 'success', time: '۲۰ دقیقه پیش' },
+                { icon: '💰', title: 'تأیید فاکتور توسط حسابداری', sub: 'INV-CRD-2026-0041', cls: 'success', time: '۱ ساعت پیش' },
+                { icon: '⚖️', title: 'تنظیم پیش‌نویس قرارداد', sub: 'توسط حقوقی', cls: 'pending', time: '۲ ساعت پیش' }
+            ];
+            box.innerHTML = mock.map(a => `
+                <div class="activity-item">
+                    <div class="activity-item__icon activity-item__icon--${a.cls}">${a.icon}</div>
+                    <div class="activity-item__content">
+                        <div class="activity-item__title">${a.title}</div>
+                        <div class="activity-item__meta">${a.sub} • ${a.time}</div>
+                    </div>
+                </div>
+            `).join('');
+            return;
+        }
+
+        box.innerHTML = logs.map(l => {
+            const icon = l.eventType?.includes('payment') ? '💰' :
+                        l.eventType?.includes('contract') ? '📄' :
+                        l.eventType?.includes('invoice') ? '📋' :
+                        l.eventType?.includes('declaration') ? '📜' : '📌';
+            const cls = l.important ? 'royal' : 'info';
+            return `
+                <div class="activity-item">
+                    <div class="activity-item__icon activity-item__icon--${cls}">${icon}</div>
+                    <div class="activity-item__content">
+                        <div class="activity-item__title">${l.title || 'رویداد'}</div>
+                        <div class="activity-item__meta">${l.actor?.name || '—'} • ${formatRelativeTime(l.at)}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Render Queues Full =====
+    function renderQueuesFull() {
+        const queuesConfig = [
+            { key: 'brokerAdmin', status: 'pending', icon: '🤝', title: 'ادمین کارگزار', desc: 'بررسی پرونده‌های جدید', link: 'admin-broker-dashboard.html', color: 'info' },
+            { key: 'accounting', status: 'pending', icon: '💰', title: 'حسابداری', desc: 'بررسی فاکتورهای امتیاز', link: 'admin-accounting-invoice.html', color: 'gold' },
+            { key: 'superFinancial', status: 'pending', icon: '👑', title: 'تأیید مالی مدیر کل', desc: 'تأیید نهایی فاکتورها', link: 'admin-super-financial.html', color: 'warning' },
+            { key: 'legal', status: 'pending_draft', icon: '⚖️', title: 'حقوقی', desc: 'تنظیم قراردادها', link: 'admin-legal-contract-draft.html', color: 'info' },
+            { key: 'siteSign', status: 'awaiting_site_sign', icon: '🏢', title: 'امضای سایت', desc: 'قراردادهای آماده امضا', link: 'broker-contract-sign.html', color: 'warning' },
+            { key: 'brokerTransfer', status: 'awaiting_broker_transfer', icon: '📤', title: 'انتقال امتیاز', desc: 'در انتظار کارگزار', link: 'broker-transfer-confirm.html', color: 'warning' },
+            { key: 'superTransfer', status: 'awaiting_super_admin_verify', icon: '🔍', title: 'تأیید انتقال', desc: 'بررسی سند انتقال', link: 'admin-super-verify-transfer.html', color: 'warning' },
+            { key: 'applicantConfirm', status: 'awaiting_applicant_confirm', icon: '✅', title: 'تأیید دریافت', desc: 'در انتظار متقاضی', link: 'applicant-confirm-receipt.html', color: 'info' },
+            { key: 'declaration', status: 'awaiting_declaration', icon: '📜', title: 'اقرار سه‌طرفه', desc: 'امضای اقرارنامه', link: 'declaration-three-way.html', color: 'info' }
+        ];
+
+        const box = $('#queuesFull');
+        if (!box) return;
+
+        box.innerHTML = queuesConfig.map(q => {
+            const count = getQueueCount(q.key, q.status);
+            const countCls = count === 0 ? 'empty' : (q.color === 'warning' ? 'warning' : '');
+            return `
+                <div class="queue-item" onclick="window.location.href='${q.link}'">
+                    <div class="queue-item__icon">${q.icon}</div>
+                    <div class="queue-item__content">
+                        <div class="queue-item__title">${q.title}</div>
+                        <div class="queue-item__meta">${q.desc}</div>
+                    </div>
+                    <div class="queue-item__count queue-item__count--${countCls}">${faNum(count)}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Render Team =====
+    function renderTeam() {
+        const byRole = (role) => state.admins.filter(a => a.role === role).length;
+
+        $('#teamDeputies').textContent = faNum(byRole('deputy_admin'));
+        $('#teamVerifiers').textContent = faNum(byRole('verification_admin'));
+        $('#teamBrokerAdmins').textContent = faNum(byRole('broker_admin'));
+        $('#teamAccountings').textContent = faNum(byRole('accounting_admin'));
+        $('#teamLegals').textContent = faNum(byRole('legal_admin'));
+        $('#teamConsultations').textContent = faNum(byRole('consultation_admin'));
+        $('#teamDevelopers').textContent = faNum(byRole('developer_admin'));
+        $('#teamTotal').textContent = faNum(state.admins.length);
+
+        // Team cards list
+        const roleEmojis = {
+            'super_admin': '👑', 'deputy_admin': '🎖️', 'verification_admin': '🔍',
+            'consultation_admin': '💬', 'broker_admin': '🤝', 'legal_admin': '⚖️',
+            'accounting_admin': '💰', 'developer_admin': '💻'
+        };
+        const roleClasses = {
+            'super_admin': 'team-card__avatar--super', 'deputy_admin': 'team-card__avatar--deputy',
+            'verification_admin': 'team-card__avatar--verifier', 'consultation_admin': 'team-card__avatar--consultation',
+            'broker_admin': 'team-card__avatar--broker', 'legal_admin': 'team-card__avatar--legal',
+            'accounting_admin': 'team-card__avatar--accounting', 'developer_admin': 'team-card__avatar--developer'
+        };
+
+        const listBox = $('#teamList');
+        if (listBox) {
+            if (state.admins.length === 0) {
+                listBox.innerHTML = `<div class="dep-empty"><div class="dep-empty__desc">هنوز ادمینی تعریف نشده است</div></div>`;
+            } else {
+                listBox.innerHTML = state.admins.map(a => {
+                    const emoji = roleEmojis[a.role] || '👤';
+                    const cls = roleClasses[a.role] || '';
+                    const roleInfo = ROLE_NAMES[a.role] || { label: a.role };
+                    const statusCls = a.status === 'active' ? 'dep-badge--active' : a.status === 'pending' ? 'dep-badge--pending' : 'dep-badge--suspended';
+                    const statusLabel = a.status === 'active' ? '✅ فعال' : a.status === 'pending' ? '⏳ در انتظار' : '❌ مسدود';
+                    return `
+                        <div class="team-card" style="margin-bottom:10px;">
+                            <div class="team-card__avatar ${cls}">${emoji}</div>
+                            <div class="team-card__content">
+                                <div class="team-card__name">${a.name || '—'} <span class="dep-badge ${statusCls}" style="margin-right:6px;font-size:10px;">${statusLabel}</span></div>
+                                <div class="team-card__role">${roleInfo.label}</div>
+                                <div class="team-card__meta">
+                                    <span>📱 ${a.mobile || '—'}</span>
+                                    <span>📅 ${a.lastLoginAt ? formatRelativeTime(a.lastLoginAt) : 'بدون ورود'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Team table
+        const tbody = $('#teamTableBody');
+        if (tbody) {
+            if (state.admins.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--text-muted);">هنوز ادمینی تعریف نشده است</td></tr>`;
+            } else {
+                tbody.innerHTML = state.admins.map((a, i) => {
+                    const roleInfo = ROLE_NAMES[a.role] || { label: a.role, cls: 'dep-badge--info' };
+                    const statusCls = a.status === 'active' ? 'dep-badge--active' : a.status === 'pending' ? 'dep-badge--pending' : 'dep-badge--suspended';
+                    const statusLabel = a.status === 'active' ? '✅ فعال' : a.status === 'pending' ? '⏳ در انتظار' : '❌ مسدود';
+                    return `
+                        <tr>
+                            <td>${faNum(i+1)}</td>
+                            <td style="font-weight:700;">${a.name || '—'}</td>
+                            <td><span class="dep-badge ${roleInfo.cls}">${roleInfo.label}</span></td>
+                            <td class="dep-table__mono">${a.mobile || '—'}</td>
+                            <td><span class="dep-badge ${statusCls}">${statusLabel}</span></td>
+                            <td style="font-size:11px;color:var(--text-muted);">${a.lastLoginAt ? formatRelativeTime(a.lastLoginAt) : '—'}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+    }
+
+    // ===== Render Reports =====
+    function renderReports() {
+        // Cases by status
+        const statusMap = {};
+        state.cases.forEach(c => {
+            const k = c.status || 'unknown';
+            if (!statusMap[k]) statusMap[k] = 0;
+            statusMap[k]++;
+        });
+
+        const statusLabels = {
+            'draft': '📝 پیش‌نویس',
+            'awaiting_broker_admin_review': '🤝 ادمین کارگزار',
+            'awaiting_accounting_review': '💰 حسابداری',
+            'awaiting_super_admin_financial': '👑 مدیر کل',
+            'awaiting_legal_draft': '⚖️ حقوقی',
+            'awaiting_broker_sign': '✍️ امضای کارگزار',
+            'awaiting_site_sign': '🏢 امضای سایت',
+            'awaiting_applicant_sign': '👤 امضای متقاضی',
+            'contract_signed_by_all': '✅ همه امضا',
+            'payment_in_escrow': '🏦 امانی',
+            'broker_transferred': '📤 انتقال',
+            'super_admin_verified': '👑 تأیید نهایی',
+            'applicant_confirmed': '✅ تأیید متقاضی',
+            'awaiting_declaration': '📜 اقرار',
+            'declaration_signed': '✍️ اقرار شد',
+            'payment_released': '💸 آزاد',
+            'completed': '🎉 تکمیل',
+            'rejected': '❌ ردشده',
+            'refunded': '↩️ عودت'
+        };
+
+        const statuses = Object.entries(statusMap).sort((a, b) => b[1] - a[1]);
+        const maxCount = Math.max(...statuses.map(s => s[1]), 1);
+        const statusBox = $('#casesByStatus');
+        if (statusBox) {
+            if (statuses.length === 0) {
+                statusBox.innerHTML = '<div class="dep-empty" style="padding:20px;"><div class="dep-empty__desc">داده‌ای موجود نیست</div></div>';
+            } else {
+                statusBox.innerHTML = statuses.map(([key, count]) => `
+                    <div class="bar-item">
+                        <div class="bar-item__header">
+                            <span class="bar-item__name">${statusLabels[key] || key}</span>
+                            <span class="bar-item__value">${faNum(count)}</span>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width:${(count / maxCount * 100).toFixed(1)}%"></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Top brokers
+        const brokerMap = {};
+        state.cases.forEach(c => {
+            const k = c.brokerId || 'unknown';
+            if (!brokerMap[k]) brokerMap[k] = { name: c.brokerName || '—', count: 0 };
+            brokerMap[k].count++;
+        });
+        const top = Object.values(brokerMap).sort((a, b) => b.count - a.count).slice(0, 5);
+        const topBox = $('#topBrokers');
+        if (topBox) {
+            if (top.length === 0) {
+                topBox.innerHTML = '<div class="dep-empty" style="padding:20px;"><div class="dep-empty__desc">داده‌ای موجود نیست</div></div>';
+            } else {
+                const maxB = Math.max(...top.map(t => t.count), 1);
+                topBox.innerHTML = top.map((b, i) => `
+                    <div class="bar-item">
+                        <div class="bar-item__header">
+                            <span class="bar-item__name">
+                                <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--royal),var(--royal-light));color:#fff;font-weight:800;font-size:12px;">${faNum(i+1)}</span>
+                                ${b.name}
+                            </span>
+                            <span class="bar-item__value">${faNum(b.count)} پرونده</span>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width:${(b.count / maxB * 100).toFixed(1)}%"></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Monthly
+        const byMonth = {};
+        state.cases.forEach(c => {
+            const d = new Date(c.createdAt);
+            const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2, '0')}`;
+            if (!byMonth[k]) byMonth[k] = 0;
+            byMonth[k]++;
+        });
+        const monthKeys = Object.keys(byMonth).sort().reverse().slice(0, 6);
+        const monthBox = $('#monthlyReports');
+        if (monthBox) {
+            if (monthKeys.length === 0) {
+                monthBox.innerHTML = '<div class="dep-empty" style="padding:20px;"><div class="dep-empty__desc">داده‌ای موجود نیست</div></div>';
+            } else {
+                monthBox.innerHTML = `
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;">
+                        ${monthKeys.map(k => `
+                            <div style="background:var(--bg);border-radius:8px;padding:14px;text-align:center;border:1px solid var(--border);">
+                                <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;font-family:monospace;">${k}</div>
+                                <div style="font-size:22px;font-weight:800;color:var(--royal);">${faNum(byMonth[k])}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+        }
+    }
+
+    // ===== Render Current Date =====
+    function renderCurrentDate() {
+        const d = new Date();
+        const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+        const days = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'];
+        const el = $('#currentDate');
+        if (el) el.textContent = `${days[d.getDay()]} — ${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())} • ${fa(d.getHours())}:${fa(d.getMinutes())}`;
+    }
+
+    // ===== Navigation =====
+    function goToSection(name) {
+        $$('.dep-section').forEach(s => s.classList.remove('dep-section--active'));
+        $('#section-' + name)?.classList.add('dep-section--active');
+        $$('.dep-nav__item').forEach(i => i.classList.toggle('dep-nav__item--active', i.dataset.nav === name));
+        $$('.dep-bottom-nav__item').forEach(i => i.classList.toggle('dep-bottom-nav__item--active', i.dataset.nav === name));
+        $('#sidebar').classList.remove('dep-sidebar--open');
+        $('#overlay').classList.remove('dep-overlay--show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (name === 'queues') renderQueuesFull();
+        if (name === 'team') renderTeam();
+        if (name === 'reports') renderReports();
+    }
+
+    // ===== Theme =====
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        if (!btn) return;
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light');
+                btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark');
+                btn.textContent = '☀️';
+            }
+        });
+    }
+
+    // ===== Events =====
+    function attachEvents() {
+        $$('[data-nav]').forEach(el => el.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (el.dataset.nav) goToSection(el.dataset.nav);
+        }));
+
+        $('#menuBtn')?.addEventListener('click', () => {
+            $('#sidebar').classList.toggle('dep-sidebar--open');
+            $('#overlay').classList.toggle('dep-overlay--show');
+        });
+        $('#overlay')?.addEventListener('click', () => {
+            $('#sidebar').classList.remove('dep-sidebar--open');
+            $('#overlay').classList.remove('dep-overlay--show');
+        });
+
+        $('#refreshBtn')?.addEventListener('click', () => {
+            loadData();
+            renderStats();
+            renderQueuesOverview();
+            renderTeamOverview();
+            renderRecentActivity();
+            renderCurrentDate();
+            toast('به‌روزرسانی شد', 'success');
+        });
+
+        $('#notifBtn')?.addEventListener('click', () => {
+            goToSection('queues');
+            toast('به صف‌های کاری منتقل شدید', 'info');
+        });
+
+        $('#userMenu')?.addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
+            e.stopPropagation();
+            $('#userDropdown').classList.toggle('dep-user__dropdown--open');
+        });
+        document.addEventListener('click', () => $('#userDropdown')?.classList.remove('dep-user__dropdown--open'));
+        $('#userDropdown')?.addEventListener('click', (e) => e.stopPropagation());
+
+        const logout = () => {
+            if (!confirm('خروج از حساب؟')) return;
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+            window.location.href = 'login.html';
+        };
+        $('#logoutBtn')?.addEventListener('click', logout);
+    }
+
+    // ===== Init =====
+    function init() {
+        if (!checkAuth()) return;
+
+        loadData();
+
+        $('#userAvatar').textContent = '🎖️';
+        $('#userName').textContent = state.user.name || 'ادمین معاون';
+
+        renderCurrentDate();
+        renderStats();
+        renderQueuesOverview();
+        renderTeamOverview();
+        renderRecentActivity();
+
+        initTheme();
+        attachEvents();
+
+        console.log('%c🎖️ WAM PAY — Deputy Admin Dashboard v1.0', 'color:#6d28d9;font-weight:bold;font-size:14px;');
+        console.log('%c👤 ادمین معاون:', 'color:#8b5cf6;font-weight:bold;', state.user.name);
+        console.log('%c📋 صف‌ها:', 'color:#8b5cf6;font-weight:bold;', Object.keys(state.queues).length);
+        console.log('%c👥 تیم:', 'color:#8b5cf6;font-weight:bold;', state.admins.length);
+        console.log('%c🔒 دسترسی محدود مالی', 'color:#e67e22;font-weight:bold;');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

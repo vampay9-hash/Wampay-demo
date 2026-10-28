@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>داشبورد کارگزار | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23;
+    --primary-light: #1a5c3a;
+    --primary-dark: #062416;
+    --gold: #d4a62a;
+    --gold-light: #f0c651;
+    --text: #1a2b22;
+    --text-muted: #6b7d73;
+    --bg: #f4f7f4;
+    --bg-card: #ffffff;
+    --border: #e0e8e3;
+    --error: #c0392b;
+    --success: #1e8e4a;
+    --warning: #e67e22;
+    --info: #2980b9;
+    --credit: #8e44ad;
+    --site-color: #2980b9;
+    --referral-color: #1e8e4a;
+    --shadow-sm: 0 2px 8px rgba(11, 59, 35, 0.06);
+    --shadow-md: 0 8px 24px rgba(11, 59, 35, 0.10);
+    --shadow-lg: 0 16px 48px rgba(11, 59, 35, 0.18);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.7; transition: background 0.3s, color 0.3s;
+}
+
+/* ===== Header ===== */
+.dash-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; box-shadow: var(--shadow-md);
+    position: sticky; top: 0; z-index: 100;
+    height: 68px;
+}
+.dash-header__right { display: flex; align-items: center; gap: 14px; }
+.dash-header__menu-btn {
+    display: none; width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: #fff;
+    cursor: pointer; font-size: 20px;
+}
+.dash-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; color: #fff; text-decoration: none; }
+.dash-logo__icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; box-shadow: 0 4px 12px rgba(212,166,42,0.4);
+}
+.dash-header__left { display: flex; align-items: center; gap: 10px; }
+.dash-header__btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: #fff;
+    cursor: pointer; font-size: 18px;
+    position: relative; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center;
+}
+.dash-header__btn:hover { background: rgba(255,255,255,0.18); }
+.dash-header__badge {
+    position: absolute; top: -4px; left: -4px;
+    background: var(--error); color: #fff;
+    font-size: 10px; font-weight: 800;
+    min-width: 18px; height: 18px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 4px;
+    border: 2px solid var(--primary);
+}
+.dash-user {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 12px 6px 6px; border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer; transition: var(--transition);
+    position: relative;
+}
+.dash-user:hover { background: rgba(255,255,255,0.18); }
+.dash-user__avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--primary-dark); font-weight: 800;
+}
+.dash-user__name { font-size: 13px; font-weight: 700; }
+.dash-user__role { font-size: 11px; opacity: 0.85; }
+.dash-user__dropdown {
+    position: absolute; top: calc(100% + 8px); left: 0;
+    background: var(--bg-card); color: var(--text);
+    border-radius: var(--radius-sm); padding: 6px;
+    box-shadow: var(--shadow-lg); min-width: 180px;
+    border: 1px solid var(--border);
+    display: none; z-index: 200;
+}
+.dash-user__dropdown--open { display: block; }
+.dash-user__dropdown a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 12px; border-radius: 6px;
+    color: var(--text); text-decoration: none;
+    font-size: 13px; font-weight: 600;
+    transition: var(--transition);
+}
+.dash-user__dropdown a:hover { background: var(--bg); color: var(--primary); }
+.dash-user__dropdown hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
+/* ===== Layout ===== */
+.dash-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 68px);
+}
+
+/* ===== Sidebar ===== */
+.dash-sidebar {
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    padding: 20px 12px;
+    position: sticky; top: 68px;
+    height: calc(100vh - 68px);
+    overflow-y: auto;
+}
+.dash-sidebar__section {
+    font-size: 11px; font-weight: 800; color: var(--text-muted);
+    padding: 12px 12px 6px; text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.dash-nav { display: flex; flex-direction: column; gap: 4px; }
+.dash-nav__item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px; border-radius: var(--radius-sm);
+    color: var(--text); text-decoration: none;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: var(--transition);
+    border: none; background: transparent;
+    width: 100%; text-align: right;
+    font-family: inherit;
+}
+.dash-nav__item:hover { background: var(--bg); color: var(--primary); }
+.dash-nav__item--active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(11,59,35,0.25);
+}
+.dash-nav__item__icon { font-size: 18px; width: 22px; text-align: center; }
+.dash-nav__item__badge {
+    margin-right: auto;
+    background: var(--error); color: #fff;
+    font-size: 10px; font-weight: 800;
+    padding: 2px 7px; border-radius: 10px;
+}
+
+/* ===== Main ===== */
+.dash-main { padding: 24px 28px 100px; max-width: 1400px; width: 100%; }
+.dash-section { display: none; animation: fadeIn 0.3s ease; }
+.dash-section--active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.dash-page-title {
+    font-size: 24px; font-weight: 800; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 10px;
+}
+.dash-page-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+
+/* ===== Welcome Card ===== */
+.welcome-card {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; border-radius: var(--radius);
+    padding: 24px 28px; margin-bottom: 20px;
+    position: relative; overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+.welcome-card::before {
+    content: ''; position: absolute; top: -60px; left: -60px;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: rgba(212, 166, 42, 0.15);
+}
+.welcome-card::after {
+    content: ''; position: absolute; bottom: -80px; right: -80px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: rgba(212, 166, 42, 0.08);
+}
+.welcome-card__content { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.welcome-card__title { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.welcome-card__subtitle { font-size: 14px; opacity: 0.9; }
+.welcome-card__meta {
+    display: flex; flex-direction: column; gap: 6px;
+    background: rgba(255,255,255,0.12);
+    padding: 12px 18px; border-radius: var(--radius-sm);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+.welcome-card__meta-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.welcome-card__meta-row strong { font-weight: 800; }
+.welcome-card__verified {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(30, 142, 74, 0.9); color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 8px; border-radius: 6px;
+}
+
+/* ===== Stats ===== */
+.dash-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 14px; margin-bottom: 24px;
+}
+.dash-stat {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 18px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--primary);
+    transition: var(--transition); cursor: pointer;
+}
+.dash-stat:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.dash-stat--warning { border-right-color: var(--warning); }
+.dash-stat--success { border-right-color: var(--success); }
+.dash-stat--gold { border-right-color: var(--gold); }
+.dash-stat--credit { border-right-color: var(--credit); }
+.dash-stat__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.dash-stat__icon { font-size: 22px; }
+.dash-stat__label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.dash-stat__value { font-size: 26px; font-weight: 800; color: var(--text); line-height: 1.2; }
+.dash-stat__unit { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-right: 4px; }
+.dash-stat__badge {
+    background: rgba(192, 57, 43, 0.12); color: var(--error);
+    font-size: 10px; font-weight: 800;
+    padding: 2px 7px; border-radius: 10px;
+}
+
+/* ===== Card ===== */
+.dash-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+    margin-bottom: 20px; overflow: hidden;
+}
+.dash-card__header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+}
+.dash-card__title { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.dash-card__body { padding: 20px; }
+
+/* ===== Chart ===== */
+.chart-wrap {
+    position: relative; height: 220px;
+    padding: 20px 10px 30px;
+}
+.chart-bars {
+    display: flex; align-items: flex-end;
+    justify-content: space-around;
+    height: 100%; gap: 8px;
+}
+.chart-bar-wrap {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; gap: 6px; height: 100%;
+    justify-content: flex-end;
+}
+.chart-bar {
+    width: 100%; max-width: 60px;
+    background: linear-gradient(180deg, var(--primary-light), var(--primary));
+    border-radius: 6px 6px 0 0;
+    min-height: 4px; transition: var(--transition);
+    position: relative;
+}
+.chart-bar--referral {
+    background: linear-gradient(180deg, #2ecc71, var(--success));
+}
+.chart-bar:hover { filter: brightness(1.15); transform: scaleY(1.03); transform-origin: bottom; }
+.chart-bar__tooltip {
+    position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-dark); color: #fff;
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 700;
+    white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: var(--transition);
+}
+.chart-bar:hover .chart-bar__tooltip { opacity: 1; }
+.chart-label {
+    font-size: 11px; color: var(--text-muted);
+    font-weight: 700; text-align: center;
+}
+.chart-legend {
+    display: flex; align-items: center; justify-content: center;
+    gap: 20px; margin-top: 12px; font-size: 12px;
+}
+.chart-legend__item { display: flex; align-items: center; gap: 6px; font-weight: 600; }
+.chart-legend__dot { width: 12px; height: 12px; border-radius: 3px; }
+
+/* ===== Activities ===== */
+.activity-list { display: flex; flex-direction: column; gap: 4px; }
+.activity-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px; border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+.activity-item:hover { background: var(--bg); }
+.activity-item__icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--bg); display: flex; align-items: center;
+    justify-content: center; font-size: 16px; flex-shrink: 0;
+}
+.activity-item__content { flex: 1; min-width: 0; }
+.activity-item__title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.activity-item__time { font-size: 11px; color: var(--text-muted); }
+
+/* ===== Tabs ===== */
+.dash-tabs {
+    display: flex; gap: 4px; background: var(--bg);
+    padding: 4px; border-radius: var(--radius-sm);
+    flex-wrap: wrap; margin-bottom: 16px;
+}
+.dash-tab {
+    padding: 8px 16px; border-radius: 6px;
+    border: none; background: transparent;
+    color: var(--text-muted); font-family: inherit;
+    font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: flex; align-items: center; gap: 6px;
+}
+.dash-tab:hover { color: var(--text); }
+.dash-tab--active { background: var(--primary); color: #fff; }
+
+/* ===== Case Card ===== */
+.case-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.case-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 18px; border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border-right: 4px solid var(--site-color);
+    position: relative;
+}
+.case-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.case-card--referral { border-right-color: var(--referral-color); }
+.case-card__header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 10px; margin-bottom: 12px;
+    padding-bottom: 12px; border-bottom: 1px dashed var(--border);
+}
+.case-card__applicant { display: flex; align-items: center; gap: 10px; }
+.case-card__avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 800;
+}
+.case-card__name { font-size: 15px; font-weight: 800; }
+.case-card__id { font-size: 11px; color: var(--text-muted); font-family: monospace; }
+.case-card__badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.case-badge {
+    font-size: 10px; font-weight: 800;
+    padding: 3px 8px; border-radius: 10px;
+    display: inline-flex; align-items: center; gap: 4px;
+}
+.case-badge--site { background: rgba(41,128,185,0.12); color: var(--site-color); }
+.case-badge--referral { background: rgba(30,142,74,0.12); color: var(--referral-color); }
+.case-badge--pending { background: rgba(230,126,34,0.12); color: var(--warning); }
+.case-badge--progress { background: rgba(41,128,185,0.12); color: var(--info); }
+.case-badge--success { background: rgba(30,142,74,0.12); color: var(--success); }
+.case-badge--error { background: rgba(192,57,43,0.12); color: var(--error); }
+.case-card__body { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.case-card__row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
+.case-card__row-label { color: var(--text-muted); }
+.case-card__row-value { font-weight: 700; }
+.case-card__actions { display: flex; gap: 8px; padding-top: 12px; border-top: 1px dashed var(--border); }
+.case-card__actions .dash-btn { flex: 1; padding: 9px 12px; font-size: 12px; }
+
+/* ===== Buttons ===== */
+.dash-btn {
+    padding: 11px 18px; border-radius: var(--radius-sm);
+    border: none; font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center;
+    justify-content: center; gap: 6px;
+    text-decoration: none;
+}
+.dash-btn--primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; box-shadow: 0 4px 12px rgba(11,59,35,0.25);
+}
+.dash-btn--primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(11,59,35,0.35); }
+.dash-btn--gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--primary-dark); box-shadow: 0 4px 12px rgba(212,166,42,0.3);
+}
+.dash-btn--gold:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(212,166,42,0.45); }
+.dash-btn--ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border);
+}
+.dash-btn--ghost:hover { background: var(--bg); color: var(--text); }
+.dash-btn--danger { background: var(--error); color: #fff; }
+.dash-btn--success { background: var(--success); color: #fff; }
+.dash-btn--block { width: 100%; }
+
+/* ===== Wallet ===== */
+.wallet-hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; border-radius: var(--radius);
+    padding: 28px; margin-bottom: 20px;
+    position: relative; overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+.wallet-hero::before {
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(212, 166, 42, 0.15);
+}
+.wallet-hero__content { position: relative; z-index: 1; }
+.wallet-hero__label { font-size: 13px; opacity: 0.85; margin-bottom: 6px; }
+.wallet-hero__value { font-size: 36px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+.wallet-hero__value span { font-size: 18px; opacity: 0.85; font-weight: 600; }
+.wallet-hero__meta {
+    display: flex; gap: 20px; margin-top: 18px;
+    padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.15);
+    flex-wrap: wrap;
+}
+.wallet-hero__meta-item { font-size: 13px; }
+.wallet-hero__meta-label { opacity: 0.75; margin-bottom: 2px; }
+.wallet-hero__meta-value { font-weight: 800; font-size: 15px; }
+.wallet-hero__actions {
+    display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap;
+}
+
+/* ===== Transaction ===== */
+.txn-list { display: flex; flex-direction: column; gap: 4px; }
+.txn-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px; border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+.txn-item:hover { background: var(--bg); }
+.txn-item__icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+}
+.txn-item__icon--in { background: rgba(30,142,74,0.12); color: var(--success); }
+.txn-item__icon--out { background: rgba(192,57,43,0.12); color: var(--error); }
+.txn-item__icon--pending { background: rgba(230,126,34,0.12); color: var(--warning); }
+.txn-item__content { flex: 1; min-width: 0; }
+.txn-item__title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.txn-item__meta { font-size: 11px; color: var(--text-muted); }
+.txn-item__amount { font-size: 14px; font-weight: 800; white-space: nowrap; }
+.txn-item__amount--in { color: var(--success); }
+.txn-item__amount--out { color: var(--error); }
+
+/* ===== Bank Info Box ===== */
+.bank-info {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px; margin-top: 12px;
+}
+.bank-info__item {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 12px 14px; border: 1px solid var(--border);
+}
+.bank-info__label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+.bank-info__value { font-size: 14px; font-weight: 700; font-family: monospace; letter-spacing: 1px; direction: ltr; text-align: right; }
+
+/* ===== Referral ===== */
+.referral-box {
+    background: linear-gradient(135deg, rgba(212, 166, 42, 0.10), rgba(11, 59, 35, 0.05));
+    border: 2px solid rgba(212, 166, 42, 0.35);
+    border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
+}
+.referral-box__title {
+    font-size: 15px; font-weight: 800; color: var(--primary);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 8px;
+}
+[data-theme="dark"] .referral-box__title { color: var(--gold-light); }
+.referral-box__desc { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+.referral-link {
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.referral-link__input {
+    flex: 1; min-width: 240px;
+    padding: 12px 14px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--bg-card); color: var(--text);
+    font-family: monospace; font-size: 13px;
+    direction: ltr; text-align: left;
+}
+.referral-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin-top: 16px;
+}
+.referral-stat {
+    background: var(--bg-card); border-radius: var(--radius-sm);
+    padding: 12px; text-align: center;
+    border: 1px solid var(--border);
+}
+.referral-stat__value { font-size: 22px; font-weight: 800; color: var(--primary); }
+.referral-stat__label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+/* ===== Profile ===== */
+.profile-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+}
+.profile-field {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 12px 14px; border: 1px solid var(--border);
+}
+.profile-field__label {
+    font-size: 11px; color: var(--text-muted); margin-bottom: 4px;
+    display: flex; align-items: center; gap: 4px;
+}
+.profile-field__value { font-size: 14px; font-weight: 700; word-break: break-word; }
+.profile-field__value--mono { font-family: monospace; letter-spacing: 1px; direction: ltr; text-align: right; }
+.verified-badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    background: rgba(30,142,74,0.12); color: var(--success);
+    font-size: 10px; font-weight: 800;
+    padding: 2px 6px; border-radius: 6px;
+}
+.pending-badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    background: rgba(230,126,34,0.12); color: var(--warning);
+    font-size: 10px; font-weight: 800;
+    padding: 2px 6px; border-radius: 6px;
+}
+
+/* ===== Empty ===== */
+.dash-empty {
+    text-align: center; padding: 50px 20px; color: var(--text-muted);
+}
+.dash-empty__icon { font-size: 56px; margin-bottom: 14px; opacity: 0.4; }
+.dash-empty__title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.dash-empty__desc { font-size: 13px; margin-bottom: 16px; }
+
+/* ===== Bottom Nav (Mobile) ===== */
+.dash-bottom-nav {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--bg-card); border-top: 1px solid var(--border);
+    padding: 6px; z-index: 90;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+.dash-bottom-nav__inner { display: flex; justify-content: space-around; }
+.dash-bottom-nav__item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 3px; padding: 6px 10px; border-radius: 8px;
+    color: var(--text-muted); text-decoration: none;
+    font-size: 10px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    background: transparent; border: none; font-family: inherit;
+    flex: 1;
+}
+.dash-bottom-nav__item--active { color: var(--primary); background: rgba(11,59,35,0.08); }
+.dash-bottom-nav__icon { font-size: 20px; }
+
+/* ===== Toast ===== */
+.dash-toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 24px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 9999; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px; max-width: 90%;
+}
+.dash-toast--show { transform: translateX(-50%) translateY(0); }
+.dash-toast--error { background: var(--error); }
+.dash-toast--success { background: var(--success); }
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+    .dash-stats { grid-template-columns: repeat(2, 1fr); }
+    .dash-layout { grid-template-columns: 1fr; }
+    .dash-sidebar {
+        position: fixed; top: 68px; right: 0;
+        width: 260px; transform: translateX(100%);
+        transition: transform 0.3s ease; z-index: 200;
+        box-shadow: var(--shadow-lg);
+    }
+    .dash-sidebar--open { transform: translateX(0); }
+    .dash-header__menu-btn { display: flex; align-items: center; justify-content: center; }
+    .dash-overlay {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+        z-index: 150; display: none;
+    }
+    .dash-overlay--show { display: block; }
+}
+@media (max-width: 640px) {
+    .dash-header { padding: 12px 16px; height: 60px; }
+    .dash-logo { font-size: 15px; }
+    .dash-logo__icon { width: 34px; height: 34px; font-size: 17px; }
+    .dash-user__name, .dash-user__role { display: none; }
+    .dash-user { padding: 4px; }
+    .dash-user__avatar { width: 38px; height: 38px; }
+    .dash-main { padding: 16px 14px 100px; }
+    .dash-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .dash-stat { padding: 14px; }
+    .dash-stat__value { font-size: 20px; }
+    .dash-page-title { font-size: 20px; }
+    .case-grid { grid-template-columns: 1fr; }
+    .welcome-card { padding: 20px; }
+    .welcome-card__title { font-size: 18px; }
+    .welcome-card__meta { width: 100%; }
+    .wallet-hero { padding: 22px; }
+    .wallet-hero__value { font-size: 28px; }
+    .chart-wrap { height: 180px; padding: 12px 4px 24px; }
+    .chart-label { font-size: 10px; }
+    .referral-stats { grid-template-columns: 1fr; }
+    .dash-bottom-nav { display: block; }
+    .dash-header__menu-btn { display: flex; }
+    .dash-sidebar { top: 60px; height: calc(100vh - 60px); }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="dash-header">
+    <div class="dash-header__right">
+        <button class="dash-header__menu-btn" id="menuBtn">☰</button>
+        <a href="index.html" class="dash-logo">
+            <div class="dash-logo__icon">💰</div>
+            <span>وام پی</span>
+        </a>
+    </div>
+    <div class="dash-header__left">
+        <button class="dash-header__btn" id="themeBtn" title="تغییر تم">🌙</button>
+        <button class="dash-header__btn" id="notifBtn" title="اعلانات">
+            🔔
+            <span class="dash-header__badge" id="notifBadge" style="display:none;">۰</span>
+        </button>
+        <div class="dash-user" id="userMenu">
+            <div class="dash-user__avatar" id="userAvatar">؟</div>
+            <div>
+                <div class="dash-user__name" id="userName">کارگزار</div>
+                <div class="dash-user__role">🤝 کارگزار</div>
+            </div>
+            <div class="dash-user__dropdown" id="userDropdown">
+                <a href="#" data-nav="profile">👤 پروفایل من</a>
+                <a href="#" data-nav="wallet">💰 کیف پول</a>
+                <a href="#" data-nav="notifications">🔔 اعلانات</a>
+                <hr>
+                <a href="#" id="logoutBtn">🚪 خروج</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== Overlay (Mobile) ===== -->
+<div class="dash-overlay" id="overlay"></div>
+
+<!-- ===== Layout ===== -->
+<div class="dash-layout">
+
+    <!-- Sidebar -->
+    <aside class="dash-sidebar" id="sidebar">
+        <div class="dash-sidebar__section">منوی اصلی</div>
+        <nav class="dash-nav">
+            <button class="dash-nav__item dash-nav__item--active" data-nav="overview">
+                <span class="dash-nav__item__icon">📈</span>
+                <span>نمای کلی</span>
+            </button>
+            <button class="dash-nav__item" data-nav="cases">
+                <span class="dash-nav__item__icon">📁</span>
+                <span>پرونده‌ها</span>
+                <span class="dash-nav__item__badge" id="casesBadge" style="display:none;">۰</span>
+            </button>
+            <button class="dash-nav__item" data-nav="wallet">
+                <span class="dash-nav__item__icon">💰</span>
+                <span>کیف پول</span>
+            </button>
+            <button class="dash-nav__item" data-nav="applicants">
+                <span class="dash-nav__item__icon">👥</span>
+                <span>متقاضیان</span>
+            </button>
+        </nav>
+        <div class="dash-sidebar__section">حساب من</div>
+        <nav class="dash-nav">
+            <button class="dash-nav__item" data-nav="profile">
+                <span class="dash-nav__item__icon">👤</span>
+                <span>پروفایل</span>
+            </button>
+            <button class="dash-nav__item" data-nav="support">
+                <span class="dash-nav__item__icon">💬</span>
+                <span>پشتیبانی</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="dash-main">
+
+        <!-- ========== SECTION: Overview ========== -->
+        <section class="dash-section dash-section--active" id="section-overview">
+            <h1 class="dash-page-title">📈 نمای کلی</h1>
+            <p class="dash-page-subtitle">خلاصه‌ی فعالیت و عملکرد شما</p>
+
+            <!-- Welcome -->
+            <div class="welcome-card">
+                <div class="welcome-card__content">
+                    <div>
+                        <div class="welcome-card__title" id="welcomeTitle">سلام 👋</div>
+                        <div class="welcome-card__subtitle" id="welcomeSubtitle">به پنل کارگزاری وام پی خوش آمدید</div>
+                    </div>
+                    <div class="welcome-card__meta">
+                        <div class="welcome-card__meta-row">
+                            <span>📁 شماره پرونده:</span>
+                            <strong id="welcomeFileNumber">—</strong>
+                        </div>
+                        <div class="welcome-card__meta-row">
+                            <span>📊 وضعیت:</span>
+                            <span class="welcome-card__verified" id="welcomeStatus">✅ تأییدشده</span>
+                        </div>
+                        <div class="welcome-card__meta-row">
+                            <span>🕐 آخرین ورود:</span>
+                            <strong id="welcomeLastLogin">—</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="dash-stats">
+                <div class="dash-stat" data-nav="cases">
+                    <div class="dash-stat__header">
+                        <div class="dash-stat__icon">📁</div>
+                    </div>
+                    <div class="dash-stat__label">پرونده‌های جاری</div>
+                    <div class="dash-stat__value" id="statActive">۰</div>
+                </div>
+                <div class="dash-stat dash-stat--warning" data-nav="cases">
+                    <div class="dash-stat__header">
+                        <div class="dash-stat__icon">⏳</div>
+                        <span class="dash-stat__badge" id="statPendingBadge" style="display:none;">جدید</span>
+                    </div>
+                    <div class="dash-stat__label">در انتظار اقدام</div>
+                    <div class="dash-stat__value" id="statPending">۰</div>
+                </div>
+                <div class="dash-stat dash-stat--success" data-nav="cases">
+                    <div class="dash-stat__header">
+                        <div class="dash-stat__icon">✅</div>
+                    </div>
+                    <div class="dash-stat__label">تکمیل‌شده</div>
+                    <div class="dash-stat__value" id="statCompleted">۰</div>
+                </div>
+                <div class="dash-stat dash-stat--gold" data-nav="wallet">
+                    <div class="dash-stat__header">
+                        <div class="dash-stat__icon">💰</div>
+                    </div>
+                    <div class="dash-stat__label">درآمد کل</div>
+                    <div class="dash-stat__value" id="statEarned">۰<span class="dash-stat__unit">تومان</span></div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">📊 نمودار درآمد ۶ ماه اخیر</div>
+                </div>
+                <div class="dash-card__body" style="padding:0 20px;">
+                    <div class="chart-wrap">
+                        <div class="chart-bars" id="chartBars"></div>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="chart-legend__item">
+                            <div class="chart-legend__dot" style="background:var(--primary);"></div>
+                            <span>پرونده‌های سیستمی</span>
+                        </div>
+                        <div class="chart-legend__item">
+                            <div class="chart-legend__dot" style="background:var(--success);"></div>
+                            <span>پرونده‌های معرفی‌شده</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">🕐 آخرین فعالیت‌ها</div>
+                </div>
+                <div class="dash-card__body" style="padding:12px;">
+                    <div class="activity-list" id="activityList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SECTION: Cases ========== -->
+        <section class="dash-section" id="section-cases">
+            <h1 class="dash-page-title">📁 پرونده‌ها</h1>
+            <p class="dash-page-subtitle">مدیریت پرونده‌های سیستمی و معرفی‌شده</p>
+
+            <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+                <button class="dash-btn dash-btn--gold" id="newCaseBtn">
+                    ➕ ثبت متقاضی جدید
+                </button>
+            </div>
+
+            <div class="dash-tabs" id="caseTabs">
+                <button class="dash-tab dash-tab--active" data-filter="all">
+                    📋 همه <span id="tabAllCount">(۰)</span>
+                </button>
+                <button class="dash-tab" data-filter="site">
+                    🔵 سیستمی <span id="tabSiteCount">(۰)</span>
+                </button>
+                <button class="dash-tab" data-filter="referral">
+                    🟢 معرفی‌شده <span id="tabReferralCount">(۰)</span>
+                </button>
+                <button class="dash-tab" data-filter="pending">
+                    ⏳ در انتظار <span id="tabPendingCount">(۰)</span>
+                </button>
+            </div>
+
+            <div class="case-grid" id="caseGrid"></div>
+        </section>
+
+        <!-- ========== SECTION: Wallet ========== -->
+        <section class="dash-section" id="section-wallet">
+            <h1 class="dash-page-title">💰 کیف پول</h1>
+            <p class="dash-page-subtitle">موجودی، تراکنش‌ها و اطلاعات بانکی</p>
+
+            <div class="wallet-hero">
+                <div class="wallet-hero__content">
+                    <div class="wallet-hero__label">💰 موجودی قابل برداشت</div>
+                    <div class="wallet-hero__value" id="walletBalance">
+                        ۰ <span>تومان</span>
+                    </div>
+                    <div class="wallet-hero__meta">
+                        <div class="wallet-hero__meta-item">
+                            <div class="wallet-hero__meta-label">🔒 مسدود</div>
+                            <div class="wallet-hero__meta-value" id="walletBlocked">۰ تومان</div>
+                        </div>
+                        <div class="wallet-hero__meta-item">
+                            <div class="wallet-hero__meta-label">📈 کل درآمد</div>
+                            <div class="wallet-hero__meta-value" id="walletTotalEarned">۰ تومان</div>
+                        </div>
+                    </div>
+                    <div class="wallet-hero__actions">
+                        <button class="dash-btn dash-btn--gold" id="settlementBtn">💸 درخواست تسویه</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">🏦 اطلاعات بانکی</div>
+                </div>
+                <div class="dash-card__body">
+                    <div class="bank-info" id="bankInfoBox"></div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">🧾 تاریخچه‌ی تراکنش‌ها</div>
+                </div>
+                <div class="dash-card__body" style="padding:12px;">
+                    <div class="txn-list" id="txnList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SECTION: Applicants ========== -->
+        <section class="dash-section" id="section-applicants">
+            <h1 class="dash-page-title">👥 متقاضیان</h1>
+            <p class="dash-page-subtitle">متقاضیان معرفی‌شده توسط شما</p>
+
+            <div class="referral-box">
+                <div class="referral-box__title">🔗 لینک دعوت اختصاصی شما</div>
+                <div class="referral-box__desc">
+                    این لینک را با متقاضیان به اشتراک بگذارید. هر متقاضی که از این لینک ثبت‌نام کند، پرونده‌اش به نام شما ثبت می‌شود.
+                </div>
+                <div class="referral-link">
+                    <input type="text" class="referral-link__input" id="referralLink" readonly>
+                    <button class="dash-btn dash-btn--primary" id="copyRefBtn">📋 کپی</button>
+                </div>
+                <div class="referral-stats">
+                    <div class="referral-stat">
+                        <div class="referral-stat__value" id="refClicks">۰</div>
+                        <div class="referral-stat__label">کلیک روی لینک</div>
+                    </div>
+                    <div class="referral-stat">
+                        <div class="referral-stat__value" id="refRegisters">۰</div>
+                        <div class="referral-stat__label">ثبت‌نام موفق</div>
+                    </div>
+                    <div class="referral-stat">
+                        <div class="referral-stat__value" id="refCompleted">۰</div>
+                        <div class="referral-stat__label">پرونده‌ی تکمیل‌شده</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">📋 لیست متقاضیان</div>
+                </div>
+                <div class="dash-card__body" style="padding:12px;">
+                    <div id="applicantsList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SECTION: Profile ========== -->
+        <section class="dash-section" id="section-profile">
+            <h1 class="dash-page-title">👤 پروفایل</h1>
+            <p class="dash-page-subtitle">اطلاعات شخصی، کارگزاری و بانکی</p>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">🪪 اطلاعات هویتی</div>
+                </div>
+                <div class="dash-card__body">
+                    <div class="profile-grid" id="profilePersonal"></div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">💼 اطلاعات کارگزاری</div>
+                </div>
+                <div class="dash-card__body">
+                    <div class="profile-grid" id="profileBroker"></div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">☎️ خط ثابت (احراز هویت)</div>
+                </div>
+                <div class="dash-card__body">
+                    <div class="profile-grid" id="profileLandline"></div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">🏦 اطلاعات بانکی</div>
+                </div>
+                <div class="dash-card__body">
+                    <div class="profile-grid" id="profileBank"></div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">🔐 امنیت</div>
+                </div>
+                <div class="dash-card__body">
+                    <button class="dash-btn dash-btn--ghost dash-btn--block" id="changePwdBtn" style="margin-bottom:10px;">
+                        🔑 تغییر رمز عبور
+                    </button>
+                    <button class="dash-btn dash-btn--danger dash-btn--block" id="logoutBtn2">
+                        🚪 خروج از حساب
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SECTION: Support ========== -->
+        <section class="dash-section" id="section-support">
+            <h1 class="dash-page-title">💬 پشتیبانی</h1>
+            <p class="dash-page-subtitle">ارتباط با تیم پشتیبانی وام پی</p>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">📞 راه‌های ارتباطی</div>
+                </div>
+                <div class="dash-card__body">
+                    <div class="profile-grid">
+                        <div class="profile-field">
+                            <div class="profile-field__label">📱 تلفن پشتیبانی</div>
+                            <div class="profile-field__value profile-field__value--mono">۰۲۱-۱۲۳۴۵۶۷۸</div>
+                        </div>
+                        <div class="profile-field">
+                            <div class="profile-field__label">✉️ ایمیل</div>
+                            <div class="profile-field__value profile-field__value--mono">support@wampay.ir</div>
+                        </div>
+                        <div class="profile-field">
+                            <div class="profile-field__label">🕐 ساعت پاسخگویی</div>
+                            <div class="profile-field__value">۹ صبح تا ۶ عصر</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card__header">
+                    <div class="dash-card__title">❓ سوالات متداول</div>
+                </div>
+                <div class="dash-card__body">
+                    <div style="display:flex;flex-direction:column;gap:12px;">
+                        <div style="padding:14px;background:var(--bg);border-radius:var(--radius-sm);">
+                            <div style="font-weight:800;margin-bottom:6px;">🔵 تفاوت پرونده‌های سیستمی و معرفی‌شده چیست؟</div>
+                            <div style="font-size:13px;color:var(--text-muted);">
+                                پرونده‌های سیستمی توسط سایت به شما تخصیص داده می‌شوند، در حالی که پرونده‌های معرفی‌شده توسط خودتان ثبت می‌شوند. در هر دو حالت سهم شما بر اساس فاکتور امتیاز و قیمت خرید توافقی محاسبه می‌شود.
+                            </div>
+                        </div>
+                        <div style="padding:14px;background:var(--bg);border-radius:var(--radius-sm);">
+                            <div style="font-weight:800;margin-bottom:6px;">💎 سهم من از هر پرونده چطور محاسبه می‌شود؟</div>
+                            <div style="font-size:13px;color:var(--text-muted);">
+                                سهم شما = تعداد امتیاز × قیمت خرید توافقی هر امتیاز. این مبلغ در فاکتور امتیاز که هنگام ثبت پرونده تنظیم می‌کنید مشخص می‌شود.
+                            </div>
+                        </div>
+                        <div style="padding:14px;background:var(--bg);border-radius:var(--radius-sm);">
+                            <div style="font-weight:800;margin-bottom:6px;">💰 تسویه چقدر طول می‌کشد؟</div>
+                            <div style="font-size:13px;color:var(--text-muted);">
+                                درخواست تسویه پس از تأیید ادمین حسابداری، حداکثر تا ۲۴ ساعت کاری به حساب بانکی شما واریز می‌شود.
+                            </div>
+                        </div>
+                        <div style="padding:14px;background:var(--bg);border-radius:var(--radius-sm);">
+                            <div style="font-weight:800;margin-bottom:6px;">✍️ چطور متقاضی جدید ثبت کنم؟</div>
+                            <div style="font-size:13px;color:var(--text-muted);">
+                                از منوی «پرونده‌ها» روی دکمه‌ی «➕ ثبت متقاضی جدید» کلیک کنید و فرم ۵ مرحله‌ای (هویتی، شغلی، مدارک، وام و بانک، فاکتور امتیاز) را تکمیل کنید.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- ===== Bottom Nav (Mobile) ===== -->
+<nav class="dash-bottom-nav">
+    <div class="dash-bottom-nav__inner">
+        <button class="dash-bottom-nav__item dash-bottom-nav__item--active" data-nav="overview">
+            <span class="dash-bottom-nav__icon">📈</span>
+            <span>نمای کلی</span>
+        </button>
+        <button class="dash-bottom-nav__item" data-nav="cases">
+            <span class="dash-bottom-nav__icon">📁</span>
+            <span>پرونده‌ها</span>
+        </button>
+        <button class="dash-bottom-nav__item" data-nav="wallet">
+            <span class="dash-bottom-nav__icon">💰</span>
+            <span>کیف پول</span>
+        </button>
+        <button class="dash-bottom-nav__item" data-nav="applicants">
+            <span class="dash-bottom-nav__icon">👥</span>
+            <span>متقاضیان</span>
+        </button>
+        <button class="dash-bottom-nav__item" data-nav="profile">
+            <span class="dash-bottom-nav__icon">👤</span>
+            <span>پروفایل</span>
+        </button>
+    </div>
+</nav>
+
+<!-- ===== Toast ===== -->
+<div class="dash-toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<script>
+/* ============================================================
+   WAM PAY — Broker Dashboard Script v1.1
+   تغییرات: حذف کارمزد ۲٪ و ۳٪، محاسبه‌ی سهم بر اساس فاکتور امتیاز
+   ============================================================ */
+(function () {
+    'use strict';
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+
+    const state = {
+        broker: null,
+        cases: [],
+        wallet: null,
+        transactions: [],
+        currentSection: 'overview',
+        caseFilter: 'all'
+    };
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'dash-toast dash-toast--show';
+        if (type === 'error') el.classList.add('dash-toast--error');
+        if (type === 'success') el.classList.add('dash-toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('dash-toast--show'), 3200);
+    }
+
+    // ===== Auth Guard =====
+    function checkAuth() {
+        try {
+            const currentUser = JSON.parse(localStorage.getItem('wamPayCurrentUser') || 'null');
+            if (!currentUser || currentUser.role !== 'broker') {
+                toast('ابتدا وارد شوید', 'error');
+                setTimeout(() => { window.location.href = 'login.html'; }, 900);
+                return false;
+            }
+            if (currentUser.status !== 'active') {
+                toast('حساب شما هنوز تأیید نشده است', 'error');
+                setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+                return false;
+            }
+            const allUsers = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+            state.broker = allUsers.find(u => u.id === currentUser.id);
+            if (!state.broker) {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        } catch (e) {
+            console.error('Auth error:', e);
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    // ===== Load Data =====
+    function loadData() {
+        const allCases = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+        state.cases = allCases.filter(c => c.brokerId === state.broker.id);
+
+        const allWallets = JSON.parse(localStorage.getItem('wamPayBrokerWallets') || '[]');
+        state.wallet = allWallets.find(w => w.brokerId === state.broker.id) || createWallet();
+
+        const allTxns = JSON.parse(localStorage.getItem('wamPayBrokerTransactions') || '[]');
+        state.transactions = allTxns.filter(t => t.brokerId === state.broker.id)
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+
+    function createWallet() {
+        const wallet = {
+            brokerId: state.broker.id,
+            balance: 0,
+            blocked: 0,
+            totalEarned: 0,
+            createdAt: new Date().toISOString()
+        };
+        const all = JSON.parse(localStorage.getItem('wamPayBrokerWallets') || '[]');
+        all.push(wallet);
+        localStorage.setItem('wamPayBrokerWallets', JSON.stringify(all));
+        return wallet;
+    }
+
+    // ===== Render Header =====
+    function renderHeader() {
+        const b = state.broker;
+        $('#userAvatar').textContent = (b.firstName?.[0] || b.name?.[0] || '؟');
+        $('#userName').textContent = b.firstName ? `${b.firstName} ${b.lastName || ''}`.trim() : (b.name || 'کارگزار');
+        $('#welcomeTitle').textContent = `سلام ${b.firstName || 'کارگزار'} جان 👋`;
+        $('#welcomeFileNumber').textContent = b.fileNumber || '—';
+        $('#welcomeStatus').textContent = b.status === 'active' ? '✅ تأییدشده' : '⏳ در انتظار تأیید';
+
+        if (b.lastLoginAt) {
+            const d = new Date(b.lastLoginAt);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            $('#welcomeLastLogin').textContent = `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())}`;
+        } else {
+            $('#welcomeLastLogin').textContent = 'اولین ورود';
+        }
+    }
+
+    // ===== Stats =====
+    function renderStats() {
+        const active = state.cases.filter(c =>
+            ['draft', 'broker_pending', 'broker_assigned', 'awaiting_signature',
+             'contract_signed', 'payment_pending', 'payment_in_escrow',
+             'broker_transferred', 'awaiting_declaration', 'declaration_signed',
+             'awaiting_broker_admin_approval', 'awaiting_super_admin_approval',
+             'awaiting_legal_review', 'awaiting_accounting_review'].includes(c.status)).length;
+        const pending = state.cases.filter(c =>
+            ['broker_pending', 'broker_assigned', 'awaiting_broker_admin_approval', 'payment_in_escrow'].includes(c.status)).length;
+        const completed = state.cases.filter(c => c.status === 'completed').length;
+
+        $('#statActive').textContent = faNum(active);
+        $('#statPending').textContent = faNum(pending);
+        $('#statCompleted').textContent = faNum(completed);
+        $('#statEarned').innerHTML = faPrice(state.wallet.totalEarned || 0) + '<span class="dash-stat__unit">تومان</span>';
+
+        if (pending > 0) {
+            $('#statPendingBadge').style.display = 'inline-block';
+            $('#casesBadge').style.display = 'inline-block';
+            $('#casesBadge').textContent = faNum(pending);
+        }
+    }
+
+    // ===== Chart =====
+    function renderChart() {
+        const now = new Date();
+        const months = [];
+        const faMonths = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+
+        for (let i = 5; i >= 0; i--) {
+            const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            months.push({
+                name: faMonths[d.getMonth()],
+                site: 0,
+                referral: 0
+            });
+        }
+
+        state.transactions.filter(t => t.type === 'commission' && t.status === 'completed').forEach(t => {
+            const d = new Date(t.createdAt);
+            const diff = (now.getFullYear() - d.getFullYear()) * 12 + (now.getMonth() - d.getMonth());
+            if (diff >= 0 && diff <= 5) {
+                const idx = 5 - diff;
+                if (t.caseSource === 'broker_referral') months[idx].referral += t.amount;
+                else months[idx].site += t.amount;
+            }
+        });
+
+        const maxVal = Math.max(...months.map(m => m.site + m.referral), 1000000);
+
+        $('#chartBars').innerHTML = months.map(m => {
+            const total = m.site + m.referral;
+            const totalH = Math.max((total / maxVal) * 100, 2);
+            const siteH = total > 0 ? (m.site / total) * totalH : totalH * 0.5;
+            const refH = total > 0 ? (m.referral / total) * totalH : totalH * 0.5;
+            return `
+                <div class="chart-bar-wrap">
+                    <div style="display:flex;flex-direction:column;width:100%;max-width:60px;height:100%;justify-content:flex-end;gap:2px;">
+                        <div class="chart-bar chart-bar--referral" style="height:${refH}%;">
+                            <div class="chart-bar__tooltip">${m.name} - معرفی: ${faPrice(m.referral)}</div>
+                        </div>
+                        <div class="chart-bar" style="height:${siteH}%;border-radius:0 0 6px 6px;">
+                            <div class="chart-bar__tooltip">${m.name} - سیستمی: ${faPrice(m.site)}</div>
+                        </div>
+                    </div>
+                    <div class="chart-label">${m.name}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Activities =====
+    function renderActivities() {
+        const recent = state.transactions.slice(0, 5);
+        const list = $('#activityList');
+
+        if (recent.length === 0) {
+            const mockActs = [
+                { icon: '📁', title: 'پرونده‌ی جدید برای متقاضی در انتظار بررسی', time: '۲ ساعت پیش' },
+                { icon: '💰', title: 'سهم شما از پرونده‌ی قبلی واریز شد', time: 'دیروز' },
+                { icon: '🤝', title: 'متقاضی جدید از لینک شما ثبت‌نام کرد', time: '۳ روز پیش' }
+            ];
+            list.innerHTML = mockActs.map(a => `
+                <div class="activity-item">
+                    <div class="activity-item__icon">${a.icon}</div>
+                    <div class="activity-item__content">
+                        <div class="activity-item__title">${a.title}</div>
+                        <div class="activity-item__time">${a.time}</div>
+                    </div>
+                </div>
+            `).join('');
+            return;
+        }
+
+        list.innerHTML = recent.map(t => {
+            const icon = t.type === 'commission' ? '💰' : t.type === 'withdrawal' ? '💸' : '📋';
+            const d = new Date(t.createdAt);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            const dateStr = `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())}`;
+            return `
+                <div class="activity-item">
+                    <div class="activity-item__icon">${icon}</div>
+                    <div class="activity-item__content">
+                        <div class="activity-item__title">${t.title || 'تراکنش'}</div>
+                        <div class="activity-item__time">${dateStr} — ${faPrice(Math.abs(t.amount))} تومان</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Cases =====
+    function renderCases() {
+        const filtered = state.caseFilter === 'all'
+            ? state.cases
+            : state.caseFilter === 'pending'
+                ? state.cases.filter(c => ['broker_pending', 'broker_assigned', 'awaiting_broker_admin_approval'].includes(c.status))
+                : state.cases.filter(c => c.source === state.caseFilter);
+
+        $('#tabAllCount').textContent = `(${faNum(state.cases.length)})`;
+        $('#tabSiteCount').textContent = `(${faNum(state.cases.filter(c => c.source === 'site').length)})`;
+        $('#tabReferralCount').textContent = `(${faNum(state.cases.filter(c => c.source === 'broker_referral').length)})`;
+        $('#tabPendingCount').textContent = `(${faNum(state.cases.filter(c => ['broker_pending', 'broker_assigned', 'awaiting_broker_admin_approval'].includes(c.status)).length)})`;
+
+        const grid = $('#caseGrid');
+        if (filtered.length === 0) {
+            grid.innerHTML = `
+                <div class="dash-empty" style="grid-column:1/-1;">
+                    <div class="dash-empty__icon">📭</div>
+                    <div class="dash-empty__title">پرونده‌ای یافت نشد</div>
+                    <div class="dash-empty__desc">هنوز هیچ پرونده‌ای ندارید یا با فیلتر فعلی چیزی پیدا نشد.</div>
+                    <button class="dash-btn dash-btn--gold" onclick="document.getElementById('newCaseBtn').click();">
+                        ➕ ثبت اولین متقاضی
+                    </button>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(c => {
+            const isReferral = c.source === 'broker_referral';
+            const applicant = c.applicantData || {};
+            const name = applicant.name || c.applicantName || 'متقاضی';
+            const amount = c.loanAmount || c.loanData?.loanAmount || 0;
+
+            // 🆕 محاسبه سهم از فاکتور امتیاز
+            const creditCount = c.creditInvoice?.creditCount || 0;
+            const brokerAmount = c.creditInvoice?.purchase?.total || 0;
+
+            const statusInfo = getStatusInfo(c.status);
+
+            return `
+                <div class="case-card ${isReferral ? 'case-card--referral' : ''}">
+                    <div class="case-card__header">
+                        <div class="case-card__applicant">
+                            <div class="case-card__avatar">${name[0] || '؟'}</div>
+                            <div>
+                                <div class="case-card__name">${name}</div>
+                                <div class="case-card__id">${c.caseNumber || c.id}</div>
+                            </div>
+                        </div>
+                        <div class="case-card__badges">
+                            <span class="case-badge ${isReferral ? 'case-badge--referral' : 'case-badge--site'}">
+                                ${isReferral ? '🟢 معرفی‌شده' : '🔵 سیستمی'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="case-card__body">
+                        <div class="case-card__row">
+                            <span class="case-card__row-label">💵 مبلغ وام</span>
+                            <span class="case-card__row-value">${faPrice(amount)} تومان</span>
+                        </div>
+                        ${creditCount > 0 ? `
+                            <div class="case-card__row">
+                                <span class="case-card__row-label">💎 تعداد امتیاز</span>
+                                <span class="case-card__row-value" style="color:var(--credit);">${faNum(creditCount)} امتیاز</span>
+                            </div>
+                        ` : ''}
+                        <div class="case-card__row">
+                            <span class="case-card__row-label">💰 سهم شما</span>
+                            <span class="case-card__row-value" style="color:var(--success);">${brokerAmount > 0 ? faPrice(brokerAmount) + ' تومان' : 'در انتظار محاسبه'}</span>
+                        </div>
+                        <div class="case-card__row">
+                            <span class="case-card__row-label">📊 وضعیت</span>
+                            <span class="case-badge ${statusInfo.cls}">${statusInfo.icon} ${statusInfo.label}</span>
+                        </div>
+                    </div>
+                    <div class="case-card__actions">
+                        <button class="dash-btn dash-btn--primary" onclick="alert('صفحه‌ی جزئیات پرونده به زودی — فاز ۶C');">👁️ مشاهده</button>
+                        ${statusInfo.actionable ? '<button class="dash-btn dash-btn--gold" onclick="alert(\'اقدام به زودی — فاز ۶B\');">⚡ اقدام</button>' : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function getStatusInfo(status) {
+        const map = {
+            draft: { label: 'پیش‌نویس', cls: 'case-badge--pending', icon: '📝', actionable: true },
+            verifier_pending: { label: 'در انتظار اعتبارسنج', cls: 'case-badge--progress', icon: '🔍', actionable: false },
+            broker_pending: { label: 'در انتظار کارگزار', cls: 'case-badge--pending', icon: '🤝', actionable: true },
+            broker_assigned: { label: 'تخصیص یافته', cls: 'case-badge--progress', icon: '⚡', actionable: true },
+            awaiting_broker_admin_review: { label: 'در انتظار ادمین کارگزار', cls: 'case-badge--pending', icon: '⏳', actionable: false },
+            awaiting_broker_admin_approval: { label: 'در انتظار ادمین', cls: 'case-badge--pending', icon: '⏳', actionable: false },
+            awaiting_super_admin_approval: { label: 'در انتظار مدیر کل', cls: 'case-badge--pending', icon: '⏳', actionable: false },
+            contract_approved: { label: 'قرارداد تأیید شد', cls: 'case-badge--progress', icon: '✅', actionable: false },
+            awaiting_signature: { label: 'در انتظار امضا', cls: 'case-badge--pending', icon: '✍️', actionable: true },
+            contract_signed: { label: 'امضا شده', cls: 'case-badge--progress', icon: '✅', actionable: false },
+            payment_pending: { label: 'در انتظار پرداخت', cls: 'case-badge--pending', icon: '💳', actionable: false },
+            payment_in_escrow: { label: 'امانی', cls: 'case-badge--progress', icon: '🏦', actionable: true },
+            broker_transferred: { label: 'انتقال انجام شد', cls: 'case-badge--progress', icon: '📤', actionable: false },
+            awaiting_declaration: { label: 'در انتظار اقرار', cls: 'case-badge--pending', icon: '✍️', actionable: false },
+            declaration_signed: { label: 'اقرار امضا شد', cls: 'case-badge--progress', icon: '✅', actionable: false },
+            payment_released: { label: 'آزادسازی شد', cls: 'case-badge--success', icon: '💰', actionable: false },
+            completed: { label: 'تکمیل‌شده', cls: 'case-badge--success', icon: '🎉', actionable: false },
+            rejected: { label: 'ردشده', cls: 'case-badge--error', icon: '❌', actionable: false },
+            refunded: { label: 'عودت داده شد', cls: 'case-badge--error', icon: '↩️', actionable: false }
+        };
+        return map[status] || map.draft;
+    }
+
+    // ===== Wallet =====
+    function renderWallet() {
+        $('#walletBalance').innerHTML = faPrice(state.wallet.balance || 0) + ' <span>تومان</span>';
+        $('#walletBlocked').textContent = faPrice(state.wallet.blocked || 0) + ' تومان';
+        $('#walletTotalEarned').textContent = faPrice(state.wallet.totalEarned || 0) + ' تومان';
+
+        const bank = state.broker.bankInfo || {};
+        $('#bankInfoBox').innerHTML = `
+            <div class="bank-info__item">
+                <div class="bank-info__label">🏦 نام بانک</div>
+                <div class="bank-info__value">${bank.bankName || '—'}</div>
+            </div>
+            <div class="bank-info__item">
+                <div class="bank-info__label">
+                    💳 شماره کارت
+                    ${bank.verified ? '<span class="verified-badge">✅ تأییدشده</span>' : '<span class="pending-badge">⏳ در انتظار</span>'}
+                </div>
+                <div class="bank-info__value">${bank.cardNumberFormatted || '—'}</div>
+            </div>
+            <div class="bank-info__item">
+                <div class="bank-info__label">🔗 شماره شبا</div>
+                <div class="bank-info__value">${bank.shebaFull || '—'}</div>
+            </div>
+        `;
+
+        const txn = $('#txnList');
+        if (state.transactions.length === 0) {
+            txn.innerHTML = `
+                <div class="dash-empty">
+                    <div class="dash-empty__icon">📭</div>
+                    <div class="dash-empty__title">هیچ تراکنشی وجود ندارد</div>
+                    <div class="dash-empty__desc">تراکنش‌های شما پس از تکمیل پرونده‌ها نمایش داده می‌شود.</div>
+                </div>
+            `;
+            return;
+        }
+
+        txn.innerHTML = state.transactions.map(t => {
+            const isIn = t.amount > 0;
+            const iconCls = t.status === 'pending' ? 'txn-item__icon--pending' :
+                            isIn ? 'txn-item__icon--in' : 'txn-item__icon--out';
+            const icon = isIn ? '📥' : '📤';
+            const amountCls = isIn ? 'txn-item__amount--in' : 'txn-item__amount--out';
+            const d = new Date(t.createdAt);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            const dateStr = `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())}`;
+
+            return `
+                <div class="txn-item">
+                    <div class="txn-item__icon ${iconCls}">${icon}</div>
+                    <div class="txn-item__content">
+                        <div class="txn-item__title">${t.title || 'تراکنش'}</div>
+                        <div class="txn-item__meta">${dateStr} ${t.status === 'pending' ? '• ⏳ در انتظار' : ''}</div>
+                    </div>
+                    <div class="txn-item__amount ${amountCls}">
+                        ${isIn ? '+' : '−'} ${faPrice(Math.abs(t.amount))}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Applicants =====
+    function renderApplicants() {
+        const refCode = state.broker.fileNumber || 'BRK-0000-000000';
+        const link = `${window.location.origin}${window.location.pathname.replace('broker-dashboard.html', '')}register.html?ref=${refCode}`;
+        $('#referralLink').value = link;
+
+        const referralCases = state.cases.filter(c => c.source === 'broker_referral');
+        $('#refRegisters').textContent = faNum(referralCases.length);
+        $('#refCompleted').textContent = faNum(referralCases.filter(c => c.status === 'completed').length);
+        $('#refClicks').textContent = faNum(Math.floor(referralCases.length * 3.5));
+
+        const list = $('#applicantsList');
+        if (referralCases.length === 0) {
+            list.innerHTML = `
+                <div class="dash-empty">
+                    <div class="dash-empty__icon">👥</div>
+                    <div class="dash-empty__title">هنوز متقاضی معرفی نکرده‌اید</div>
+                    <div class="dash-empty__desc">لینک دعوت خود را به اشتراک بگذارید تا متقاضیان از آن ثبت‌نام کنند.</div>
+                </div>
+            `;
+            return;
+        }
+
+        list.innerHTML = referralCases.map(c => {
+            const applicant = c.applicantData || {};
+            const name = applicant.name || c.applicantName || 'متقاضی';
+            const statusInfo = getStatusInfo(c.status);
+            const d = new Date(c.createdAt || c.registeredAt);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            const dateStr = `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())}`;
+
+            return `
+                <div class="txn-item" style="cursor:pointer;">
+                    <div class="txn-item__icon" style="background:rgba(30,142,74,0.12);color:var(--success);">
+                        ${name[0] || '؟'}
+                    </div>
+                    <div class="txn-item__content">
+                        <div class="txn-item__title">${name}</div>
+                        <div class="txn-item__meta">📁 ${c.caseNumber || c.id} • ${dateStr}</div>
+                    </div>
+                    <span class="case-badge ${statusInfo.cls}">${statusInfo.icon} ${statusInfo.label}</span>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== Profile =====
+    function renderProfile() {
+        const b = state.broker;
+
+        $('#profilePersonal').innerHTML = `
+            <div class="profile-field">
+                <div class="profile-field__label">👤 نام و نام خانوادگی</div>
+                <div class="profile-field__value">${b.firstName || ''} ${b.lastName || ''}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">🆔 کد ملی</div>
+                <div class="profile-field__value profile-field__value--mono">${b.nationalId || '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">🎂 تاریخ تولد</div>
+                <div class="profile-field__value">${b.birthDate || '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">📱 موبایل</div>
+                <div class="profile-field__value profile-field__value--mono">${b.mobile || '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">✉️ ایمیل</div>
+                <div class="profile-field__value profile-field__value--mono">${b.email || '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">📁 شماره پرونده</div>
+                <div class="profile-field__value profile-field__value--mono">${b.fileNumber || '—'}</div>
+            </div>
+        `;
+
+        $('#profileBroker').innerHTML = `
+            <div class="profile-field">
+                <div class="profile-field__label">🎫 شماره پروانه</div>
+                <div class="profile-field__value profile-field__value--mono">${b.licenseNumber || '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">📊 سابقه‌ی کار</div>
+                <div class="profile-field__value">${b.experience ? faNum(b.experience) + ' سال' : '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">📍 استان / شهر</div>
+                <div class="profile-field__value">${b.province || '—'} / ${b.city || '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">🎯 حوزه‌ی تخصصی</div>
+                <div class="profile-field__value">${b.specialty || '—'}</div>
+            </div>
+        `;
+
+        const l = b.landline || {};
+        $('#profileLandline').innerHTML = `
+            <div class="profile-field">
+                <div class="profile-field__label">
+                    ☎️ شماره‌ی خط ثابت
+                    ${l.verified ? '<span class="verified-badge">✅ تأییدشده</span>' : '<span class="pending-badge">⏳ در انتظار تأیید</span>'}
+                </div>
+                <div class="profile-field__value profile-field__value--mono">${l.full || '—'}</div>
+            </div>
+        `;
+
+        const bank = b.bankInfo || {};
+        $('#profileBank').innerHTML = `
+            <div class="profile-field">
+                <div class="profile-field__label">🏦 نام بانک</div>
+                <div class="profile-field__value">${bank.bankName || '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">🔢 شماره حساب</div>
+                <div class="profile-field__value profile-field__value--mono">${bank.accountNumber || '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">
+                    💳 شماره کارت
+                    ${bank.verified ? '<span class="verified-badge">✅ تأییدشده</span>' : '<span class="pending-badge">⏳ در انتظار</span>'}
+                </div>
+                <div class="profile-field__value profile-field__value--mono">${bank.cardNumberFormatted || '—'}</div>
+            </div>
+            <div class="profile-field">
+                <div class="profile-field__label">🔗 شماره شبا</div>
+                <div class="profile-field__value profile-field__value--mono">${bank.shebaFull || '—'}</div>
+            </div>
+        `;
+    }
+
+    // ===== Navigation =====
+    function goToSection(name) {
+        state.currentSection = name;
+        $$('.dash-section').forEach(s => s.classList.remove('dash-section--active'));
+        const target = $('#section-' + name);
+        if (target) target.classList.add('dash-section--active');
+
+        $$('.dash-nav__item').forEach(i => i.classList.toggle('dash-nav__item--active', i.dataset.nav === name));
+        $$('.dash-bottom-nav__item').forEach(i => i.classList.toggle('dash-bottom-nav__item--active', i.dataset.nav === name));
+
+        $('#sidebar').classList.remove('dash-sidebar--open');
+        $('#overlay').classList.remove('dash-overlay--show');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== Theme =====
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light'); btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark'); btn.textContent = '☀️';
+            }
+        });
+    }
+
+    // ===== Event Listeners =====
+    function attachEvents() {
+        $$('[data-nav]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                goToSection(el.dataset.nav);
+            });
+        });
+
+        $('#menuBtn').addEventListener('click', () => {
+            $('#sidebar').classList.toggle('dash-sidebar--open');
+            $('#overlay').classList.toggle('dash-overlay--show');
+        });
+        $('#overlay').addEventListener('click', () => {
+            $('#sidebar').classList.remove('dash-sidebar--open');
+            $('#overlay').classList.remove('dash-overlay--show');
+        });
+
+        $('#userMenu').addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
+            e.stopPropagation();
+            $('#userDropdown').classList.toggle('dash-user__dropdown--open');
+        });
+        document.addEventListener('click', () => {
+            $('#userDropdown').classList.remove('dash-user__dropdown--open');
+        });
+        $('#userDropdown').addEventListener('click', (e) => e.stopPropagation());
+
+        const logout = () => {
+            if (!confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) return;
+            localStorage.removeItem('wamPayCurrentUser');
+            localStorage.removeItem('wamPayToken');
+            window.location.href = 'login.html';
+        };
+        $('#logoutBtn').addEventListener('click', logout);
+        $('#logoutBtn2').addEventListener('click', logout);
+
+        $$('#caseTabs .dash-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                $$('#caseTabs .dash-tab').forEach(t => t.classList.remove('dash-tab--active'));
+                tab.classList.add('dash-tab--active');
+                state.caseFilter = tab.dataset.filter;
+                renderCases();
+            });
+        });
+
+        $('#newCaseBtn').addEventListener('click', () => {
+            window.location.href = 'broker-new-case-wizard.html';
+        });
+
+        $('#copyRefBtn').addEventListener('click', () => {
+            const input = $('#referralLink');
+            input.select();
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(input.value).then(() => {
+                    toast('لینک دعوت کپی شد', 'success');
+                }).catch(() => document.execCommand('copy'));
+            } else {
+                document.execCommand('copy');
+                toast('لینک دعوت کپی شد', 'success');
+            }
+        });
+
+        $('#notifBtn').addEventListener('click', () => {
+            toast('صفحه‌ی اعلانات به زودی', 'info');
+        });
+
+        $('#settlementBtn').addEventListener('click', () => {
+            if (state.wallet.balance < 100000) {
+                toast('حداقل مبلغ تسویه ۱۰۰,۰۰۰ تومان است', 'error');
+                return;
+            }
+            toast('درخواست تسویه ثبت شد (به زودی)', 'success');
+        });
+
+        $('#changePwdBtn').addEventListener('click', () => {
+            toast('صفحه‌ی تغییر رمز به زودی', 'info');
+        });
+    }
+
+    // ===== Init =====
+    function init() {
+        if (!checkAuth()) return;
+        loadData();
+        renderHeader();
+        renderStats();
+        renderChart();
+        renderActivities();
+        renderCases();
+        renderWallet();
+        renderApplicants();
+        renderProfile();
+        initTheme();
+        attachEvents();
+        goToSection('overview');
+
+        console.log('%c🚀 WAM PAY — Broker Dashboard v1.1 (امتیاز-محور)', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+        console.log('%c📁 کارگزار:', 'color:#d4a62a;', state.broker.name, '| File:', state.broker.fileNumber);
+        console.log('%c📊 تعداد پرونده‌ها:', 'color:#d4a62a;', state.cases.length);
+        console.log('%c🆕 v1.1: حذف کارمزد ۲٪ و ۳٪ — محاسبه بر اساس فاکتور امتیاز', 'color:#1e8e4a;font-weight:bold;');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

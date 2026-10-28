@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b3b23">
+<title>ثبت پرونده جدید | وام پی</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ═══════════════════════════════════════════════════════
+   Broker Wizard v1 — استایل اختصاصی
+   هماهنگ با کلاس‌های داخل js/broker-wizard.js
+   ═══════════════════════════════════════════════════════ */
+:root{
+  --card: var(--wam-bg-alt, #fff);
+  --error: var(--wam-danger, #c0392b);
+  --warn: var(--wam-warning, #c98a00);
+  --line: var(--wam-border, rgba(11,59,35,.12));
+}
+[data-theme="dark"]{
+  --card: var(--wam-bg-alt, #142219);
+  --line: var(--wam-border, rgba(255,255,255,.1));
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Vazirmatn',-apple-system,'Segoe UI',Tahoma,sans-serif;
+  background:var(--wam-bg, #f4f7f4);
+  color:var(--wam-text, #1a2b22);
+  min-height:100vh;
+  padding:16px;
+}
+
+/* ─── Wrapper ─── */
+.wam-wiz-wrap{max-width:760px;margin:0 auto}
+
+/* ─── Topbar ─── */
+.wam-wiz-topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 16px;
+  background:var(--card);
+  border-radius:12px;
+  margin-bottom:16px;
+  border:1px solid var(--line);
+}
+.wam-wiz-brand{font-weight:800;font-size:18px;color:var(--wam-primary)}
+.wam-wiz-brand span{color:var(--wam-gold)}
+.wam-wiz-back{
+  background:none;
+  border:1.5px solid var(--line);
+  color:var(--wam-text);
+  padding:6px 14px;
+  border-radius:8px;
+  font-family:inherit;
+  font-size:13px;
+  cursor:pointer;
+  transition:all .2s;
+}
+.wam-wiz-back:hover{border-color:var(--wam-primary);color:var(--wam-primary)}
+
+/* ─── Wizard Container (root render) ─── */
+.wam-wiz{
+  background:var(--card);
+  border-radius:12px;
+  padding:22px;
+  border:1px solid var(--line);
+  margin-bottom:16px;
+}
+
+/* ─── Progress ─── */
+.wam-wiz__progress{
+  height:8px;
+  background:rgba(11,59,35,.08);
+  border-radius:99px;
+  overflow:hidden;
+  margin-bottom:8px;
+}
+.wam-wiz__progress-bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--wam-primary),var(--wam-gold));
+  border-radius:99px;
+  transition:width .3s ease;
+  min-width:4%;
+}
+.wam-wiz__progress-label{
+  font-size:12px;
+  color:var(--wam-text-muted, #77847b);
+  text-align:center;
+  margin-bottom:18px;
+}
+
+/* ─── Step Content ─── */
+.wam-wiz__step h3{
+  font-size:17px;
+  font-weight:800;
+  color:var(--wam-primary);
+  margin:0 0 6px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.wam-wiz__desc{
+  font-size:13px;
+  color:var(--wam-text-muted, #77847b);
+  margin:0 0 18px;
+  line-height:1.9;
+}
+
+/* ─── Review Block (Step 3) ─── */
+.wam-wiz__review{
+  background:rgba(11,59,35,.03);
+  border-radius:10px;
+  padding:14px 16px;
+  margin-bottom:16px;
+  border:1px solid var(--line);
+}
+
+/* ─── Fields ─── */
+.wam-field{margin-bottom:14px}
+.wam-field label{
+  display:block;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:6px;
+  color:var(--wam-text);
+}
+.wam-field input,
+.wam-field select,
+.wam-field textarea{
+  width:100%;
+  padding:11px 13px;
+  border:1.5px solid var(--line);
+  border-radius:9px;
+  font-family:inherit;
+  font-size:14px;
+  background:transparent;
+  color:var(--wam-text);
+  transition:border-color .2s, box-shadow .2s;
+}
+.wam-field input:focus,
+.wam-field select:focus,
+.wam-field textarea:focus{
+  outline:none;
+  border-color:var(--wam-primary);
+  box-shadow:0 0 0 4px rgba(11,59,35,.08);
+}
+.wam-field textarea{resize:vertical;min-height:70px}
+.wam-field__error{
+  font-size:11px;
+  color:var(--error);
+  margin-top:4px;
+  display:none;
+}
+.wam-field__error[style*="display: block"]{display:block!important}
+.wam-input--error{border-color:var(--error)!important}
+
+/* ─── Checkbox ─── */
+.wam-check{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  background:rgba(212,166,42,.06);
+  border:1.5px solid rgba(212,166,42,.3);
+  border-radius:10px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+  user-select:none;
+  margin-top:10px;
+  transition:background .2s;
+}
+.wam-check:hover{background:rgba(212,166,42,.1)}
+.wam-check input{
+  width:18px;
+  height:18px;
+  accent-color:var(--wam-primary);
+  cursor:pointer;
+  margin:0;
+  flex-shrink:0;
+}
+
+/* ─── Review Rows ─── */
+.wam-review-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  padding:7px 0;
+  border-bottom:1px dashed var(--line);
+  gap:12px;
+}
+.wam-review-row:last-child{border-bottom:none}
+.wam-review-row span:first-child{color:var(--wam-text-muted, #77847b);flex-shrink:0}
+.wam-review-row strong{
+  font-weight:700;
+  text-align:left;
+  direction:ltr;
+  color:var(--wam-text);
+}
+
+/* ─── Nav (Bottom buttons) ─── */
+.wam-wiz__nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:22px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+.wam-wiz__dots{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  flex:1;
+}
+.wam-wiz__dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(11,59,35,.15);
+  cursor:pointer;
+  transition:all .2s;
+}
+.wam-wiz__dot.is-active{background:var(--wam-primary);transform:scale(1.3)}
+.wam-wiz__dot.is-done{background:var(--wam-gold)}
+.wam-wiz__nav .wam-btn,
+.wam-wiz__nav .btn{min-width:100px}
+
+/* ─── Empty State ─── */
+.wam-empty{
+  text-align:center;
+  padding:40px 20px;
+  color:var(--wam-text-muted, #77847b);
+  font-size:13px;
+  background:var(--card);
+  border-radius:12px;
+  border:1px dashed var(--line);
+}
+
+/* ─── Buttons (اگر style.css نبود) ─── */
+.wam-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:9px 18px;
+  font-size:.9rem;
+  font-weight:600;
+  line-height:1.4;
+  border:1px solid transparent;
+  border-radius:10px;
+  background:var(--card);
+  color:var(--wam-text);
+  cursor:pointer;
+  user-select:none;
+  text-decoration:none;
+  transition:all .2s;
+  white-space:nowrap;
+  font-family:inherit;
+}
+.wam-btn:disabled{opacity:.5;cursor:not-allowed}
+.wam-btn--primary{
+  background:var(--wam-primary-light, #105b35);
+  color:#fff;
+}
+.wam-btn--primary:hover:not(:disabled){background:var(--wam-primary)}
+.wam-btn--ghost{
+  background:transparent;
+  border-color:var(--wam-border-strong, #c9d0c6);
+  color:var(--wam-text);
+}
+.wam-btn--ghost:hover:not(:disabled){
+  border-color:var(--wam-primary);
+  color:var(--wam-primary);
+}
+</style>
+</head>
+<body>
+
+<div class="wam-wiz-wrap">
+
+  <!-- Topbar -->
+  <div class="wam-wiz-topbar">
+    <div class="wam-wiz-brand">وام<span>پی</span></div>
+    <button class="wam-wiz-back" onclick="location.href='broker-dashboard.html'">← بازگشت</button>
+  </div>
+
+  <!-- Wizard Root — JS در این Div محتوا رندر می‌کند -->
+  <div data-broker-wizard></div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     Scripts — ترتیب مهم است
+     1) bundle-common: Storage, EventBus, WamUI, WamPermissions, WamPayGuard
+     2) bundle-state:  CaseRepository, CaseStateMachine
+     3) bundle-broker: broker-wizard.js + سایر ماژول‌های کارگزار
+     ═══════════════════════════════════════════════════════ -->
+<script src="js/bundle-common.js" defer></script>
+<script src="js/bundle-state.js" defer></script>
+<script src="js/bundle-broker.js" defer></script>
+
+</body>
+</html>

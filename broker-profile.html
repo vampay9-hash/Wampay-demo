@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="پروفایل کارگزار — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>پروفایل | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/broker-panel.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ─── استایل اختصاصی پروفایل ─── */
+
+    .wam-broker__profile-hero {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 55%, #1a6b42 100%);
+      color: #fff;
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-xl) var(--wam-space-lg);
+      margin-bottom: var(--wam-space-lg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wam-broker__profile-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.3), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-broker__profile-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.18), transparent 65%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-broker__profile-avatar-wrap {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+      margin-bottom: 14px;
+    }
+
+    .wam-broker__profile-avatar-xl {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      font-size: 2.2rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 4px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .wam-broker__profile-edit-avatar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--wam-gold);
+      color: #3a2a00;
+      border: 3px solid var(--wam-primary);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--wam-t);
+    }
+    .wam-broker__profile-edit-avatar:hover {
+      transform: scale(1.08);
+      background: var(--wam-gold-light);
+    }
+
+    .wam-broker__profile-name-lg {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin: 0 0 4px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .wam-broker__profile-role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 12px;
+      border-radius: var(--wam-radius-pill);
+      background: rgba(212, 166, 42, 0.25);
+      color: #f4d477;
+      font-size: 0.75rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .wam-broker__profile-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: var(--wam-space-md);
+      padding-top: var(--wam-space-md);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-broker__profile-stat-cell {
+      text-align: center;
+    }
+
+    .wam-broker__profile-stat-value {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .wam-broker__profile-stat-label {
+      font-size: 0.68rem;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    /* بخش‌های تنظیمات */
+    .wam-broker__section-list {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      overflow: hidden;
+      box-shadow: var(--wam-shadow-sm);
+      margin-bottom: var(--wam-space-lg);
+    }
+
+    .wam-broker__list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--wam-border-soft);
+      cursor: pointer;
+      transition: background var(--wam-t);
+      background: transparent;
+      border-left: 0;
+      border-right: 0;
+      border-top: 0;
+      width: 100%;
+      text-align: right;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--wam-text);
+    }
+
+    .wam-broker__list-item:last-child {
+      border-bottom: 0;
+    }
+
+    .wam-broker__list-item:hover {
+      background: var(--wam-bg-muted);
+    }
+
+    .wam-broker__list-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      flex: 0 0 auto;
+    }
+
+    .wam-broker__list-icon--gold    { background: var(--wam-gold-soft); color: #7a5a00; }
+    .wam-broker__list-icon--success { background: var(--wam-success-soft); color: var(--wam-success-text); }
+    .wam-broker__list-icon--danger  { background: var(--wam-danger-soft); color: var(--wam-danger-text); }
+    .wam-broker__list-icon--info    { background: var(--wam-info-soft); color: var(--wam-info-text); }
+
+    .wam-broker__list-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-broker__list-title {
+      font-weight: 700;
+      color: var(--wam-text);
+      margin: 0 0 2px;
+      font-size: 0.88rem;
+    }
+
+    .wam-broker__list-sub {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-broker__list-arrow {
+      color: var(--wam-text-muted);
+      font-size: 1rem;
+      flex: 0 0 auto;
+    }
+
+    /* سوییچ داخل آیتم */
+    .wam-broker__list-item .wam-switch {
+      flex: 0 0 auto;
+      pointer-events: none;
+    }
+
+    /* Modal */
+    .wam-broker__modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 59, 35, 0.5);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: var(--wam-z-modal);
+      padding: 0;
+    }
+    .wam-broker__modal.is-open { display: flex; }
+
+    .wam-broker__modal-box {
+      background: var(--wam-bg-alt);
+      width: 100%;
+      max-width: 560px;
+      border-radius: var(--wam-radius-lg) var(--wam-radius-lg) 0 0;
+      padding: var(--wam-space-lg);
+      padding-bottom: calc(var(--wam-space-lg) + env(safe-area-inset-bottom, 0px));
+      animation: wam-slide-up 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .wam-broker__modal-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: var(--wam-space-md);
+      border-bottom: 1px solid var(--wam-border-soft);
+      margin-bottom: var(--wam-space-md);
+    }
+
+    .wam-broker__modal-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      flex: 1 1 auto;
+    }
+
+    .wam-broker__modal-close {
+      background: transparent;
+      border: 0;
+      font-size: 1.2rem;
+      color: var(--wam-text-muted);
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .wam-broker__modal-close:hover {
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+    }
+
+    .wam-broker__modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .wam-broker__modal-actions .wam-btn {
+      flex: 1 1 0;
+    }
+
+    /* About section */
+    .wam-broker__about {
+      text-align: center;
+      padding: var(--wam-space-lg);
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius-md);
+      font-size: 0.78rem;
+      color: var(--wam-text-muted);
+      line-height: 1.8;
+    }
+
+    .wam-broker__about-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--wam-primary);
+      margin-bottom: 8px;
+    }
+
+    .wam-broker__about-logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0b3b23, #105b35);
+      color: var(--wam-gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+  </style>
+</head>
+
+<body data-page="broker-profile">
+
+  <div class="wam-broker" id="brokerRoot">
+
+    <!-- ═══ TOPBAR ═══ -->
+    <header class="wam-broker__topbar">
+      <div class="wam-broker__topbar-info">
+        <a href="broker-dashboard.html" style="color:inherit;text-decoration:none;font-size:0.75rem;opacity:0.85;">
+          ↩ بازگشت
+        </a>
+        <span class="wam-broker__topbar-name">👤 پروفایل من</span>
+      </div>
+      <div class="wam-broker__topbar-actions">
+        <button type="button" class="wam-broker__icon-btn" id="editProfileBtn" title="ویرایش پروفایل">
+          ✏
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="wam-broker__main">
+
+      <!-- Hero پروفایل -->
+      <section class="wam-broker__profile-hero">
+        <div class="wam-broker__profile-avatar-wrap">
+          <div class="wam-broker__profile-avatar-xl" id="profileAvatar">ک</div>
+          <button type="button" class="wam-broker__profile-edit-avatar" id="avatarEditBtn" title="تغییر آواتار">
+            📷
+          </button>
+        </div>
+
+        <h1 class="wam-broker__profile-name-lg" id="profileName">کارگزار</h1>
+        <div class="wam-broker__profile-role-badge">
+          💼 <span id="profileRoleLabel">کارگزار</span>
+        </div>
+
+        <div class="wam-broker__profile-stats-row">
+          <div class="wam-broker__profile-stat-cell">
+            <div class="wam-broker__profile-stat-value" id="statCases">۰</div>
+            <div class="wam-broker__profile-stat-label">پرونده</div>
+          </div>
+          <div class="wam-broker__profile-stat-cell">
+            <div class="wam-broker__profile-stat-value" id="statApproved">۰</div>
+            <div class="wam-broker__profile-stat-label">موفق</div>
+          </div>
+          <div class="wam-broker__profile-stat-cell">
+            <div class="wam-broker__profile-stat-value" id="statApplicants">۰</div>
+            <div class="wam-broker__profile-stat-label">متقاضی</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- اطلاعات شخصی -->
+      <section class="wam-broker__section">
+        <div class="wam-broker__section-head">
+          <h2 class="wam-broker__section-title">📋 اطلاعات شخصی</h2>
+        </div>
+
+        <div class="wam-broker__section-list">
+          <button type="button" class="wam-broker__list-item" data-action="edit-name">
+            <span class="wam-broker__list-icon">👤</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">نام و نام خانوادگی</p>
+              <p class="wam-broker__list-sub" id="infoName">—</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+
+          <button type="button" class="wam-broker__list-item" data-action="edit-phone">
+            <span class="wam-broker__list-icon">📱</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">شماره موبایل</p>
+              <p class="wam-broker__list-sub" id="infoPhone" dir="ltr">—</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+
+          <button type="button" class="wam-broker__list-item" data-action="edit-email">
+            <span class="wam-broker__list-icon">✉️</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">ایمیل</p>
+              <p class="wam-broker__list-sub" id="infoEmail" dir="ltr">—</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+
+          <button type="button" class="wam-broker__list-item" data-action="edit-national-id">
+            <span class="wam-broker__list-icon">🪪</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">کد ملی</p>
+              <p class="wam-broker__list-sub" id="infoNid" dir="ltr">—</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+
+          <button type="button" class="wam-broker__list-item" data-action="edit-iban">
+            <span class="wam-broker__list-icon">🏦</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">شماره شبا</p>
+              <p class="wam-broker__list-sub" id="infoIban" dir="ltr">—</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+
+          <button type="button" class="wam-broker__list-item" data-action="edit-address">
+            <span class="wam-broker__list-icon">🏠</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">آدرس</p>
+              <p class="wam-broker__list-sub" id="infoAddress">—</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- امنیت -->
+      <section class="wam-broker__section">
+        <div class="wam-broker__section-head">
+          <h2 class="wam-broker__section-title">🔒 امنیت</h2>
+        </div>
+
+        <div class="wam-broker__section-list">
+          <button type="button" class="wam-broker__list-item" data-action="change-password">
+            <span class="wam-broker__list-icon wam-broker__list-icon--gold">🔑</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">تغییر رمز عبور</p>
+              <p class="wam-broker__list-sub">آخرین تغییر: —</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+
+          <div class="wam-broker__list-item" style="cursor:default;">
+            <span class="wam-broker__list-icon wam-broker__list-icon--info">🔐</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">ورود دو مرحله‌ای</p>
+              <p class="wam-broker__list-sub">افزایش امنیت حساب</p>
+            </div>
+            <label class="wam-switch">
+              <input type="checkbox" id="twoFactorToggle">
+              <span class="wam-switch__slider"></span>
+            </label>
+          </div>
+
+          <button type="button" class="wam-broker__list-item" data-action="sessions">
+            <span class="wam-broker__list-icon wam-broker__list-icon--success">📱</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">نشست‌های فعال</p>
+              <p class="wam-broker__list-sub">مدیریت دستگاه‌های متصل</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ترجیحات -->
+      <section class="wam-broker__section">
+        <div class="wam-broker__section-head">
+          <h2 class="wam-broker__section-title">⚙️ ترجیحات</h2>
+        </div>
+
+        <div class="wam-broker__section-list">
+          <div class="wam-broker__list-item" style="cursor:default;">
+            <span class="wam-broker__list-icon">🔔</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">اعلان‌ها</p>
+              <p class="wam-broker__list-sub">دریافت اعلان‌های مربوطه</p>
+            </div>
+            <label class="wam-switch">
+              <input type="checkbox" id="notifToggle" checked>
+              <span class="wam-switch__slider"></span>
+            </label>
+          </div>
+
+          <div class="wam-broker__list-item" style="cursor:default;">
+            <span class="wam-broker__list-icon">🌙</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">حالت تیره</p>
+              <p class="wam-broker__list-sub">به‌زودی</p>
+            </div>
+            <label class="wam-switch">
+              <input type="checkbox" id="darkModeToggle" disabled>
+              <span class="wam-switch__slider"></span>
+            </label>
+          </div>
+
+          <button type="button" class="wam-broker__list-item" data-action="clear-cache">
+            <span class="wam-broker__list-icon wam-broker__list-icon--info">🧹</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">پاک‌سازی داده‌های موقت</p>
+              <p class="wam-broker__list-sub">حذف cache و پیش‌نویس‌ها</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- پشتیبانی -->
+      <section class="wam-broker__section">
+        <div class="wam-broker__section-head">
+          <h2 class="wam-broker__section-title">💬 پشتیبانی</h2>
+        </div>
+
+        <div class="wam-broker__section-list">
+          <button type="button" class="wam-broker__list-item" data-action="help">
+            <span class="wam-broker__list-icon wam-broker__list-icon--info">❓</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">راهنما و آموزش</p>
+              <p class="wam-broker__list-sub">مستندات و ویدیوهای آموزشی</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+
+          <button type="button" class="wam-broker__list-item" data-action="contact">
+            <span class="wam-broker__list-icon wam-broker__list-icon--success">📞</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">تماس با پشتیبانی</p>
+              <p class="wam-broker__list-sub">۰۲۱-۱۲۳۴۵۶۷۸</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+
+          <button type="button" class="wam-broker__list-item" data-action="feedback">
+            <span class="wam-broker__list-icon wam-broker__list-icon--gold">💡</span>
+            <div class="wam-broker__list-body">
+              <p class="wam-broker__list-title">ارسال بازخورد</p>
+              <p class="wam-broker__list-sub">پیشنهاد یا گزارش مشکل</p>
+            </div>
+            <span class="wam-broker__list-arrow">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Logout -->
+      <section class="wam-broker__section">
+        <button type="button" class="wam-broker__list-item" id="logoutBtn"
+                style="border-radius:var(--wam-radius-md);background:var(--wam-danger-soft);color:var(--wam-danger-text);border:1px solid var(--wam-danger-soft);justify-content:center;">
+          <span style="font-size:1.1rem;">🚪</span>
+          <span style="font-weight:800;">خروج از حساب کاربری</span>
+        </button>
+      </section>
+
+      <!-- درباره -->
+      <div class="wam-broker__about">
+        <div class="wam-broker__about-logo">
+          <span class="wam-broker__about-logo-icon">و</span>
+          <span>وام پی</span>
+        </div>
+        <div>نسخه <span id="appVersion">1.0.0</span></div>
+        <div style="margin-top:4px;">مسیر هوشمند تأمین مالی</div>
+        <div style="margin-top:8px;font-size:0.7rem;opacity:0.75;">
+          © ۱۴۰۵ — تمامی حقوق محفوظ است.
+        </div>
+      </div>
+
+      <div style="height: 20px;"></div>
+
+    </main>
+
+    <!-- ═══ BOTTOM NAV ═══ -->
+    <nav class="wam-broker__bottomnav" role="navigation">
+      <a href="broker-dashboard.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">🏠</span>
+        <span class="wam-broker__nav-label">خانه</span>
+      </a>
+      <a href="broker-cases.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">📁</span>
+        <span class="wam-broker__nav-label">پرونده‌ها</span>
+      </a>
+      <a href="broker-wizard.html" class="wam-broker__nav-item wam-broker__nav-item--cta">
+        <span class="wam-broker__nav-icon">➕</span>
+        <span class="wam-broker__nav-label">جدید</span>
+      </a>
+      <a href="broker-applicants.html" class="wam-broker__nav-item">
+        <span class="wam-broker__nav-icon">👥</span>
+        <span class="wam-broker__nav-label">متقاضیان</span>
+      </a>
+      <a href="broker-profile.html" class="wam-broker__nav-item is-active">
+        <span class="wam-broker__nav-icon">👤</span>
+        <span class="wam-broker__nav-label">پروفایل</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- ═══ MODAL: ویرایش فیلد ═══ -->
+  <div class="wam-broker__modal" id="editModal" role="dialog" aria-modal="true">
+    <div class="wam-broker__modal-box">
+
+      <div class="wam-broker__modal-head">
+        <h3 class="wam-broker__modal-title" id="editModalTitle">✏ ویرایش</h3>
+        <button type="button" class="wam-broker__modal-close" id="editModalClose" aria-label="بستن">✕</button>
+      </div>
+
+      <div class="wam-field" id="editFieldWrap">
+        <label class="wam-field__label" for="editInput" id="editLabel">مقدار جدید</label>
+        <input type="text" id="editInput" class="wam-input">
+        <p class="wam-field__hint" id="editHint"></p>
+      </div>
+
+      <div class="wam-broker__modal-actions">
+        <button type="button" class="wam-btn" id="editCancelBtn">انصراف</button>
+        <button type="button" class="wam-btn wam-btn--primary" id="editSaveBtn">
+          💾 ذخیره
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: تغییر رمز ═══ -->
+  <div class="wam-broker__modal" id="passwordModal" role="dialog" aria-modal="true">
+    <div class="wam-broker__modal-box">
+
+      <div class="wam-broker__modal-head">
+        <h3 class="wam-broker__modal-title">🔑 تغییر رمز عبور</h3>
+        <button type="button" class="wam-broker__modal-close" id="passwordModalClose" aria-label="بستن">✕</button>
+      </div>
+
+      <div class="wam-field">
+        <label class="wam-field__label" for="curPass">رمز عبور فعلی *</label>
+        <input type="password" id="curPass" class="wam-input" autocomplete="current-password">
+      </div>
+
+      <div class="wam-field">
+        <label class="wam-field__label" for="newPass">رمز عبور جدید *</label>
+        <input type="password" id="newPass" class="wam-input" autocomplete="new-password">
+        <p class="wam-field__hint">حداقل ۶ کاراکتر</p>
+      </div>
+
+      <div class="wam-field">
+        <label class="wam-field__label" for="confirmPass">تکرار رمز جدید *</label>
+        <input type="password" id="confirmPass" class="wam-input" autocomplete="new-password">
+      </div>
+
+      <div class="wam-broker__modal-actions">
+        <button type="button" class="wam-btn" id="passwordCancelBtn">انصراف</button>
+        <button type="button" class="wam-btn wam-btn--primary" id="passwordSaveBtn">
+          💾 تغییر رمز
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: نشست‌ها ═══ -->
+  <div class="wam-broker__modal" id="sessionsModal" role="dialog" aria-modal="true">
+    <div class="wam-broker__modal-box">
+
+      <div class="wam-broker__modal-head">
+        <h3 class="wam-broker__modal-title">📱 نشست‌های فعال</h3>
+        <button type="button" class="wam-broker__modal-close" id="sessionsModalClose" aria-label="بستن">✕</button>
+      </div>
+
+      <div id="sessionsBody" style="font-size:0.85rem;color:var(--wam-text-muted);line-height:1.8;">
+        در حال حاضر فقط این دستگاه متصل است.
+      </div>
+
+      <div class="wam-broker__modal-actions">
+        <button type="button" class="wam-btn" id="sessionsCloseBtn">بستن</button>
+        <button type="button" class="wam-btn wam-btn--danger" id="logoutAllBtn">
+          🚪 خروج از همه دستگاه‌ها
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+  <script src="js/bundle-broker.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       BROKER PROFILE CONTROLLER
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_USER = 'wamPayCurrentUser';
+      var STORAGE_USERS = 'wamPayUsers';
+      var STORAGE_CASES = 'wamPayCases';
+      var STORAGE_APP = 'wamPayBrokerApplicants';
+      var STORAGE_PREFS = 'wamPayBrokerPrefs';
+
+      var APP_VERSION = '1.0.0';
+
+      var state = {
+        user: null,
+        editKey: null,
+        editMeta: {}
+      };
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function currentUserId() {
+        var u = state.user || readJSON(STORAGE_USER, null);
+        return (u && (u.id || u.username)) || 'broker';
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadUser() {
+        state.user = readJSON(STORAGE_USER, null);
+        if (!state.user) {
+          state.user = {
+            id: 'broker', username: 'broker',
+            name: 'کارگزار', role: 'broker'
+          };
+        }
+      }
+
+      function updateUser(updates) {
+        if (!state.user) return false;
+        for (var k in updates) {
+          if (Object.prototype.hasOwnProperty.call(updates, k)) {
+            state.user[k] = updates[k];
+          }
+        }
+        state.user.updatedAt = Date.now();
+        writeJSON(STORAGE_USER, state.user);
+
+        // همچنین در لیست کاربران
+        var users = readJSON(STORAGE_USERS, []);
+        if (Array.isArray(users)) {
+          for (var i = 0; i < users.length; i++) {
+            if (users[i].id === state.user.id || users[i].username === state.user.username) {
+              for (var k2 in updates) {
+                if (Object.prototype.hasOwnProperty.call(updates, k2)) {
+                  users[i][k2] = updates[k2];
+                }
+              }
+              users[i].updatedAt = Date.now();
+              break;
+            }
+          }
+          writeJSON(STORAGE_USERS, users);
+        }
+        return true;
+      }
+
+      // ═══════════════════════════════════
+      // آمار
+      // ═══════════════════════════════════
+
+      function computeStats() {
+        var cases = readJSON(STORAGE_CASES, []);
+        var applicants = readJSON(STORAGE_APP, []);
+        var me = currentUserId();
+
+        var total = 0, approved = 0;
+
+        if (Array.isArray(cases)) {
+          cases.forEach(function (c) {
+            if (!c) return;
+            if (c.brokerId && c.brokerId !== me) return;
+            if (c.brokerName && state.user && c.brokerName !== state.user.name) {
+              if (c.brokerId) return;
+            }
+            total++;
+            if (c.status === 'approved' || c.status === 'completed') approved++;
+          });
+        }
+
+        var appCount = 0;
+        if (Array.isArray(applicants)) {
+          applicants.forEach(function (a) {
+            if (a && a.brokerId === me) appCount++;
+          });
+        }
+
+        return { total: total, approved: approved, applicants: appCount };
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function roleLabel(role) {
+        return {
+          super_admin: 'مدیر ارشد',
+          admin: 'ادمین کل',
+          verifier: 'اعتبارسنج',
+          broker: 'کارگزار',
+          applicant: 'متقاضی'
+        }[role] || role || 'کاربر';
+      }
+
+      function renderAll() {
+        var u = state.user || {};
+        var displayName = u.name || u.fullName || u.username || 'کارگزار';
+        var initial = displayName.trim().charAt(0).toUpperCase() || 'ک';
+
+        if ($('profileAvatar')) $('profileAvatar').textContent = initial;
+        if ($('profileName')) $('profileName').textContent = displayName;
+        if ($('profileRoleLabel')) $('profileRoleLabel').textContent = roleLabel(u.role);
+
+        // اطلاعات
+        if ($('infoName')) $('infoName').textContent = displayName;
+        if ($('infoPhone')) $('infoPhone').textContent = u.phone || 'ثبت نشده';
+        if ($('infoEmail')) $('infoEmail').textContent = u.email || 'ثبت نشده';
+        if ($('infoNid')) $('infoNid').textContent = u.nationalId || 'ثبت نشده';
+        if ($('infoIban')) $('infoIban').textContent = u.iban || 'ثبت نشده';
+        if ($('infoAddress')) $('infoAddress').textContent = u.address || 'ثبت نشده';
+
+        // آمار
+        var s = computeStats();
+        if ($('statCases')) $('statCases').textContent = toFa(s.total);
+        if ($('statApproved')) $('statApproved').textContent = toFa(s.approved);
+        if ($('statApplicants')) $('statApplicants').textContent = toFa(s.applicants);
+
+        // نسخه
+        if ($('appVersion')) $('appVersion').textContent = APP_VERSION;
+
+        // تنظیمات
+        var prefs = readJSON(STORAGE_PREFS, {});
+        if ($('notifToggle')) $('notifToggle').checked = prefs.notif !== false;
+        if ($('twoFactorToggle')) $('twoFactorToggle').checked = !!prefs.twoFactor;
+      }
+
+      // ═══════════════════════════════════
+      // ویرایش فیلد
+      // ═══════════════════════════════════
+
+      var FIELD_META = {
+        'name': {
+          label: 'نام و نام خانوادگی',
+          hint: 'حداقل ۳ کاراکتر',
+          validate: function (v) { return v && v.trim().length >= 3; },
+          errorMsg: 'نام معتبر نیست.'
+        },
+        'phone': {
+          label: 'شماره موبایل',
+          hint: '۱۱ رقم با ۰۹',
+          ltr: true,
+          validate: function (v) { return /^09\d{9}$/.test(v || ''); },
+          errorMsg: 'شماره موبایل معتبر نیست.'
+        },
+        'email': {
+          label: 'ایمیل',
+          hint: 'example@mail.com',
+          ltr: true,
+          validate: function (v) { return !v || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); },
+          errorMsg: 'ایمیل معتبر نیست.'
+        },
+        'nationalId': {
+          label: 'کد ملی',
+          hint: '۱۰ رقم',
+          ltr: true,
+          validate: function (v) { return !v || /^\d{10}$/.test(v); },
+          errorMsg: 'کد ملی باید ۱۰ رقم باشد.'
+        },
+        'iban': {
+          label: 'شماره شبا',
+          hint: 'IR + ۲۴ رقم',
+          ltr: true,
+          validate: function (v) { return !v || /^IR\d{24}$/.test(v); },
+          errorMsg: 'شماره شبا معتبر نیست.'
+        },
+        'address': {
+          label: 'آدرس',
+          hint: 'آدرس محل سکونت یا کار',
+          multiline: true,
+          validate: function (v) { return !v || v.length >= 5; },
+          errorMsg: 'آدرس خیلی کوتاه است.'
+        }
+      };
+
+      function openEditModal(key) {
+        var meta = FIELD_META[key];
+        if (!meta) return;
+        state.editKey = key;
+        state.editMeta = meta;
+
+        if ($('editModalTitle')) $('editModalTitle').textContent = '✏ ویرایش ' + meta.label;
+        if ($('editLabel')) $('editLabel').textContent = meta.label;
+        if ($('editHint')) $('editHint').textContent = meta.hint || '';
+        if ($('editInput')) {
+          $('editInput').value = state.user[key] || '';
+          $('editInput').setAttribute('dir', meta.ltr ? 'ltr' : 'rtl');
+          if (meta.ltr) $('editInput').setAttribute('inputmode', 'text');
+        }
+
+        var m = $('editModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('editInput')) $('editInput').focus(); }, 150);
+      }
+
+      function closeEditModal() {
+        var m = $('editModal');
+        if (m) m.classList.remove('is-open');
+        state.editKey = null;
+      }
+
+      function saveEdit() {
+        if (!state.editKey) return;
+        var meta = state.editMeta;
+        var val = ($('editInput') || {}).value || '';
+        val = val.trim();
+
+        // تبدیل به uppercase برای IBAN
+        if (state.editKey === 'iban') {
+          val = val.toUpperCase();
+          if (val && val.indexOf('IR') !== 0) val = 'IR' + val;
+        }
+
+        if (meta.validate && !meta.validate(val)) {
+          alert(meta.errorMsg || 'مقدار نامعتبر است.');
+          return;
+        }
+
+        var updates = {};
+        updates[state.editKey] = val;
+        if (!updateUser(updates)) {
+          alert('خطا در ذخیره‌سازی.');
+          return;
+        }
+
+        emitEvent('broker:profile-updated', { field: state.editKey, value: val });
+        closeEditModal();
+        renderAll();
+      }
+
+      // ═══════════════════════════════════
+      // تغییر رمز
+      // ═══════════════════════════════════
+
+      function openPasswordModal() {
+        if ($('curPass')) $('curPass').value = '';
+        if ($('newPass')) $('newPass').value = '';
+        if ($('confirmPass')) $('confirmPass').value = '';
+        var m = $('passwordModal');
+        if (m) m.classList.add('is-open');
+        setTimeout(function () { if ($('curPass')) $('curPass').focus(); }, 150);
+      }
+
+      function closePasswordModal() {
+        var m = $('passwordModal');
+        if (m) m.classList.remove('is-open');
+      }
+
+      function savePassword() {
+        var cur = ($('curPass') || {}).value || '';
+        var np = ($('newPass') || {}).value || '';
+        var cp = ($('confirmPass') || {}).value || '';
+
+        if (!cur) {
+          alert('رمز عبور فعلی را وارد کنید.');
+          return;
+        }
+        if (!np || np.length < 6) {
+          alert('رمز جدید باید حداقل ۶ کاراکتر باشد.');
+          return;
+        }
+        if (np !== cp) {
+          alert('تکرار رمز جدید مطابقت ندارد.');
+          return;
+        }
+
+        // چک رمز فعلی
+        var u = state.user;
+        var currentPass = u.password || (u.username === 'broker' ? 'broker123' : '');
+        if (currentPass && currentPass !== cur) {
+          alert('رمز عبور فعلی اشتباه است.');
+          return;
+        }
+
+        if (!updateUser({ password: np, passwordChangedAt: Date.now() })) {
+          alert('خطا در ذخیره‌سازی.');
+          return;
+        }
+
+        emitEvent('broker:password-changed', {});
+        closePasswordModal();
+
+        var ok = document.createElement('div');
+        ok.className = 'wam-toast wam-toast--success';
+        ok.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);z-index:1200;';
+        ok.textContent = '✓ رمز عبور تغییر کرد';
+        document.body.appendChild(ok);
+        setTimeout(function () { ok.remove(); }, 2500);
+      }
+
+      // ═══════════════════════════════════
+      // نشست‌ها
+      // ═══════════════════════════════════
+
+      function openSessionsModal() {
+        var m = $('sessionsModal');
+        if (m) m.classList.add('is-open');
+      }
+
+      function closeSessionsModal() {
+        var m = $('sessionsModal');
+        if (m) m.classList.remove('is-open');
+      }
+
+      // ═══════════════════════════════════
+      // ترجیحات
+      // ═══════════════════════════════════
+
+      function savePrefs() {
+        var prefs = {
+          notif: $('notifToggle') ? $('notifToggle').checked : true,
+          twoFactor: $('twoFactorToggle') ? $('twoFactorToggle').checked : false
+        };
+        writeJSON(STORAGE_PREFS, prefs);
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // ویرایش فیلدها
+        $$('.wam-broker__list-item[data-action]').forEach(function (item) {
+          item.addEventListener('click', function () {
+            var act = item.getAttribute('data-action');
+            if (act === 'edit-name') openEditModal('name');
+            else if (act === 'edit-phone') openEditModal('phone');
+            else if (act === 'edit-email') openEditModal('email');
+            else if (act === 'edit-national-id') openEditModal('nationalId');
+            else if (act === 'edit-iban') openEditModal('iban');
+            else if (act === 'edit-address') openEditModal('address');
+            else if (act === 'change-password') openPasswordModal();
+            else if (act === 'sessions') openSessionsModal();
+            else if (act === 'clear-cache') {
+              if (confirm('داده‌های موقت (پیش‌نویس و cache) پاک شود؟')) {
+                try {
+                  localStorage.removeItem('wamPayWizardDraft');
+                  localStorage.removeItem('wamPayWizardPrefill');
+                } catch (_) {}
+                alert('✓ داده‌های موقت پاک شد.');
+              }
+            }
+            else if (act === 'help') {
+              alert('راهنما و آموزش\n\nبه‌زودی: مستندات و ویدیوهای آموزشی در دسترس قرار می‌گیرد.');
+            }
+            else if (act === 'contact') {
+              window.location.href = 'tel:02112345678';
+            }
+            else if (act === 'feedback') {
+              var msg = prompt('بازخورد خود را وارد کنید:');
+              if (msg) {
+                emitEvent('broker:feedback', { text: msg });
+                alert('✓ بازخورد شما ثبت شد. ممنون!');
+              }
+            }
+          });
+        });
+
+        // دکمه ویرایش در topbar
+        if ($('editProfileBtn')) {
+          $('editProfileBtn').addEventListener('click', function () {
+            openEditModal('name');
+          });
+        }
+
+        // تغییر آواتار (نمایشی)
+        if ($('avatarEditBtn')) {
+          $('avatarEditBtn').addEventListener('click', function () {
+            alert('تغییر آواتار به‌زودی فعال می‌شود.');
+          });
+        }
+
+        // Modal ویرایش
+        if ($('editModalClose')) $('editModalClose').addEventListener('click', closeEditModal);
+        if ($('editCancelBtn')) $('editCancelBtn').addEventListener('click', closeEditModal);
+        if ($('editSaveBtn')) $('editSaveBtn').addEventListener('click', saveEdit);
+        var m1 = $('editModal');
+        if (m1) m1.addEventListener('click', function (e) { if (e.target === m1) closeEditModal(); });
+        if ($('editInput')) {
+          $('editInput').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') { e.preventDefault(); saveEdit(); }
+          });
+        }
+
+        // Modal رمز
+        if ($('passwordModalClose')) $('passwordModalClose').addEventListener('click', closePasswordModal);
+        if ($('passwordCancelBtn')) $('passwordCancelBtn').addEventListener('click', closePasswordModal);
+        if ($('passwordSaveBtn')) $('passwordSaveBtn').addEventListener('click', savePassword);
+        var m2 = $('passwordModal');
+        if (m2) m2.addEventListener('click', function (e) { if (e.target === m2) closePasswordModal(); });
+
+        // Modal نشست‌ها
+        if ($('sessionsModalClose')) $('sessionsModalClose').addEventListener('click', closeSessionsModal);
+        if ($('sessionsCloseBtn')) $('sessionsCloseBtn').addEventListener('click', closeSessionsModal);
+        if ($('logoutAllBtn')) {
+          $('logoutAllBtn').addEventListener('click', function () {
+            if (!confirm('از همه دستگاه‌ها خارج می‌شوید؟')) return;
+            try {
+              localStorage.removeItem('wamPayCurrentUser');
+              localStorage.removeItem('wamPayRemember');
+            } catch (_) {}
+            emitEvent('auth:logout-all', {});
+            window.location.replace('login.html');
+          });
+        }
+        var m3 = $('sessionsModal');
+        if (m3) m3.addEventListener('click', function (e) { if (e.target === m3) closeSessionsModal(); });
+
+        // خروج
+        if ($('logoutBtn')) {
+          $('logoutBtn').addEventListener('click', function () {
+            if (!confirm('از حساب کاربری خارج می‌شوید؟')) return;
+            try {
+              localStorage.removeItem('wamPayCurrentUser');
+              localStorage.removeItem('wamPayRemember');
+            } catch (_) {}
+            emitEvent('auth:logout', {});
+            window.location.replace('login.html');
+          });
+        }
+
+        // سوییچ‌ها
+        if ($('notifToggle')) $('notifToggle').addEventListener('change', savePrefs);
+        if ($('twoFactorToggle')) {
+          $('twoFactorToggle').addEventListener('change', function () {
+            savePrefs();
+            if (this.checked) {
+              alert('ورود دو مرحله‌ای فعال شد. در ورود بعدی، کد تأیید پیامکی دریافت خواهید کرد.');
+            }
+          });
+        }
+
+        // Esc
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            closeEditModal();
+            closePasswordModal();
+            closeSessionsModal();
+          }
+        });
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        loadUser();
+        renderAll();
+        bindEvents();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

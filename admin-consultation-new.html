@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پنل مشاوره وام پی</title>
+<script src="js/supabase.min.js"></script>
+<style>
+    * { box-sizing: border-box; }
+    body { font-family: Tahoma, sans-serif; background: #f5f7f5; margin: 0; padding: 20px; direction: rtl; }
+    .header { background: linear-gradient(135deg,#0b3b23,#1e8e4a); color: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .header h1 { margin: 0; font-size: 22px; }
+    .header .user-info { display: flex; align-items: center; gap: 15px; }
+    .logout-btn { background: #c0392b; color: #fff; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: inherit; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+    .stat { background: #fff; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .stat .num { font-size: 32px; font-weight: bold; color: #0b3b23; }
+    .stat .label { color: #666; font-size: 14px; margin-top: 5px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 15px; }
+    .card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-right: 5px solid #d4a62a; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.12); }
+    .card h3 { margin-top: 0; color: #0b3b23; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    .card p { margin: 8px 0; font-size: 14px; color: #555; }
+    .card p strong { color: #0b3b23; }
+    .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-approved { background: #d4edda; color: #155724; }
+    .btn-approve { background: #1e8e4a; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; margin-top: 12px; font-size: 14px; font-family: inherit; font-weight: bold; }
+    .btn-approve:hover { background: #166b38; }
+    .btn-approve:disabled { background: #ccc; cursor: not-allowed; }
+    .empty-state { text-align: center; color: #777; padding: 60px; font-size: 18px; background: #fff; border-radius: 12px; }
+    .loading { text-align: center; padding: 40px; color: #0b3b23; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1> پنل مشاوره وام پی</h1>
+    <div class="user-info">
+        <span id="userName">در حال بارگذاری...</span>
+        <button class="logout-btn" onclick="logout()">خروج</button>
+    </div>
+</div>
+
+<div class="stats">
+    <div class="stat"><div class="num" id="statPending">0</div><div class="label">در انتظار بررسی</div></div>
+    <div class="stat"><div class="num" id="statApproved">0</div><div class="label">تأیید شده</div></div>
+    <div class="stat"><div class="num" id="statTotal">0</div><div class="label">کل پروندهها</div></div>
+</div>
+
+<div id="caseList" class="grid">
+    <div class="loading"> در حال دریافت پروندهها از دیتابیس...</div>
+</div>
+
+<script>
+    const SUPABASE_URL = 'http://62.60.191.179:8000';
+    const dbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzkxMzU0NjE5LCJleHAiOjE5NDkwMzQ2MTl9.I6Wc_3L-qpjz81Rp53FOqyjjy45pV4WW-iC3ebFauwo';
+
+    const currentUser = JSON.parse(localStorage.getItem('wamPayCurrentUser'));
+    if (!currentUser || !['consultation_admin', 'super_admin', 'deputy_admin'].includes(currentUser.role)) {
+        alert('لطفا ابتدا با حساب مشاور وارد شوید.');
+        window.location.href = 'login.html';
+    } else {
+        document.getElementById('userName').textContent = ' ' + (currentUser.name || currentUser.mobile);
+    }
+
+    async function loadCases() {
+        const list = document.getElementById('caseList');
+        list.innerHTML = '<div class="loading"> در حال دریافت پروندهها...</div>';
+
+        const { data, error } = await dbClient
+            .from('applications')
+            .select('*')
+            .in('status', ['awaiting_consultation', 'consultation_approved', 'draft'])
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            list.innerHTML = `<div class="empty-state" style="color:#c0392b"> خطا در ارتباط با دیتابیس: ${error.message}</div>`;
+            return;
+        }
+
+        // بهروزرسانی آمار
+        document.getElementById('statTotal').textContent = data.length;
+        document.getElementById('statPending').textContent = data.filter(a => a.status === 'awaiting_consultation' || a.status === 'draft').length;
+        document.getElementById('statApproved').textContent = data.filter(a => a.status === 'consultation_approved').length;
+
+        if (data.length === 0) {
+            list.innerHTML = '<div class="empty-state"> هیچ پروندهای در انتظار مشاوره نیست.</div>';
+            return;
+        }
+
+        list.innerHTML = '';
+        data.forEach(app => {
+            const name = ((app.personal_info?.firstName || '') + ' ' + (app.personal_info?.lastName || '')).trim() || 'نامشخص';
+            const mobile = app.personal_info?.phone || app.personal_info?.mobile || '';
+            const amount = app.financial_info?.loanAmount ? Number(app.financial_info.loanAmount).toLocaleString('fa-IR') : '';
+            const bank = app.financial_info?.bankLoanType || '';
+            const isPending = app.status === 'awaiting_consultation' || app.status === 'draft';
+            
+            const statusBadge = isPending
+                ? '<span class="status-badge status-pending"> در انتظار بررسی</span>'
+                : '<span class="status-badge status-approved"> تأیید شده</span>';
+            
+            const actionBtn = isPending
+                ? `<button class="btn-approve" onclick="approveCase('${app.id}')"> تأیید و ارجاع به اعتبارسنجی</button>`
+                : `<div style="text-align:center; color:#1e8e4a; font-weight:bold; margin-top:12px; font-size:14px;"> به اعتبارسنجی ارجاع شد</div>`;
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <h3> ${app.application_number}</h3>
+                <p><strong> متقاضی:</strong> ${name}</p>
+                <p><strong> موبایل:</strong> ${mobile}</p>
+                <p><strong> بانک:</strong> ${bank}</p>
+                <p><strong> مبلغ:</strong> ${amount} تومان</p>
+                <p><strong> وضعیت:</strong> ${statusBadge}</p>
+                ${actionBtn}
+            `;
+            list.appendChild(card);
+        });
+    }
+
+    async function approveCase(id) {
+        if (!confirm('آیا از تأیید این پرونده و ارجاع به اعتبارسنجی مطمئن هستید')) return;
+
+        const { error } = await dbClient
+            .from('applications')
+            .update({ status: 'consultation_approved' })
+            .eq('id', id);
+
+        if (error) {
+            alert(' خطا در تأیید پرونده: ' + error.message);
+        } else {
+            alert(' پرونده با موفقیت تأیید شد و به اعتبارسنجی ارجاع داده شد!');
+            loadCases();
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('wamPayCurrentUser');
+        localStorage.removeItem('wamPayToken');
+        window.location.href = 'login.html';
+    }
+
+    loadCases();
+</script>
+</body>
+</html>

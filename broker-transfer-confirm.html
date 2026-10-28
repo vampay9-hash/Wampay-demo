@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تأیید انتقال امتیاز | وام پی</title>
+<link href="css/fonts/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+:root {
+    --primary: #0b3b23; --primary-light: #1a5c3a; --primary-dark: #062416;
+    --gold: #d4a62a; --gold-light: #f0c651;
+    --text: #1a2b22; --text-muted: #6b7d73;
+    --bg: #f4f7f4; --bg-card: #ffffff; --border: #e0e8e3;
+    --error: #c0392b; --success: #1e8e4a; --warning: #e67e22; --info: #2980b9;
+    --transfer: #16a085;
+    --shadow-sm: 0 2px 8px rgba(11,59,35,0.06);
+    --shadow-md: 0 8px 24px rgba(11,59,35,0.10);
+    --shadow-lg: 0 16px 48px rgba(11,59,35,0.18);
+    --radius: 14px; --radius-sm: 8px;
+    --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+[data-theme="dark"] {
+    --text: #e8ede9; --text-muted: #8fa398;
+    --bg: #0a1410; --bg-card: #10201a; --border: #1f3429;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-lg: 0 16px 48px rgba(0,0,0,0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+    background-image:
+        radial-gradient(circle at 10% 10%, rgba(22,160,133,0.05), transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(11,59,35,0.07), transparent 40%);
+}
+.tr-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; box-shadow: var(--shadow-md);
+    position: sticky; top: 0; z-index: 100;
+}
+.tr-header__inner {
+    max-width: 1100px; width: 100%; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.tr-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 800; font-size: 18px; color: #fff; text-decoration: none;
+}
+.tr-logo__icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 4px 12px rgba(212,166,42,0.4);
+}
+.tr-header__actions { display: flex; gap: 8px; align-items: center; }
+.tr-theme-btn {
+    width: 38px; height: 38px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08); color: #fff;
+    cursor: pointer; font-size: 16px; transition: var(--transition);
+}
+.tr-theme-btn:hover { background: rgba(255,255,255,0.18); }
+.tr-back-link {
+    color: #fff; text-decoration: none; font-size: 13px;
+    padding: 8px 14px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: var(--transition);
+}
+.tr-back-link:hover { background: rgba(255,255,255,0.12); }
+
+.tr-main { max-width: 850px; margin: 0 auto; padding: 24px 20px 100px; }
+
+.tr-hero { text-align: center; margin-bottom: 22px; }
+.tr-hero__badge {
+    display: inline-block; padding: 6px 16px;
+    background: rgba(22,160,133,0.12); color: var(--transfer);
+    border-radius: 999px; font-size: 12px; font-weight: 800; margin-bottom: 10px;
+}
+.tr-hero__title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+.tr-hero__subtitle { color: var(--text-muted); font-size: 14px; max-width: 560px; margin: 0 auto; }
+
+/* Timer */
+.timer-box {
+    background: linear-gradient(135deg, rgba(230,126,34,0.12), rgba(212,166,42,0.08));
+    border: 2px solid rgba(230,126,34,0.4);
+    border-radius: var(--radius); padding: 18px 22px;
+    text-align: center; margin-bottom: 20px;
+    animation: pulse-warning 2s ease-in-out infinite;
+}
+@keyframes pulse-warning {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(230,126,34,0.3); }
+    50% { box-shadow: 0 0 0 12px rgba(230,126,34,0.05); }
+}
+.timer-box--urgent {
+    background: linear-gradient(135deg, rgba(192,57,43,0.12), rgba(230,126,34,0.08));
+    border-color: rgba(192,57,43,0.5);
+    animation: pulse-danger 1s ease-in-out infinite;
+}
+@keyframes pulse-danger {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.4); }
+    50% { box-shadow: 0 0 0 14px rgba(192,57,43,0.05); }
+}
+.timer-box__label {
+    font-size: 13px; font-weight: 700; color: var(--warning);
+    margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.timer-box--urgent .timer-box__label { color: var(--error); }
+.timer-box__value {
+    font-size: 32px; font-weight: 800;
+    font-family: monospace; letter-spacing: 4px;
+    color: var(--warning); direction: ltr;
+}
+.timer-box--urgent .timer-box__value { color: var(--error); }
+.timer-box__desc { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+/* Case Banner */
+.case-banner {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff; border-radius: var(--radius);
+    padding: 16px 22px; margin-bottom: 18px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; box-shadow: var(--shadow-md);
+    position: relative; overflow: hidden;
+    flex-wrap: wrap;
+}
+.case-banner::before {
+    content: ''; position: absolute; top: -50%; right: -20%;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(212,166,42,0.15);
+}
+.case-banner__right, .case-banner__left { position: relative; z-index: 1; }
+.case-banner__label { font-size: 12px; opacity: 0.85; margin-bottom: 4px; }
+.case-banner__value {
+    font-size: 18px; font-weight: 800; letter-spacing: 2px;
+    color: var(--gold-light); font-family: monospace; direction: ltr;
+}
+.case-banner__left { text-align: left; }
+.case-banner__name { font-size: 15px; font-weight: 800; }
+.case-banner__sub { font-size: 11px; opacity: 0.85; }
+
+/* Card */
+.tr-card {
+    background: var(--bg-card); border-radius: var(--radius);
+    padding: 24px; box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+    animation: fadeInUp 0.4s ease;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.tr-card__title {
+    font-size: 17px; font-weight: 800; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+}
+.tr-card__desc {
+    font-size: 13px; color: var(--text-muted);
+    margin-bottom: 18px; padding-bottom: 14px;
+    border-bottom: 1px dashed var(--border);
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.info-item {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 12px 14px; border: 1px solid var(--border);
+}
+.info-item--full { grid-column: 1/-1; }
+.info-item__label {
+    font-size: 11px; color: var(--text-muted); margin-bottom: 4px;
+    display: flex; align-items: center; gap: 4px;
+}
+.info-item__value {
+    font-weight: 800; font-size: 14px; word-break: break-word;
+}
+.info-item__value--mono {
+    font-family: monospace; direction: ltr; text-align: right;
+    font-size: 13px; letter-spacing: 1px;
+}
+.info-item__value--success { color: var(--success); }
+.info-item__value--warning { color: var(--warning); }
+
+/* Escrow Summary */
+.escrow-summary {
+    background: linear-gradient(135deg, rgba(22,160,133,0.08), rgba(11,59,35,0.04));
+    border: 2px solid rgba(22,160,133,0.3);
+    border-radius: var(--radius); padding: 18px 22px;
+    margin-bottom: 16px;
+}
+.escrow-summary__title {
+    font-size: 14px; font-weight: 800; color: var(--transfer);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+}
+.escrow-summary__row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px dashed var(--border);
+    font-size: 14px;
+}
+.escrow-summary__row:last-child { border-bottom: none; }
+.escrow-summary__row span:first-child { color: var(--text-muted); }
+.escrow-summary__row span:last-child { font-weight: 800; }
+.escrow-summary__highlight {
+    background: linear-gradient(135deg, var(--transfer), #1abc9c);
+    color: #fff; border-radius: var(--radius-sm);
+    padding: 14px 16px; margin-top: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.escrow-summary__highlight-label { font-size: 13px; opacity: 0.95; }
+.escrow-summary__highlight-value { font-size: 20px; font-weight: 800; color: #fff; }
+
+/* Upload */
+.upload-wrap {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 12px; border: 2px dashed var(--border);
+    transition: var(--transition);
+}
+.upload-wrap--has-file { border-color: var(--success); background: rgba(30,142,74,0.04); }
+.upload-wrap--compressing { border-color: var(--gold); background: rgba(212,166,42,0.06); }
+.upload-wrap--required { border-color: rgba(192,57,43,0.4); }
+
+.upload-zone {
+    display: block; padding: 30px 20px; text-align: center;
+    cursor: pointer; border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+.upload-zone:hover { background: rgba(11,59,35,0.03); }
+.upload-zone__icon { font-size: 40px; margin-bottom: 8px; }
+.upload-zone__text { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.upload-zone__hint { font-size: 12px; color: var(--text-muted); }
+.upload-zone input[type="file"] { display: none; }
+.upload-preview {
+    width: 100%; max-height: 300px; object-fit: contain;
+    border-radius: 8px; margin-bottom: 10px; border: 2px solid var(--success);
+}
+.upload-meta {
+    font-size: 11px; color: var(--text-muted); font-family: monospace;
+    text-align: center; padding: 6px;
+}
+
+/* Textarea */
+.tr-textarea {
+    width: 100%; padding: 13px 16px;
+    border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+    background: var(--bg); color: var(--text);
+    font-family: inherit; font-size: 14px;
+    min-height: 100px; resize: vertical;
+    transition: var(--transition);
+}
+.tr-textarea:focus {
+    outline: none; border-color: var(--transfer);
+    box-shadow: 0 0 0 4px rgba(22,160,133,0.1);
+}
+
+/* Checkbox */
+.check-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px; border-radius: var(--radius-sm);
+    background: var(--bg); border: 1.5px solid var(--border);
+    cursor: pointer; transition: var(--transition);
+    margin-bottom: 10px;
+}
+.check-item:hover { border-color: var(--transfer); }
+.check-item--checked {
+    background: rgba(22,160,133,0.06);
+    border-color: var(--success);
+}
+.check-item input[type="checkbox"] {
+    width: 20px; height: 20px; accent-color: var(--transfer);
+    cursor: pointer; flex-shrink: 0; margin-top: 3px;
+}
+.check-item__text { flex: 1; font-size: 13px; line-height: 1.8; }
+.check-item__text strong { color: var(--transfer); font-weight: 800; }
+
+/* Buttons */
+.btn {
+    padding: 15px 24px; border-radius: var(--radius-sm); border: none;
+    font-family: inherit; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    text-decoration: none;
+}
+.btn--primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; box-shadow: 0 6px 16px rgba(11,59,35,0.25);
+}
+.btn--primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(11,59,35,0.35); }
+.btn--primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn--transfer {
+    background: linear-gradient(135deg, var(--transfer), #1abc9c);
+    color: #fff; box-shadow: 0 6px 16px rgba(22,160,133,0.35);
+}
+.btn--transfer:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(22,160,133,0.5); }
+.btn--success {
+    background: linear-gradient(135deg, var(--success), #2ecc71);
+    color: #fff;
+}
+.btn--ghost {
+    background: transparent; color: var(--text-muted);
+    border: 1.5px solid var(--border);
+}
+.btn--ghost:hover { background: var(--bg); color: var(--text); }
+.btn--block { width: 100%; }
+.btn__spinner {
+    width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff; border-radius: 50%;
+    animation: spin 0.8s linear infinite; display: none;
+}
+.btn--loading .btn__spinner { display: block; }
+.btn--loading .btn__text { opacity: 0.7; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.tr-actions { display: flex; gap: 12px; margin-top: 20px; }
+.tr-actions .btn { flex: 1; }
+
+/* Alert */
+.alert {
+    padding: 14px 18px; border-radius: var(--radius-sm);
+    font-size: 13px; margin-bottom: 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+    line-height: 1.8;
+}
+.alert--info { background: rgba(41,128,185,0.08); color: var(--info); border-right: 4px solid var(--info); }
+.alert--warning { background: rgba(230,126,34,0.10); color: var(--warning); border-right: 4px solid var(--warning); }
+.alert--success { background: rgba(30,142,74,0.08); color: var(--success); border-right: 4px solid var(--success); }
+.alert--error { background: rgba(192,57,43,0.08); color: var(--error); border-right: 4px solid var(--error); }
+
+/* Success */
+.success-screen { text-align: center; padding: 30px 20px; }
+.success-icon {
+    width: 100px; height: 100px; margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--transfer), #1abc9c);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px; color: #fff;
+    box-shadow: 0 12px 40px rgba(22,160,133,0.4);
+    animation: pop 0.6s cubic-bezier(0.68,-0.55,0.27,1.55);
+}
+@keyframes pop { 0% { transform: scale(0); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+.success-title { font-size: 24px; font-weight: 800; margin-bottom: 8px; color: var(--transfer); }
+.success-desc { color: var(--text-muted); margin-bottom: 24px; font-size: 14px; }
+
+/* Timeline */
+.timeline {
+    background: var(--bg); border-radius: var(--radius-sm);
+    padding: 18px; text-align: right;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+.timeline__title {
+    font-size: 14px; font-weight: 800; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 6px;
+}
+.timeline__item {
+    display: flex; gap: 12px; padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+}
+.timeline__item:last-child { border-bottom: none; }
+.timeline__icon {
+    width: 34px; height: 34px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+}
+.timeline__icon--done { background: rgba(30,142,74,0.12); color: var(--success); }
+.timeline__icon--pending { background: rgba(230,126,34,0.12); color: var(--warning); }
+.timeline__content { flex: 1; }
+.timeline__label { font-size: 13px; font-weight: 700; }
+.timeline__sub { font-size: 11px; color: var(--text-muted); }
+
+/* Loading */
+.loading-screen { text-align: center; padding: 80px 20px; color: var(--text-muted); }
+.loading-spinner {
+    width: 50px; height: 50px; border: 4px solid var(--border);
+    border-top-color: var(--transfer);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+}
+
+/* Toast */
+.toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--primary-dark); color: #fff;
+    padding: 14px 22px; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
+    z-index: 9999; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 10px; max-width: 90%;
+}
+.toast--show { transform: translateX(-50%) translateY(0); }
+.toast--error { background: var(--error); }
+.toast--success { background: var(--success); }
+
+@media (max-width: 640px) {
+    .tr-main { padding: 16px 14px 80px; }
+    .tr-hero__title { font-size: 20px; }
+    .tr-hero__subtitle { font-size: 13px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .tr-actions { flex-direction: column-reverse; }
+    .timer-box__value { font-size: 26px; }
+    .case-banner { flex-direction: column; text-align: center; }
+    .case-banner__left { text-align: center; }
+    .escrow-summary__highlight { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<header class="tr-header">
+    <div class="tr-header__inner">
+        <a href="broker-dashboard.html" class="tr-logo">
+            <div class="tr-logo__icon">📤</div>
+            <span>وام پی</span>
+        </a>
+        <div class="tr-header__actions">
+            <button class="tr-theme-btn" id="themeBtn">🌙</button>
+            <a href="broker-dashboard.html" class="tr-back-link">→ بازگشت</a>
+        </div>
+    </div>
+</header>
+
+<main class="tr-main" id="mainContainer">
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div>در حال بارگذاری اطلاعات...</div>
+    </div>
+</main>
+
+<div class="toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastText"></span>
+</div>
+
+<!-- Services -->
+<script src="js/trust-service.js"></script>
+<script src="js/contract-service.js"></script>
+<script src="js/credit-invoice-service.js"></script>
+<script src="js/financial-log-service.js"></script>
+<script src="js/case-state-machine.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    const IMAGE_CONFIG = { maxWidth: 1200, maxHeight: 1400, quality: 0.75, maxSizeBytes: 5 * 1024 * 1024 };
+    const TIMER_CONFIG = { durationHours: 72, warningHours: 24, urgentHours: 6 };
+
+    const state = {
+        broker: null,
+        caseData: null,
+        invoice: null,
+        deposit: null,
+        transferDoc: null,
+        brokerNote: '',
+        checkItems: {
+            transferComplete: false,
+            documentsValid: false,
+            noClaim: false
+        },
+        timerInterval: null,
+        remainingMs: 0
+    };
+
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    const faNum = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    const faPrice = (n) => Number(n || 0).toLocaleString('fa-IR');
+
+    // ===== Toast =====
+    function toast(msg, type = 'info') {
+        const el = $('#toast');
+        $('#toastIcon').textContent = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+        $('#toastText').textContent = msg;
+        el.className = 'toast toast--show';
+        if (type === 'error') el.classList.add('toast--error');
+        if (type === 'success') el.classList.add('toast--success');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => el.classList.remove('toast--show'), 3200);
+    }
+
+    // ===== Auth =====
+    function checkAuth() {
+        try {
+            const cu = JSON.parse(localStorage.getItem('wamPayCurrentUser') || 'null');
+            if (!cu || cu.role !== 'broker' || cu.status !== 'active') {
+                toast('ابتدا وارد شوید', 'error');
+                setTimeout(() => window.location.href = 'login.html', 900);
+                return false;
+            }
+            const users = JSON.parse(localStorage.getItem('wamPayUsers') || '[]');
+            state.broker = users.find(u => u.id === cu.id);
+            if (!state.broker) { window.location.href = 'login.html'; return false; }
+            return true;
+        } catch (e) {
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    // ===== Load Data =====
+    function loadData() {
+        const params = new URLSearchParams(window.location.search);
+        let caseId = params.get('case');
+
+        let caseData = null;
+        if (caseId) {
+            caseData = JSON.parse(localStorage.getItem('wamPayApplications') || '[]')
+                .find(c => c.id === caseId);
+        }
+
+        // آخرین پرونده در وضعیت payment_in_escrow
+        if (!caseData) {
+            const all = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+            caseData = all
+                .filter(c => c.status === 'payment_in_escrow' && c.brokerId === state.broker.id)
+                .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))[0];
+        }
+
+        if (!caseData) {
+            showError('پرونده‌ای برای انتقال یافت نشد',
+                'هیچ پرونده‌ای در وضعیت «پرداخت امانی» برای شما وجود ندارد. اگر مطمئن هستید که پرداخت انجام شده، از داشبورد به این بخش مراجعه کنید.',
+                'broker-dashboard.html');
+            return false;
+        }
+
+        state.caseData = caseData;
+
+        // لود فاکتور
+        if (window.WamPayCreditInvoice) {
+            state.invoice = WamPayCreditInvoice.getInvoicesByCase(caseData.id)[0] || null;
+        }
+
+        // لود امانت
+        if (caseData.escrow?.depositId && window.WamPayTrust) {
+            state.deposit = WamPayTrust.getTrustDeposit(caseData.escrow.depositId);
+        }
+
+        // اگر deposit نبود، از escrow پرونده
+        if (!state.deposit && caseData.escrow) {
+            state.deposit = {
+                id: caseData.escrow.depositId,
+                deedNumber: caseData.escrow.deedNumber,
+                amount: caseData.escrow.total,
+                brokerShare: caseData.escrow.brokerShare,
+                status: 'held',
+                paidAt: caseData.escrow.paidAt
+            };
+        }
+
+        return true;
+    }
+
+    function showError(title, desc, backUrl) {
+        $('#mainContainer').innerHTML = `
+            <div class="tr-hero">
+                <div class="tr-hero__badge">⚠️ توجه</div>
+                <h1 class="tr-hero__title">${title}</h1>
+                <p class="tr-hero__subtitle">${desc}</p>
+            </div>
+            <div class="tr-actions" style="margin-top:24px;">
+                <a href="${backUrl}" class="btn btn--primary btn--block">
+                    <span>🏠 بازگشت به داشبورد</span>
+                </a>
+            </div>
+        `;
+    }
+
+    // ===== Render =====
+    function render() {
+        const c = state.caseData;
+        const inv = state.invoice;
+        const dep = state.deposit;
+
+        // محاسبه‌ی زمان باقی‌مانده
+        const paidAt = c.escrow?.paidAt ? new Date(c.escrow.paidAt).getTime() : Date.now();
+        const deadline = paidAt + (TIMER_CONFIG.durationHours * 3600 * 1000);
+        state.remainingMs = Math.max(0, deadline - Date.now());
+
+        const brokerShare = inv?.profit?.brokerShare || dep?.brokerShare || 0;
+
+        $('#mainContainer').innerHTML = `
+            <div class="tr-hero">
+                <div class="tr-hero__badge">📤 مرحله‌ی انتقال امتیاز</div>
+                <h1 class="tr-hero__title">تأیید انتقال امتیاز</h1>
+                <p class="tr-hero__subtitle">
+                    پس از انتقال امتیاز به متقاضی، سند انتقال را بارگذاری کنید.
+                </p>
+            </div>
+
+            <!-- Timer -->
+            <div class="timer-box" id="timerBox">
+                <div class="timer-box__label">
+                    <span>⏱️</span>
+                    <span>مهلت انتقال امتیاز</span>
+                </div>
+                <div class="timer-box__value" id="timerValue">--:--:--</div>
+                <div class="timer-box__desc">
+                    پس از پایان مهلت، پرونده به‌طور خودکار به مدیر کل ارجاع می‌شود.
+                </div>
+            </div>
+
+            <!-- Case Banner -->
+            <div class="case-banner">
+                <div class="case-banner__right">
+                    <div class="case-banner__label">📁 شماره پرونده</div>
+                    <div class="case-banner__value">${c.caseNumber || '—'}</div>
+                </div>
+                <div class="case-banner__left">
+                    <div class="case-banner__name">${c.applicantData?.name || '—'}</div>
+                    <div class="case-banner__sub">${c.applicantData?.mobile || '—'}</div>
+                </div>
+            </div>
+
+            <!-- Escrow Summary -->
+            <div class="escrow-summary">
+                <div class="escrow-summary__title">
+                    <span>🏛️</span>
+                    <span>اطلاعات امانت</span>
+                </div>
+                <div class="escrow-summary__row">
+                    <span>📋 شماره سند امانت</span>
+                    <span style="font-family:monospace;">${dep?.deedNumber || '—'}</span>
+                </div>
+                <div class="escrow-summary__row">
+                    <span>💰 مبلغ کل امانی</span>
+                    <span>${faPrice(dep?.amount || c.escrow?.total || 0)} تومان</span>
+                </div>
+                <div class="escrow-summary__row">
+                    <span>💎 نام امتیاز</span>
+                    <span>${inv?.creditName || '—'}</span>
+                </div>
+                <div class="escrow-summary__row">
+                    <span>🔢 تعداد امتیاز</span>
+                    <span>${faNum(inv?.creditCount || 0)} امتیاز</span>
+                </div>
+                <div class="escrow-summary__highlight">
+                    <span class="escrow-summary__highlight-label">🎁 سهم شما (پس از تأیید)</span>
+                    <span class="escrow-summary__highlight-value">${faPrice(brokerShare)} تومان</span>
+                </div>
+            </div>
+
+            <!-- Instruction -->
+            <div class="alert alert--info">
+                <span>📌</span>
+                <span>
+                    <strong>راهنما:</strong> امتیاز را طبق توافق به حساب متقاضی منتقل کنید.
+                    سپس <strong>سند انتقال</strong> (پیامک بانکی یا اسکرین‌شات) را در کادر زیر بارگذاری نمایید.
+                </span>
+            </div>
+
+            <!-- Upload Document -->
+            <div class="tr-card">
+                <div class="tr-card__title">📎 بارگذاری سند انتقال</div>
+                <div class="tr-card__desc">
+                    تصویر سند انتقال امتیاز (JPG/PNG — حداکثر ۵ مگابایت)
+                </div>
+
+                <div class="upload-wrap upload-wrap--required" id="uploadWrap">
+                    <label class="upload-zone" id="uploadZone">
+                        <input type="file" accept="image/*" id="transferFile">
+                        <div id="uploadInner">
+                            <div class="upload-zone__icon">📤</div>
+                            <div class="upload-zone__text">انتخاب تصویر سند انتقال</div>
+                            <div class="upload-zone__hint">پیامک بانکی یا اسکرین‌شات موفقیت‌آمیز</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Broker Note -->
+            <div class="tr-card">
+                <div class="tr-card__title">📝 یادداشت کارگزار</div>
+                <div class="tr-card__desc">توضیحات اختیاری درباره‌ی نحوه‌ی انتقال</div>
+                <textarea class="tr-textarea" id="brokerNote" placeholder="مثال: انتقال از طریق حساب بانک رسالت انجام شد. پیامک تأیید ضمیمه شده است..."></textarea>
+            </div>
+
+            <!-- Check Items -->
+            <div class="tr-card">
+                <div class="tr-card__title">✅ تأیید نهایی</div>
+                <div class="tr-card__desc">لطفاً موارد زیر را تأیید کنید</div>
+
+                <label class="check-item" data-check="transferComplete">
+                    <input type="checkbox" class="tr-check" id="checkTransfer">
+                    <span class="check-item__text">
+                        <strong>تأیید انتقال:</strong>
+                        امتیاز موضوع قرارداد را <strong>به‌طور کامل</strong> به متقاضی منتقل کردم.
+                    </span>
+                </label>
+
+                <label class="check-item" data-check="documentsValid">
+                    <input type="checkbox" class="tr-check" id="checkDocs">
+                    <span class="check-item__text">
+                        <strong>تأیید سند:</strong>
+                        سند انتقال بارگذاری‌شده <strong>صحیح و معتبر</strong> است.
+                    </span>
+                </label>
+
+                <label class="check-item" data-check="noClaim">
+                    <input type="checkbox" class="tr-check" id="checkNoClaim">
+                    <span class="check-item__text">
+                        <strong>تعهد نهایی:</strong>
+                        با امضای قرارداد، از هرگونه ادعا نسبت به سود سایت سلب شده‌ام و
+                        آماده‌ی دریافت <strong>${faPrice(brokerShare)} تومان</strong> پس از تأیید مدیر کل هستم.
+                    </span>
+                </label>
+            </div>
+
+            <!-- Actions -->
+            <div class="tr-actions">
+                <a href="broker-dashboard.html" class="btn btn--ghost">
+                    <span>→ بازگشت</span>
+                </a>
+                <button class="btn btn--transfer" id="submitBtn" disabled>
+                    <span class="btn__spinner"></span>
+                    <span class="btn__text">📤 ارسال برای تأیید مدیر کل</span>
+                </button>
+            </div>
+        `;
+
+        // Attach Events
+        attachEvents();
+        startTimer();
+    }
+
+    // ===== Timer =====
+    function startTimer() {
+        clearInterval(state.timerInterval);
+        updateTimerDisplay();
+        state.timerInterval = setInterval(updateTimerDisplay, 1000);
+    }
+
+    function updateTimerDisplay() {
+        if (state.remainingMs <= 0) {
+            $('#timerValue').textContent = '۰۰:۰۰:۰۰';
+            clearInterval(state.timerInterval);
+            return;
+        }
+        state.remainingMs = Math.max(0, state.remainingMs - 1000);
+
+        const h = Math.floor(state.remainingMs / 3600000);
+        const m = Math.floor((state.remainingMs % 3600000) / 60000);
+        const s = Math.floor((state.remainingMs % 60000) / 1000);
+
+        const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+        const val = `${fa(h)}:${fa(m)}:${fa(s)}`;
+        const valEl = $('#timerValue');
+        if (valEl) valEl.textContent = val;
+
+        // حالت urgent
+        const box = $('#timerBox');
+        if (box) {
+            const urgent = state.remainingMs < (TIMER_CONFIG.urgentHours * 3600 * 1000);
+            box.classList.toggle('timer-box--urgent', urgent);
+        }
+    }
+
+    // ===== Image Compression =====
+    function compressImage(file, options = {}) {
+        const { maxWidth = IMAGE_CONFIG.maxWidth, maxHeight = IMAGE_CONFIG.maxHeight, quality = IMAGE_CONFIG.quality } = options;
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    let { width, height } = img;
+                    if (width > maxWidth) { height = Math.round((height * maxWidth) / width); width = maxWidth; }
+                    if (height > maxHeight) { width = Math.round((width * maxHeight) / height); height = maxHeight; }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                    const b64 = dataUrl.length - 'data:image/jpeg;base64,'.length;
+                    resolve({ dataUrl, width, height, size: Math.round(b64 * 3 / 4), mime: 'image/jpeg' });
+                };
+                img.onerror = () => reject(new Error('خطا'));
+                img.src = e.target.result;
+            };
+            reader.onerror = () => reject(new Error('خطا'));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // ===== Events =====
+    function attachEvents() {
+        // File upload
+        const fileInput = $('#transferFile');
+        if (fileInput) {
+            fileInput.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                if (!file.type.startsWith('image/')) {
+                    toast('فقط تصویر مجاز است', 'error'); e.target.value = ''; return;
+                }
+                if (file.size > IMAGE_CONFIG.maxSizeBytes) {
+                    toast('حجم بیشتر از ۵MB', 'error'); e.target.value = ''; return;
+                }
+
+                const wrap = $('#uploadWrap');
+                const zone = $('#uploadZone');
+                const inner = $('#uploadInner');
+
+                wrap.classList.add('upload-wrap--compressing');
+                inner.innerHTML = '<div class="upload-zone__icon">⏳</div><div class="upload-zone__text">در حال فشرده‌سازی...</div>';
+
+                try {
+                    const c = await compressImage(file);
+                    state.transferDoc = {
+                        fileName: file.name,
+                        size: c.size,
+                        originalSize: file.size,
+                        mime: c.mime,
+                        width: c.width,
+                        height: c.height,
+                        dataUrl: c.dataUrl,
+                        uploadedAt: new Date().toISOString()
+                    };
+
+                    wrap.classList.remove('upload-wrap--compressing', 'upload-wrap--required');
+                    wrap.classList.add('upload-wrap--has-file');
+
+                    // پیش‌نمایش
+                    zone.innerHTML = '';
+                    const preview = document.createElement('img');
+                    preview.className = 'upload-preview';
+                    preview.src = c.dataUrl;
+                    zone.appendChild(preview);
+
+                    const meta = document.createElement('div');
+                    meta.className = 'upload-meta';
+                    meta.textContent = `${c.width}×${c.height} • ${(c.size/1024).toFixed(0)}KB (اصلی: ${(file.size/1024).toFixed(0)}KB)`;
+                    zone.appendChild(meta);
+
+                    const change = document.createElement('div');
+                    change.style.cssText = 'text-align:center;font-size:12px;color:var(--transfer);font-weight:700;margin-top:6px;';
+                    change.textContent = 'برای تغییر، دوباره روی کادر کلیک کنید';
+                    zone.appendChild(change);
+
+                    const savings = Math.round((1 - c.size / file.size) * 100);
+                    toast(`✓ فشرده شد (${savings}٪)`, 'success');
+                    updateSubmitButton();
+                } catch (err) {
+                    console.error(err);
+                    wrap.classList.remove('upload-wrap--compressing');
+                    inner.innerHTML = '<div class="upload-zone__icon">⚠️</div><div class="upload-zone__text">خطا در پردازش</div>';
+                    toast('خطا در پردازش تصویر', 'error');
+                    e.target.value = '';
+                }
+            });
+        }
+
+        // Note
+        const noteEl = $('#brokerNote');
+        if (noteEl) {
+            noteEl.addEventListener('input', (e) => {
+                state.brokerNote = e.target.value;
+            });
+        }
+
+        // Checkboxes
+        const checkMap = {
+            checkTransfer: 'transferComplete',
+            checkDocs: 'documentsValid',
+            checkNoClaim: 'noClaim'
+        };
+        Object.keys(checkMap).forEach(id => {
+            const cb = document.getElementById(id);
+            if (!cb) return;
+            cb.addEventListener('change', () => {
+                state.checkItems[checkMap[id]] = cb.checked;
+                const item = cb.closest('.check-item');
+                if (item) item.classList.toggle('check-item--checked', cb.checked);
+                updateSubmitButton();
+            });
+        });
+
+        // Submit
+        const submitBtn = $('#submitBtn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', handleSubmit);
+        }
+    }
+
+    function updateSubmitButton() {
+        const btn = $('#submitBtn');
+        if (!btn) return;
+        const allChecks = Object.values(state.checkItems).every(v => v);
+        const hasDoc = !!state.transferDoc;
+        btn.disabled = !(allChecks && hasDoc);
+    }
+
+    // ===== Submit =====
+    function handleSubmit() {
+        if (!state.transferDoc) { toast('سند انتقال را بارگذاری کنید', 'error'); return; }
+        const allChecks = Object.values(state.checkItems).every(v => v);
+        if (!allChecks) { toast('لطفاً تمام موارد تأیید را تیک بزنید', 'error'); return; }
+
+        const btn = $('#submitBtn');
+        btn.classList.add('btn--loading'); btn.disabled = true;
+
+        setTimeout(() => {
+            try {
+                const c = state.caseData;
+                const inv = state.invoice;
+                const dep = state.deposit;
+                const now = new Date().toISOString();
+
+                // ۱. به‌روزرسانی پرونده
+                const apps = JSON.parse(localStorage.getItem('wamPayApplications') || '[]');
+                const idx = apps.findIndex(a => a.id === c.id);
+                if (idx >= 0) {
+                    apps[idx].status = 'broker_transferred';
+                    apps[idx].brokerTransfer = {
+                        transferredAt: now,
+                        brokerNote: state.brokerNote || null,
+                        evidenceDoc: {
+                            fileName: state.transferDoc.fileName,
+                            size: state.transferDoc.size,
+                            originalSize: state.transferDoc.originalSize,
+                            mime: state.transferDoc.mime,
+                            width: state.transferDoc.width,
+                            height: state.transferDoc.height,
+                            dataUrl: state.transferDoc.dataUrl,
+                            uploadedAt: state.transferDoc.uploadedAt
+                        },
+                        status: 'transferred',
+                        submittedBy: state.broker.name,
+                        submittedById: state.broker.id
+                    };
+                    apps[idx].updatedAt = now;
+                    localStorage.setItem('wamPayApplications', JSON.stringify(apps));
+                }
+
+                // ۲. حذف از صف انتقال کارگزار
+                const brokerQueue = JSON.parse(localStorage.getItem('wamPayBrokerTransferQueue') || '[]');
+                const filtered = brokerQueue.filter(q => q.caseId !== c.id);
+                localStorage.setItem('wamPayBrokerTransferQueue', JSON.stringify(filtered));
+
+                // ۳. افزودن به صف تأیید مدیر کل
+                const superQueue = JSON.parse(localStorage.getItem('wamPaySuperAdminTransferQueue') || '[]');
+                superQueue.push({
+                    caseId: c.id,
+                    caseNumber: c.caseNumber,
+                    brokerId: c.brokerId,
+                    brokerName: c.brokerName,
+                    applicantName: c.applicantData?.name,
+                    applicantMobile: c.applicantData?.mobile,
+                    depositId: dep?.id || c.escrow?.depositId,
+                    deedNumber: dep?.deedNumber || c.escrow?.deedNumber,
+                    amount: c.escrow?.total || 0,
+                    brokerShare: inv?.profit?.brokerShare || 0,
+                    siteShare: inv?.profit?.siteShare || 0,
+                    creditName: inv?.creditName,
+                    creditCount: inv?.creditCount,
+                    evidenceDoc: {
+                        fileName: state.transferDoc.fileName,
+                        dataUrl: state.transferDoc.dataUrl
+                    },
+                    brokerNote: state.brokerNote || null,
+                    transferredAt: now,
+                    submittedAt: now,
+                    status: 'awaiting_super_admin_verify'
+                });
+                localStorage.setItem('wamPaySuperAdminTransferQueue', JSON.stringify(superQueue));
+
+                // ۴. لاگ مالی
+                if (window.WamPayFinancialLog) {
+                    WamPayFinancialLog.logEvent(
+                        'system_event',
+                        { stage: 'broker_transferred', caseNumber: c.caseNumber },
+                        {
+                            caseId: c.id,
+                            caseNumber: c.caseNumber,
+                            brokerId: c.brokerId,
+                            title: `📤 انتقال امتیاز توسط کارگزار — ${c.caseNumber}`,
+                            description: `${inv?.creditCount || 0} امتیاز ${inv?.creditName} منتقل شد`,
+                            amount: c.escrow?.total || 0,
+                            siteShare: inv?.profit?.siteShare || 0,
+                            brokerShare: inv?.profit?.brokerShare || 0,
+                            actor: { role: 'broker', name: state.broker.name, id: state.broker.id },
+                            important: true
+                        }
+                    );
+                }
+
+                renderSuccess();
+
+                console.log('✅ [BrokerTransfer] انتقال امتیاز ثبت شد:', c.caseNumber);
+                console.log('📤 سند بارگذاری شده:', state.transferDoc.fileName);
+
+            } catch (err) {
+                console.error('❌ خطا:', err);
+                toast('خطا در ثبت انتقال', 'error');
+                btn.classList.remove('btn--loading');
+                btn.disabled = false;
+            }
+        }, 1000);
+    }
+
+    // ===== Success =====
+    function renderSuccess() {
+        clearInterval(state.timerInterval);
+        const c = state.caseData;
+        const inv = state.invoice;
+        const dep = state.deposit;
+        const brokerShare = inv?.profit?.brokerShare || 0;
+
+        $('#mainContainer').innerHTML = `
+            <div class="success-screen">
+                <div class="success-icon">✓</div>
+                <h1 class="success-title">انتقال امتیاز ثبت شد!</h1>
+                <p class="success-desc">
+                    سند انتقال برای تأیید به مدیر کل ارسال شد. پس از تأیید، سهم شما آزاد می‌شود.
+                </p>
+            </div>
+
+            <div class="escrow-summary">
+                <div class="escrow-summary__title">
+                    <span>📋</span>
+                    <span>خلاصه‌ی انتقال</span>
+                </div>
+                <div class="escrow-summary__row">
+                    <span>📁 شماره پرونده</span>
+                    <span style="font-family:monospace;">${c.caseNumber}</span>
+                </div>
+                <div class="escrow-summary__row">
+                    <span>👤 متقاضی</span>
+                    <span>${c.applicantData?.name || '—'}</span>
+                </div>
+                <div class="escrow-summary__row">
+                    <span>💎 امتیاز منتقل‌شده</span>
+                    <span>${faNum(inv?.creditCount || 0)} × ${inv?.creditName}</span>
+                </div>
+                <div class="escrow-summary__row">
+                    <span>📎 سند بارگذاری‌شده</span>
+                    <span style="font-family:monospace;font-size:11px;">${state.transferDoc?.fileName || '—'}</span>
+                </div>
+                <div class="escrow-summary__highlight">
+                    <span class="escrow-summary__highlight-label">🎁 سهم شما (پس از تأیید)</span>
+                    <span class="escrow-summary__highlight-value">${faPrice(brokerShare)} تومان</span>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline__title">📊 مراحل بعدی</div>
+                <div class="timeline__item">
+                    <div class="timeline__icon timeline__icon--done">✓</div>
+                    <div class="timeline__content">
+                        <div class="timeline__label">انتقال امتیاز</div>
+                        <div class="timeline__sub">${formatShamsi(new Date())}</div>
+                    </div>
+                </div>
+                <div class="timeline__item">
+                    <div class="timeline__icon timeline__icon--pending">⏳</div>
+                    <div class="timeline__content">
+                        <div class="timeline__label">تأیید مدیر کل</div>
+                        <div class="timeline__sub">بررسی سند انتقال</div>
+                    </div>
+                </div>
+                <div class="timeline__item">
+                    <div class="timeline__icon timeline__icon--pending">⏳</div>
+                    <div class="timeline__content">
+                        <div class="timeline__label">تأیید دریافت متقاضی</div>
+                        <div class="timeline__sub">آپلود پیامک بانک توسط متقاضی</div>
+                    </div>
+                </div>
+                <div class="timeline__item">
+                    <div class="timeline__icon timeline__icon--pending">⏳</div>
+                    <div class="timeline__content">
+                        <div class="timeline__label">اقرار سه‌طرفه</div>
+                        <div class="timeline__sub">امضای اقرارنامه توسط همه</div>
+                    </div>
+                </div>
+                <div class="timeline__item">
+                    <div class="timeline__icon timeline__icon--pending">💰</div>
+                    <div class="timeline__content">
+                        <div class="timeline__label">آزادسازی وجه</div>
+                        <div class="timeline__sub">واریز ${faPrice(brokerShare)} تومان به کیف پول شما</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert--info">
+                <span>📱</span>
+                <span>
+                    <strong>اطلاع‌رسانی:</strong> به‌محض تأیید مدیر کل، پیامک اطلاع‌رسانی دریافت خواهید کرد.
+                </span>
+            </div>
+
+            <div class="tr-actions">
+                <a href="broker-dashboard.html" class="btn btn--primary btn--block" style="text-decoration:none;">
+                    <span>🏠 بازگشت به داشبورد</span>
+                </a>
+            </div>
+        `;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function formatShamsi(date) {
+        try {
+            const d = new Date(date);
+            const fa = (n) => String(n).padStart(2, '0').replace(/\d/g, x => '۰۱۲۳۴۵۶۷۸۹'[x]);
+            return `${fa(d.getFullYear())}/${fa(d.getMonth()+1)}/${fa(d.getDate())} — ${fa(d.getHours())}:${fa(d.getMinutes())}`;
+        } catch { return '—'; }
+    }
+
+    // ===== Theme =====
+    function initTheme() {
+        const saved = localStorage.getItem('wamPayTheme');
+        if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = $('#themeBtn');
+        if (!btn) return;
+        btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('wamPayTheme', 'light');
+                btn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('wamPayTheme', 'dark');
+                btn.textContent = '☀️';
+            }
+        });
+    }
+
+    // ===== Init =====
+    function init() {
+        if (!checkAuth()) return;
+        if (!loadData()) return;
+        render();
+        initTheme();
+
+        console.log('%c📤 WAM PAY — Broker Transfer Confirm v1.0', 'color:#0b3b23;font-weight:bold;font-size:14px;');
+        console.log('%c👤 کارگزار:', 'color:#16a085;', state.broker.name);
+        console.log('%c📁 پرونده:', 'color:#16a085;', state.caseData?.caseNumber);
+        console.log('%c⏱️ مهلت:', 'color:#16a085;', TIMER_CONFIG.durationHours, 'ساعت');
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b3b23">
+  <meta name="description" content="بررسی پرونده — وام پی">
+  <meta name="robots" content="noindex, nofollow">
+  <title>بررسی پرونده | وام پی</title>
+
+  <link rel="stylesheet"
+        href="css/fonts/Vazirmatn-font-face.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/verifier-panel.css">
+  <link rel="stylesheet" href="css/mobile.css">
+
+  <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230b3b23'/><text y='72' x='50' text-anchor='middle' font-size='58' fill='%23d4a62a' font-family='sans-serif' font-weight='bold'>و</text></svg>">
+
+  <style>
+    /* ─── Verifier Review ─── */
+
+    .wam-verifier {
+      min-height: 100vh;
+      background: var(--wam-bg);
+      padding-bottom: 120px;
+    }
+
+    .wam-verifier__main {
+      padding: var(--wam-space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .wam-verifier__topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--wam-space-md);
+      padding: 12px var(--wam-space-lg);
+      background: var(--wam-bg-alt);
+      border-bottom: 1px solid var(--wam-border);
+      position: sticky;
+      top: 0;
+      z-index: var(--wam-z-sticky);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-verifier__topbar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .wam-verifier__topbar-back {
+      color: var(--wam-text-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+    }
+
+    .wam-verifier__topbar-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+    }
+
+    .wam-verifier__icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--wam-bg-muted);
+      color: var(--wam-text);
+      border: 0;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--wam-t);
+    }
+    .wam-verifier__icon-btn:hover {
+      background: var(--wam-primary-soft);
+      color: var(--wam-primary);
+    }
+
+    /* Case header card */
+    .wam-vr__case-head {
+      background: linear-gradient(135deg, #0b3b23 0%, #105b35 55%, #1a6b42 100%);
+      color: #fff;
+      border-radius: var(--wam-radius-lg);
+      padding: var(--wam-space-lg);
+      margin-bottom: var(--wam-space-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wam-vr__case-head::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: -40px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(212, 166, 42, 0.25), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wam-vr__case-head-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-vr__case-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--wam-radius);
+      background: rgba(255, 255, 255, 0.15);
+      color: #f4d477;
+      font-size: 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    .wam-vr__case-title-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-vr__case-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 0 0 4px;
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .wam-vr__case-id {
+      font-family: 'Menlo', monospace;
+      font-size: 0.72rem;
+      direction: ltr;
+      text-align: right;
+      opacity: 0.85;
+    }
+
+    .wam-vr__case-amount {
+      text-align: left;
+      flex: 0 0 auto;
+    }
+
+    .wam-vr__case-amount-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f4d477;
+      line-height: 1;
+    }
+
+    .wam-vr__case-amount-label {
+      font-size: 0.68rem;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    .wam-vr__case-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      font-size: 0.78rem;
+      opacity: 0.92;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      position: relative;
+      z-index: 1;
+    }
+
+    .wam-vr__case-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wam-vr__priority-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 10px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.68rem;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+    }
+
+    .wam-vr__priority-badge[data-priority="urgent"] {
+      background: rgba(192, 57, 43, 0.85);
+    }
+    .wam-vr__priority-badge[data-priority="high"] {
+      background: rgba(212, 166, 42, 0.85);
+      color: #3a2a00;
+    }
+
+    /* Section */
+    .wam-vr__section {
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border-soft);
+      border-radius: var(--wam-radius-md);
+      padding: var(--wam-space-md);
+      margin-bottom: var(--wam-space-md);
+      box-shadow: var(--wam-shadow-sm);
+    }
+
+    .wam-vr__section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--wam-border-soft);
+    }
+
+    .wam-vr__section-title-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wam-vr__section-count {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--wam-text-muted);
+      padding: 2px 8px;
+      background: var(--wam-bg-muted);
+      border-radius: var(--wam-radius-pill);
+    }
+
+    /* Info rows */
+    .wam-vr__info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 0.85rem;
+      border-bottom: 1px dashed var(--wam-border-soft);
+    }
+    .wam-vr__info-row:last-child { border-bottom: 0; }
+
+    .wam-vr__info-label {
+      color: var(--wam-text-muted);
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+
+    .wam-vr__info-value {
+      color: var(--wam-text);
+      font-weight: 700;
+      text-align: left;
+      word-break: break-word;
+      flex: 1 1 auto;
+    }
+
+    /* Checklist */
+    .wam-vr__checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .wam-vr__check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--wam-bg-muted);
+      border: 1.5px solid transparent;
+      border-radius: var(--wam-radius);
+      cursor: pointer;
+      transition: all var(--wam-t);
+    }
+
+    .wam-vr__check:hover {
+      background: var(--wam-primary-soft);
+    }
+
+    .wam-vr__check.is-ok {
+      background: var(--wam-success-soft);
+      border-color: var(--wam-success);
+    }
+
+    .wam-vr__check.is-fail {
+      background: var(--wam-danger-soft);
+      border-color: var(--wam-danger);
+    }
+
+    .wam-vr__check-icon {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--wam-border-strong);
+      background: transparent;
+      color: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      transition: all var(--wam-t);
+    }
+
+    .wam-vr__check.is-ok .wam-vr__check-icon {
+      background: var(--wam-success);
+      border-color: var(--wam-success);
+      color: #fff;
+    }
+    .wam-vr__check.is-fail .wam-vr__check-icon {
+      background: var(--wam-danger);
+      border-color: var(--wam-danger);
+      color: #fff;
+    }
+
+    .wam-vr__check-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .wam-vr__check-label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      line-height: 1.5;
+    }
+
+    .wam-vr__check-hint {
+      font-size: 0.72rem;
+      color: var(--wam-text-muted);
+      margin-top: 2px;
+    }
+
+    /* Documents */
+    .wam-vr__docs {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .wam-vr__doc {
+      position: relative;
+      padding: 14px 10px;
+      text-align: center;
+      background: var(--wam-bg-muted);
+      border: 2px solid transparent;
+      border-radius: var(--wam-radius);
+      cursor: pointer;
+      transition: all var(--wam-t);
+    }
+
+    .wam-vr__doc:hover {
+      border-color: var(--wam-primary-light);
+      background: var(--wam-bg-alt);
+      transform: translateY(-2px);
+    }
+
+    .wam-vr__doc.is-uploaded {
+      background: var(--wam-bg-alt);
+      border-color: var(--wam-border);
+    }
+
+    .wam-vr__doc.is-approved {
+      background: var(--wam-success-soft);
+      border-color: var(--wam-success);
+    }
+
+    .wam-vr__doc.is-rejected {
+      background: var(--wam-danger-soft);
+      border-color: var(--wam-danger);
+    }
+
+    .wam-vr__doc-icon {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      opacity: 0.85;
+    }
+
+    .wam-vr__doc-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--wam-text);
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+
+    .wam-vr__doc-hint {
+      font-size: 0.68rem;
+      color: var(--wam-text-muted);
+    }
+
+    .wam-vr__doc-badge {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .wam-vr__doc-badge--ok {
+      background: var(--wam-success);
+    }
+    .wam-vr__doc-badge--fail {
+      background: var(--wam-danger);
+    }
+
+    /* Notes */
+    .wam-vr__notes {
+      width: 100%;
+      min-height: 90px;
+      padding: 12px;
+      border: 1.5px solid var(--wam-border);
+      border-radius: var(--wam-radius);
+      font-family: inherit;
+      font-size: 0.87rem;
+      color: var(--wam-text);
+      background: var(--wam-bg-alt);
+      resize: vertical;
+      transition: border-color var(--wam-t), box-shadow var(--wam-t);
+    }
+
+    .wam-vr__notes:focus {
+      outline: none;
+      border-color: var(--wam-primary-light);
+      box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.13);
+    }
+
+    /* Decision bar (sticky bottom) */
+    .wam-vr__decision-bar {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: var(--wam-bg-alt);
+      border-top: 1px solid var(--wam-border);
+      padding: 12px var(--wam-space-lg);
+      padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      gap: 8px;
+      z-index: var(--wam-z-sticky);
+      box-shadow: 0 -4px 12px rgba(11, 59, 35, 0.08);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .wam-vr__decision-bar .wam-btn {
+      flex: 1 1 0;
+      padding: 12px;
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    /* Reject panel */
+    .wam-vr__reject-panel {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      background: var(--wam-danger-soft);
+      border: 1px solid var(--wam-danger);
+      border-radius: var(--wam-radius);
+      animation: wam-slide-up 0.25s ease;
+    }
+    .wam-vr__reject-panel.is-visible { display: block; }
+
+    .wam-vr__reject-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--wam-danger-text);
+      margin: 0 0 10px;
+    }
+
+    .wam-vr__reject-reasons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .wam-vr__reason-chip {
+      padding: 5px 12px;
+      border-radius: var(--wam-radius-pill);
+      background: var(--wam-bg-alt);
+      border: 1px solid var(--wam-border);
+      color: var(--wam-text);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--wam-t);
+      font-family: inherit;
+    }
+
+    .wam-vr__reason-chip:hover {
+      border-color: var(--wam-danger);
+      color: var(--wam-danger);
+    }
+
+    .wam-vr__reason-chip.is-active {
+      background: var(--wam-danger);
+      color: #fff;
+      border-color: var(--wam-danger);
+    }
+
+    /* Empty/Invalid state */
+    .wam-vr__empty {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--wam-bg-alt);
+      border: 1px dashed var(--wam-border);
+      border-radius: var(--wam-radius-md);
+    }
+
+    .wam-vr__empty-icon {
+      font-size: 3rem;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .wam-vr__empty-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--wam-text);
+      margin: 0 0 8px;
+    }
+
+    .wam-vr__empty-text {
+      font-size: 0.85rem;
+      color: var(--wam-text-muted);
+      margin: 0 0 var(--wam-space-md);
+      line-height: 1.7;
+    }
+
+    /* Success */
+    .wam-vr__success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      animation: wam-slide-up 0.4s ease both;
+    }
+    .wam-vr__success.is-visible { display: flex; }
+
+    .wam-vr__success-icon {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      font-size: 2.6rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .wam-vr__success-icon--approved {
+      background: var(--wam-success-soft);
+      color: var(--wam-success);
+      box-shadow: 0 8px 24px rgba(46, 158, 91, 0.25);
+    }
+    .wam-vr__success-icon--rejected {
+      background: var(--wam-danger-soft);
+      color: var(--wam-danger);
+      box-shadow: 0 8px 24px rgba(192, 57, 43, 0.25);
+    }
+
+    .wam-vr__success-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--wam-primary);
+      margin: 0 0 8px;
+    }
+
+    .wam-vr__success-text {
+      font-size: 0.87rem;
+      color: var(--wam-text-muted);
+      line-height: 1.8;
+      margin: 0 0 20px;
+      max-width: 360px;
+    }
+
+    /* Toast */
+    .wam-vr__toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--wam-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--wam-radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+    .wam-vr__toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .wam-verifier__main { padding: var(--wam-space-md); }
+      .wam-vr__case-head { padding: var(--wam-space-md); }
+      .wam-vr__case-title { font-size: 0.95rem; }
+      .wam-vr__case-amount-value { font-size: 1.1rem; }
+      .wam-vr__docs { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+
+<body data-page="verifier-review">
+
+  <div class="wam-verifier" id="verifierRoot">
+
+    <!-- Topbar -->
+    <header class="wam-verifier__topbar">
+      <div class="wam-verifier__topbar-info">
+        <a href="verifier-queue.html" class="wam-verifier__topbar-back">↩ بازگشت به صف</a>
+        <span class="wam-verifier__topbar-name">🔍 بررسی پرونده</span>
+      </div>
+      <div class="wam-verifier__topbar-actions" style="display:flex;gap:6px;">
+        <button type="button" class="wam-verifier__icon-btn" id="followUpBtn" title="پیگیری">📌</button>
+        <button type="button" class="wam-verifier__icon-btn" id="refreshBtn" title="بروزرسانی">🔄</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="wam-verifier__main" id="reviewMain">
+
+      <!-- ✅ Case Header (visible) -->
+      <div id="reviewWrap">
+
+        <section class="wam-vr__case-head" id="caseHead">
+          <!-- توسط JS پر می‌شود -->
+        </section>
+
+        <!-- اطلاعات متقاضی -->
+        <section class="wam-vr__section">
+          <h2 class="wam-vr__section-title">
+            <span class="wam-vr__section-title-text">👤 اطلاعات متقاضی</span>
+          </h2>
+          <div id="applicantInfo">
+            <!-- توسط JS پر می‌شود -->
+          </div>
+        </section>
+
+        <!-- اطلاعات وام -->
+        <section class="wam-vr__section">
+          <h2 class="wam-vr__section-title">
+            <span class="wam-vr__section-title-text">💰 اطلاعات وام</span>
+          </h2>
+          <div id="loanInfo">
+            <!-- توسط JS پر می‌شود -->
+          </div>
+        </section>
+
+        <!-- چک‌لیست بررسی -->
+        <section class="wam-vr__section">
+          <h2 class="wam-vr__section-title">
+            <span class="wam-vr__section-title-text">✅ چک‌لیست بررسی</span>
+            <span class="wam-vr__section-count" id="checklistProgress">۰ / ۰</span>
+          </h2>
+          <div class="wam-vr__checklist" id="checklist">
+            <!-- توسط JS پر می‌شود -->
+          </div>
+        </section>
+
+        <!-- مدارک -->
+        <section class="wam-vr__section">
+          <h2 class="wam-vr__section-title">
+            <span class="wam-vr__section-title-text">📎 مدارک</span>
+            <span class="wam-vr__section-count" id="docsProgress">۰ / ۵</span>
+          </h2>
+          <div class="wam-vr__docs" id="docsGrid">
+            <!-- توسط JS پر می‌شود -->
+          </div>
+        </section>
+
+        <!-- یادداشت -->
+        <section class="wam-vr__section">
+          <h2 class="wam-vr__section-title">
+            <span class="wam-vr__section-title-text">📝 یادداشت بررسی</span>
+          </h2>
+          <textarea id="reviewNotes" class="wam-vr__notes"
+                    placeholder="توضیحات، نکات یا یادداشت خود را وارد کنید..."></textarea>
+
+          <!-- Reject panel -->
+          <div class="wam-vr__reject-panel" id="rejectPanel">
+            <p class="wam-vr__reject-title">دلیل رد پرونده (اجباری):</p>
+            <div class="wam-vr__reject-reasons" id="rejectReasons">
+              <button type="button" class="wam-vr__reason-chip" data-reason="مدارک ناقص">مدارک ناقص</button>
+              <button type="button" class="wam-vr__reason-chip" data-reason="گردش حساب ناکافی">گردش حساب ناکافی</button>
+              <button type="button" class="wam-vr__reason-chip" data-reason="اعتبار پایین">اعتبار پایین</button>
+              <button type="button" class="wam-vr__reason-chip" data-reason="عدم تطابق اطلاعات">عدم تطابق اطلاعات</button>
+              <button type="button" class="wam-vr__reason-chip" data-reason="سابقه چک برگشتی">سابقه چک برگشتی</button>
+            </div>
+            <textarea id="rejectReason" class="wam-vr__notes" style="min-height:60px;"
+                      placeholder="یا دلیل را اینجا بنویسید..."></textarea>
+          </div>
+
+        </section>
+
+      </div>
+
+      <!-- Empty / Invalid -->
+      <div class="wam-vr__empty" id="emptyState" style="display:none;">
+        <div class="wam-vr__empty-icon">❓</div>
+        <h3 class="wam-vr__empty-title">پرونده یافت نشد</h3>
+        <p class="wam-vr__empty-text">
+          پرونده‌ای با این شناسه در سیستم وجود ندارد یا حذف شده است.
+        </p>
+        <a href="verifier-queue.html" class="wam-btn wam-btn--primary">
+          ↩ بازگشت به صف
+        </a>
+      </div>
+
+      <!-- Success -->
+      <div class="wam-vr__success" id="successState">
+        <div class="wam-vr__success-icon" id="successIcon">✓</div>
+        <h2 class="wam-vr__success-title" id="successTitle">تصمیم ثبت شد!</h2>
+        <p class="wam-vr__success-text" id="successText">
+          تصمیم شما با موفقیت ثبت شد.
+        </p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;max-width:400px;">
+          <a href="verifier-queue.html" class="wam-btn wam-btn--primary" style="flex:1 1 auto;">
+            ↩ بازگشت به صف
+          </a>
+          <a href="verifier-dashboard.html" class="wam-btn wam-btn--outline" style="flex:1 1 auto;">
+            🏠 داشبورد
+          </a>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Decision bar -->
+    <div class="wam-vr__decision-bar" id="decisionBar">
+      <button type="button" class="wam-btn wam-btn--danger" id="rejectBtn">
+        ✕ رد پرونده
+      </button>
+      <button type="button" class="wam-btn wam-btn--success" id="approveBtn">
+        ✓ تأیید پرونده
+      </button>
+    </div>
+
+    <!-- Toast -->
+    <div class="wam-vr__toast" id="toast"></div>
+
+  </div>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="js/bundle-common.js" defer></script>
+  <script src="js/bundle-state.js" defer></script>
+  <script src="js/bundle-verifier.js" defer></script>
+
+  <script>
+    /* ────────────────────────────────────────
+       VERIFIER REVIEW CONTROLLER
+       - بررسی یک پرونده از ?id=
+       - چک‌لیست + مدارک + تصمیم (تأیید/رد)
+       ──────────────────────────────────────── */
+    (function () {
+      'use strict';
+
+      var $ = function (id) { return document.getElementById(id); };
+      var $$ = function (sel) { return document.querySelectorAll(sel); };
+
+      var STORAGE_CASES = 'wamPayCases';
+
+      var state = {
+        user: null,
+        caseData: null,
+        checklist: {},
+        docs: {},
+        rejectReason: ''
+      };
+
+      // چک‌لیست پیش‌فرض
+      var CHECKLIST_ITEMS = [
+        { key: 'identity',  label: 'احراز هویت متقاضی',         hint: 'کد ملی با نام مطابقت دارد' },
+        { key: 'income',    label: 'تأیید درآمد',                 hint: 'فیش حقوقی یا گردش حساب' },
+        { key: 'credit',    label: 'بررسی اعتبار (بانک مرکزی)',   hint: 'عدم چک برگشتی و بدهی معوق' },
+        { key: 'docs',      label: 'کامل بودن مدارک',             hint: 'همه مدارک بارگذاری شده' },
+        { key: 'guarantee', label: 'بررسی ضامن / وثیقه',          hint: 'در صورت نیاز' },
+        { key: 'amount',    label: 'تناسب مبلغ با درآمد',         hint: 'قسط ≤ 40٪ درآمد ماهانه' }
+      ];
+
+      var DOCS_ITEMS = [
+        { key: 'national_id',    label: 'کارت ملی',     icon: '📄' },
+        { key: 'id_card',        label: 'شناسنامه',     icon: '🪪' },
+        { key: 'salary_slip',    label: 'فیش حقوقی',    icon: '💵' },
+        { key: 'bank_statement', label: 'گردش حساب',   icon: '🏦' },
+        { key: 'guarantee',      label: 'سفته/ضمانت',  icon: '📝' }
+      ];
+
+      // ═══════════════════════════════════
+      // ابزارها
+      // ═══════════════════════════════════
+
+      function toFa(n) {
+        if (n == null) return '۰';
+        try { return Number(n).toLocaleString('fa-IR'); }
+        catch (_) { return String(n); }
+      }
+
+      function fmtAmount(n) {
+        if (n == null || isNaN(n)) return '۰';
+        return toFa(Math.round(Number(n)));
+      }
+
+      function fmtDate(ts) {
+        if (!ts) return '—';
+        try {
+          if (window.WamPersianDate && typeof window.WamPersianDate.format === 'function') {
+            return window.WamPersianDate.format(new Date(ts));
+          }
+        } catch (_) {}
+        try { return new Date(ts).toLocaleDateString('fa-IR'); } catch (_) { return '—'; }
+      }
+
+      function relTime(ts) {
+        if (!ts) return '';
+        var diff = Date.now() - ts;
+        var abs = Math.abs(diff);
+        if (abs < 3600000) return Math.round(abs / 60000) + ' دقیقه پیش';
+        if (abs < 86400000) return Math.round(abs / 3600000) + ' ساعت پیش';
+        return Math.round(abs / 86400000) + ' روز پیش';
+      }
+
+      function readJSON(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return fallback;
+          return JSON.parse(raw);
+        } catch (_) { return fallback; }
+      }
+
+      function writeJSON(key, val) {
+        try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+        catch (_) { return false; }
+      }
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      function getParam(name) {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          return params.get(name) || '';
+        } catch (_) { return ''; }
+      }
+
+      function currentUser() {
+        return readJSON('wamPayCurrentUser', null) ||
+               { name: 'اعتبارسنج', username: 'verifier', role: 'verifier', id: 'verifier' };
+      }
+
+      function emitEvent(name, payload) {
+        try {
+          if (window.EventBus && typeof window.EventBus.emit === 'function') {
+            window.EventBus.emit(name, payload);
+          }
+        } catch (_) {}
+      }
+
+      function typeLabel(t) {
+        var map = {
+          home: '🏠 مسکن', car: '🚗 خودرو', personal: '👤 شخصی',
+          business: '💼 کسب‌وکار', equipment: '🏭 تجهیزات', education: '🎓 تحصیلی'
+        };
+        return map[t] || t || 'وام';
+      }
+
+      function priorityOf(c) {
+        var age = Date.now() - (c.createdAt || 0);
+        var ageDays = age / 86400000;
+        var amount = Number(c.amount) || 0;
+        if (ageDays >= 3 || amount >= 1000) return 'urgent';
+        if (ageDays >= 1 || amount >= 500) return 'high';
+        if (ageDays >= 0.25) return 'normal';
+        return 'low';
+      }
+
+      function priorityLabel(p) {
+        return { urgent: '🚨 فوری', high: '⚠️ بالا', normal: 'عادی', low: 'کم' }[p] || p;
+      }
+
+      function showToast(msg) {
+        var t = $('toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('is-visible');
+        setTimeout(function () { t.classList.remove('is-visible'); }, 2200);
+      }
+
+      // ═══════════════════════════════════
+      // بارگذاری
+      // ═══════════════════════════════════
+
+      function loadCase() {
+        var id = getParam('id');
+        if (!id) return null;
+        var all = readJSON(STORAGE_CASES, []);
+        if (!Array.isArray(all)) return null;
+        return all.find(function (c) { return c && c.id === id; }) || null;
+      }
+
+      function persistCase() {
+        if (!state.caseData) return false;
+        var all = readJSON(STORAGE_CASES, []);
+        if (!Array.isArray(all)) all = [];
+        for (var i = 0; i < all.length; i++) {
+          if (all[i].id === state.caseData.id) {
+            all[i] = state.caseData;
+            break;
+          }
+        }
+        return writeJSON(STORAGE_CASES, all);
+      }
+
+      // ═══════════════════════════════════
+      // رندر
+      // ═══════════════════════════════════
+
+      function renderCaseHead() {
+        var c = state.caseData;
+        var head = $('caseHead');
+        if (!head || !c) return;
+
+        var prio = priorityOf(c);
+        var stLabel = {
+          pending: 'در انتظار', in_review: 'در بررسی',
+          approved: 'تأییدشده', rejected: 'ردشده'
+        }[c.status] || c.status;
+
+        head.innerHTML = '' +
+          '<div class="wam-vr__case-head-top">' +
+            '<div class="wam-vr__case-icon">📁</div>' +
+            '<div class="wam-vr__case-title-wrap">' +
+              '<h1 class="wam-vr__case-title">' + esc(c.title || 'بدون عنوان') + '</h1>' +
+              '<div class="wam-vr__case-id">' + esc(c.id) + ' • ' + esc(stLabel) + '</div>' +
+            '</div>' +
+            '<div class="wam-vr__case-amount">' +
+              '<div class="wam-vr__case-amount-value">' + fmtAmount(c.amount) + '</div>' +
+              '<div class="wam-vr__case-amount-label">میلیون ریال</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="wam-vr__case-meta-row">' +
+            '<span class="wam-vr__case-meta-item">' + typeLabel(c.type) + '</span>' +
+            '<span class="wam-vr__case-meta-item">🗓 ' + relTime(c.createdAt) + '</span>' +
+            '<span class="wam-vr__priority-badge" data-priority="' + prio + '">' +
+              priorityLabel(prio) +
+            '</span>' +
+          '</div>';
+      }
+
+      function renderApplicantInfo() {
+        var c = state.caseData;
+        var el = $('applicantInfo');
+        if (!el || !c) return;
+
+        el.innerHTML = '' +
+          row('نام و نام خانوادگی', c.applicantName || '—') +
+          row('شماره موبایل', c.applicantPhone || c.phone || '—', 'ltr') +
+          row('کد ملی', c.nationalId || '—', 'ltr') +
+          row('ایمیل', c.email || '—', 'ltr') +
+          row('آدرس', c.address || '—');
+      }
+
+      function renderLoanInfo() {
+        var c = state.caseData;
+        var el = $('loanInfo');
+        if (!el || !c) return;
+
+        var c2 = calcInstallment(c.amount, c.rate, c.term);
+
+        el.innerHTML = '' +
+          row('نوع وام', typeLabel(c.type)) +
+          row('مبلغ درخواستی', fmtAmount(c.amount) + ' میلیون ریال') +
+          row('مدت بازپرداخت', toFa(c.term) + ' ماه') +
+          row('نرخ سود', toFa(c.rate) + '٪') +
+          row('قسط ماهانه', fmtAmount(c2.monthly) + ' میلیون ریال') +
+          row('کل بازپرداخت', fmtAmount(c2.total) + ' میلیون ریال') +
+          row('کارگزار', c.brokerName || '—');
+      }
+
+      function row(label, value, dir) {
+        return '' +
+          '<div class="wam-vr__info-row">' +
+            '<span class="wam-vr__info-label">' + esc(label) + ':</span>' +
+            '<span class="wam-vr__info-value"' + (dir ? ' dir="' + dir + '"' : '') + '>' +
+              esc(value) +
+            '</span>' +
+          '</div>';
+      }
+
+      function calcInstallment(principal, rateYear, months) {
+        if (!principal || !months) return { monthly: 0, total: 0 };
+        var r = (rateYear / 100) / 12;
+        var p = principal;
+        var n = months;
+        var monthly;
+        if (r === 0) monthly = p / n;
+        else {
+          var pow = Math.pow(1 + r, n);
+          monthly = (p * r * pow) / (pow - 1);
+        }
+        var total = monthly * n;
+        return { monthly: monthly, total: total };
+      }
+
+      function renderChecklist() {
+        var container = $('checklist');
+        if (!container) return;
+
+        var html = '';
+        CHECKLIST_ITEMS.forEach(function (item) {
+          var status = state.checklist[item.key] || null;
+          var cls = 'wam-vr__check';
+          if (status === 'ok') cls += ' is-ok';
+          else if (status === 'fail') cls += ' is-fail';
+
+          var iconText = status === 'ok' ? '✓' : (status === 'fail' ? '✕' : '');
+
+          html += '' +
+            '<div class="' + cls + '" data-check="' + esc(item.key) + '">' +
+              '<div class="wam-vr__check-icon">' + iconText + '</div>' +
+              '<div class="wam-vr__check-body">' +
+                '<div class="wam-vr__check-label">' + esc(item.label) + '</div>' +
+                (item.hint ? '<div class="wam-vr__check-hint">' + esc(item.hint) + '</div>' : '') +
+              '</div>' +
+            '</div>';
+        });
+        container.innerHTML = html;
+
+        // Bind clicks (cycle: null → ok → fail → null)
+        container.querySelectorAll('[data-check]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var key = el.getAttribute('data-check');
+            var cur = state.checklist[key] || null;
+            if (cur === null) state.checklist[key] = 'ok';
+            else if (cur === 'ok') state.checklist[key] = 'fail';
+            else state.checklist[key] = null;
+            if (state.checklist[key] === null) delete state.checklist[key];
+            renderChecklist();
+            updateChecklistProgress();
+          });
+        });
+      }
+
+      function updateChecklistProgress() {
+        var done = 0;
+        CHECKLIST_ITEMS.forEach(function (item) {
+          if (state.checklist[item.key]) done++;
+        });
+        var el = $('checklistProgress');
+        if (el) el.textContent = toFa(done) + ' / ' + toFa(CHECKLIST_ITEMS.length);
+      }
+
+      function renderDocs() {
+        var container = $('docsGrid');
+        if (!container) return;
+
+        var html = '';
+        DOCS_ITEMS.forEach(function (item) {
+          var status = state.docs[item.key] || null;
+          var cls = 'wam-vr__doc';
+          if (status === 'ok') cls += ' is-approved';
+          else if (status === 'fail') cls += ' is-rejected';
+
+          var badge = '';
+          if (status === 'ok') badge = '<div class="wam-vr__doc-badge wam-vr__doc-badge--ok">✓</div>';
+          else if (status === 'fail') badge = '<div class="wam-vr__doc-badge wam-vr__doc-badge--fail">✕</div>';
+
+          html += '' +
+            '<div class="' + cls + '" data-doc="' + esc(item.key) + '">' +
+              badge +
+              '<div class="wam-vr__doc-icon">' + item.icon + '</div>' +
+              '<div class="wam-vr__doc-name">' + esc(item.label) + '</div>' +
+              '<div class="wam-vr__doc-hint">' + (status === 'ok' ? 'تأییدشده' : status === 'fail' ? 'ردشده' : 'در انتظار') + '</div>' +
+            '</div>';
+        });
+        container.innerHTML = html;
+
+        // Bind clicks (cycle)
+        container.querySelectorAll('[data-doc]').forEach(function (el) {
+          el.addEventListener('click', function () {
+            var key = el.getAttribute('data-doc');
+            var cur = state.docs[key] || null;
+            if (cur === null) state.docs[key] = 'ok';
+            else if (cur === 'ok') state.docs[key] = 'fail';
+            else state.docs[key] = null;
+            if (state.docs[key] === null) delete state.docs[key];
+            renderDocs();
+            updateDocsProgress();
+          });
+        });
+      }
+
+      function updateDocsProgress() {
+        var done = 0;
+        DOCS_ITEMS.forEach(function (item) {
+          if (state.docs[item.key] === 'ok') done++;
+        });
+        var el = $('docsProgress');
+        if (el) el.textContent = toFa(done) + ' / ' + toFa(DOCS_ITEMS.length);
+      }
+
+      // ═══════════════════════════════════
+      // تصمیم‌گیری
+      // ═══════════════════════════════════
+
+      function onApprove() {
+        if (!state.caseData) return;
+
+        // چک‌لیست باید حداقل کامل باشد
+        var failCount = 0, okCount = 0;
+        CHECKLIST_ITEMS.forEach(function (item) {
+          var s = state.checklist[item.key];
+          if (s === 'ok') okCount++;
+          if (s === 'fail') failCount++;
+        });
+
+        if (failCount > 0) {
+          showToast('⚠️ ' + toFa(failCount) + ' مورد ناموفق در چک‌لیست. ابتدا برطرف کنید.');
+          return;
+        }
+
+        if (okCount < CHECKLIST_ITEMS.length) {
+          if (!confirm('همه موارد چک‌لیست تأیید نشده‌اند. باز هم تأیید می‌کنید؟')) return;
+        }
+
+        if (!confirm('آیا از تأیید این پرونده مطمئن هستید؟')) return;
+
+        state.caseData.status = 'approved';
+        state.caseData.progress = 80;
+        state.caseData.decidedAt = Date.now();
+        state.caseData.decidedBy = state.user.name || state.user.username || 'اعتبارسنج';
+        state.caseData.decisionNotes = ($('reviewNotes') || {}).value || '';
+        state.caseData.checklist = state.checklist;
+        state.caseData.docsReview = state.docs;
+
+        if (!persistCase()) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        emitEvent('verifier:case-approved', {
+          id: state.caseData.id,
+          case: state.caseData
+        });
+
+        showSuccess('approved');
+      }
+
+      function onReject() {
+        if (!state.caseData) return;
+        var panel = $('rejectPanel');
+        if (panel && !panel.classList.contains('is-visible')) {
+          panel.classList.add('is-visible');
+          try { panel.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (_) {}
+          return;
+        }
+
+        // Confirm rejection
+        var reason = (($('rejectReason') || {}).value || '').trim() || state.rejectReason || '';
+        if (!reason) {
+          showToast('لطفاً دلیل رد را وارد کنید.');
+          return;
+        }
+
+        if (!confirm('از رد این پرونده مطمئن هستید؟')) return;
+
+        state.caseData.status = 'rejected';
+        state.caseData.progress = 20;
+        state.caseData.decidedAt = Date.now();
+        state.caseData.decidedBy = state.user.name || state.user.username || 'اعتبارسنج';
+        state.caseData.decisionReason = reason;
+        state.caseData.decisionNotes = ($('reviewNotes') || {}).value || '';
+        state.caseData.checklist = state.checklist;
+        state.caseData.docsReview = state.docs;
+
+        if (!persistCase()) {
+          showToast('خطا در ذخیره‌سازی');
+          return;
+        }
+
+        emitEvent('verifier:case-rejected', {
+          id: state.caseData.id,
+          reason: reason,
+          case: state.caseData
+        });
+
+        showSuccess('rejected');
+      }
+
+      function showSuccess(type) {
+        var wrap = $('reviewWrap');
+        var bar = $('decisionBar');
+        var suc = $('successState');
+        if (wrap) wrap.style.display = 'none';
+        if (bar) bar.style.display = 'none';
+        if (suc) {
+          suc.classList.add('is-visible');
+          var icon = $('successIcon');
+          var title = $('successTitle');
+          var text = $('successText');
+          if (type === 'approved') {
+            if (icon) {
+              icon.classList.remove('wam-vr__success-icon--rejected');
+              icon.classList.add('wam-vr__success-icon--approved');
+              icon.textContent = '✓';
+            }
+            if (title) title.textContent = 'پرونده تأیید شد!';
+            if (text) text.textContent = 'پرونده با موفقیت تأیید شد و به مرحله بعد ارسال گردید.';
+          } else {
+            if (icon) {
+              icon.classList.remove('wam-vr__success-icon--approved');
+              icon.classList.add('wam-vr__success-icon--rejected');
+              icon.textContent = '✕';
+            }
+            if (title) title.textContent = 'پرونده رد شد';
+            if (text) text.textContent = 'پرونده با ذکر دلیل رد شد و به کارگزار اطلاع‌رسانی شد.';
+          }
+        }
+        try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) {}
+      }
+
+      // ═══════════════════════════════════
+      // رویدادها
+      // ═══════════════════════════════════
+
+      function bindEvents() {
+        // Approve
+        if ($('approveBtn')) {
+          $('approveBtn').addEventListener('click', onApprove);
+        }
+
+        // Reject
+        if ($('rejectBtn')) {
+          $('rejectBtn').addEventListener('click', onReject);
+        }
+
+        // Reason chips
+        $$('.wam-vr__reason-chip').forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            $$('.wam-vr__reason-chip').forEach(function (x) {
+              x.classList.remove('is-active');
+            });
+            chip.classList.add('is-active');
+            state.rejectReason = chip.getAttribute('data-reason') || '';
+            var ta = $('rejectReason');
+            if (ta) ta.value = state.rejectReason;
+          });
+        });
+
+        // Refresh
+        if ($('refreshBtn')) {
+          $('refreshBtn').addEventListener('click', function () {
+            state.caseData = loadCase();
+            if (state.caseData) {
+              renderCaseHead();
+              renderApplicantInfo();
+              renderLoanInfo();
+            }
+            showToast('✓ بروزرسانی شد');
+          });
+        }
+
+        // Follow-up
+        if ($('followUpBtn')) {
+          $('followUpBtn').addEventListener('click', function () {
+            var id = state.caseData ? state.caseData.id : '';
+            window.location.href = 'follow-ups.html?case=' + encodeURIComponent(id);
+          });
+        }
+
+        // Esc
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            var p = $('rejectPanel');
+            if (p && p.classList.contains('is-visible')) {
+              p.classList.remove('is-visible');
+            }
+          }
+        });
+      }
+
+      // ═══════════════════════════════════
+      // راه‌اندازی
+      // ═══════════════════════════════════
+
+      function init() {
+        state.user = currentUser();
+        state.caseData = loadCase();
+
+        if (!state.caseData) {
+          if ($('reviewWrap')) $('reviewWrap').style.display = 'none';
+          if ($('decisionBar')) $('decisionBar').style.display = 'none';
+          if ($('emptyState')) $('emptyState').style.display = '';
+          return;
+        }
+
+        // بارگذاری چک‌لیست و مدارک قبلی
+        state.checklist = state.caseData.checklist || {};
+        state.docs = state.caseData.docsReview || {};
+
+        renderCaseHead();
+        renderApplicantInfo();
+        renderLoanInfo();
+        renderChecklist();
+        renderDocs();
+        updateChecklistProgress();
+        updateDocsProgress();
+
+        if ($('reviewNotes')) {
+          $('reviewNotes').value = state.caseData.decisionNotes || '';
+        }
+
+        bindEvents();
+
+        // اگر پرونده قبلاً تصمیم گرفته شده → نمایش وضعیت
+        if (state.caseData.status === 'approved' || state.caseData.status === 'rejected') {
+          showSuccess(state.caseData.status);
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+      if (window.EventBus && typeof window.EventBus.on === 'function') {
+        try {
+          window.EventBus.on('auth:logout', function () {
+            window.location.replace('login.html');
+          });
+        } catch (_) {}
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
