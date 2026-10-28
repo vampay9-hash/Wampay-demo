@@ -1,0 +1,986 @@
+/* ==========================================
+   وام پی — استایل پنل ادمین
+   فایل: css/admin.css
+   نسخه: 1.0.0
+   تاریخ: 1405/01/15
+   ==========================================
+   شامل:
+     - Admin Layout (sidebar + main)
+     - Admin Topbar
+     - Admin Sidebar + Navigation
+     - Admin Content Wrapper
+     - Admin Page Header
+     - Admin Stat Cards (اختصاصی)
+     - Admin Filters / Search Bar
+     - Admin Tables (با ستون اکشن)
+     - Admin Users Management
+     - Admin Approvals
+     - Admin Case List
+     - Admin Forms (چند ستونه)
+     - Admin Bulk Actions
+     - Admin Timeline
+     - Admin Tabs
+     - Admin Empty States
+     - Admin Responsive
+   ========================================== */
+
+/* ==========================================
+   1) ADMIN LAYOUT
+   ========================================== */
+
+.wam-admin {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background: var(--wam-bg);
+}
+
+.wam-admin__sidebar {
+  background: var(--wam-primary);
+  color: #fff;
+  padding: var(--wam-space-lg) 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: transform var(--wam-t);
+  z-index: var(--wam-z-sticky);
+}
+
+.wam-admin__main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ==========================================
+   2) ADMIN TOPBAR
+   ========================================== */
+
+.wam-admin__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--wam-space-md);
+  height: var(--wam-header-h);
+  padding: 0 var(--wam-space-lg);
+  background: var(--wam-bg-alt);
+  border-bottom: 1px solid var(--wam-border);
+  position: sticky;
+  top: 0;
+  z-index: var(--wam-z-sticky);
+}
+
+.wam-admin__topbar-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--wam-primary);
+  margin: 0;
+}
+
+.wam-admin__topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--wam-space-sm);
+}
+
+.wam-admin__menu-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--wam-border);
+  border-radius: var(--wam-radius-sm);
+  padding: 6px 10px;
+  font-size: 1.1rem;
+  color: var(--wam-text);
+  cursor: pointer;
+}
+
+.wam-admin__user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--wam-radius-pill);
+  background: var(--wam-primary-soft);
+  color: var(--wam-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--wam-t);
+}
+
+.wam-admin__user:hover {
+  background: #d5e4d5;
+}
+
+.wam-admin__user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--wam-primary-light);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+/* ==========================================
+   3) SIDEBAR
+   ========================================== */
+
+.wam-admin__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 var(--wam-space-lg) var(--wam-space-lg);
+  margin-bottom: var(--wam-space-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--wam-gold-light);
+}
+
+.wam-admin__brand-icon {
+  font-size: 1.5rem;
+}
+
+.wam-admin__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 var(--wam-space-sm);
+}
+
+.wam-admin__nav-group {
+  margin-top: var(--wam-space-md);
+}
+
+.wam-admin__nav-group-title {
+  padding: 6px 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+}
+
+.wam-admin__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--wam-radius);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--wam-t), color var(--wam-t);
+  border: 0;
+  background: transparent;
+  width: 100%;
+  text-align: right;
+  font-family: inherit;
+}
+
+.wam-admin__nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.wam-admin__nav-item.is-active {
+  background: var(--wam-gold);
+  color: var(--wam-primary);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(212, 166, 42, 0.35);
+}
+
+.wam-admin__nav-icon {
+  font-size: 1.05rem;
+  width: 22px;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.wam-admin__nav-badge {
+  margin-right: auto;
+  padding: 1px 8px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  border-radius: var(--wam-radius-pill);
+  background: var(--wam-danger);
+  color: #fff;
+  line-height: 1.6;
+}
+
+.wam-admin__nav-item.is-active .wam-admin__nav-badge {
+  background: var(--wam-primary);
+  color: var(--wam-gold-light);
+}
+
+/* ==========================================
+   4) CONTENT
+   ========================================== */
+
+.wam-admin__content {
+  flex: 1 1 auto;
+  padding: var(--wam-space-lg);
+  min-width: 0;
+}
+
+.wam-admin__page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--wam-space-md);
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-admin__page-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+}
+
+.wam-admin__page-subtitle {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  color: var(--wam-text-muted);
+}
+
+.wam-admin__page-actions {
+  display: flex;
+  gap: var(--wam-space-sm);
+  flex-wrap: wrap;
+}
+
+.wam-admin__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--wam-text-muted);
+  margin-bottom: 8px;
+}
+
+.wam-admin__breadcrumb a {
+  color: var(--wam-text-muted);
+}
+
+.wam-admin__breadcrumb a:hover {
+  color: var(--wam-primary-light);
+}
+
+.wam-admin__breadcrumb-sep {
+  opacity: 0.5;
+}
+
+/* ==========================================
+   5) ADMIN STAT CARDS
+   ========================================== */
+
+.wam-admin__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--wam-space-md);
+  margin-bottom: var(--wam-space-xl);
+}
+
+.wam-admin__stat {
+  position: relative;
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  padding: var(--wam-space-lg);
+  box-shadow: var(--wam-shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--wam-t), transform var(--wam-t);
+}
+
+.wam-admin__stat:hover {
+  box-shadow: var(--wam-shadow-md);
+  transform: translateY(-2px);
+}
+
+.wam-admin__stat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-right: 4px solid var(--wam-primary);
+  opacity: 0.9;
+}
+
+.wam-admin__stat--gold::before    { border-right-color: var(--wam-gold); }
+.wam-admin__stat--success::before { border-right-color: var(--wam-success); }
+.wam-admin__stat--warning::before { border-right-color: var(--wam-warning); }
+.wam-admin__stat--danger::before  { border-right-color: var(--wam-danger); }
+.wam-admin__stat--info::before    { border-right-color: var(--wam-info); }
+
+.wam-admin__stat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.wam-admin__stat-icon {
+  font-size: 1.4rem;
+  opacity: 0.85;
+}
+
+.wam-admin__stat-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--wam-text-muted);
+}
+
+.wam-admin__stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--wam-primary);
+  margin-bottom: 4px;
+}
+
+.wam-admin__stat--gold    .wam-admin__stat-value { color: #8a6d00; }
+.wam-admin__stat--success .wam-admin__stat-value { color: var(--wam-success-text); }
+.wam-admin__stat--warning .wam-admin__stat-value { color: var(--wam-warning-text); }
+.wam-admin__stat--danger  .wam-admin__stat-value { color: var(--wam-danger-text); }
+.wam-admin__stat--info    .wam-admin__stat-value { color: var(--wam-info-text); }
+
+.wam-admin__stat-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--wam-radius-pill);
+}
+
+.wam-admin__stat-delta--up {
+  background: var(--wam-success-soft);
+  color: var(--wam-success-text);
+}
+
+.wam-admin__stat-delta--down {
+  background: var(--wam-danger-soft);
+  color: var(--wam-danger-text);
+}
+
+.wam-admin__stat-delta--flat {
+  background: var(--wam-muted-soft);
+  color: var(--wam-text-muted);
+}
+
+/* ==========================================
+   6) ADMIN FILTERS / SEARCH BAR
+   ========================================== */
+
+.wam-admin__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--wam-space-sm);
+  padding: var(--wam-space-md);
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  margin-bottom: var(--wam-space-lg);
+  box-shadow: var(--wam-shadow-sm);
+}
+
+.wam-admin__search {
+  position: relative;
+  flex: 1 1 260px;
+  min-width: 200px;
+}
+
+.wam-admin__search input {
+  width: 100%;
+  padding: 9px 36px 9px 12px;
+  border: 1px solid var(--wam-border);
+  border-radius: var(--wam-radius);
+  font-size: 0.88rem;
+  background: var(--wam-bg-alt);
+  color: var(--wam-text);
+  transition: border-color var(--wam-t), box-shadow var(--wam-t);
+}
+
+.wam-admin__search input:focus {
+  outline: none;
+  border-color: var(--wam-primary-light);
+  box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.12);
+}
+
+.wam-admin__search::before {
+  content: '🔍';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.wam-admin__filter-select {
+  min-width: 130px;
+  padding: 9px 12px;
+  border: 1px solid var(--wam-border);
+  border-radius: var(--wam-radius);
+  background: var(--wam-bg-alt);
+  font-size: 0.85rem;
+  color: var(--wam-text);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.wam-admin__filter-select:focus {
+  outline: none;
+  border-color: var(--wam-primary-light);
+}
+
+.wam-admin__filters-spacer {
+  flex: 1 1 auto;
+}
+
+/* ==========================================
+   7) ADMIN TABLES
+   ========================================== */
+
+.wam-admin__table-wrap {
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  overflow: hidden;
+  box-shadow: var(--wam-shadow-sm);
+}
+
+.wam-admin__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.wam-admin__table thead th {
+  background: var(--wam-primary-soft);
+  color: var(--wam-primary);
+  font-weight: 700;
+  text-align: right;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--wam-border);
+  white-space: nowrap;
+  font-size: 0.78rem;
+  letter-spacing: 0.2px;
+}
+
+.wam-admin__table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--wam-border-soft);
+  text-align: right;
+  vertical-align: middle;
+}
+
+.wam-admin__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.wam-admin__table tbody tr {
+  transition: background var(--wam-t);
+}
+
+.wam-admin__table tbody tr:hover {
+  background: var(--wam-bg-muted);
+}
+
+.wam-admin__table tbody tr.is-selected {
+  background: var(--wam-gold-soft);
+}
+
+.wam-admin__table tbody tr.is-disabled {
+  opacity: 0.55;
+}
+
+.wam-admin__table-col-check {
+  width: 40px;
+  text-align: center !important;
+}
+
+.wam-admin__table-col-actions {
+  width: 1%;
+  white-space: nowrap;
+  text-align: left !important;
+}
+
+.wam-admin__table-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wam-admin__table-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--wam-primary-soft);
+  color: var(--wam-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.78rem;
+  flex: 0 0 auto;
+}
+
+.wam-admin__table-name {
+  font-weight: 700;
+  color: var(--wam-text);
+  display: block;
+  line-height: 1.3;
+}
+
+.wam-admin__table-sub {
+  font-size: 0.75rem;
+  color: var(--wam-text-muted);
+}
+
+.wam-admin__row-actions {
+  display: inline-flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.wam-admin__row-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--wam-radius-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--wam-text-muted);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--wam-t);
+}
+
+.wam-admin__row-action:hover {
+  background: var(--wam-primary-soft);
+  color: var(--wam-primary);
+  border-color: var(--wam-primary-soft);
+}
+
+.wam-admin__row-action--danger:hover {
+  background: var(--wam-danger-soft);
+  color: var(--wam-danger);
+  border-color: var(--wam-danger-soft);
+}
+
+.wam-admin__row-action--gold:hover {
+  background: var(--wam-gold-soft);
+  color: #8a6d00;
+  border-color: var(--wam-gold-soft);
+}
+
+/* ==========================================
+   8) BULK ACTIONS
+   ========================================== */
+
+.wam-admin__bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--wam-space-md);
+  padding: 10px 14px;
+  background: var(--wam-gold-soft);
+  border: 1px solid var(--wam-gold);
+  border-radius: var(--wam-radius);
+  margin-bottom: var(--wam-space-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #7a5a00;
+}
+
+.wam-admin__bulk-bar.is-hidden { display: none; }
+
+.wam-admin__bulk-count {
+  background: var(--wam-gold);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: var(--wam-radius-pill);
+  font-weight: 800;
+  font-size: 0.78rem;
+}
+
+.wam-admin__bulk-actions {
+  margin-right: auto;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================
+   9) ADMIN FORMS
+   ========================================== */
+
+.wam-admin__form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--wam-space-md);
+}
+
+.wam-admin__form-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.wam-admin__form-grid--3 { grid-template-columns: repeat(3, 1fr); }
+
+.wam-admin__form-full { grid-column: 1 / -1; }
+
+.wam-admin__form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--wam-space-sm);
+  padding-top: var(--wam-space-md);
+  margin-top: var(--wam-space-md);
+  border-top: 1px solid var(--wam-border-soft);
+}
+
+/* ==========================================
+   10) ADMIN TABS
+   ========================================== */
+
+.wam-admin__tabs {
+  display: flex;
+  gap: 2px;
+  border-bottom: 2px solid var(--wam-border-soft);
+  margin-bottom: var(--wam-space-lg);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.wam-admin__tabs::-webkit-scrollbar { display: none; }
+
+.wam-admin__tab {
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--wam-text-muted);
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--wam-t), border-color var(--wam-t);
+  font-family: inherit;
+  margin-bottom: -2px;
+}
+
+.wam-admin__tab:hover {
+  color: var(--wam-primary);
+}
+
+.wam-admin__tab.is-active {
+  color: var(--wam-primary);
+  border-bottom-color: var(--wam-gold);
+  font-weight: 700;
+}
+
+.wam-admin__tab-count {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 1px 7px;
+  background: var(--wam-muted-soft);
+  color: var(--wam-text-muted);
+  border-radius: var(--wam-radius-pill);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.wam-admin__tab.is-active .wam-admin__tab-count {
+  background: var(--wam-gold-soft);
+  color: #7a5a00;
+}
+
+/* ==========================================
+   11) ADMIN APPROVALS
+   ========================================== */
+
+.wam-admin__approval {
+  display: flex;
+  gap: var(--wam-space-md);
+  padding: var(--wam-space-md);
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-right: 4px solid var(--wam-warning);
+  border-radius: var(--wam-radius-md);
+  margin-bottom: var(--wam-space-md);
+  transition: box-shadow var(--wam-t);
+}
+
+.wam-admin__approval:hover {
+  box-shadow: var(--wam-shadow);
+}
+
+.wam-admin__approval--approved {
+  border-right-color: var(--wam-success);
+}
+
+.wam-admin__approval--rejected {
+  border-right-color: var(--wam-danger);
+}
+
+.wam-admin__approval-icon {
+  font-size: 1.5rem;
+  flex: 0 0 auto;
+}
+
+.wam-admin__approval-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wam-admin__approval-title {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--wam-text);
+}
+
+.wam-admin__approval-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.76rem;
+  color: var(--wam-text-muted);
+  margin-bottom: 8px;
+}
+
+.wam-admin__approval-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================
+   12) ADMIN TIMELINE
+   ========================================== */
+
+.wam-admin__timeline {
+  position: relative;
+  padding-right: 24px;
+}
+
+.wam-admin__timeline::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  right: 7px;
+  width: 2px;
+  background: var(--wam-border);
+}
+
+.wam-admin__timeline-item {
+  position: relative;
+  padding: 0 0 var(--wam-space-lg) 0;
+}
+
+.wam-admin__timeline-item::before {
+  content: '';
+  position: absolute;
+  right: -22px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--wam-primary-soft);
+  border: 2px solid var(--wam-primary-light);
+}
+
+.wam-admin__timeline-item--success::before {
+  background: var(--wam-success-soft);
+  border-color: var(--wam-success);
+}
+
+.wam-admin__timeline-item--warning::before {
+  background: var(--wam-warning-soft);
+  border-color: var(--wam-warning);
+}
+
+.wam-admin__timeline-item--danger::before {
+  background: var(--wam-danger-soft);
+  border-color: var(--wam-danger);
+}
+
+.wam-admin__timeline-time {
+  font-size: 0.72rem;
+  color: var(--wam-text-muted);
+  margin-bottom: 2px;
+}
+
+.wam-admin__timeline-text {
+  font-size: 0.85rem;
+  color: var(--wam-text);
+  line-height: 1.6;
+}
+
+.wam-admin__timeline-user {
+  font-weight: 700;
+  color: var(--wam-primary);
+}
+
+/* ==========================================
+   13) ADMIN EMPTY STATE
+   ========================================== */
+
+.wam-admin__empty {
+  text-align: center;
+  padding: 56px 20px;
+  background: var(--wam-bg-alt);
+  border: 1px dashed var(--wam-border);
+  border-radius: var(--wam-radius-md);
+}
+
+.wam-admin__empty-icon {
+  font-size: 2.8rem;
+  opacity: 0.6;
+  margin-bottom: 10px;
+}
+
+.wam-admin__empty-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--wam-text);
+  margin: 0 0 6px;
+}
+
+.wam-admin__empty-text {
+  font-size: 0.85rem;
+  color: var(--wam-text-muted);
+  margin: 0 0 var(--wam-space-md);
+}
+
+/* ==========================================
+   14) ADMIN PAGINATION
+   ========================================== */
+
+.wam-admin__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: var(--wam-space-lg);
+}
+
+.wam-admin__page-btn {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  border-radius: var(--wam-radius-sm);
+  border: 1px solid var(--wam-border);
+  background: var(--wam-bg-alt);
+  color: var(--wam-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--wam-t);
+  font-family: inherit;
+}
+
+.wam-admin__page-btn:hover:not(:disabled) {
+  border-color: var(--wam-primary-light);
+  color: var(--wam-primary);
+}
+
+.wam-admin__page-btn.is-active {
+  background: var(--wam-primary-light);
+  color: #fff;
+  border-color: var(--wam-primary-light);
+}
+
+.wam-admin__page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.wam-admin__page-info {
+  font-size: 0.78rem;
+  color: var(--wam-text-muted);
+  margin: 0 var(--wam-space-sm);
+}
+
+/* ==========================================
+   15) ADMIN SIDEBAR OVERLAY (موبایل)
+   ========================================== */
+
+.wam-admin__overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 59, 35, 0.5);
+  z-index: calc(var(--wam-z-sticky) - 1);
+  animation: wam-fade-in 0.2s ease;
+}
+
+.wam-admin__overlay.is-open { display: block; }
+
+/* ==========================================
+   16) RESPONSIVE
+   ========================================== */
+
+@media (max-width: 992px) {
+  .wam-admin {
+    grid-template-columns: 1fr;
+  }
+
+  .wam-admin__sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 260px;
+    height: 100vh;
+    transform: translateX(100%);
+    box-shadow: var(--wam-shadow-lg);
+  }
+
+  .wam-admin.is-sidebar-open .wam-admin__sidebar {
+    transform: translateX(0);
+  }
+
+  .wam-admin__menu-toggle {
+    display: inline-flex;
+  }
+
+  .wam-admin__form-grid--2,
+  .wam-admin__form-grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .wam-admin__filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wam-admin__search { flex: 1 1 auto; }
+}
+
+@media (max-width: 640px) {
+  .wam-admin__content { padding: var(--wam-space-md); }
+  .wam-admin__topbar { padding: 0 var(--wam-space-md); }
+  .wam-admin__page-title { font-size: 1.15rem; }
+  .wam-admin__stat-value { font-size: 1.5rem; }
+  .wam-admin__stat { padding: var(--wam-space-md); }
+  .wam-admin__stats { grid-template-columns: repeat(2, 1fr); gap: var(--wam-space-sm); }
+  .wam-admin__bulk-bar { flex-direction: column; align-items: stretch; }
+  .wam-admin__bulk-actions { margin-right: 0; justify-content: flex-start; }
+  .wam-admin__table thead th,
+  .wam-admin__table tbody td { padding: 10px; font-size: 0.8rem; }
+}
+
+/* ==========================================
+   END OF ADMIN.CSS
+   ========================================== */

@@ -1,0 +1,36 @@
+﻿/* WAM PAY — SVG LOGO ANIMATION */
+.wam-logo-svg { position: relative; width: 320px; height: 320px; display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+.wam-logo-svg svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.45)); }
+.wam-logo-svg .logo-stroke { fill: none; stroke: url(#wamGoldGrad); stroke-linecap: round; stroke-linejoin: round; }
+.wam-logo-svg .frame-1 { opacity: 0; }
+.wam-logo-svg .frame-1 path { stroke-dasharray: 700; stroke-dashoffset: 700; }
+.wam-logo-svg .frame-2 { opacity: 0; }
+.wam-logo-svg .frame-2 circle { stroke-dasharray: 900; stroke-dashoffset: 900; }
+.wam-logo-svg .frame-3 { opacity: 0; transform-origin: center; transform: scale(0.85); }
+.wam-logo-svg .frame-3 .letter { stroke-dasharray: 600; stroke-dashoffset: 600; }
+.wam-logo-svg .frame-3 .bar { opacity: 0; transform-origin: bottom; transform: scaleY(0); }
+.wam-logo-svg .frame-4 { opacity: 0; transform-origin: center; }
+.wam-logo-svg.play .frame-1 { animation: frame1In 0.3s ease-out 0.2s forwards; }
+.wam-logo-svg.play .frame-1 path { animation: frame1Draw 1.4s ease-out 0.3s forwards; }
+.wam-logo-svg.play .frame-2 { animation: frame2In 0.3s ease-out 1.5s forwards; }
+.wam-logo-svg.play .frame-2 circle { animation: frame2Draw 1.5s ease-out 1.6s forwards; }
+.wam-logo-svg.play .frame-3 { animation: frame3In 0.6s ease-out 3.1s forwards; }
+.wam-logo-svg.play .frame-3 .letter { animation: frame3LetterDraw 1.2s ease-out 3.2s forwards; }
+.wam-logo-svg.play .frame-3 .bar { animation: barRise 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.wam-logo-svg.play .frame-3 .bar-1 { animation-delay: 4.2s; }
+.wam-logo-svg.play .frame-3 .bar-2 { animation-delay: 4.35s; }
+.wam-logo-svg.play .frame-3 .bar-3 { animation-delay: 4.5s; }
+.wam-logo-svg.play .frame-4 { animation: frame4Glow 3s ease-in-out 4.8s infinite; }
+@keyframes frame1In { to { opacity: 1; } }
+@keyframes frame1Draw { 0% { stroke-dashoffset: 700; } 100% { stroke-dashoffset: 0; } }
+@keyframes frame2In { to { opacity: 1; } }
+@keyframes frame2Draw { 0% { stroke-dashoffset: 900; } 100% { stroke-dashoffset: 0; } }
+@keyframes frame3In { to { opacity: 1; transform: scale(1); } }
+@keyframes frame3LetterDraw { 0% { stroke-dashoffset: 600; } 100% { stroke-dashoffset: 0; } }
+@keyframes barRise { 0% { opacity: 0; transform: scaleY(0); } 100% { opacity: 1; transform: scaleY(1); } }
+@keyframes frame4Glow { 0%, 100% { opacity: 0.25; transform: scale(1); } 50% { opacity: 0.55; transform: scale(1.05); } }
+.wam-logo-svg.play svg { animation: logoFloat 4s ease-in-out 5s infinite; }
+@keyframes logoFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@media (max-width: 1000px) { .wam-logo-svg { width: 260px; height: 260px; } }
+@media (max-width: 760px) { .wam-logo-svg { width: 200px; height: 200px; } }
+@media (max-width: 400px) { .wam-logo-svg { width: 170px; height: 170px; } }

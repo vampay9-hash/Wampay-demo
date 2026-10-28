@@ -1,0 +1,1106 @@
+/* ==========================================
+   وام پی — استایل پنل کارگزار
+   فایل: css/broker-panel.css
+   نسخه: 1.0.0
+   تاریخ: 1405/01/15
+   ==========================================
+   شامل:
+     - Broker Layout
+     - Broker Topbar
+     - Broker Bottom Nav (موبایل‌فرست)
+     - Broker Home / Dashboard
+     - Broker Quick Actions (FAB)
+     - Broker Case Cards (کارت‌محور)
+     - Broker Commission / Wallet
+     - Broker Applicants List
+     - Broker Wizard Steps
+     - Broker Task List
+     - Broker Notifications
+     - Broker Profile
+     - Broker Empty States
+     - Broker Responsive
+   ========================================== */
+
+/* ==========================================
+   1) BROKER LAYOUT
+   ========================================== */
+
+.wam-broker {
+  min-height: 100vh;
+  background: var(--wam-bg);
+  padding-bottom: 76px; /* فضای Bottom Nav */
+  position: relative;
+}
+
+.wam-broker__main {
+  padding: var(--wam-space-lg);
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ==========================================
+   2) BROKER TOPBAR
+   ========================================== */
+
+.wam-broker__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--wam-space-md);
+  padding: 12px var(--wam-space-lg);
+  background: linear-gradient(135deg, var(--wam-primary), var(--wam-primary-light));
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: var(--wam-z-sticky);
+  box-shadow: var(--wam-shadow);
+}
+
+.wam-broker__topbar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.wam-broker__topbar-greeting {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.wam-broker__topbar-name {
+  font-size: 1rem;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wam-broker__topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wam-broker__icon-btn {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 0;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--wam-t);
+}
+
+.wam-broker__icon-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.wam-broker__icon-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--wam-radius-pill);
+  background: var(--wam-gold);
+  color: var(--wam-primary);
+  font-size: 0.65rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--wam-primary-light);
+}
+
+.wam-broker__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+/* ==========================================
+   3) BROKER BOTTOM NAV (موبایل‌فرست)
+   ========================================== */
+
+.wam-broker__bottomnav {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 68px;
+  background: var(--wam-bg-alt);
+  border-top: 1px solid var(--wam-border);
+  box-shadow: 0 -2px 10px rgba(11, 59, 35, 0.06);
+  display: flex;
+  align-items: stretch;
+  z-index: var(--wam-z-sticky);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.wam-broker__nav-item {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 6px 4px;
+  color: var(--wam-text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color var(--wam-t);
+  font-family: inherit;
+  position: relative;
+}
+
+.wam-broker__nav-item:hover {
+  color: var(--wam-primary);
+}
+
+.wam-broker__nav-item.is-active {
+  color: var(--wam-primary);
+}
+
+.wam-broker__nav-item.is-active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 25%;
+  left: 25%;
+  height: 3px;
+  background: var(--wam-gold);
+  border-radius: 0 0 6px 6px;
+}
+
+.wam-broker__nav-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.wam-broker__nav-label {
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.wam-broker__nav-badge {
+  position: absolute;
+  top: 4px;
+  right: calc(50% - 20px);
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--wam-radius-pill);
+  background: var(--wam-danger);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* آیتم مرکزی برجسته */
+.wam-broker__nav-item--cta .wam-broker__nav-icon {
+  background: var(--wam-primary-light);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -22px;
+  box-shadow: 0 4px 12px rgba(16, 91, 53, 0.35);
+  border: 4px solid var(--wam-bg-alt);
+}
+
+.wam-broker__nav-item--cta .wam-broker__nav-label {
+  margin-top: 2px;
+  font-weight: 700;
+}
+
+/* ==========================================
+   4) BROKER HOME
+   ========================================== */
+
+.wam-broker__hero {
+  background: linear-gradient(135deg, var(--wam-primary), var(--wam-primary-light));
+  color: #fff;
+  border-radius: var(--wam-radius-lg);
+  padding: var(--wam-space-lg);
+  margin-bottom: var(--wam-space-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.wam-broker__hero::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: -30px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(212, 166, 42, 0.25), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wam-broker__hero-label {
+  font-size: 0.78rem;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+
+.wam-broker__hero-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+.wam-broker__hero-sub {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.wam-broker__hero-row {
+  display: flex;
+  gap: var(--wam-space-md);
+  margin-top: var(--wam-space-md);
+  padding-top: var(--wam-space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.wam-broker__hero-cell {
+  flex: 1 1 0;
+  text-align: center;
+}
+
+.wam-broker__hero-cell-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.wam-broker__hero-cell-label {
+  font-size: 0.72rem;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+/* ==========================================
+   5) BROKER QUICK ACTIONS
+   ========================================== */
+
+.wam-broker__quick {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--wam-space-sm);
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-broker__quick-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 6px;
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius);
+  color: var(--wam-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--wam-t);
+  font-family: inherit;
+}
+
+.wam-broker__quick-btn:hover {
+  background: var(--wam-primary-soft);
+  border-color: var(--wam-primary-light);
+  transform: translateY(-2px);
+}
+
+.wam-broker__quick-emoji {
+  font-size: 1.35rem;
+}
+
+/* ==========================================
+   6) BROKER SECTION
+   ========================================== */
+
+.wam-broker__section {
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-broker__section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--wam-space-md);
+}
+
+.wam-broker__section-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+  margin: 0;
+}
+
+.wam-broker__section-link {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--wam-primary-light);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  font-family: inherit;
+  padding: 0;
+}
+
+.wam-broker__section-link:hover {
+  color: var(--wam-gold);
+}
+
+/* ==========================================
+   7) BROKER CASE CARD
+   ========================================== */
+
+.wam-broker__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wam-space-md);
+}
+
+.wam-broker__case {
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-right: 4px solid var(--wam-primary-light);
+  border-radius: var(--wam-radius-md);
+  padding: var(--wam-space-md);
+  box-shadow: var(--wam-shadow-sm);
+  cursor: pointer;
+  transition: box-shadow var(--wam-t), transform var(--wam-t);
+}
+
+.wam-broker__case:hover {
+  box-shadow: var(--wam-shadow-md);
+  transform: translateY(-2px);
+}
+
+.wam-broker__case--draft       { border-right-color: var(--wam-muted); }
+.wam-broker__case--pending     { border-right-color: var(--wam-warning); }
+.wam-broker__case--in_progress { border-right-color: var(--wam-info); }
+.wam-broker__case--approved    { border-right-color: var(--wam-success); }
+.wam-broker__case--rejected    { border-right-color: var(--wam-danger); }
+
+.wam-broker__case-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.wam-broker__case-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--wam-radius);
+  background: var(--wam-primary-soft);
+  color: var(--wam-primary);
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.wam-broker__case-title-wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wam-broker__case-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--wam-text);
+  margin: 0 0 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wam-broker__case-id {
+  font-size: 0.72rem;
+  color: var(--wam-text-muted);
+  font-family: 'Menlo', monospace;
+  direction: ltr;
+  text-align: right;
+}
+
+.wam-broker__case-amount {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+  white-space: nowrap;
+}
+
+.wam-broker__case-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--wam-text-muted);
+  margin-bottom: 10px;
+}
+
+.wam-broker__case-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.wam-broker__case-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--wam-border-soft);
+}
+
+.wam-broker__case-progress {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wam-broker__case-progress-bar {
+  flex: 1 1 auto;
+  height: 6px;
+  background: var(--wam-bg-muted);
+  border-radius: var(--wam-radius-pill);
+  overflow: hidden;
+  max-width: 140px;
+}
+
+.wam-broker__case-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--wam-primary-light), var(--wam-gold));
+  border-radius: var(--wam-radius-pill);
+  transition: width var(--wam-t);
+}
+
+.wam-broker__case-progress-label {
+  font-size: 0.72rem;
+  color: var(--wam-text-muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ==========================================
+   8) BROKER WALLET / COMMISSION
+   ========================================== */
+
+.wam-broker__wallet {
+  background: linear-gradient(135deg, #0b3b23, #105b35 55%, #1a6b42);
+  color: #fff;
+  border-radius: var(--wam-radius-lg);
+  padding: var(--wam-space-lg);
+  margin-bottom: var(--wam-space-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.wam-broker__wallet::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: -40px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(212, 166, 42, 0.35), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wam-broker__wallet-label {
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+
+.wam-broker__wallet-balance {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 6px 0 4px;
+  line-height: 1.15;
+}
+
+.wam-broker__wallet-sub {
+  font-size: 0.78rem;
+  opacity: 0.85;
+  margin-bottom: var(--wam-space-md);
+}
+
+.wam-broker__wallet-row {
+  display: flex;
+  gap: var(--wam-space-sm);
+  position: relative;
+  z-index: 1;
+}
+
+.wam-broker__wallet-cell {
+  flex: 1 1 0;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--wam-radius);
+  text-align: center;
+}
+
+.wam-broker__wallet-cell-label {
+  font-size: 0.7rem;
+  opacity: 0.82;
+  margin-bottom: 2px;
+}
+
+.wam-broker__wallet-cell-value {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+/* ==========================================
+   9) BROKER APPLICANTS LIST
+   ========================================== */
+
+.wam-broker__applicant {
+  display: flex;
+  align-items: center;
+  gap: var(--wam-space-md);
+  padding: var(--wam-space-md);
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all var(--wam-t);
+}
+
+.wam-broker__applicant:hover {
+  box-shadow: var(--wam-shadow);
+  transform: translateY(-1px);
+}
+
+.wam-broker__applicant-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--wam-primary-soft);
+  color: var(--wam-primary);
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.wam-broker__applicant-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wam-broker__applicant-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--wam-text);
+  margin: 0 0 2px;
+}
+
+.wam-broker__applicant-info {
+  font-size: 0.75rem;
+  color: var(--wam-text-muted);
+}
+
+.wam-broker__applicant-action {
+  font-size: 1.2rem;
+  color: var(--wam-text-muted);
+}
+
+/* ==========================================
+   10) BROKER WIZARD STEPS
+   ========================================== */
+
+.wam-broker__steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: var(--wam-space-md);
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  margin-bottom: var(--wam-space-lg);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.wam-broker__steps::-webkit-scrollbar { display: none; }
+
+.wam-broker__step {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  position: relative;
+  min-width: 72px;
+}
+
+.wam-broker__step-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--wam-bg-muted);
+  color: var(--wam-text-muted);
+  font-weight: 800;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  transition: all var(--wam-t);
+}
+
+.wam-broker__step-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--wam-text-muted);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.wam-broker__step.is-current .wam-broker__step-num {
+  background: var(--wam-primary-light);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(16, 91, 53, 0.15);
+}
+
+.wam-broker__step.is-current .wam-broker__step-label {
+  color: var(--wam-primary);
+  font-weight: 800;
+}
+
+.wam-broker__step.is-done .wam-broker__step-num {
+  background: var(--wam-success-soft);
+  color: var(--wam-success-text);
+  border-color: var(--wam-success);
+}
+
+.wam-broker__step.is-done .wam-broker__step-label {
+  color: var(--wam-success-text);
+}
+
+.wam-broker__step-divider {
+  flex: 1 1 auto;
+  height: 2px;
+  background: var(--wam-border);
+  min-width: 12px;
+  align-self: center;
+  margin-top: -18px;
+}
+
+.wam-broker__step.is-done + .wam-broker__step-divider {
+  background: var(--wam-success);
+}
+
+/* ==========================================
+   11) BROKER TASK LIST
+   ========================================== */
+
+.wam-broker__tasks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wam-space-sm);
+}
+
+.wam-broker__task {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: var(--wam-space-md);
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  transition: background var(--wam-t);
+}
+
+.wam-broker__task:hover {
+  background: var(--wam-bg-muted);
+}
+
+.wam-broker__task-check {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--wam-border-strong);
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: transparent;
+  transition: all var(--wam-t);
+  padding: 0;
+}
+
+.wam-broker__task-check:hover {
+  border-color: var(--wam-primary-light);
+}
+
+.wam-broker__task.is-done .wam-broker__task-check {
+  background: var(--wam-success);
+  border-color: var(--wam-success);
+  color: #fff;
+}
+
+.wam-broker__task-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wam-broker__task-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--wam-text);
+  margin: 0 0 3px;
+  line-height: 1.4;
+}
+
+.wam-broker__task.is-done .wam-broker__task-title {
+  text-decoration: line-through;
+  color: var(--wam-text-muted);
+}
+
+.wam-broker__task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--wam-text-muted);
+}
+
+/* ==========================================
+   12) BROKER NOTIFICATIONS
+   ========================================== */
+
+.wam-broker__notif {
+  display: flex;
+  gap: 10px;
+  padding: var(--wam-space-md);
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  margin-bottom: 8px;
+  transition: background var(--wam-t);
+}
+
+.wam-broker__notif.is-unread {
+  background: var(--wam-primary-soft);
+  border-color: var(--wam-primary-soft);
+}
+
+.wam-broker__notif-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--wam-gold-soft);
+  color: #8a6d00;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.wam-broker__notif-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wam-broker__notif-text {
+  font-size: 0.85rem;
+  color: var(--wam-text);
+  margin: 0 0 3px;
+  line-height: 1.5;
+}
+
+.wam-broker__notif-time {
+  font-size: 0.7rem;
+  color: var(--wam-text-muted);
+}
+
+/* ==========================================
+   13) BROKER PROFILE
+   ========================================== */
+
+.wam-broker__profile {
+  text-align: center;
+  padding: var(--wam-space-xl) var(--wam-space-lg);
+  background: linear-gradient(135deg, var(--wam-primary), var(--wam-primary-light));
+  color: #fff;
+  border-radius: var(--wam-radius-lg);
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-broker__profile-avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+}
+
+.wam-broker__profile-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0 0 2px;
+}
+
+.wam-broker__profile-role {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.wam-broker__profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: var(--wam-space-md);
+  padding-top: var(--wam-space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.wam-broker__profile-stat-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.wam-broker__profile-stat-label {
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+/* ==========================================
+   14) BROKER FAB
+   ========================================== */
+
+.wam-broker__fab {
+  position: fixed;
+  bottom: 84px;
+  left: 20px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--wam-gold);
+  color: #3a2a00;
+  font-size: 1.5rem;
+  font-weight: 800;
+  border: 0;
+  box-shadow: 0 6px 18px rgba(212, 166, 42, 0.45);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--wam-t), box-shadow var(--wam-t);
+  z-index: calc(var(--wam-z-sticky) - 1);
+}
+
+.wam-broker__fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(212, 166, 42, 0.55);
+}
+
+/* ==========================================
+   15) BROKER EMPTY STATE
+   ========================================== */
+
+.wam-broker__empty {
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--wam-bg-alt);
+  border: 1px dashed var(--wam-border);
+  border-radius: var(--wam-radius-md);
+}
+
+.wam-broker__empty-icon {
+  font-size: 2.4rem;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.wam-broker__empty-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--wam-text);
+  margin: 0 0 4px;
+}
+
+.wam-broker__empty-text {
+  font-size: 0.82rem;
+  color: var(--wam-text-muted);
+  margin: 0 0 var(--wam-space-md);
+}
+
+/* ==========================================
+   16) BROKER STICKY ACTION BAR
+   ========================================== */
+
+.wam-broker__sticky-bar {
+  position: sticky;
+  bottom: 76px;
+  margin: 0 calc(-1 * var(--wam-space-lg));
+  padding: var(--wam-space-md) var(--wam-space-lg);
+  background: var(--wam-bg-alt);
+  border-top: 1px solid var(--wam-border);
+  display: flex;
+  gap: var(--wam-space-sm);
+  z-index: 10;
+  box-shadow: 0 -4px 12px rgba(11, 59, 35, 0.05);
+}
+
+.wam-broker__sticky-bar .wam-btn {
+  flex: 1 1 0;
+}
+
+/* ==========================================
+   17) RESPONSIVE
+   ========================================== */
+
+@media (max-width: 640px) {
+  .wam-broker__main {
+    padding: var(--wam-space-md);
+  }
+
+  .wam-broker__quick {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  .wam-broker__quick-btn {
+    padding: 12px 4px;
+    font-size: 0.66rem;
+  }
+
+  .wam-broker__quick-emoji {
+    font-size: 1.2rem;
+  }
+
+  .wam-broker__hero-value,
+  .wam-broker__wallet-balance {
+    font-size: 1.55rem;
+  }
+
+  .wam-broker__profile-avatar {
+    width: 72px;
+    height: 72px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 900px) {
+  /* در دسکتاپ Bottom Nav به بالای صفحه منتقل می‌شود */
+  .wam-broker {
+    padding-bottom: 0;
+  }
+
+  .wam-broker__bottomnav {
+    position: sticky;
+    top: 0;
+    height: auto;
+    padding: 0 var(--wam-space-lg);
+    justify-content: center;
+    gap: 4px;
+    border-top: 0;
+    border-bottom: 1px solid var(--wam-border);
+    box-shadow: var(--wam-shadow-sm);
+  }
+
+  .wam-broker__nav-item {
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: 6px;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+  }
+
+  .wam-broker__nav-item.is-active::before {
+    top: auto;
+    bottom: 0;
+    right: 8px;
+    left: 8px;
+    height: 3px;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .wam-broker__nav-label {
+    font-size: 0.85rem;
+  }
+
+  .wam-broker__nav-badge {
+    position: static;
+    margin-right: 4px;
+  }
+
+  .wam-broker__nav-item--cta .wam-broker__nav-icon {
+    width: 30px;
+    height: 30px;
+    margin-top: 0;
+    border-width: 0;
+    font-size: 1rem;
+  }
+
+  .wam-broker__sticky-bar {
+    bottom: 0;
+  }
+
+  .wam-broker__fab {
+    bottom: 20px;
+  }
+}
+
+/* ==========================================
+   END OF BROKER-PANEL.CSS
+   ========================================== */

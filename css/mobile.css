@@ -1,0 +1,952 @@
+/* ==========================================
+   وام پی — استایل موبایل (Override نهایی)
+   فایل: css/mobile.css
+   نسخه: 1.0.0
+   تاریخ: 1405/01/15
+   ==========================================
+   ⚠️ این فایل باید آخرین CSS لود شود.
+   شامل:
+     - Mobile-First Overrides
+     - Safe Area (notch)
+     - Touch Targets (44px+)
+     - Typography Scale موبایل
+     - Container & Spacing موبایل
+     - Header / Navbar Overrides
+     - Table → Card تبدیل
+     - Modal → Bottom Sheet
+     - Toast / Alert Overrides
+     - Forms (Full-width + Bigger input)
+     - Buttons (Full-width در موبایل)
+     - Dashboard (Single Column)
+     - Follow-ups (Stack)
+     - Admin (Sidebar Drawer)
+     - Broker (Bottom Nav محکم‌تر)
+     - Verifier (Queue بالا)
+     - Utilities موبایل
+     - Landscape / Small Phone / Tablet
+     - Reduce Motion / Dark Mode Hint
+   ========================================== */
+
+/* ==========================================
+   1) MOBILE-FIRST BASE (≤ 640px)
+   ========================================== */
+
+@media (max-width: 640px) {
+
+  /* ── Safe Area (Notch) ── */
+  :root {
+    --wam-safe-top:    env(safe-area-inset-top, 0px);
+    --wam-safe-bottom: env(safe-area-inset-bottom, 0px);
+    --wam-safe-right:  env(safe-area-inset-right, 0px);
+    --wam-safe-left:   env(safe-area-inset-left, 0px);
+  }
+
+  body {
+    font-size: 13.5px;
+    line-height: 1.7;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+  }
+
+  /* ── Typography ── */
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.22rem; }
+  h3 { font-size: 1.08rem; }
+  h4 { font-size: 1rem; }
+
+  /* ── Container ── */
+  .wam-container {
+    padding-left: max(var(--wam-space-md), var(--wam-safe-right));
+    padding-right: max(var(--wam-space-md), var(--wam-safe-left));
+  }
+
+  /* ── Touch Targets (min 44px) ── */
+  .wam-btn,
+  button,
+  .wam-chip,
+  .wam-fu__filter,
+  .wam-admin__tab,
+  .wam-verifier__tab {
+    min-height: 40px;
+  }
+
+  .wam-btn--icon,
+  .wam-admin__row-action,
+  .wam-verifier__check-btn {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  /* ── Forms ── */
+  .wam-input,
+  .wam-select,
+  .wam-textarea {
+    font-size: 16px; /* جلوگیری از زوم iOS */
+    padding: 12px 14px;
+    min-height: 44px;
+  }
+
+  .wam-field {
+    margin-bottom: var(--wam-space-md);
+  }
+
+  /* ── Buttons ── */
+  .wam-btn {
+    padding: 11px 18px;
+    font-size: 0.9rem;
+  }
+
+  .wam-btn--block-mobile {
+    width: 100%;
+  }
+
+  /* ── Cards ── */
+  .wam-card {
+    padding: var(--wam-space-md);
+    border-radius: var(--wam-radius);
+  }
+
+  .wam-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  /* ── Modals → Bottom Sheet ── */
+  .wam-modal {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .wam-modal__box {
+    max-width: 100%;
+    width: 100%;
+    border-radius: var(--wam-radius-lg) var(--wam-radius-lg) 0 0;
+    max-height: 92vh;
+    animation: wam-sheet-up 0.3s ease;
+    padding-bottom: var(--wam-safe-bottom);
+  }
+
+  .wam-modal__header { padding: 14px 16px; }
+  .wam-modal__body   { padding: 16px; }
+  .wam-modal__footer {
+    flex-direction: column-reverse;
+    gap: 8px;
+    padding: 12px 16px;
+  }
+
+  .wam-modal__footer .wam-btn {
+    width: 100%;
+  }
+
+  /* ── Toast ── */
+  .wam-toast-wrap {
+    top: auto;
+    bottom: calc(16px + var(--wam-safe-bottom));
+    left: 12px;
+    right: 12px;
+    transform: none;
+    align-items: stretch;
+  }
+
+  .wam-toast {
+    min-width: 0;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  /* ── Alerts ── */
+  .wam-alert {
+    padding: 10px 12px;
+    font-size: 0.83rem;
+  }
+
+  /* ═══════════════════════════════════════
+     TABLES → CARD VIEW
+     ═══════════════════════════════════════ */
+
+  .wam-table--responsive {
+    display: block;
+    border: 0;
+    background: transparent;
+  }
+
+  .wam-table--responsive thead {
+    display: none;
+  }
+
+  .wam-table--responsive tbody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wam-space-sm);
+  }
+
+  .wam-table--responsive tbody tr {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 14px;
+    background: var(--wam-bg-alt);
+    border: 1px solid var(--wam-border-soft);
+    border-radius: var(--wam-radius-md);
+    box-shadow: var(--wam-shadow-sm);
+  }
+
+  .wam-table--responsive tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--wam-border-soft);
+    text-align: right;
+  }
+
+  .wam-table--responsive tbody td:last-child {
+    border-bottom: 0;
+  }
+
+  .wam-table--responsive tbody td::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--wam-text-muted);
+    margin-left: 10px;
+    flex: 0 0 auto;
+  }
+
+  /* ═══════════════════════════════════════
+     DASHBOARD
+     ═══════════════════════════════════════ */
+
+  .wam-dash { padding: var(--wam-space-md) 0 var(--wam-space-xl); }
+
+  .wam-dash__header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--wam-space-sm);
+  }
+
+  .wam-dash__title { font-size: 1.15rem; }
+
+  .wam-dash__toolbar {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .wam-dash__grid {
+    grid-template-columns: 1fr;
+    gap: var(--wam-space-md);
+  }
+
+  .wam-dash__widget {
+    padding: var(--wam-space-md);
+  }
+
+  .wam-dash__widget--wide {
+    grid-column: auto;
+  }
+
+  .wam-dash__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .wam-dash__stat-card {
+    padding: 10px;
+  }
+
+  .wam-dash__stat-value { font-size: 1.15rem; }
+  .wam-dash__stat-label { font-size: 0.7rem; }
+
+  .wam-dash__quick-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wam-dash__quick-btn {
+    padding: 12px 6px;
+    font-size: 0.72rem;
+  }
+
+  .wam-dash__quick-emoji { font-size: 1.2rem; }
+
+  .wam-dash__chart { height: 110px; }
+
+  .wam-dash__list-item {
+    padding: 9px 10px;
+    font-size: 0.82rem;
+  }
+
+  /* ═══════════════════════════════════════
+     FOLLOW-UPS
+     ═══════════════════════════════════════ */
+
+  .wam-fu { padding: var(--wam-space-md) 0; }
+
+  .wam-fu__header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .wam-fu__title { font-size: 1.15rem; }
+
+  .wam-fu__btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .wam-fu__stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .wam-fu__stat { padding: 10px 6px; }
+  .wam-fu__stat-value { font-size: 1.1rem; }
+  .wam-fu__stat-label { font-size: 0.68rem; }
+
+  .wam-fu__filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .wam-fu__filters::-webkit-scrollbar { display: none; }
+
+  .wam-fu__filter {
+    flex: 0 0 auto;
+  }
+
+  .wam-fu__item {
+    padding: 12px 14px;
+  }
+
+  .wam-fu__item-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .wam-fu__actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .wam-fu__act {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-width: 90px;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+  }
+
+  /* ═══════════════════════════════════════
+     ADMIN (Sidebar → Drawer)
+     ═══════════════════════════════════════ */
+
+  .wam-admin__topbar {
+    padding: 0 var(--wam-space-md);
+    padding-top: var(--wam-safe-top);
+    height: calc(var(--wam-header-h) + var(--wam-safe-top));
+  }
+
+  .wam-admin__topbar-title { font-size: 0.95rem; }
+
+  .wam-admin__content { padding: var(--wam-space-md); }
+
+  .wam-admin__sidebar {
+    width: 82vw;
+    max-width: 300px;
+    padding-top: var(--wam-safe-top);
+  }
+
+  .wam-admin__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .wam-admin__stat { padding: var(--wam-space-md); }
+  .wam-admin__stat-value { font-size: 1.3rem; }
+  .wam-admin__stat-label { font-size: 0.72rem; }
+  .wam-admin__stat-icon  { font-size: 1.15rem; }
+
+  .wam-admin__page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wam-admin__page-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .wam-admin__page-actions .wam-btn {
+    flex: 1 1 auto;
+  }
+
+  .wam-admin__filters {
+    padding: 10px;
+  }
+
+  .wam-admin__table thead th,
+  .wam-admin__table tbody td {
+    padding: 9px 10px;
+    font-size: 0.8rem;
+  }
+
+  .wam-admin__row-actions {
+    flex-wrap: wrap;
+  }
+
+  .wam-admin__bulk-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .wam-admin__tabs {
+    scroll-snap-type: x mandatory;
+  }
+
+  .wam-admin__tab {
+    scroll-snap-align: start;
+  }
+
+  .wam-admin__form-grid,
+  .wam-admin__form-grid--2,
+  .wam-admin__form-grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .wam-admin__form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .wam-admin__form-actions .wam-btn {
+    width: 100%;
+  }
+
+  /* ═══════════════════════════════════════
+     BROKER (Bottom Nav محکم‌تر)
+     ═══════════════════════════════════════ */
+
+  .wam-broker {
+    padding-bottom: calc(72px + var(--wam-safe-bottom));
+  }
+
+  .wam-broker__main { padding: var(--wam-space-md); }
+
+  .wam-broker__topbar {
+    padding: 10px var(--wam-space-md);
+    padding-top: calc(10px + var(--wam-safe-top));
+  }
+
+  .wam-broker__bottomnav {
+    height: calc(64px + var(--wam-safe-bottom));
+    padding-bottom: var(--wam-safe-bottom);
+  }
+
+  .wam-broker__nav-item {
+    padding: 4px 2px;
+  }
+
+  .wam-broker__nav-icon { font-size: 1.15rem; }
+  .wam-broker__nav-label { font-size: 0.62rem; }
+
+  .wam-broker__hero { padding: var(--wam-space-md); }
+  .wam-broker__hero-value { font-size: 1.5rem; }
+
+  .wam-broker__wallet { padding: var(--wam-space-md); }
+  .wam-broker__wallet-balance { font-size: 1.5rem; }
+  .wam-broker__wallet-row { flex-direction: column; }
+
+  .wam-broker__quick {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  .wam-broker__quick-btn {
+    padding: 10px 4px;
+    font-size: 0.62rem;
+  }
+
+  .wam-broker__quick-emoji { font-size: 1.15rem; }
+
+  .wam-broker__fab {
+    bottom: calc(80px + var(--wam-safe-bottom));
+    left: 16px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.35rem;
+  }
+
+  .wam-broker__sticky-bar {
+    bottom: calc(64px + var(--wam-safe-bottom));
+    padding: var(--wam-space-sm) var(--wam-space-md);
+  }
+
+  .wam-broker__case-head { flex-wrap: wrap; }
+  .wam-broker__case-amount {
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .wam-broker__steps {
+    padding: 10px 6px;
+  }
+
+  .wam-broker__step { min-width: 62px; }
+  .wam-broker__step-num { width: 26px; height: 26px; font-size: 0.72rem; }
+  .wam-broker__step-label { font-size: 0.62rem; }
+
+  .wam-broker__profile { padding: var(--wam-space-lg) var(--wam-space-md); }
+  .wam-broker__profile-avatar {
+    width: 68px;
+    height: 68px;
+    font-size: 1.35rem;
+  }
+
+  /* ═══════════════════════════════════════
+     VERIFIER
+     ═══════════════════════════════════════ */
+
+  .wam-verifier__main { padding: var(--wam-space-md); }
+
+  .wam-verifier__topbar {
+    padding: 10px var(--wam-space-md);
+    padding-top: calc(10px + var(--wam-safe-top));
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .wam-verifier__title { font-size: 1.15rem; }
+
+  .wam-verifier__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .wam-verifier__stat { padding: 10px; }
+  .wam-verifier__stat-icon { width: 34px; height: 34px; font-size: 0.95rem; }
+  .wam-verifier__stat-value { font-size: 1.05rem; }
+  .wam-verifier__stat-label { font-size: 0.68rem; }
+
+  .wam-verifier__review { padding: var(--wam-space-md); }
+
+  .wam-verifier__review-meta {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .wam-verifier__docs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .wam-verifier__decision {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wam-verifier__decision-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .wam-verifier__decision .wam-btn {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .wam-verifier__check { padding: 10px; }
+  .wam-verifier__check-actions { gap: 8px; }
+
+  .wam-verifier__reason-chip {
+    flex: 1 1 calc(50% - 6px);
+    justify-content: center;
+  }
+
+  /* ═══════════════════════════════════════
+     APP LOADER
+     ═══════════════════════════════════════ */
+
+  .wam-app__loader-box {
+    padding: 20px 24px;
+    border-radius: var(--wam-radius-md);
+  }
+
+  .wam-app__loader-spinner {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ==========================================
+   2) SMALL PHONE (≤ 400px)
+   ========================================== */
+
+@media (max-width: 400px) {
+  body { font-size: 13px; }
+
+  h1 { font-size: 1.25rem; }
+  h2 { font-size: 1.1rem; }
+  h3 { font-size: 1rem; }
+
+  .wam-container { padding: 0 10px; }
+
+  .wam-dash__stats,
+  .wam-admin__stats,
+  .wam-fu__stats,
+  .wam-verifier__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wam-broker__quick {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .wam-broker__quick-btn {
+    padding: 8px 2px;
+    font-size: 0.58rem;
+  }
+
+  .wam-broker__quick-emoji { font-size: 1rem; }
+
+  .wam-broker__nav-icon { font-size: 1.05rem; }
+  .wam-broker__nav-label { font-size: 0.58rem; }
+
+  .wam-verifier__docs { grid-template-columns: 1fr; }
+
+  .wam-fu__act { min-width: 0; flex: 1 1 40%; }
+
+  .wam-btn { padding: 10px 14px; font-size: 0.85rem; }
+}
+
+/* ==========================================
+   3) LANDSCAPE (ارتفاع کم)
+   ========================================== */
+
+@media (max-height: 480px) and (orientation: landscape) {
+
+  .wam-broker__bottomnav { height: 56px; }
+
+  .wam-broker__nav-icon { font-size: 1rem; }
+  .wam-broker__nav-label { display: none; }
+
+  .wam-broker__nav-item--cta .wam-broker__nav-icon {
+    width: 36px;
+    height: 36px;
+    margin-top: -12px;
+  }
+
+  .wam-modal__box {
+    max-height: 95vh;
+  }
+
+  .wam-app__loader-box {
+    padding: 16px 20px;
+  }
+}
+
+/* ==========================================
+   4) TABLET (641px – 1024px)
+   ========================================== */
+
+@media (min-width: 641px) and (max-width: 1024px) {
+
+  .wam-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  .wam-grid--3 { grid-template-columns: repeat(2, 1fr); }
+
+  .wam-dash__widget--wide { grid-column: span 1; }
+
+  .wam-admin__form-grid--3 { grid-template-columns: repeat(2, 1fr); }
+
+  .wam-verifier__split {
+    grid-template-columns: 260px 1fr;
+    gap: var(--wam-space-md);
+  }
+}
+
+/* ==========================================
+   5) HOVER: NONE (لمسی)
+   ========================================== */
+
+@media (hover: none) {
+
+  /* حذف افکت‌های hover که در لمسی مزاحم هستند */
+  .wam-card--hover:hover,
+  .wam-admin__stat:hover,
+  .wam-broker__case:hover,
+  .wam-fu__item:hover,
+  .wam-verifier__stat:hover {
+    transform: none;
+    box-shadow: var(--wam-shadow-sm);
+  }
+
+  .wam-btn:hover {
+    transform: none;
+  }
+
+  .wam-broker__quick-btn:hover {
+    transform: none;
+  }
+
+  /* فعال‌سازی :active به‌جای hover */
+  .wam-btn:active,
+  .wam-admin__row-action:active,
+  .wam-broker__nav-item:active {
+    opacity: 0.75;
+    transform: scale(0.97);
+  }
+
+  .wam-broker__case:active,
+  .wam-fu__item:active,
+  .wam-admin__stat:active {
+    transform: scale(0.99);
+    background: var(--wam-bg-muted);
+  }
+}
+
+/* ==========================================
+   6) REDUCE MOTION
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .wam-app__loader-spinner {
+    animation-duration: 1.5s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* ==========================================
+   7) DARK MODE (Hint — آماده برای بعد)
+   ========================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* به‌صورت پیش‌فرض غیرفعال است.
+     برای فعال‌سازی، :root را با کلاس body.light-only خنثی کنید
+     یا media query را با body.dark-mode جایگزین کنید. */
+
+  body[data-theme="auto-dark"] {
+    /* TODO: پیاده‌سازی در نسخه بعدی */
+  }
+}
+
+/* ==========================================
+   8) PRINT MOBILE
+   ========================================== */
+
+@media print {
+  .wam-broker__bottomnav,
+  .wam-broker__fab,
+  .wam-broker__sticky-bar,
+  .wam-admin__sidebar,
+  .wam-admin__topbar,
+  .wam-verifier__topbar,
+  .wam-verifier__queue {
+    display: none !important;
+  }
+
+  .wam-admin {
+    grid-template-columns: 1fr;
+  }
+
+  .wam-verifier__split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================
+   9) ANIMATIONS
+   ========================================== */
+
+@keyframes wam-sheet-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================
+   10) UTILITIES موبایل
+   ========================================== */
+
+.wam-hide-mobile { display: initial; }
+.wam-show-mobile { display: none; }
+
+@media (max-width: 640px) {
+  .wam-hide-mobile { display: none !important; }
+  .wam-show-mobile { display: initial !important; }
+
+  .wam-only-desktop { display: none !important; }
+
+  /* استک کردن خودکار در موبایل */
+  .wam-stack-mobile {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--wam-space-sm) !important;
+  }
+
+  .wam-stack-mobile > * {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+@media (min-width: 641px) {
+  .wam-only-mobile { display: none !important; }
+}
+
+/* ==========================================
+   11) SCROLL SNAP برای کاروسل‌های موبایل
+   ========================================== */
+
+@media (max-width: 640px) {
+
+  .wam-snap-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--wam-space-sm);
+    padding-bottom: var(--wam-space-sm);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .wam-snap-scroll::-webkit-scrollbar { display: none; }
+
+  .wam-snap-item {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+}
+
+/* ==========================================
+   12) INPUT FOCUS iOS SAFARI
+   ========================================== */
+
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 640px) {
+    /* جلوگیری از پرش layout هنگام focus روی input */
+    .wam-input,
+    .wam-select,
+    .wam-textarea {
+      font-size: 16px;
+    }
+
+    /* حذف شعاع داخلی iOS */
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    textarea,
+    select {
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: var(--wam-radius);
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--wam-border-strong);
+      border-radius: 5px;
+      background: var(--wam-bg-alt);
+      position: relative;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"]:checked {
+      background: var(--wam-primary-light);
+      border-color: var(--wam-primary-light);
+    }
+
+    input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input[type="radio"] {
+      border-radius: 50%;
+    }
+
+    input[type="radio"]:checked {
+      border-color: var(--wam-primary-light);
+    }
+
+    input[type="radio"]:checked::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      background: var(--wam-primary-light);
+    }
+  }
+}
+
+/* ==========================================
+   13) STICKY HEADER با Safe Area
+   ========================================== */
+
+@media (max-width: 640px) {
+
+  .wam-sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: var(--wam-z-sticky);
+    padding-top: var(--wam-safe-top);
+    background: var(--wam-bg-alt);
+    border-bottom: 1px solid var(--wam-border);
+  }
+
+  .wam-sticky-bottom {
+    position: sticky;
+    bottom: 0;
+    z-index: var(--wam-z-sticky);
+    padding-bottom: var(--wam-safe-bottom);
+    background: var(--wam-bg-alt);
+    border-top: 1px solid var(--wam-border);
+  }
+}
+
+/* ==========================================
+   14) تصحیح RTL در موبایل
+   ========================================== */
+
+@media (max-width: 640px) {
+
+  /* اطمینان از RTL در همه اجزا */
+  .wam-broker__topbar,
+  .wam-admin__topbar,
+  .wam-verifier__topbar {
+    direction: rtl;
+  }
+
+  /* جدول‌های Scrollable در موبایل */
+  .wam-table-wrap {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+}
+
+/* ==========================================
+   END OF MOBILE.CSS
+   ========================================== */

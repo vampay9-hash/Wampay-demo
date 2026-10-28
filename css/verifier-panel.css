@@ -1,0 +1,1009 @@
+/* ==========================================
+   وام پی — استایل پنل اعتبارسنج
+   فایل: css/verifier-panel.css
+   نسخه: 1.0.0
+   تاریخ: 1405/01/15
+   ==========================================
+   شامل:
+     - Verifier Layout
+     - Verifier Topbar
+     - Verifier Tabs / Filter Bar
+     - Verifier Queue (Inbox)
+     - Verifier Case Review Card
+     - Verifier Checklist
+     - Verifier Documents Review
+     - Verifier Decision Actions (Approve/Reject)
+     - Verifier Rejection Panel
+     - Verifier Approval Timeline
+     - Verifier Notes
+     - Verifier Stats
+     - Verifier Empty State
+     - Verifier Responsive
+   ========================================== */
+
+/* ==========================================
+   1) VERIFIER LAYOUT
+   ========================================== */
+
+.wam-verifier {
+  min-height: 100vh;
+  background: var(--wam-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.wam-verifier__main {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--wam-space-lg);
+}
+
+.wam-verifier__split {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--wam-space-lg);
+  align-items: start;
+}
+
+/* ==========================================
+   2) VERIFIER TOPBAR
+   ========================================== */
+
+.wam-verifier__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--wam-space-md);
+  padding: 12px var(--wam-space-lg);
+  background: var(--wam-bg-alt);
+  border-bottom: 1px solid var(--wam-border);
+  position: sticky;
+  top: 0;
+  z-index: var(--wam-z-sticky);
+  box-shadow: var(--wam-shadow-sm);
+}
+
+.wam-verifier__topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+}
+
+.wam-verifier__topbar-icon {
+  font-size: 1.35rem;
+}
+
+.wam-verifier__topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wam-verifier__topbar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--wam-radius-pill);
+  background: var(--wam-primary-soft);
+  color: var(--wam-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.wam-verifier__topbar-badge--gold {
+  background: var(--wam-gold-soft);
+  color: #7a5a00;
+}
+
+.wam-verifier__user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--wam-radius-pill);
+  background: var(--wam-primary-soft);
+  color: var(--wam-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--wam-t);
+}
+
+.wam-verifier__user:hover {
+  background: #d5e4d5;
+}
+
+.wam-verifier__user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--wam-primary-light);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* ==========================================
+   3) VERIFIER HEADER + TABS
+   ========================================== */
+
+.wam-verifier__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--wam-space-md);
+  margin-bottom: var(--wam-space-md);
+}
+
+.wam-verifier__title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+}
+
+.wam-verifier__subtitle {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  color: var(--wam-text-muted);
+}
+
+.wam-verifier__tabs {
+  display: flex;
+  gap: 2px;
+  border-bottom: 2px solid var(--wam-border-soft);
+  margin-bottom: var(--wam-space-lg);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.wam-verifier__tabs::-webkit-scrollbar { display: none; }
+
+.wam-verifier__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--wam-text-muted);
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--wam-t), border-color var(--wam-t);
+  font-family: inherit;
+  margin-bottom: -2px;
+}
+
+.wam-verifier__tab:hover {
+  color: var(--wam-primary);
+}
+
+.wam-verifier__tab.is-active {
+  color: var(--wam-primary);
+  border-bottom-color: var(--wam-gold);
+  font-weight: 700;
+}
+
+.wam-verifier__tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  background: var(--wam-muted-soft);
+  color: var(--wam-text-muted);
+  border-radius: var(--wam-radius-pill);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.wam-verifier__tab.is-active .wam-verifier__tab-count {
+  background: var(--wam-gold-soft);
+  color: #7a5a00;
+}
+
+/* ==========================================
+   4) VERIFIER STATS
+   ========================================== */
+
+.wam-verifier__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--wam-space-sm);
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-verifier__stat {
+  position: relative;
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  padding: var(--wam-space-md);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--wam-shadow-sm);
+  transition: box-shadow var(--wam-t);
+}
+
+.wam-verifier__stat:hover {
+  box-shadow: var(--wam-shadow);
+}
+
+.wam-verifier__stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--wam-radius);
+  background: var(--wam-primary-soft);
+  color: var(--wam-primary);
+  font-size: 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.wam-verifier__stat--gold    .wam-verifier__stat-icon { background: var(--wam-gold-soft);    color: #7a5a00; }
+.wam-verifier__stat--warning .wam-verifier__stat-icon { background: var(--wam-warning-soft); color: var(--wam-warning-text); }
+.wam-verifier__stat--success .wam-verifier__stat-icon { background: var(--wam-success-soft); color: var(--wam-success-text); }
+.wam-verifier__stat--danger  .wam-verifier__stat-icon { background: var(--wam-danger-soft);  color: var(--wam-danger-text); }
+.wam-verifier__stat--info    .wam-verifier__stat-icon { background: var(--wam-info-soft);    color: var(--wam-info-text); }
+
+.wam-verifier__stat-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wam-verifier__stat-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+  line-height: 1.1;
+}
+
+.wam-verifier__stat-label {
+  font-size: 0.72rem;
+  color: var(--wam-text-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* ==========================================
+   5) VERIFIER QUEUE (Inbox)
+   ========================================== */
+
+.wam-verifier__queue {
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  overflow: hidden;
+  box-shadow: var(--wam-shadow-sm);
+  position: sticky;
+  top: 84px;
+  max-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+}
+
+.wam-verifier__queue-head {
+  padding: 12px 14px;
+  background: var(--wam-primary-soft);
+  border-bottom: 1px solid var(--wam-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wam-verifier__queue-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+  margin: 0;
+}
+
+.wam-verifier__queue-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 6px;
+}
+
+.wam-verifier__queue-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: var(--wam-radius);
+  cursor: pointer;
+  transition: background var(--wam-t);
+  border-right: 3px solid transparent;
+  margin-bottom: 4px;
+}
+
+.wam-verifier__queue-item:hover {
+  background: var(--wam-bg-muted);
+}
+
+.wam-verifier__queue-item.is-active {
+  background: var(--wam-primary-soft);
+  border-right-color: var(--wam-gold);
+}
+
+.wam-verifier__queue-item--urgent {
+  border-right-color: var(--wam-danger);
+}
+
+.wam-verifier__queue-item--new {
+  border-right-color: var(--wam-info);
+}
+
+.wam-verifier__queue-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.wam-verifier__queue-item-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--wam-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+}
+
+.wam-verifier__queue-item-time {
+  font-size: 0.7rem;
+  color: var(--wam-text-muted);
+  white-space: nowrap;
+}
+
+.wam-verifier__queue-item-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--wam-text-muted);
+}
+
+.wam-verifier__queue-item-id {
+  font-family: 'Menlo', monospace;
+  direction: ltr;
+  text-align: right;
+}
+
+/* ==========================================
+   6) VERIFIER REVIEW PANEL
+   ========================================== */
+
+.wam-verifier__review {
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border-soft);
+  border-radius: var(--wam-radius-md);
+  padding: var(--wam-space-lg);
+  box-shadow: var(--wam-shadow-sm);
+}
+
+.wam-verifier__review-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--wam-space-md);
+  padding-bottom: var(--wam-space-md);
+  border-bottom: 1px solid var(--wam-border-soft);
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-verifier__review-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+}
+
+.wam-verifier__review-id {
+  font-family: 'Menlo', monospace;
+  direction: ltr;
+  text-align: right;
+  font-size: 0.75rem;
+  color: var(--wam-text-muted);
+  margin-top: 4px;
+}
+
+.wam-verifier__review-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--wam-space-md);
+  padding: var(--wam-space-md);
+  background: var(--wam-bg-muted);
+  border-radius: var(--wam-radius);
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-verifier__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wam-verifier__meta-label {
+  font-size: 0.7rem;
+  color: var(--wam-text-muted);
+  font-weight: 600;
+}
+
+.wam-verifier__meta-value {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--wam-text);
+}
+
+/* ==========================================
+   7) VERIFIER CHECKLIST
+   ========================================== */
+
+.wam-verifier__checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-verifier__checklist-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+  margin: 0 0 var(--wam-space-sm);
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--wam-border);
+}
+
+.wam-verifier__check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--wam-bg-muted);
+  border: 1px solid transparent;
+  border-radius: var(--wam-radius);
+  cursor: pointer;
+  transition: all var(--wam-t);
+}
+
+.wam-verifier__check:hover {
+  background: var(--wam-primary-soft);
+}
+
+.wam-verifier__check.is-checked {
+  background: var(--wam-success-soft);
+  border-color: var(--wam-success);
+}
+
+.wam-verifier__check.is-failed {
+  background: var(--wam-danger-soft);
+  border-color: var(--wam-danger);
+}
+
+.wam-verifier__check-icon {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--wam-border-strong);
+  background: transparent;
+  color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  transition: all var(--wam-t);
+}
+
+.wam-verifier__check.is-checked .wam-verifier__check-icon {
+  background: var(--wam-success);
+  border-color: var(--wam-success);
+  color: #fff;
+}
+
+.wam-verifier__check.is-failed .wam-verifier__check-icon {
+  background: var(--wam-danger);
+  border-color: var(--wam-danger);
+  color: #fff;
+}
+
+.wam-verifier__check-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.wam-verifier__check-label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--wam-text);
+  line-height: 1.5;
+}
+
+.wam-verifier__check-hint {
+  font-size: 0.72rem;
+  color: var(--wam-text-muted);
+  margin-top: 2px;
+}
+
+.wam-verifier__check-actions {
+  display: flex;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+.wam-verifier__check-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--wam-border);
+  background: var(--wam-bg-alt);
+  color: var(--wam-text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--wam-t);
+  padding: 0;
+}
+
+.wam-verifier__check-btn:hover {
+  border-color: var(--wam-primary-light);
+  color: var(--wam-primary);
+}
+
+.wam-verifier__check-btn--ok:hover {
+  background: var(--wam-success);
+  color: #fff;
+  border-color: var(--wam-success);
+}
+
+.wam-verifier__check-btn--fail:hover {
+  background: var(--wam-danger);
+  color: #fff;
+  border-color: var(--wam-danger);
+}
+
+/* ==========================================
+   8) VERIFIER DOCUMENTS REVIEW
+   ========================================== */
+
+.wam-verifier__docs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--wam-space-md);
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-verifier__doc {
+  position: relative;
+  background: var(--wam-bg-muted);
+  border: 2px solid transparent;
+  border-radius: var(--wam-radius);
+  padding: var(--wam-space-md);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--wam-t);
+}
+
+.wam-verifier__doc:hover {
+  border-color: var(--wam-primary-light);
+  background: var(--wam-bg-alt);
+  transform: translateY(-2px);
+}
+
+.wam-verifier__doc.is-approved {
+  border-color: var(--wam-success);
+  background: var(--wam-success-soft);
+}
+
+.wam-verifier__doc.is-rejected {
+  border-color: var(--wam-danger);
+  background: var(--wam-danger-soft);
+}
+
+.wam-verifier__doc-icon {
+  font-size: 2rem;
+  margin-bottom: 6px;
+  opacity: 0.85;
+}
+
+.wam-verifier__doc-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--wam-text);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wam-verifier__doc-size {
+  font-size: 0.7rem;
+  color: var(--wam-text-muted);
+}
+
+.wam-verifier__doc-status {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.wam-verifier__doc-status--ok {
+  background: var(--wam-success);
+}
+
+.wam-verifier__doc-status--fail {
+  background: var(--wam-danger);
+}
+
+/* ==========================================
+   9) VERIFIER NOTES
+   ========================================== */
+
+.wam-verifier__notes {
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-verifier__notes-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--wam-primary);
+  margin: 0 0 var(--wam-space-sm);
+}
+
+.wam-verifier__notes-input {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px 12px;
+  border: 1px solid var(--wam-border);
+  border-radius: var(--wam-radius);
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--wam-text);
+  background: var(--wam-bg-alt);
+  resize: vertical;
+  transition: border-color var(--wam-t), box-shadow var(--wam-t);
+}
+
+.wam-verifier__notes-input:focus {
+  outline: none;
+  border-color: var(--wam-primary-light);
+  box-shadow: 0 0 0 3px rgba(16, 91, 53, 0.12);
+}
+
+/* ==========================================
+   10) VERIFIER DECISION BAR
+   ========================================== */
+
+.wam-verifier__decision {
+  display: flex;
+  align-items: center;
+  gap: var(--wam-space-sm);
+  padding-top: var(--wam-space-md);
+  border-top: 1px solid var(--wam-border-soft);
+  flex-wrap: wrap;
+}
+
+.wam-verifier__decision-info {
+  flex: 1 1 auto;
+  font-size: 0.78rem;
+  color: var(--wam-text-muted);
+}
+
+.wam-verifier__decision-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wam-verifier__decision .wam-btn {
+  min-width: 130px;
+}
+
+/* ==========================================
+   11) VERIFIER REJECTION PANEL
+   ========================================== */
+
+.wam-verifier__reject-panel {
+  margin-top: var(--wam-space-md);
+  padding: var(--wam-space-md);
+  background: var(--wam-danger-soft);
+  border: 1px solid var(--wam-danger);
+  border-radius: var(--wam-radius-md);
+  animation: wam-slide-up 0.25s ease;
+}
+
+.wam-verifier__reject-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--wam-danger-text);
+  margin: 0 0 8px;
+}
+
+.wam-verifier__reject-reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--wam-space-md);
+}
+
+.wam-verifier__reason-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: var(--wam-radius-pill);
+  background: var(--wam-bg-alt);
+  border: 1px solid var(--wam-border);
+  color: var(--wam-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--wam-t);
+  font-family: inherit;
+}
+
+.wam-verifier__reason-chip:hover {
+  border-color: var(--wam-danger);
+  color: var(--wam-danger);
+}
+
+.wam-verifier__reason-chip.is-active {
+  background: var(--wam-danger);
+  color: #fff;
+  border-color: var(--wam-danger);
+}
+
+.wam-verifier__reject-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ==========================================
+   12) VERIFIER APPROVAL TIMELINE
+   ========================================== */
+
+.wam-verifier__timeline {
+  position: relative;
+  padding-right: 24px;
+  margin-bottom: var(--wam-space-lg);
+}
+
+.wam-verifier__timeline::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  right: 7px;
+  width: 2px;
+  background: var(--wam-border);
+}
+
+.wam-verifier__timeline-item {
+  position: relative;
+  padding: 0 0 var(--wam-space-md) 0;
+}
+
+.wam-verifier__timeline-item::before {
+  content: '';
+  position: absolute;
+  right: -22px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--wam-primary-soft);
+  border: 2px solid var(--wam-primary-light);
+}
+
+.wam-verifier__timeline-item--success::before {
+  background: var(--wam-success-soft);
+  border-color: var(--wam-success);
+}
+
+.wam-verifier__timeline-item--warning::before {
+  background: var(--wam-warning-soft);
+  border-color: var(--wam-warning);
+}
+
+.wam-verifier__timeline-item--danger::before {
+  background: var(--wam-danger-soft);
+  border-color: var(--wam-danger);
+}
+
+.wam-verifier__timeline-time {
+  font-size: 0.72rem;
+  color: var(--wam-text-muted);
+  margin-bottom: 2px;
+}
+
+.wam-verifier__timeline-text {
+  font-size: 0.85rem;
+  color: var(--wam-text);
+  line-height: 1.6;
+}
+
+.wam-verifier__timeline-user {
+  font-weight: 700;
+  color: var(--wam-primary);
+}
+
+/* ==========================================
+   13) VERIFIER EMPTY STATE
+   ========================================== */
+
+.wam-verifier__empty {
+  text-align: center;
+  padding: 56px 20px;
+  background: var(--wam-bg-alt);
+  border: 1px dashed var(--wam-border);
+  border-radius: var(--wam-radius-md);
+}
+
+.wam-verifier__empty-icon {
+  font-size: 2.8rem;
+  opacity: 0.6;
+  margin-bottom: 10px;
+}
+
+.wam-verifier__empty-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--wam-text);
+  margin: 0 0 6px;
+}
+
+.wam-verifier__empty-text {
+  font-size: 0.85rem;
+  color: var(--wam-text-muted);
+  margin: 0 0 var(--wam-space-md);
+}
+
+/* ==========================================
+   14) VERIFIER BADGE / STATUS
+   ========================================== */
+
+.wam-verifier__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--wam-radius-pill);
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: var(--wam-muted-soft);
+  color: var(--wam-text-muted);
+  white-space: nowrap;
+}
+
+.wam-verifier__status--pending {
+  background: var(--wam-warning-soft);
+  color: var(--wam-warning-text);
+}
+
+.wam-verifier__status--approved {
+  background: var(--wam-success-soft);
+  color: var(--wam-success-text);
+}
+
+.wam-verifier__status--rejected {
+  background: var(--wam-danger-soft);
+  color: var(--wam-danger-text);
+}
+
+.wam-verifier__status--in-review {
+  background: var(--wam-info-soft);
+  color: var(--wam-info-text);
+}
+
+/* ==========================================
+   15) RESPONSIVE
+   ========================================== */
+
+@media (max-width: 992px) {
+  .wam-verifier__split {
+    grid-template-columns: 1fr;
+  }
+
+  .wam-verifier__queue {
+    position: static;
+    max-height: none;
+    margin-bottom: var(--wam-space-lg);
+  }
+
+  .wam-verifier__queue-list {
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 640px) {
+  .wam-verifier__main {
+    padding: var(--wam-space-md);
+  }
+
+  .wam-verifier__title {
+    font-size: 1.15rem;
+  }
+
+  .wam-verifier__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .wam-verifier__stat {
+    padding: 10px;
+  }
+
+  .wam-verifier__stat-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .wam-verifier__stat-value {
+    font-size: 1.15rem;
+  }
+
+  .wam-verifier__review {
+    padding: var(--wam-space-md);
+  }
+
+  .wam-verifier__docs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .wam-verifier__decision {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wam-verifier__decision-actions {
+    flex-direction: column;
+  }
+
+  .wam-verifier__decision .wam-btn {
+    width: 100%;
+  }
+
+  .wam-verifier__review-meta {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================
+   END OF VERIFIER-PANEL.CSS
+   ========================================== */
